@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bintang & Cerita — Belajar Astronomi 5 Menit Sehari</title>
+<title>Bintang & Cerita — Program 6 Bulan Astronomi</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = {
@@ -31,23 +31,15 @@ tailwind.config = {
     border: 1px solid rgba(251,191,36,0.12);
     box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
   }
-  .story-text { font-family: Georgia, 'Times New Roman', serif; font-size: 1.05rem; line-height: 1.95; color:#d1d5e0; }
+  .story-text { font-family: Georgia, serif; font-size: 1.05rem; line-height: 1.95; color:#d1d5e0; }
   .story-text p { margin-bottom: 1.15rem; }
   .story-text em { color:#fcd34d; font-style: italic; }
   .story-text strong { color:#fbbf24; font-weight: 600; }
-  .story-text code {
-    background: rgba(251,191,36,0.1); color:#fcd34d;
-    padding: 1px 6px; border-radius: 4px; font-size: 0.9em;
-    font-family: 'Courier New', monospace;
-  }
   .drop-cap::first-letter {
     font-size: 3.2rem; float: left; line-height: 0.9;
     padding: 4px 8px 0 0; color: #fbbf24; font-weight: bold;
     font-family: Georgia, serif;
   }
-  .scrollbar::-webkit-scrollbar { width:6px; }
-  .scrollbar::-webkit-scrollbar-track { background:#12142b; }
-  .scrollbar::-webkit-scrollbar-thumb { background:#252a56; border-radius:3px; }
   .quote-box {
     background: rgba(251,191,36,0.05);
     border-left: 3px solid #fbbf24;
@@ -58,9 +50,7 @@ tailwind.config = {
   .analogy-box {
     background: rgba(96,165,250,0.07);
     border: 1px dashed rgba(96,165,250,0.35);
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin: 1.25rem 0;
+    border-radius: 12px; padding: 16px 20px; margin: 1.25rem 0;
   }
   .analogy-box .label {
     font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px;
@@ -86,14 +76,8 @@ tailwind.config = {
     border-color: rgba(251,191,36,0.4);
     transform: translateX(4px);
   }
-  .quiz-opt.correct {
-    background: rgba(74,222,128,0.15);
-    border-color: rgba(74,222,128,0.5); color:#86efac;
-  }
-  .quiz-opt.wrong {
-    background: rgba(248,113,113,0.15);
-    border-color: rgba(248,113,113,0.5); color:#fca5a5;
-  }
+  .quiz-opt.correct { background: rgba(74,222,128,0.15); border-color: rgba(74,222,128,0.5); color:#86efac; }
+  .quiz-opt.wrong { background: rgba(248,113,113,0.15); border-color: rgba(248,113,113,0.5); color:#fca5a5; }
   .quiz-opt:disabled { cursor: default; opacity: 0.7; }
   .feedback {
     padding: 12px 16px; border-radius: 10px;
@@ -108,14 +92,22 @@ tailwind.config = {
   .lv-menengah { background: rgba(168,85,247,0.15); color:#c4b5fd; border:1px solid rgba(168,85,247,0.3); }
   .lv-mahir { background: rgba(244,114,182,0.15); color:#f9a8d4; border:1px solid rgba(244,114,182,0.3); }
   .lv-olimpiade { background: rgba(74,222,128,0.15); color:#86efac; border:1px solid rgba(74,222,128,0.3); }
-  .chapter-tab {
+  .month-tab {
     font-size: 0.72rem; padding: 6px 14px; border-radius: 20px;
     background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
     color: #8b90a8; cursor: pointer; transition: all 0.2s;
     font-family: inherit; white-space: nowrap;
   }
-  .chapter-tab:hover { color: #fbbf24; border-color: rgba(251,191,36,0.3); }
-  .chapter-tab.active { background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.5); color:#fbbf24; font-weight: 600; }
+  .month-tab:hover { color: #fbbf24; border-color: rgba(251,191,36,0.3); }
+  .month-tab.active { background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.5); color:#fbbf24; font-weight: 600; }
+  .main-tab {
+    padding: 10px 18px; border-radius: 12px; font-size: 0.85rem;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    color:#a8adc0; cursor: pointer; transition: all 0.2s; font-family: inherit;
+    font-weight: 500;
+  }
+  .main-tab:hover { color: #fbbf24; border-color: rgba(251,191,36,0.3); }
+  .main-tab.active { background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.5); color:#fbbf24; }
   .nav-arrow {
     padding: 12px 20px; border-radius: 12px; font-weight: 600; font-size: 0.88rem;
     transition: all 0.25s; cursor: pointer; font-family: inherit;
@@ -127,6 +119,25 @@ tailwind.config = {
   .nav-next:hover:not(:disabled) { box-shadow: 0 10px 28px rgba(251,191,36,0.4); transform: translateY(-2px); }
   .progress-thin { height: 4px; background: rgba(255,255,255,0.06); border-radius: 20px; overflow: hidden; }
   .progress-thin > div { height: 100%; background: linear-gradient(90deg, #fbbf24, #f59e0b); transition: width 0.5s; }
+  .sim-panel { background: rgba(18,20,43,0.7); border: 1px solid rgba(251,191,36,0.15); border-radius: 16px; padding: 20px; }
+  .sim-input {
+    background: rgba(10,11,26,0.8); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 8px 12px; color: #d8dbe8;
+    font-size: 0.85rem; font-family: inherit; width: 100%;
+  }
+  .sim-input:focus { outline: none; border-color: #fbbf24; }
+  .sim-label { font-size: 0.72rem; color: #8b90a8; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; display: block; }
+  .day-pill {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    color: #8b90a8; font-size: 0.75rem; cursor: pointer; transition: all 0.2s;
+    font-weight: 600;
+  }
+  .day-pill:hover { border-color: rgba(251,191,36,0.4); color:#fbbf24; }
+  .day-pill.active { background: rgba(251,191,36,0.15); border-color: #fbbf24; color:#fbbf24; }
+  .day-pill.done { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.4); color:#86efac; }
+  .day-pill.active.done { background: rgba(74,222,128,0.2); border-color: #86efac; color:#86efac; }
   @media (max-width: 640px) {
     .story-text { font-size: 0.98rem; line-height: 1.85; }
     .drop-cap::first-letter { font-size: 2.6rem; }
@@ -137,1069 +148,950 @@ tailwind.config = {
 
 <canvas id="starfield"></canvas>
 
-<div class="relative z-10 max-w-3xl mx-auto px-4 py-6 sm:py-10">
+<div class="relative z-10 max-w-4xl mx-auto px-4 py-6 sm:py-10">
 
   <!-- Header -->
-  <header class="text-center mb-8">
-    <div class="inline-flex items-center gap-2 mb-3">
+  <header class="text-center mb-6">
+    <div class="inline-flex items-center gap-2 mb-2">
       <i class="fa-solid fa-star text-star-400 text-xl"></i>
       <h1 class="font-serif text-2xl sm:text-3xl font-bold bg-gradient-to-r from-star-300 via-star-400 to-amber-500 bg-clip-text text-transparent">
         Bintang & Cerita
       </h1>
       <i class="fa-solid fa-star text-star-400 text-xl"></i>
     </div>
-    <p class="text-sm text-slate-400 italic">Belajar astronomi lima menit sehari — seperti membaca novel, tapi tentang alam semesta</p>
+    <p class="text-sm text-slate-400 italic">Program 6 bulan — belajar astronomi 5 menit sehari, dari nol hingga level olimpiade</p>
   </header>
 
-  <!-- Progress Bar -->
-  <div class="mb-6">
-    <div class="flex justify-between items-center text-xs text-slate-400 mb-2">
-      <span id="progressLabel">Hari 1 dari 18</span>
-      <span id="progressPercent">0%</span>
-    </div>
-    <div class="progress-thin"><div id="progressFill" style="width:0%"></div></div>
+  <!-- Main Tabs -->
+  <div class="flex flex-wrap justify-center gap-2 mb-6">
+    <button class="main-tab active" onclick="switchMainTab('cerita')" id="tab-cerita">
+      <i class="fa-solid fa-book-open mr-1"></i> Cerita Harian
+    </button>
+    <button class="main-tab" onclick="switchMainTab('bola')" id="tab-bola">
+      <i class="fa-solid fa-globe mr-1"></i> Simulasi Bola Langit
+    </button>
+    <button class="main-tab" onclick="switchMainTab('teleskop')" id="tab-teleskop">
+      <i class="fa-solid fa-circle-dot mr-1"></i> Simulasi Teleskop
+    </button>
+    <button class="main-tab" onclick="switchMainTab('hr')" id="tab-hr">
+      <i class="fa-solid fa-chart-line mr-1"></i> Lab Diagram HR
+    </button>
+    <button class="main-tab" onclick="switchMainTab('peta')" id="tab-peta">
+      <i class="fa-solid fa-map mr-1"></i> Peta Progres 180 Hari
+    </button>
   </div>
 
-  <!-- Chapter Tabs -->
-  <div class="flex gap-2 overflow-x-auto pb-3 mb-6 scrollbar" id="chapterTabs"></div>
+  <!-- ========== TAB: CERITA HARIAN ========== -->
+  <section id="view-cerita">
 
-  <!-- Story Card -->
-  <article id="storyCard" class="paper rounded-3xl p-6 sm:p-10 mb-6">
-
-    <!-- Header slide -->
-    <div class="mb-6 pb-5 border-b border-white/5">
-      <div class="flex flex-wrap items-center gap-3 mb-3">
-        <span id="levelChip" class="level-chip lv-pemula">Pemula</span>
-        <span class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"></i>5 menit membaca</span>
+    <!-- Progress Bar -->
+    <div class="mb-5">
+      <div class="flex justify-between items-center text-xs text-slate-400 mb-2">
+        <span id="progressLabel">Hari 1 dari 180</span>
+        <span id="progressPercent">0%</span>
       </div>
-      <h2 id="storyTitle" class="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight mb-2"></h2>
-      <p id="storySubtitle" class="text-sm text-slate-400 italic"></p>
+      <div class="progress-thin"><div id="progressFill" style="width:0%"></div></div>
     </div>
 
-    <!-- Story Body -->
-    <div id="storyBody" class="story-text"></div>
+    <!-- Month Tabs -->
+    <div class="flex gap-2 overflow-x-auto pb-3 mb-5" style="scrollbar-width:thin;" id="monthTabs"></div>
 
-    <!-- Renungan -->
-    <div id="reflectionBox" class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      <span id="reflectionText"></span>
+    <!-- Day Pills (scroll) -->
+    <div class="mb-5">
+      <div class="text-xs text-slate-500 mb-2">Pilih hari (klik untuk melompat):</div>
+      <div id="dayPills" class="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-1"></div>
     </div>
 
-    <!-- Quiz -->
-    <div class="mt-8 pt-6 border-t border-white/5">
-      <h3 class="font-semibold text-star-400 mb-1 flex items-center gap-2 text-sm">
-        <i class="fa-solid fa-circle-question"></i> Cek Pemahaman
-      </h3>
-      <p class="text-xs text-slate-500 mb-4">Tidak ada nilai — ini hanya untuk memastikan Anda mengikuti cerita.</p>
-      <div id="quizContainer"></div>
-    </div>
-
-    <!-- Status hari -->
-    <div class="mt-8 pt-5 border-t border-white/5 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-2 text-sm" id="dayStatus">
-        <i class="fa-regular fa-circle text-slate-500"></i>
-        <span class="text-slate-400">Hari ini belum ditandai selesai</span>
+    <!-- Story Card -->
+    <article id="storyCard" class="paper rounded-3xl p-6 sm:p-10 mb-6">
+      <div class="mb-6 pb-5 border-b border-white/5">
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          <span id="levelChip" class="level-chip lv-pemula">Pemula</span>
+          <span class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"></i>5 menit membaca</span>
+          <span id="monthChip" class="text-xs text-amber-400/80"></span>
+        </div>
+        <h2 id="storyTitle" class="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight mb-2"></h2>
+        <p id="storySubtitle" class="text-sm text-slate-400 italic"></p>
       </div>
-      <button id="btnComplete" onclick="markComplete()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-sm shadow-lg shadow-emerald-600/20 transition flex items-center gap-2">
-        <i class="fa-solid fa-check-circle"></i> Tandai Selesai
+
+      <div id="storyBody" class="story-text"></div>
+
+      <div id="reflectionBox" class="quote-box">
+        <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
+        <span id="reflectionText"></span>
+      </div>
+
+      <!-- Mini simulasi terkait (opsional) -->
+      <div id="inlineSim" class="hidden mt-6 p-4 rounded-2xl border border-amber-500/20 bg-amber-500/5">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-flask mr-1"></i> Simulasi Terkait Hari Ini</span>
+          <button onclick="openSimFromStory()" class="text-xs text-amber-400 hover:text-amber-300 underline">Buka tab simulasi <i class="fa-solid fa-arrow-right ml-1"></i></button>
+        </div>
+        <p id="inlineSimDesc" class="text-xs text-slate-400"></p>
+      </div>
+
+      <!-- Quiz -->
+      <div class="mt-8 pt-6 border-t border-white/5">
+        <h3 class="font-semibold text-star-400 mb-1 flex items-center gap-2 text-sm">
+          <i class="fa-solid fa-circle-question"></i> Cek Pemahaman
+        </h3>
+        <p class="text-xs text-slate-500 mb-4">Tidak ada nilai — ini hanya untuk memastikan Anda mengikuti cerita.</p>
+        <div id="quizContainer"></div>
+      </div>
+
+      <!-- Status -->
+      <div class="mt-8 pt-5 border-t border-white/5 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2 text-sm" id="dayStatus"></div>
+        <button id="btnComplete" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-sm shadow-lg shadow-emerald-600/20 transition flex items-center gap-2">
+          <i class="fa-solid fa-check-circle"></i> Tandai Selesai
+        </button>
+      </div>
+    </article>
+
+    <!-- Navigation -->
+    <div class="flex justify-between items-center gap-3 mb-10">
+      <button id="btnPrev" class="nav-arrow nav-prev" onclick="changeDay(-1)" disabled>
+        <i class="fa-solid fa-chevron-left mr-1"></i> Sebelumnya
+      </button>
+      <span id="counterText" class="text-xs text-slate-500 whitespace-nowrap">1 / 180</span>
+      <button id="btnNext" class="nav-arrow nav-next" onclick="changeDay(1)">
+        Berikutnya <i class="fa-solid fa-chevron-right ml-1"></i>
       </button>
     </div>
 
-  </article>
+  </section>
 
-  <!-- Navigation -->
-  <div class="flex justify-between items-center gap-3 mb-10">
-    <button id="btnPrev" class="nav-arrow nav-prev" onclick="changeDay(-1)" disabled>
-      <i class="fa-solid fa-chevron-left mr-1"></i> Hari sebelumnya
-    </button>
-    <span id="counterText" class="text-xs text-slate-500 whitespace-nowrap">1 / 18</span>
-    <button id="btnNext" class="nav-arrow nav-next" onclick="changeDay(1)">
-      Hari berikutnya <i class="fa-solid fa-chevron-right ml-1"></i>
-    </button>
-  </div>
+  <!-- ========== TAB: SIMULASI BOLA LANGIT ========== -->
+  <section id="view-bola" class="hidden">
+    <div class="paper rounded-3xl p-6 sm:p-8 mb-6">
+      <h2 class="font-serif text-2xl font-bold text-white mb-2">🌍 Simulasi Bola Langit</h2>
+      <p class="text-sm text-slate-400 mb-6">Hitung posisi bintang (Altitudo, Azimuth, Sudut Jam) dari lokasi pengamat, lalu lihat visualisasinya pada bola langit interaktif.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="sim-panel">
+          <h3 class="text-sm font-bold text-amber-300 mb-4 uppercase tracking-wider">Parameter Pengamat & Bintang</h3>
+
+          <div class="mb-4">
+            <label class="sim-label">Preset Bintang</label>
+            <select id="starPreset" class="sim-input" onchange="applyStarPreset()">
+              <option value="sirius">Sirius (α CMa)</option>
+              <option value="canopus">Canopus (α Car)</option>
+              <option value="betelgeuse">Betelgeuse (α Ori)</option>
+              <option value="vega">Vega (α Lyr)</option>
+              <option value="polaris">Polaris (α UMi)</option>
+              <option value="acrux">Acrux (α Cru)</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div>
+              <label class="sim-label">Lintang φ (°)</label>
+              <input type="number" id="obsLat" value="-6.9" step="0.1" class="sim-input" oninput="calculateCelestial()">
+            </div>
+            <div>
+              <label class="sim-label">LST (jam)</label>
+              <input type="number" id="obsLST" value="10.5" step="0.1" min="0" max="24" class="sim-input" oninput="calculateCelestial()">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div>
+              <label class="sim-label">RA Bintang (jam)</label>
+              <input type="number" id="starRA" value="6.75" step="0.01" class="sim-input" oninput="calculateCelestial()">
+            </div>
+            <div>
+              <label class="sim-label">Deklinasi δ (°)</label>
+              <input type="number" id="starDec" value="-16.7" step="0.1" class="sim-input" oninput="calculateCelestial()">
+            </div>
+          </div>
+
+          <div class="bg-black/40 rounded-xl p-4 mt-4">
+            <h4 class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-3">Hasil Kalkulasi</h4>
+            <div class="grid grid-cols-2 gap-3 text-sm">
+              <div>
+                <span class="text-xs text-slate-500">Sudut Jam (HA)</span>
+                <p id="outHA" class="text-lg font-bold text-white">03h 45m</p>
+              </div>
+              <div>
+                <span class="text-xs text-slate-500">Altitudo h</span>
+                <p id="outAlt" class="text-lg font-bold text-cyan-300">+42.5°</p>
+              </div>
+              <div>
+                <span class="text-xs text-slate-500">Azimuth A</span>
+                <p id="outAz" class="text-lg font-bold text-purple-300">245.2°</p>
+              </div>
+              <div>
+                <span class="text-xs text-slate-500">Status</span>
+                <p id="outVisibility" class="text-sm font-bold text-emerald-400 mt-1">Tampak ✓</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-panel flex flex-col items-center">
+          <h3 class="text-sm font-bold text-amber-300 mb-3 uppercase tracking-wider self-start">Visualisasi Bola Langit</h3>
+          <div class="relative w-full aspect-square">
+            <canvas id="celestialCanvas" class="w-full h-full rounded-2xl bg-black/60 border border-white/10"></canvas>
+          </div>
+          <div class="flex flex-wrap justify-center gap-3 text-xs text-slate-400 mt-3">
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Horizon</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-cyan-400 inline-block"></span> Zenith</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-purple-500 inline-block"></span> Ekuator Langit</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span> Bintang</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TAB: SIMULASI TELESKOP ========== -->
+  <section id="view-teleskop" class="hidden">
+    <div class="paper rounded-3xl p-6 sm:p-8 mb-6">
+      <h2 class="font-serif text-2xl font-bold text-white mb-2">🔭 Simulasi Optik Teleskop & Binokuler</h2>
+      <p class="text-sm text-slate-400 mb-6">Eksplorasi bagaimana aperture, panjang fokus, dan okuler memengaruhi perbesaran, resolusi, dan kecerahan gambar.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="sim-panel">
+          <h3 class="text-sm font-bold text-purple-300 mb-4 uppercase tracking-wider">Spesifikasi Peralatan</h3>
+
+          <div class="mb-4">
+            <label class="sim-label">Target Pengamatan</label>
+            <select id="scopeTarget" class="sim-input" onchange="updateTelescopeSim()">
+              <option value="saturn">Planet Saturnus</option>
+              <option value="moon">Kawah Bulan</option>
+              <option value="orion">Nebula Orion</option>
+              <option value="jupiter">Jupiter & Satelit</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">Aperture D</span>
+              <span id="valScopeD" class="font-bold text-purple-300">150 mm</span>
+            </div>
+            <input type="range" id="sliderScopeD" min="30" max="400" step="5" value="150" class="w-full accent-purple-500" oninput="updateTelescopeSim()">
+          </div>
+
+          <div class="mb-4">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">Panjang Fokus fo</span>
+              <span id="valScopeFo" class="font-bold text-purple-300">1200 mm</span>
+            </div>
+            <input type="range" id="sliderScopeFo" min="300" max="2500" step="50" value="1200" class="w-full accent-purple-500" oninput="updateTelescopeSim()">
+          </div>
+
+          <div class="mb-4">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">Okuler fe</span>
+              <span id="valScopeFe" class="font-bold text-purple-300">10 mm</span>
+            </div>
+            <input type="range" id="sliderScopeFe" min="4" max="40" step="1" value="10" class="w-full accent-purple-500" oninput="updateTelescopeSim()">
+          </div>
+
+          <div class="bg-black/40 rounded-xl p-4">
+            <h4 class="text-xs font-bold text-purple-400 uppercase tracking-wider mb-3">Parameter Terhitung</h4>
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div><span class="text-slate-500">Perbesaran M</span><p id="outMag" class="text-base font-bold text-white">120x</p></div>
+              <div><span class="text-slate-500">Rasio fokal</span><p id="outFRatio" class="text-base font-bold text-cyan-300">f/8.0</p></div>
+              <div><span class="text-slate-500">Resolusi Rayleigh</span><p id="outRayleigh" class="text-xs font-bold text-purple-300">0.92"</p></div>
+              <div><span class="text-slate-500">Exit pupil</span><p id="outExitPupil" class="text-xs font-bold text-amber-300">1.25 mm</p></div>
+              <div class="col-span-2 pt-2 border-t border-white/10"><span class="text-slate-500">Daya kumpul cahaya</span><p id="outLGP" class="text-sm font-bold text-emerald-400">459x dari mata</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-panel flex flex-col items-center">
+          <h3 class="text-sm font-bold text-purple-300 mb-3 uppercase tracking-wider self-start">Tampilan Melalui Okuler</h3>
+          <div class="relative w-full aspect-square max-w-[420px] flex items-center justify-center">
+            <canvas id="telescopeCanvas" class="w-full h-full rounded-full bg-black border-4 border-slate-800"></canvas>
+          </div>
+          <p class="text-xs text-slate-400 mt-3 text-center">True FOV: <span id="fovLabelText">~0.42°</span> — gambar makin buram jika perbesaran melewati batas difraksi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TAB: LAB DIAGRAM HR ========== -->
+  <section id="view-hr" class="hidden">
+    <div class="paper rounded-3xl p-6 sm:p-8 mb-6">
+      <h2 class="font-serif text-2xl font-bold text-white mb-2">📈 Lab Diagram Hertzsprung-Russell</h2>
+      <p class="text-sm text-slate-400 mb-6">Geser suhu dan radius bintang, lalu lihat bagaimana luminositas dan posisinya di diagram HR berubah.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="sim-panel">
+          <h3 class="text-sm font-bold text-amber-300 mb-4 uppercase tracking-wider">Simulator Bintang</h3>
+
+          <div class="mb-5">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">Suhu Efektif T</span>
+              <span id="valStarTemp" class="font-bold text-amber-300">5.778 K</span>
+            </div>
+            <input type="range" id="sliderStarTemp" min="2000" max="40000" step="200" value="5778" class="w-full accent-amber-500" oninput="updateHRLab()">
+          </div>
+
+          <div class="mb-5">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">Radius R (log)</span>
+              <span id="valStarRadius" class="font-bold text-amber-300">1.00 R☉</span>
+            </div>
+            <input type="range" id="sliderStarRadius" min="-2" max="3" step="0.05" value="0" class="w-full accent-amber-500" oninput="updateHRLab()">
+          </div>
+
+          <div class="bg-black/40 rounded-xl p-4 mb-4">
+            <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-3">Properti Terhitung</h4>
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div><span class="text-slate-500">Luminositas</span><p id="outStarLuminosity" class="text-base font-bold text-white">1.00 L☉</p></div>
+              <div><span class="text-slate-500">Kelas Spektral</span><p id="outStarSpectral" class="text-base font-bold text-amber-300">G2V</p></div>
+              <div><span class="text-slate-500">Puncak Wien</span><p id="outWienPeak" class="text-xs font-bold text-cyan-300">501.6 nm</p></div>
+              <div>
+                <span class="text-slate-500">Warna</span>
+                <div class="flex items-center gap-2 mt-1">
+                  <div id="starColorBox" class="w-5 h-5 rounded-full border border-white/40"></div>
+                  <span id="starColorText" class="text-xs font-semibold">Kuning</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <button onclick="setHRStar(5778,1)" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700">Matahari (G2V)</button>
+            <button onclick="setHRStar(9940,1.71)" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700">Sirius A (A1V)</button>
+            <button onclick="setHRStar(3500,764)" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700">Betelgeuse (M2 Ia)</button>
+            <button onclick="setHRStar(25000,0.01)" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700">Sirius B (Katai Putih)</button>
+          </div>
+        </div>
+
+        <div class="sim-panel flex flex-col items-center">
+          <h3 class="text-sm font-bold text-amber-300 mb-3 uppercase tracking-wider self-start">Diagram HR Interaktif</h3>
+          <div class="relative w-full aspect-[4/3] max-w-[500px]">
+            <canvas id="hrCanvas" class="w-full h-full rounded-2xl bg-black/60 border border-white/10"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TAB: PETA PROGRES ========== -->
+  <section id="view-peta" class="hidden">
+    <div class="paper rounded-3xl p-6 sm:p-8 mb-6">
+      <h2 class="font-serif text-2xl font-bold text-white mb-2">🗺️ Peta Progres 6 Bulan</h2>
+      <p class="text-sm text-slate-400 mb-6">Lihat perjalanan Anda dari hari 1 hingga 180. Klik kotak untuk melompat ke hari tersebut.</p>
+
+      <div class="grid grid-cols-3 gap-4 mb-6 text-center">
+        <div class="sim-panel"><i class="fa-solid fa-fire text-amber-500 text-2xl mb-1"></i><p id="statStreak" class="text-2xl font-bold text-white">0</p><p class="text-xs text-slate-400">Hari selesai</p></div>
+        <div class="sim-panel"><i class="fa-solid fa-star text-indigo-400 text-2xl mb-1"></i><p id="statScore" class="text-2xl font-bold text-white">0%</p><p class="text-xs text-slate-400">Akurasi kuis</p></div>
+        <div class="sim-panel"><i class="fa-solid fa-calendar text-emerald-400 text-2xl mb-1"></i><p id="statPercent" class="text-2xl font-bold text-white">0%</p><p class="text-xs text-slate-400">Progres total</p></div>
+      </div>
+
+      <div id="progressGrid" class="space-y-4"></div>
+
+      <div class="mt-6 pt-4 border-t border-white/10 text-center">
+        <button onclick="resetProgress()" class="px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs">
+          <i class="fa-solid fa-rotate-left mr-1"></i> Reset Progres
+        </button>
+      </div>
+    </div>
+  </section>
 
   <footer class="text-center text-xs text-slate-600 pb-8">
-    <p>Ditulis dengan tenang untuk pembelajar yang sabar. Sumber: <em>Fundamental Astronomy</em> (Karttunen), NASA, IOAA Syllabus.</p>
+    <p>Program 6 bulan · 180 hari · Sumber: <em>Fundamental Astronomy</em> (Karttunen), NASA, IOAA Syllabus</p>
   </footer>
 
 </div>
 
 <script>
 /* =========================================================
-   KURIKULUM NARATIF — 18 HARI BERCERITA
-   Setiap "hari" adalah cerita pendek yang mengalir,
-   dari pemula hingga level olimpiade/universitas.
+   PROGRAM 6 BULAN — 180 HARI
+   Setiap hari dihasilkan secara dinamis dari kurikulum.
    ========================================================= */
-const stories = [
-/* ---------- BAB 1: MENGENAL LANGIT ---------- */
-{
-  chapter: "Bab 1 · Mengenal Langit",
-  day: 1, level: "Pemula", levelClass: "lv-pemula",
-  title: "Malam Pertama di Bawah Bintang",
-  subtitle: "Ketika kita mulai bertanya: apa yang sebenarnya kita lihat?",
-  body: `
-    <p class="drop-cap">Bayangkan Anda berdiri di halaman rumah pada malam yang cerah, jauh dari lampu kota. Di atas kepala, ribuan titik cahaya bertaburan. Sebagian berkelip, sebagian tenang. Sebagian terang, sebagian nyaris tak terlihat. Pertanyaan pertama yang muncul mungkin sederhana: <em>apa semua itu?</em></p>
-    <p>Orang-orang zaman dahulu juga bertanya hal yang sama. Mereka memperhatikan bahwa titik-titik itu bergerak pelan sepanjang malam — semua bergeser bersama-sama, seolah ada yang memutar langit dari timur ke barat. Mereka menamai pola-pola tertentu: Orion si pemburu, Biduk, Salib Selatan. Tanpa mereka sadari, mereka sudah mulai berastronomi.</p>
-    <p>Ada satu hal yang perlu kita sepakati sebelum melangkah lebih jauh. Jarak ke bintang-bintang itu <strong>sangat jauh</strong> — jauh melampaui apa pun yang bisa kita bayangkan dalam kehidupan sehari-hari. Karena itulah mata kita <em>tidak mampu</em> membedakan mana bintang yang dekat dan mana yang jauh. Semuanya tampak menempel di satu permukaan datar.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Bayangkan Anda melihat pemandangan pegunungan dari jauh. Pepohonan di depan dan gunung di belakang tampak seperti satu lukisan datar. Begitu pula langit malam — bagi mata kita, semua bintang seolah menempel di sebuah "kubah raksasa" yang kita sebut <strong>bola langit</strong>.</p>
-    </div>
-    <p>Bola langit bukan benda nyata. Ia hanyalah alat bantu berpikir — sebuah bola imajiner raksasa yang mengelilingi Bumi, tempat kita "menempelkan" semua bintang agar mudah dibicarakan. Astronom sudah menggunakannya selama ribuan tahun, dan sampai hari ini masih sangat berguna.</p>
-    <p>Di bola langit itu ada beberapa titik penting yang perlu Anda kenal sejak awal:</p>
-    <p><strong>Zenith</strong> adalah titik tepat di atas kepala Anda — kalau Anda mendongak lurus ke atas, itulah zenith. <strong>Nadir</strong> adalah kebalikannya: titik tepat di bawah kaki Anda. <strong>Horizon</strong> adalah garis lingkaran yang membatasi apa yang bisa Anda lihat dan tidak — tempat langit bertemu bumi.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Malam ini, cobalah keluar sebentar. Cari satu bintang yang paling terang. Sadari bahwa cahaya yang Anda lihat mungkin sudah berjalan ratusan atau ribuan tahun untuk sampai ke mata Anda. Anda sedang melihat masa lalu.
-    </div>
-  `,
-  reflection: "Langit malam mengajarkan kerendahan hati: kita kecil, tetapi kita diberi kemampuan untuk bertanya.",
-  quiz: [
-    {
-      q: "Mengapa mata kita tidak bisa membedakan bintang yang dekat dan jauh?",
-      opts: [
-        "Karena bintang bersinar terlalu redup",
-        "Karena jarak antarbintang sangat besar sehingga tampak seperti menempel di satu bidang",
-        "Karena atmosfer Bumi membelokkan cahaya bintang",
-        "Karena Bumi berputar terlalu cepat"
-      ],
-      ans: 1,
-      exp: "Jarak bintang yang sangat besar membuat mata kita tidak mampu mempersepsikan kedalaman. Itulah sebabnya kita memerlukan 'bola langit' sebagai alat bantu berpikir."
-    },
-    {
-      q: "Apa yang dimaksud dengan Zenith?",
-      opts: [
-        "Titik tepat di bawah kaki pengamat",
-        "Garis batas antara langit dan bumi",
-        "Titik tepat di atas kepala pengamat",
-        "Titik tempat bintang paling terang berada"
-      ],
-      ans: 2,
-      exp: "Zenith adalah titik di bola langit yang berada tepat di atas kepala pengamat. Kebalikannya disebut Nadir."
-    }
-  ]
-},
-{
-  chapter: "Bab 1 · Mengenal Langit",
-  day: 2, level: "Pemula", levelClass: "lv-pemula",
-  title: "Membuat Peta Langit dari Halaman Rumah",
-  subtitle: "Bagaimana kita menyebut 'arah' di langit yang tak berujung?",
-  body: `
-    <p class="drop-cap">Kalau saya bertanya, "Di mana rumahmu?", Anda akan menjawab dengan alamat: jalan, nomor, kota. Ada sistem. Langit juga butuh sistem seperti itu — kalau tidak, kita akan tersesat di antara miliaran bintang.</p>
-    <p>Ada dua cara utama untuk memberi "alamat" pada sebuah bintang. Cara pertama adalah cara yang paling alami: <strong>dari sudut pandang kita sendiri</strong>. Kita sebut ini <em>sistem horizon</em>, dan ia menggunakan dua angka.</p>
-    <p>Angka pertama adalah <strong>altitudo</strong> (atau ketinggian). Ini mengukur seberapa tinggi sebuah bintang dari horizon. Kalau bintang tepat di horizon, altitudonya 0 derajat. Kalau tepat di atas kepala (di zenith), altitudonya 90 derajat.</p>
-    <p>Angka kedua adalah <strong>azimuth</strong>. Ini mengukur arah sepanjang horizon. Bayangkan Anda berdiri memutar: Utara adalah 0 derajat, Timur 90 derajat, Selatan 180 derajat, Barat 270 derajat, dan kembali ke Utara 360 derajat.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Bayangkan Anda berada di tengah lapangan bola. Untuk memberi tahu teman di mana bola berada, Anda bisa berkata: "20 meter ke kiri Anda, setinggi lutut." Altitudo adalah "setinggi lutut" itu, dan azimuth adalah "ke kiri Anda" itu.</p>
-    </div>
-    <p>Sayangnya, sistem ini punya satu kelemahan besar: <strong>alamatnya berubah setiap saat</strong>. Karena Bumi berputar, bintang yang tadi di Timur sekarang ada di atas kepala, dan nanti akan ada di Barat. Alamat yang sama tidak berlaku besok malam.</p>
-    <p>Karena itu, astronom menggunakan cara kedua yang lebih tahan lama: <strong>sistem ekuator</strong>. Sistem ini menempel pada bola langit itu sendiri, bukan pada kita. Ia juga menggunakan dua angka, tetapi keduanya mirip dengan lintang dan bujur Bumi.</p>
-    <p>Angka pertama adalah <strong>deklinasi</strong> (δ). Ini mirip dengan garis lintang di Bumi: 0 derajat di ekuator langit, +90 derajat di kutub utara langit, −90 derajat di kutub selatan langit.</p>
-    <p>Angka kedua adalah <strong>asensio rekta</strong> (RA, simbol α). Ini mirip garis bujur Bumi, tetapi diukur dalam jam, bukan derajat. Satu putaran penuh 360 derajat sama dengan 24 jam. Jadi 1 jam RA = 15 derajat.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Kapan pun Anda membaca buku astronomi, ingatlah: deklinasi = "lintang langit", asensio rekta = "bujur langit dalam satuan jam". Dengan dua angka itu, sebuah bintang punya alamat tetap sepanjang masa.
-    </div>
-    <p>Malam ini, coba cari bintang paling terang yang bisa Anda lihat. Beri nama sendiri. Catat di mana ia berada dibandingkan pohon atau atap rumah Anda. Besok malam, lihat lagi. Ia akan bergeser — dan Anda akan tahu mengapa.</p>
-  `,
-  reflection: "Sistem koordinat bukanlah belenggu, melainkan bahasa yang memungkinkan kita berbicara tentang langit dengan tepat.",
-  quiz: [
-    {
-      q: "Mengapa sistem koordinat horizon dianggap kurang praktis untuk katalog bintang?",
-      opts: [
-        "Karena hanya berlaku di Bumi bagian utara",
-        "Karena posisinya berubah setiap saat akibat rotasi Bumi",
-        "Karena tidak bisa mengukur ketinggian bintang",
-        "Karena hanya bisa dipakai pada malam hari"
-      ],
-      ans: 1,
-      exp: "Rotasi Bumi membuat altitudo dan azimuth sebuah bintang terus berubah. Sistem ekuator (deklinasi & RA) tidak memiliki masalah ini karena menempel pada bola langit."
-    },
-    {
-      q: "Berapa derajatkah nilai 1 jam Asensio Rekta (RA)?",
-      opts: ["1°", "15°", "24°", "360°"],
-      ans: 1,
-      exp: "Satu putaran penuh 360° setara 24 jam RA, sehingga 1 jam = 360/24 = 15°."
-    }
-  ]
-},
-{
-  chapter: "Bab 1 · Mengenal Langit",
-  day: 3, level: "Pemula", levelClass: "lv-pemula",
-  title: "Mengapa Bintang Terbit Lebih Awal Setiap Hari",
-  subtitle: "Tentang dua macam 'hari' yang berbeda",
-  body: `
-    <p class="drop-cap">Pernahkah Anda memperhatikan bahwa rasi bintang yang muncul awal Januari tidak sama dengan yang muncul awal Juli? Atau, kalau Anda rajin mengamati, bintang yang sama terbit sekitar 4 menit lebih awal setiap harinya? Fenomena sederhana ini mengandung rahasia tentang gerak Bumi.</p>
-    <p>Mari kita mulai dengan yang kita anggap biasa: <strong>satu hari</strong>. Kita mendefinisikannya sebagai waktu dari satu tengah hari ke tengah hari berikutnya — 24 jam. Ini disebut <em>hari Matahari</em>. Matahari kembali ke posisi tertinggi di langit setiap 24 jam.</p>
-    <p>Tetapi tunggu. Bumi tidak hanya berputar pada porosnya; ia juga bergerak mengelilingi Matahari. Dalam 24 jam, Bumi sudah maju sekitar 1 derajat dalam orbitnya. Akibatnya, Bumi harus berputar sedikit lebih lama — sekitar 4 menit ekstra — supaya Matahari kembali ke posisi yang sama di langit.</p>
-    <p>Nah, kalau kita ukur rotasi Bumi bukan berdasarkan Matahari, tetapi berdasarkan <strong>bintang jauh</strong>, durasinya sedikit berbeda. Bintang jauh tidak terpengaruh oleh revolusi Bumi, sehingga waktu yang dibutuhkan untuk kembali ke posisi yang sama hanya <strong>23 jam 56 menit 4 detik</strong>. Ini yang disebut <em>hari sidereal</em> (hari bintang).</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Bayangkan Anda berlari mengelilingi sebuah tiang sambil memutar tubuh Anda sendiri. Kalau Anda mengukur putaran tubuh berdasarkan pohon yang jauh, putarannya selesai lebih cepat dibandingkan kalau Anda mengukurnya berdasarkan tiang yang Anda kelilingi.</p>
-    </div>
-    <p>Selisih 4 menit itu tampak kecil, tetapi menumpuk. Dalam 15 hari, ia menjadi 1 jam. Dalam 30 hari, 2 jam. Dalam setahun, ia berputar penuh 24 jam — itulah sebabnya bintang-bintang kembali ke posisi semula setelah satu tahun.</p>
-    <p>Inilah alasan mengapa langit berubah sepanjang tahun. Orion yang muncul di awal malam bulan Desember, akan muncul di akhir malam bulan Maret, lalu menghilang di balik cahaya Matahari bulan Juni, dan kembali pada akhir tahun. Semuanya hanya karena selisih 4 menit itu.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Alam semesta tidak menyembunyikan rahasianya. Ia hanya berbicara dengan pelan — dan menunggu kita sabar mendengarkan.
-    </div>
-  `,
-  reflection: "Selisih kecil yang konsisten bisa menghasilkan perubahan besar. Alam semesta bekerja dengan cara seperti itu.",
-  quiz: [
-    {
-      q: "Berapa durasi satu hari sidereal (hari bintang)?",
-      opts: ["24 jam 00 menit", "23 jam 56 menit 4 detik", "24 jam 4 menit", "23 jam 30 menit"],
-      ans: 1,
-      exp: "Hari sidereal adalah waktu rotasi Bumi relatif terhadap bintang jauh, yaitu 23 jam 56 menit 4 detik — sekitar 4 menit lebih pendek dari hari Matahari."
-    },
-    {
-      q: "Mengapa bintang terbit sekitar 4 menit lebih awal setiap harinya?",
-      opts: [
-        "Karena bintang bergerak menjauh dari Bumi",
-        "Karena Bumi juga bergerak mengelilingi Matahari, sehingga perlu sedikit lebih lama agar posisi Matahari kembali",
-        "Karena atmosfer Bumi membelokkan cahaya bintang",
-        "Karena bulan mengelilingi Bumi"
-      ],
-      ans: 1,
-      exp: "Revolusi Bumi menggeser posisi Matahari terhadap latar belakang bintang sekitar 1° per hari. Akibatnya bintang terbit ~4 menit lebih awal."
-    }
-  ]
-},
-{
-  chapter: "Bab 1 · Mengenal Langit",
-  day: 4, level: "Menengah", levelClass: "lv-menengah",
-  title: "Tarian Bumi yang Membuat Bintang Bergeser",
-  subtitle: "Aberasi, presesi, dan gerak diri — tiga gerakan yang halus namun penting",
-  body: `
-    <p class="drop-cap">Kalau Anda mengira posisi bintang di langit itu tetap, Anda tidak sendiri. Selama ribuan tahun, manusia menganggap bintang-bintang diam seperti paku yang menempel di kubah langit. Baru pada abad ke-18 para astronom mulai menyadari bahwa semua itu tidak benar — bintang-bintang bergerak, dan bahkan Bumi sendiri bergoyang.</p>
-    <p>Mari kita mulai dengan yang paling mudah dibayangkan. Ketika Anda berjalan di tengah hujan, payung Anda harus dimiringkan sedikit ke depan supaya tetap kering. Ini karena Anda bergerak, dan hujan tampak datang dari arah yang sedikit berbeda. Fenomena serupa terjadi pada cahaya bintang.</p>
-    <p>Karena Bumi bergerak mengelilingi Matahari dengan kecepatan sekitar 30 km/detik, arah datang cahaya bintang tampak sedikit miring. Ini disebut <strong>aberasi cahaya</strong>. Astronom James Bradley menemukan efek ini pada tahun 1725, dan tanpa sengaja ia mendapat bukti pertama bahwa Bumi benar-benar mengelilingi Matahari.</p>
-    <p>Lalu ada gerakan yang jauh lebih lambat namun berdampak besar: <strong>presesi</strong>. Bayangkan sebuah gasing yang berputar. Selain berputar pada porosnya, gasing itu juga menggoyang pelan — porosnya berputar membentuk kerucut. Bumi melakukan hal yang sama, dengan periode sekitar <strong>26.000 tahun</strong>.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Arah sumbu Bumi sekarang menunjuk ke bintang Polaris. Tetapi 5.000 tahun yang lalu, arah itu menunjuk ke bintang Thuban di rasi Draco. Dan 12.000 tahun lagi, ia akan menunjuk ke Vega. Tidak ada yang benar-benar "tetap" di langit.</p>
-    </div>
-    <p>Ada juga <strong>nutasi</strong>, goyangan kecil pada sumbu Bumi dengan periode sekitar 18,6 tahun, yang dipengaruhi oleh gravitasi Bulan. Ia tidak sebesar presesi, tetapi astronom tetap harus memperhitungkannya untuk pengukuran presisi tinggi.</p>
-    <p>Yang terakhir adalah <strong>gerak diri</strong> (proper motion). Ini bukan gerakan semu — bintang benar-benar bergerak di ruang angkasa. Bintang Barnard, misalnya, bergerak melintasi langit 10,3 detik busur per tahun. Selama satu abad, ia sudah bergerak sekitar seperempat diameter Bulan. Perlahan, tetapi nyata.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Dalam astronomi, kata "diam" hampir selalu berarti "bergerak terlalu pelan untuk kita sadari". Alam semesta tidak pernah benar-benar berhenti.
-    </div>
-  `,
-  reflection: "Ketika kita memperluas skala waktu, segala sesuatu bergerak — bahkan yang tampak kekal.",
-  quiz: [
-    {
-      q: "Apa yang menyebabkan aberasi cahaya bintang?",
-      opts: [
-        "Rotasi Bumi pada porosnya",
-        "Gravitasi Bulan",
-        "Gerak Bumi mengelilingi Matahari dengan kecepatan ~30 km/s",
-        "Tekanan atmosfer Bumi"
-      ],
-      ans: 2,
-      exp: "Aberasi cahaya muncul karena Bumi bergerak mengelilingi Matahari. Arah datang cahaya bintang tampak miring, mirip seperti hujan yang tampak datang dari depan saat kita berlari."
-    },
-    {
-      q: "Berapa periode presesi sumbu rotasi Bumi?",
-      opts: ["365 hari", "26.000 tahun", "100 tahun", "18,6 tahun"],
-      ans: 1,
-      exp: "Presesi sumbu Bumi memiliki periode sekitar 26.000 tahun. Karena itulah bintang kutub berubah sepanjang sejarah."
-    }
-  ]
-},
-{
-  chapter: "Bab 1 · Mengenal Langit",
-  day: 5, level: "Menengah", levelClass: "lv-menengah",
-  title: "Mengukur Jarak Bintang dengan Gerak Bumi",
-  subtitle: "Paralaks — trik geometri yang mengungkap skala alam semesta",
-  body: `
-    <p class="drop-cap">Bagaimana Anda bisa mengetahui jarak sesuatu yang tak bisa Anda sentuh? Ini pertanyaan yang telah mengganggu astronom selama berabad-abad. Jawabannya, ternyata, sesederhana cara kita memperkirakan jarak benda dengan dua mata kita.</p>
-    <p>Coba tutup mata kiri, lalu lihat jari telunjuk Anda di depan wajah. Buka mata kiri dan tutup mata kanan. Jari Anda tampak melompat sedikit. Perpindahan ini disebut <strong>paralaks</strong>. Semakin dekat jari ke wajah, semakin besar lompatannya. Semakin jauh, semakin kecil.</p>
-    <p>Otak kita menggunakan informasi ini secara otomatis untuk memperkirakan jarak. Astronom melakukan hal yang sama, tetapi dengan jarak yang jauh lebih besar. Alih-alih dua mata, mereka menggunakan dua posisi Bumi pada waktu yang berbeda dalam orbitnya.</p>
-    <p>Bayangkan Anda melihat bintang pada bulan Januari. Lalu Anda melihat bintang yang sama pada bulan Juli, ketika Bumi sudah berada di sisi berlawanan orbitnya. Terhadap bintang-bintang jauh di latar belakang, bintang yang kita amati tampak bergeser sedikit. Sudut pergeseran ini adalah <strong>paralaks tahunan</strong> bintang tersebut.</p>
-    <div class="formula-soft">
-      $$d\,(\text{parsec}) = \frac{1}{p\,(\text{detik busur})}$$
-    </div>
-    <p>Rumus ini adalah salah satu yang paling elegan dalam astronomi. Jarak dalam satuan <em>parsec</em> hanyalah kebalikan dari sudut paralaks dalam detik busur. Jika sebuah bintang memiliki paralaks 1 detik busur, jaraknya 1 parsec — sekitar 3,26 tahun cahaya.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Parsec berasal dari kata "parallax of one arcsecond". Ia bukan nama barang antik atau kue — ia hanyalah singkatan teknis dari sebuah pengukuran sudut.</p>
-    </div>
-    <p>Bintang terdekat dari Matahari, Proxima Centauri, memiliki paralaks 0,768 detik busur. Ini berarti jaraknya sekitar 1,3 parsec — atau 4,25 tahun cahaya. Bintang paling terang, Sirius, jaraknya 2,64 parsec, atau 8,6 tahun cahaya.</p>
-    <p>Untuk mengukur paralaks dengan presisi tinggi, astronom memerlukan teleskop ruang angkasa — karena atmosfer Bumi mengaburkan pengukuran. Misi Hipparcos (1989–1993) mengukur paralaks lebih dari 100.000 bintang. Misi Gaia (2013–sekarang) telah mengukur lebih dari satu miliar bintang dengan presisi mikro-arcsecond.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Untuk mengukur sesuatu yang sangat besar, kadang kita hanya perlu menunggu — menunggu Bumi berpindah posisi, dan melihat apa yang tampak bergeser.
-    </div>
-  `,
-  reflection: "Metode ilmiah terkadang sesederhana mengamati dari dua tempat berbeda. Kebesaran lahir dari kesabaran.",
-  quiz: [
-    {
-      q: "Jika sebuah bintang memiliki paralaks 0,5 detik busur, berapakah jaraknya dalam parsec?",
-      opts: ["0,5 pc", "1 pc", "2 pc", "5 pc"],
-      ans: 2,
-      exp: "Gunakan rumus d = 1/p. Jika p = 0,5 detik busur, maka d = 1/0,5 = 2 parsec."
-    },
-    {
-      q: "Mengapa pengukuran paralaks sebaiknya dilakukan dari luar angkasa?",
-      opts: [
-        "Karena teleskop ruang angkasa lebih murah",
-        "Karena atmosfer Bumi mengaburkan posisi bintang",
-        "Karena Bumi tidak cukup besar untuk menghasilkan paralaks",
-        "Karena paralaks hanya terjadi di luar angkasa"
-      ],
-      ans: 1,
-      exp: "Atmosfer Bumi mengaburkan citra bintang (efek 'seeing') dan membatasi presisi pengukuran. Teleskop ruang angkasa seperti Hipparcos dan Gaia menghindari masalah ini."
-    }
-  ]
-},
-{
-  chapter: "Bab 1 · Mengenal Langit",
-  day: 6, level: "Olimpiade", levelClass: "lv-olimpiade",
-  title: "Mengukur Langit dengan Tangan Anda",
-  subtitle: "Trigonometri bola — saat langit menjadi medan matematika",
-  body: `
-    <p class="drop-cap">Sampai di sini kita sudah memiliki sistem koordinat. Tapi bagaimana kita berpindah dari satu sistem ke sistem lain? Bagaimana kita menghitung ketinggian bintang di langit, jika yang kita ketahui hanyalah lintang pengamat, deklinasi bintang, dan waktu bintang lokal? Di sinilah trigonometri bola masuk.</p>
-    <p>Sebelum kita masuk ke rumus, mari kita pahami dulu gagasannya. Bola langit itu permukaan bola. Di permukaan bola, kita tidak bisa menggunakan geometri biasa seperti di buku tulis datar. Kita perlu alat baru — <strong>segitiga bola</strong>, yaitu segitiga yang sisi-sisinya adalah busur lingkaran besar pada permukaan bola.</p>
-    <p>Ada tiga titik yang membentuk segitiga bola penting dalam astronomi:</p>
-    <p><strong>Kutub Langit (P)</strong> — titik di bola langit yang sejajar dengan sumbu rotasi Bumi. <strong>Zenith (Z)</strong> — titik tepat di atas kepala pengamat. Dan <strong>Bintang (X)</strong> — objek yang ingin kita amati.</p>
-    <p>Jarak busur antara P dan Z adalah 90° − φ (di mana φ adalah lintang pengamat). Jarak busur antara P dan X adalah 90° − δ (di mana δ adalah deklinasi bintang). Jarak busur antara Z dan X adalah 90° − h (di mana h adalah ketinggian bintang). Sudut di P adalah sudut jam (HA), dan sudut di Z adalah 180° − A (di mana A adalah azimuth).</p>
-    <p>Dengan informasi ini, kita bisa menggunakan <strong>hukum kosinus bola</strong>:</p>
-    <div class="formula-soft">
-      $$\\sin h = \\sin\\phi \\sin\\delta + \\cos\\phi \\cos\\delta \\cos(\\text{HA})$$
-    </div>
-    <p>Rumus ini mungkin tampak rumit, tetapi isinya sederhana: ia mengatakan bahwa ketinggian sebuah bintang di langit bergantung pada lintang tempat Anda berdiri, deklinasi bintang, dan sudut jam bintang.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Jika Anda tahu tinggi rumah, panjang jalan, dan sudut antar keduanya, Anda bisa menghitung jarak dari ujung jalan ke puncak rumah dengan teorema Pythagoras. Di bola, kita menggunakan versi "melengkung" dari teorema itu — itulah trigonometri bola.</p>
-    </div>
-    <p>Sebagai contoh, mari kita hitung ketinggian bintang saat transit (ketika bintang berada tepat di meridian, yaitu HA = 0). Saat HA = 0, cos(HA) = 1, sehingga rumus di atas menyederhana menjadi:</p>
-    <div class="formula-soft">
-      $$h_{\\text{transit}} = 90° - |\\phi - \\delta|$$
-    </div>
-    <p>Jika Anda berada di lintang +20° dan bintang memiliki deklinasi +30°, maka ketinggian transit bintang tersebut adalah 90° − |20° − 30°| = 80°. Bintang akan berada 80° di atas horizon Selatan — sangat tinggi, hampir di zenith.</p>
-    <p>Inilah cara astronom menghitung kapan bintang akan terlihat, seberapa tinggi ia akan naik, dan apakah ia bisa diamati dari lokasi tertentu. Semuanya berakar pada satu ide sederhana: permukaan bola punya geometrinya sendiri.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Matematika bukan tembok yang menghalangi kita dari langit. Ia adalah tangga yang membuat kita bisa memanjatnya.
-    </div>
-  `,
-  reflection: "Setiap rumus pada akhirnya adalah cerita tentang hubungan antar hal. Jika kita memahami ceritanya, kita tidak perlu menghafal rumusnya.",
-  quiz: [
-    {
-      q: "Jika Anda berada di lintang φ = +30° dan mengamati bintang dengan δ = +40° saat transit, berapakah ketinggian bintang tersebut?",
-      opts: ["70°", "80°", "90°", "100°"],
-      ans: 1,
-      exp: "Gunakan rumus h = 90° − |φ − δ| = 90° − |30° − 40°| = 90° − 10° = 80°."
-    },
-    {
-      q: "Apa nama segitiga bola yang digunakan untuk konversi koordinat ekuator ke horizon?",
-      opts: [
-        "Segitiga Bumi-Matahari-Bulan",
-        "Segitiga Kutub-Zenith-Bintang",
-        "Segitiga Vernal-Equinox-Solstice",
-        "Segitiga Lagrange"
-      ],
-      ans: 1,
-      exp: "Segitiga bola penting dalam astronomi dibentuk oleh Kutub Langit (P), Zenith (Z), dan Bintang (X). Dari sini kita bisa menurunkan rumus konversi koordinat."
-    }
-  ]
-},
 
-/* ---------- BAB 2: ALAT UNTUK MELIHAT LEBIH JAUH ---------- */
-{
-  chapter: "Bab 2 · Alat untuk Melihat Lebih Jauh",
-  day: 7, level: "Pemula", levelClass: "lv-pemula",
-  title: "Sebelum Membeli Teleskop, Bacalah Ini",
-  subtitle: "Mengapa binokular adalah hadiah terbaik untuk pemula",
-  body: `
-    <p class="drop-cap">Setiap kali saya bertemu orang yang baru tertarik pada astronomi, pertanyaan pertama mereka hampir selalu sama: "Teleskop apa yang harus saya beli?" Dan jawaban saya sering mengejutkan mereka: <em>belum beli teleskop. Beli binokular dulu.</em></p>
-    <p>Mengapa? Karena binokular mengajarkan hal yang paling penting dalam pengamatan langit — yaitu <strong>menemukan objek</strong>. Teleskop dengan perbesaran tinggi memiliki medan pandang yang sempit. Anda akan kesulitan menemukan apa pun jika belum terbiasa. Binokular, sebaliknya, memiliki medan pandang luas. Anda bisa menyapu langit dengan mudah dan menemukan galaksi Andromeda, gugus Pleiades, atau nebula Orion dalam hitungan detik.</p>
-    <p>Selain itu, binokular juga lebih murah, lebih portabel, dan bisa dipakai untuk mengamati hal lain di siang hari — burung, kapal di laut, pemandangan gunung. Nilai gunanya jauh lebih besar dibandingkan teleskop murah yang sering hanya menjadi hiasan di lemari.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Bayangkan Anda ingin belajar fotografi. Apakah Anda langsung membeli lensa tele 600mm? Tentu tidak. Anda mulai dengan lensa kit 18-55mm yang serbaguna. Binokular adalah "lensa kit" bagi astronom pemula.</p>
-    </div>
-    <p>Spesifikasi binokular ditulis dengan format seperti <strong>7×50</strong> atau <strong>10×50</strong>. Angka pertama adalah perbesaran (7 kali atau 10 kali). Angka kedua adalah diameter lensa depan dalam milimeter (50 mm). Semakin besar angka kedua, semakin banyak cahaya yang dikumpulkan — semakin terang gambar, tetapi semakin berat juga binokularnya.</p>
-    <p>Untuk pemula, ukuran yang paling nyaman adalah <strong>7×50</strong> atau <strong>8×42</strong>. Keduanya memberikan keseimbangan antara keterangan gambar, bobot, dan harga.</p>
-    <p>Satu hal lagi yang perlu diketahui: ada angka tersembunyi yang penting, yaitu <strong>exit pupil</strong> — diameter berkas cahaya yang keluar dari lensa okuler:</p>
-    <div class="formula-soft">
-      $$\\text{Exit Pupil} = \\frac{D}{M}$$
-    </div>
-    <p>Untuk 7×50, exit pupil = 50/7 = 7,1 mm. Untuk 10×50, exit pupil = 5 mm. Pupil mata manusia saat beradaptasi gelap berkisar 5–7 mm. Jadi keduanya ideal untuk pengamatan malam. Binokular dengan exit pupil kecil (misalnya 20×50, exit pupil 2,5 mm) akan terasa gelap dan tidak nyaman.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Peralatan terbaik bukan yang paling mahal, melainkan yang paling sering Anda gunakan. Binokular yang Anda pakai setiap minggu jauh lebih berharga daripada teleskop mahal yang hanya keluar sekali setahun.
-    </div>
-  `,
-  reflection: "Belajar astronomi bukan tentang memiliki alat terbaik, tetapi tentang melatih mata untuk melihat.",
-  quiz: [
-    {
-      q: "Berapakah exit pupil dari binokular 10×50?",
-      opts: ["5 mm", "7 mm", "10 mm", "50 mm"],
-      ans: 0,
-      exp: "Exit pupil = D/M = 50/10 = 5 mm. Ukuran ini pas dengan pupil mata manusia saat beradaptasi gelap."
-    },
-    {
-      q: "Mengapa binokular direkomendasikan untuk pemula sebelum membeli teleskop?",
-      opts: [
-        "Karena binokular lebih mahal dan bergengsi",
-        "Karena medan pandangnya luas sehingga mudah menemukan objek",
-        "Karena binokular bisa melihat lebih jauh dari teleskop",
-        "Karena teleskop tidak bisa digunakan pada malam hari"
-      ],
-      ans: 1,
-      exp: "Medan pandang binokular yang luas sangat membantu pemula untuk belajar menemukan objek di langit sebelum beralih ke teleskop dengan perbesaran tinggi."
-    }
-  ]
-},
-{
-  chapter: "Bab 2 · Alat untuk Melihat Lebih Jauh",
-  day: 8, level: "Pemula", levelClass: "lv-pemula",
-  title: "Tiga Jenis Teleskop dan Karakternya",
-  subtitle: "Memahami pilihan sebelum berinvestasi",
-  body: `
-    <p class="drop-cap">Teleskop bukan alat yang rumit — pada dasarnya ia hanyalah "ember cahaya". Semakin besar embernya, semakin banyak cahaya yang bisa dikumpulkan, dan semakin redup objek yang bisa kita lihat. Tetapi ada tiga cara berbeda untuk membuat ember itu, dan masing-masing punya karakter sendiri.</p>
-    <p>Cara pertama adalah dengan <strong>lensa</strong>. Teleskop yang menggunakan lensa di bagian depan disebut <em>refraktor</em>. Ini adalah teleskop tertua — Galileo menggunakannya lebih dari 400 tahun yang lalu. Lensa refraktor membelokkan cahaya sehingga berkas sejajar dari bintang dikumpulkan ke satu titik fokus di belakangnya.</p>
-    <p>Refraktor punya satu masalah besar yang tidak bisa dihindari: <strong>aberasi kromatik</strong>. Karena lensa membelokkan warna berbeda secara berbeda, warna merah dan biru tidak fokus di titik yang sama. Akibatnya, bintang terang tampak memiliki "halo" warna. Untuk memperbaikinya, lensa harus dibuat dari beberapa lapis kaca khusus — mahal, terutama pada ukuran besar.</p>
-    <p>Karena itu, hampir semua teleskop modern menggunakan <strong>cermin</strong> alih-alih lensa. Teleskop jenis ini disebut <em>reflektor</em>. Cermin tidak memiliki masalah aberasi kromatik — cahaya dari semua warna dipantulkan dengan cara yang sama. Selain itu, cermin besar jauh lebih mudah dan murah dibuat dibandingkan lensa besar. Teleskop Newtonian adalah contoh reflektor paling klasik.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Lensa seperti jendela kaca yang membelokkan cahaya; cermin seperti dinding yang memantulkan cahaya. Untuk mengumpulkan cahaya sebanyak mungkin, lebih mudah membuat cermin besar daripada lensa besar.</p>
-    </div>
-    <p>Jenis ketiga adalah <strong>katadioptrik</strong> — kombinasi lensa dan cermin. Contohnya adalah Schmidt-Cassegrain dan Maksutov-Cassegrain. Teleskop ini ringkas dan kokoh, karena cahaya "dilipat" bolak-balik di dalam tabung yang pendek. Desain ini sangat populer untuk astronom amatir serius yang ingin portabilitas.</p>
-    <p>Untuk pemula, pertanyaan praktisnya sederhana: teleskop mana yang paling sesuai dengan kebutuhan Anda? Jika Anda ingin mengamati planet dan bulan dengan detail tinggi, refraktor atau katadioptrik kecil sudah cukup. Jika Anda ingin menjelajahi galaksi redup dan nebula, reflektor dengan aperture besar adalah pilihan terbaik.</p>
-    <p>Dan selalu ingat: <strong>aperture</strong> — diameter bukaan — adalah parameter terpenting. Bukan perbesaran. Teleskop dengan aperture 150 mm akan selalu mengalahkan teleskop dengan aperture 60 mm, sebesar apa pun perbesarannya.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Teleskop adalah mata tambahan, bukan pengganti mata. Yang Anda lihat melalui teleskop tetap bergantung pada langit di atas Anda — dan langit yang gelap selalu lebih berharga daripada teleskop yang mahal.
-    </div>
-  `,
-  reflection: "Memahami alat berarti memahami batas dan kemampuannya. Itulah awal dari pengamatan yang jujur.",
-  quiz: [
-    {
-      q: "Apa keunggulan utama reflektor (teleskop cermin) dibandingkan refraktor (teleskop lensa)?",
-      opts: [
-        "Lebih ringan dan murah",
-        "Bebas aberasi kromatik dan bisa dibuat lebih besar",
-        "Lebih mudah digunakan oleh pemula",
-        "Tidak memerlukan okuler"
-      ],
-      ans: 1,
-      exp: "Cermin memantulkan semua warna dengan cara yang sama, sehingga bebas dari aberasi kromatik. Cermin besar juga jauh lebih murah untuk dibuat dibanding lensa besar."
-    },
-    {
-      q: "Parameter terpenting dalam memilih teleskop adalah...",
-      opts: [
-        "Perbesaran maksimum",
-        "Warna tabung",
-        "Aperture (diameter bukaan)",
-        "Panjang tabung"
-      ],
-      ans: 2,
-      exp: "Aperture menentukan daya kumpul cahaya dan resolusi. Perbesaran hanya bergantung pada okuler dan bisa diubah-ubah."
-    }
-  ]
-},
-{
-  chapter: "Bab 2 · Alat untuk Melihat Lebih Jauh",
-  day: 9, level: "Menengah", levelClass: "lv-menengah",
-  title: "Angka-Angka Ajaib di Balik Teleskop",
-  subtitle: "Perbesaran, rasio fokal, dan daya kumpul cahaya",
-  body: `
-    <p class="drop-cap">Setiap teleskop memiliki sekumpulan angka di badannya. 150/1200, f/8, 6 inci, dan sebagainya. Bagi pemula, angka-angka ini sering terasa membingungkan — seperti kode rahasia yang tidak bisa dipecahkan. Padahal, semua angka itu bercerita tentang kemampuan teleskop tersebut.</p>
-    <p>Mari kita mulai dari yang paling penting: <strong>aperture</strong>. Ini adalah diameter bukaan teleskop — biasanya tertulis dalam milimeter atau inci. Aperture menentukan seberapa banyak cahaya yang bisa dikumpulkan. Semakin besar aperture, semakin redup objek yang bisa Anda lihat, dan semakin detail struktur yang bisa Anda pisahkan.</p>
-    <p>Angka kedua adalah <strong>panjang fokus</strong>. Ini adalah jarak dari lensa utama (atau cermin utama) ke titik fokus. Panjang fokus biasanya ditulis dalam milimeter.</p>
-    <p>Dari dua angka ini, kita bisa menghitung <strong>rasio fokal</strong>:</p>
-    <div class="formula-soft">
-      $$f/\\# = \\frac{f_{\\text{panjang fokus}}}{D_{\\text{aperture}}}$$
-    </div>
-    <p>Rasio fokal menentukan "kecepatan" teleskop. Rasio kecil (misalnya f/4 atau f/5) disebut "cepat" karena membutuhkan waktu paparan lebih singkat untuk astrofotografi. Rasio besar (misalnya f/10 atau f/12) disebut "lambat" — cocok untuk planet dan bulan dengan perbesaran tinggi.</p>
-    <p>Sekarang, bagian yang paling sering ditanyakan pemula: <strong>perbesaran</strong>. Perbesaran ditentukan oleh panjang fokus teleskop dan panjang fokus okuler:</p>
-    <div class="formula-soft">
-      $$M = \\frac{f_{\\text{teleskop}}}{f_{\\text{okuler}}}$$
-    </div>
-    <p>Jika teleskop memiliki panjang fokus 1200 mm dan okuler 10 mm, maka perbesarannya adalah 120×. Kalau Anda ganti okuler menjadi 25 mm, perbesarannya menjadi 48×. Perbesaran berubah-ubah sesuai okuler yang dipakai — inilah sebabnya "perbesaran" bukan parameter yang baik untuk menilai teleskop.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Perbesaran itu seperti zoom pada kamera ponsel. Zoom tinggi membuat gambar terlihat lebih besar, tetapi tidak menambah detail baru. Detail datang dari aperture — bukan dari zoom.</p>
-    </div>
-    <p>Terakhir, <strong>daya kumpul cahaya</strong> (Light Gathering Power, LGP) mengukur seberapa banyak cahaya yang dikumpulkan teleskop dibandingkan mata manusia:</p>
-    <div class="formula-soft">
-      $$\\text{LGP} = \\left(\\frac{D_{\\text{teleskop}}}{D_{\\text{mata}}}\\right)^2$$
-    </div>
-    <p>Dengan D_mata sekitar 7 mm (pupil mata saat gelap), teleskop dengan aperture 200 mm memiliki LGP = (200/7)² ≈ 816 kali lebih besar dari mata. Artinya, objek yang tampak redup bagi mata bisa terlihat jelas melalui teleskop ini.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Jangan tertipu angka. Teleskop murah yang memasang label "600×" adalah tipuan pemasaran. Perbesaran maksimum yang berguna hanyalah sekitar 2× aperture dalam milimeter.
-    </div>
-  `,
-  reflection: "Angka bukan tujuan, tetapi petunjuk. Yang membuat pengamatan menyenangkan adalah pemahaman kita tentangnya.",
-  quiz: [
-    {
-      q: "Sebuah teleskop memiliki aperture 150 mm dan panjang fokus 750 mm. Berapakah rasio fokal (f/#)nya?",
-      opts: ["f/3", "f/5", "f/10", "f/15"],
-      ans: 1,
-      exp: "Rasio fokal = f/D = 750/150 = f/5."
-    },
-    {
-      q: "Jika teleskop 1200 mm dipasang okuler 25 mm, berapakah perbesarannya?",
-      opts: ["25×", "48×", "120×", "300×"],
-      ans: 1,
-      exp: "Perbesaran M = f_teleskop / f_okuler = 1200/25 = 48×."
-    }
-  ]
-},
-{
-  chapter: "Bab 2 · Alat untuk Melihat Lebih Jauh",
-  day: 10, level: "Menengah", levelClass: "lv-menengah",
-  title: "Batas Ketajaman: Difraksi dan Atmosfer",
-  subtitle: "Mengapa gambar bintang tidak pernah berupa titik sempurna",
-  body: `
-    <p class="drop-cap">Kalau Anda pernah mengintip melalui teleskop dengan perbesaran sangat tinggi, Anda mungkin kecewa. Bintang yang seharusnya tampak seperti titik cahaya kecil justru tampak seperti cakram buram dengan cincin tipis. Apakah teleskop Anda rusak? Tidak. Anda baru saja menemukan salah satu batas paling mendasar dari optik.</p>
-    <p>Nama batas itu adalah <strong>difraksi</strong>. Cahaya adalah gelombang. Ketika gelombang cahaya melewati bukaan sempit (seperti aperture teleskop), ia tidak bisa fokus menjadi satu titik yang sempurna — ia malah menyebar menjadi pola yang disebut <em>pola difraksi</em>, atau <em>cakram Airy</em>.</p>
-    <p>Semakin besar aperture, semakin sempit pola difraksi ini. Batas ketajaman sebuah teleskop diberikan oleh <strong>kriteria Rayleigh</strong>:</p>
-    <div class="formula-soft">
-      $$\\theta = 1.22 \\frac{\\lambda}{D}$$
-    </div>
-    <p>Di sini θ adalah sudut terkecil yang bisa dipisahkan teleskop (dalam radian), λ adalah panjang gelombang cahaya, dan D adalah aperture. Untuk cahaya tampak (λ ≈ 550 nm) dan aperture dalam milimeter, rumus praktisnya menjadi:</p>
-    <div class="formula-soft">
-      $$\\theta (\\text{detik busur}) \\approx \\frac{138}{D(\\text{mm})}$$
-    </div>
-    <p>Teleskop dengan aperture 200 mm memiliki resolusi teoritis sekitar 0,69 detik busur. Itu sangat tajam — bisa memisahkan dua bintang yang jaraknya hanya 0,69 detik busur, kira-kira sebesar memisahkan dua kelereng pada jarak 2 km.</p>
-    <p>Tetapi ada masalah besar: <strong>atmosfer Bumi</strong>. Bahkan sebelum cahaya mencapai teleskop Anda, ia harus melewati puluhan kilometer udara yang bergejolak. Turbulensi ini — yang oleh astronom disebut <em>seeing</em> — mengaburkan gambar. Di lokasi terbaik di Bumi, seeing biasanya membatasi resolusi hingga sekitar 1 detik busur. Teleskop sebesar apa pun di daratan tidak bisa mengalahkan batas ini tanpa bantuan.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Bayangkan Anda melihat batu di dasar kolam yang airnya beriak. Sebesar apa pun teropong Anda, riak air tetap mengaburkan pandangan. Itulah yang dilakukan atmosfer Bumi terhadap cahaya bintang.</p>
-    </div>
-    <p>Solusi modern adalah <strong>optik adaptif</strong> (adaptive optics). Cermin teleskop dibuat sangat tipis dan fleksibel, lalu diubah bentuknya ribuan kali per detik untuk mengoreksi distorsi atmosfer secara real-time. Dengan teknologi ini, teleskop darat besar bisa mencapai resolusi yang menyaingi teleskop ruang angkasa.</p>
-    <p>Solusi lain adalah menempatkan teleskop di luar angkasa — seperti Hubble, JWST, atau Gaia — sehingga cahaya bintang tidak melewati atmosfer sama sekali.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Ada batas-batas yang tidak bisa kita lampaui dengan teknologi. Tetapi ada juga batas-batas yang bisa kita akali dengan kecerdasan. Astronomi adalah tentang mengetahui perbedaan keduanya.
-    </div>
-  `,
-  reflection: "Batas bukanlah tembok yang menghentikan kita. Ia adalah cermin yang menunjukkan di mana kita perlu berinovasi.",
-  quiz: [
-    {
-      q: "Mengapa teleskop dengan aperture lebih besar memiliki resolusi lebih tajam?",
-      opts: [
-        "Karena perbesarannya lebih tinggi",
-        "Karena pola difraksinya lebih sempit",
-        "Karena cahayanya lebih terang",
-        "Karena lebih mudah dibawa"
-      ],
-      ans: 1,
-      exp: "Menurut kriteria Rayleigh, resolusi θ berbanding terbalik dengan aperture D. Semakin besar D, semakin kecil θ, semakin tajam gambar."
-    },
-    {
-      q: "Apa yang membatasi resolusi teleskop darat besar di Bumi?",
-      opts: [
-        "Biaya pembuatan",
-        "Turbulensi atmosfer (seeing)",
-        "Warna tabung teleskop",
-        "Kekuatan gravitasi Bumi"
-      ],
-      ans: 1,
-      exp: "Turbulensi atmosfer membatasi resolusi teleskop darat hingga sekitar 1 detik busur, kecuali menggunakan optik adaptif."
-    }
-  ]
-},
-{
-  chapter: "Bab 2 · Alat untuk Melihat Lebih Jauh",
-  day: 11, level: "Mahir", levelClass: "lv-mahir",
-  title: "Membaca Cahaya Bintang",
-  subtitle: "Spektroskopi — bagaimana satu garis terang mengungkap rahasia bintang",
-  body: `
-    <p class="drop-cap">Bayangkan Anda menerima surat dari sahabat lama, tetapi surat itu ditulis dalam bahasa asing. Anda tidak bisa membacanya. Namun suatu hari Anda menemukan kamus ajaib yang mampu menerjemahkan bahasa apa pun. Itulah yang dilakukan spektroskopi terhadap cahaya bintang.</p>
-    <p>Cahaya bintang yang tampak putih sebenarnya adalah campuran dari semua warna pelangi. Ketika cahaya ini dilewatkan melalui prisma atau kisi difraksi, ia terurai menjadi <em>spektrum</em>. Pada spektrum itu, astronom menemukan sesuatu yang menakjubkan: garis-garis gelap tipis pada panjang gelombang tertentu.</p>
-    <p>Garis-garis gelap ini disebut <strong>garis absorpsi</strong>. Mereka muncul karena atom-atom di atmosfer bintang menyerap cahaya pada panjang gelombang tertentu — sesuai dengan struktur energi atom tersebut. Setiap unsur kimia memiliki "sidik jari" garis absorpsi yang unik.</p>
-    <p>Dengan kata lain, jika kita bisa membaca garis-garis absorpsi dalam spektrum bintang, kita bisa mengetahui <strong>apa isi bintang itu</strong> — tanpa perlu mengunjunginya.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Bayangkan Anda mendengar suara piano dari balik pintu. Meskipun Anda tidak bisa melihat piano itu, Anda tahu nada apa yang dimainkan — karena setiap nada memiliki frekuensi yang khas. Garis spektrum bekerja dengan cara yang sama, tetapi dengan cahaya, bukan suara.</p>
-    </div>
-    <p>Ada tiga jenis spektrum yang perlu Anda kenal:</p>
-    <p><strong>Spektrum kontinu</strong> — pelangi sempurna tanpa garis. Dipancarkan oleh benda padat atau gas sangat padat yang panas.</p>
-    <p><strong>Spektrum emisi</strong> — latar gelap dengan garis-garis terang. Dipancarkan oleh gas panas bertekanan rendah.</p>
-    <p><strong>Spektrum absorpsi</strong> — pelangi dengan garis-garis gelap. Terbentuk ketika cahaya kontinu melewati gas dingin. Inilah yang kita lihat dari bintang.</p>
-    <p>Selain mengungkap komposisi, spektrum juga mengungkap gerak. Jika sebuah bintang bergerak mendekati kita, garis-garis spektrumnya bergeser ke arah biru (blueshift). Jika menjauh, bergeser ke arah merah (redshift). Fenomena ini disebut <strong>efek Doppler</strong>. Besar pergeserannya sebanding dengan kecepatan bintang:</p>
-    <div class="formula-soft">
-      $$\\frac{\\Delta \\lambda}{\\lambda} = \\frac{v}{c}$$
-    </div>
-    <p>Dari rumus sederhana ini, astronom bisa mengukur kecepatan bintang, mendeteksi eksoplanet, memetakan rotasi galaksi, dan bahkan menghitung umur alam semesta.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Cahaya adalah utusan dari bintang-bintang. Ia datang membawa pesan tentang suhu, komposisi, dan gerak. Tugas astronom adalah mendengarkan dengan sabar.
-    </div>
-  `,
-  reflection: "Cahaya yang kita lihat dari bintang adalah pesan yang sudah berjalan ribuan tahun. Membacanya berarti membaca masa lalu alam semesta.",
-  quiz: [
-    {
-      q: "Apa yang menyebabkan garis-garis gelap (garis absorpsi) pada spektrum bintang?",
-      opts: [
-        "Gas panas bertekanan rendah memancarkan cahaya",
-        "Atom-atom di atmosfer bintang menyerap cahaya pada panjang gelombang tertentu",
-        "Debu antar bintang menghalangi cahaya",
-        "Bintang bergerak menjauh dari Bumi"
-      ],
-      ans: 1,
-      exp: "Garis absorpsi muncul ketika cahaya kontinu melewati gas yang lebih dingin. Atom-atom gas menyerap foton pada panjang gelombang tertentu sesuai struktur energinya."
-    },
-    {
-      q: "Jika garis spektrum sebuah bintang bergeser ke arah biru, apa artinya?",
-      opts: [
-        "Bintang sedang bergerak mendekati kita",
-        "Bintang sedang bergerak menjauh dari kita",
-        "Bintang sedang berputar sangat cepat",
-        "Bintang sedang meledak"
-      ],
-      ans: 0,
-      exp: "Pergeseran ke arah biru (blueshift) berarti bintang bergerak mendekati kita, sehingga panjang gelombang yang kita terima menjadi lebih pendek."
-    }
-  ]
-},
+const TOTAL_DAYS = 180;
 
-/* ---------- BAB 3: TATA SURYA & NEBULA ---------- */
-{
-  chapter: "Bab 3 · Tata Surya & Nebula",
-  day: 12, level: "Pemula", levelClass: "lv-pemula",
-  title: "Kelahiran Bintang di Awan Nebula",
-  subtitle: "Kisah tentang gravitasi, gas, dan cahaya yang baru lahir",
-  body: `
-    <p class="drop-cap">Bintang tidak muncul begitu saja di langit. Setiap bintang yang Anda lihat malam ini pernah lahir di dalam awan gas raksasa yang dingin, gelap, dan sunyi. Perjalanan dari awan menjadi bintang adalah salah satu kisah paling megah di alam semesta — dan kisah itu masih berlangsung di banyak tempat di galaksi kita.</p>
-    <p>Awan tempat bintang lahir disebut <strong>nebula molekuler raksasa</strong>. Ukurannya luar biasa besar — puluhan hingga ratusan tahun cahaya. Suhunya sangat dingin, hanya beberapa derajat di atas nol mutlak. Di dalamnya, hidrogen dan helium bercampur dengan debu kosmik, membentuk kabut yang menutupi cahaya bintang di belakangnya.</p>
-    <p>Selama jutaan tahun, awan ini tampak tenang. Tetapi gravitasi terus bekerja. Sedikit demi sedikit, bagian-bagian awan yang lebih padat mulai menarik materi di sekitarnya. Ketika kepadatan mencapai titik kritis, wilayah itu mulai runtuh.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Bayangkan salju yang menumpuk di lereng gunung. Selama beberapa saat, tumpukan itu stabil. Tetapi begitu massa kritis terlampaui, longsor pun terjadi — runtuh dengan sendirinya. Hal serupa terjadi pada awan molekuler ketika gravitasi mengalahkan tekanan gas.</p>
-    </div>
-    <p>Selama keruntuhan, beberapa hal menarik terjadi sekaligus:</p>
-    <p><strong>Pemanasan</strong> — materi yang jatuh ke pusat bertumbukan dan memanas. Energi potensial gravitasi berubah menjadi panas.</p>
-    <p><strong>Rotasi</strong> — seperti pemain ski yang menarik tangannya agar berputar lebih cepat, awan yang menyusut juga berputar lebih cepat. Materi di sekitarnya membentuk <em>piringan akresi</em>.</p>
-    <p><strong>Pembentukan inti</strong> — pusat awan menjadi sangat padat dan panas sehingga cahaya tidak bisa lagi keluar dengan bebas. Wilayah ini disebut <em>protobintang</em>.</p>
-    <p>Protobintang terus menyusut dan memanas. Ketika suhu intinya mencapai sekitar 10 juta Kelvin, sesuatu yang dahsyat terjadi: <strong>fusi nuklir</strong> dimulai. Inti hidrogen mulai bergabung menjadi helium, melepaskan energi luar biasa. Bintang resmi lahir — dan cahayanya akan bersinar selama miliaran tahun.</p>
-    <p>Tetapi tidak semua protobintang berhasil. Jika massanya kurang dari 8% massa Matahari, suhu intinya tidak akan pernah cukup untuk memulai fusi. Objek ini disebut <strong>katai coklat</strong> — "bintang gagal" yang perlahan mendingin dan memudar.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Kita semua — termasuk atom di tubuh kita — pernah menjadi bagian dari bintang. Besi dalam darah kita ditempa di inti bintang yang sudah mati miliaran tahun lalu.
-    </div>
-  `,
-  reflection: "Kita adalah debu bintang yang belajar mengenali dirinya sendiri.",
-  quiz: [
-    {
-      q: "Apa yang memicu keruntuhan awan molekuler menjadi bintang?",
-      opts: [
-        "Ledakan supernova di dekatnya selalu diperlukan",
-        "Gravitasi yang mengalahkan tekanan gas",
-        "Radiasi dari bintang lain",
-        "Angin matahari"
-      ],
-      ans: 1,
-      exp: "Keruntuhan dimulai ketika gaya gravitasi di bagian awan yang padat melebihi tekanan gas internal. Peristiwa eksternal seperti supernova bisa memicunya, tetapi tidak selalu diperlukan."
-    },
-    {
-      q: "Apa yang terjadi pada suhu inti protobintang ketika fusi nuklir dimulai?",
-      opts: [
-        "Suhu inti turun drastis",
-        "Suhu inti mencapai sekitar 10 juta Kelvin",
-        "Suhu inti tetap konstan di 1000 K",
-        "Suhu inti tidak relevan"
-      ],
-      ans: 1,
-      exp: "Fusi hidrogen memerlukan suhu sekitar 10 juta Kelvin. Pada titik ini, protobintang resmi menjadi bintang deret utama."
-    }
-  ]
-},
-{
-  chapter: "Bab 3 · Tata Surya & Nebula",
-  day: 13, level: "Menengah", levelClass: "lv-menengah",
-  title: "Jenis-Jenis Nebula dan Warna-Warninya",
-  subtitle: "Mengapa nebula bisa berwarna merah, biru, atau gelap sama sekali",
-  body: `
-    <p class="drop-cap">Ketika Anda melihat foto nebula Orion yang berwarna merah menyala atau nebula Pleiades yang berwarna biru lembut, Anda mungkin berpikir itu hanya efek artistik. Tapi tidak — warna-warna itu nyata, dan masing-masing menceritakan fisika yang berbeda.</p>
-    <p>Secara umum, nebula — awan gas dan debu antar bintang — dapat dikelompokkan menjadi empat jenis utama, dan setiap jenis memiliki mekanisme yang berbeda dalam menghasilkan (atau tidak menghasilkan) cahaya.</p>
-    <p>Jenis pertama adalah <strong>nebula emisi</strong>. Ini adalah awan hidrogen yang terionisasi oleh radiasi ultraviolet dari bintang-bintang panas yang baru lahir di dalamnya. Ketika elektron bebas bergabung kembali dengan inti hidrogen, mereka memancarkan cahaya pada panjang gelombang tertentu — termasuk garis H-alpha yang berwarna merah tua (656 nm). Inilah sebabnya nebula emisi seperti Orion tampak merah.</p>
-    <p>Jenis kedua adalah <strong>nebula refleksi</strong>. Awan ini tidak memancarkan cahayanya sendiri, tetapi memantulkan cahaya bintang di dekatnya. Karena partikel debu menghamburkan cahaya biru lebih efisien daripada cahaya merah (efek yang sama dengan langit biru kita), nebula refleksi tampak berwarna biru.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Nebula emisi seperti lampu neon — ia menghasilkan cahayanya sendiri. Nebula refleksi seperti bulan — ia hanya memantulkan cahaya Matahari. Keduanya terlihat terang, tetapi sumber energinya berbeda.</p>
-    </div>
-    <p>Jenis ketiga adalah <strong>nebula gelap</strong>. Ini adalah awan debu yang sangat padat sehingga menghalangi cahaya bintang di belakangnya. Nebula gelap tidak memancarkan atau memantulkan cukup cahaya untuk terlihat — yang kita lihat justru <em>ketiadaan</em> cahaya di latar belakang. Contoh paling terkenal adalah Nebula Kepala Kuda di Orion.</p>
-    <p>Jenis keempat mencakup nebula yang terbentuk dari kematian bintang: <strong>planetary nebula</strong> (cangkang gas yang dilepaskan bintang sekarat) dan <strong>sisa supernova</strong> (puing-puing ledakan bintang masif). Keduanya memperkaya medium antarbintang dengan unsur-unsur berat yang nantinya akan menjadi bahan baku bintang baru dan planet-planet.</p>
-    <p>Jadi ketika Anda melihat foto-foto nebula yang menakjubkan, Anda sebenarnya sedang melihat daur ulang materi alam semesta — proses yang mengubah gas menjadi bintang, bintang menjadi gas lagi, dan seterusnya selama miliaran tahun.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Tidak ada yang benar-benar hilang di alam semesta. Materi terus berubah bentuk, bergerak dari satu tempat ke tempat lain, menunggu giliran untuk bersinar kembali.
-    </div>
-  `,
-  reflection: "Nebula adalah bukti bahwa bahkan kehancuran pun adalah bagian dari siklus kehidupan.",
-  quiz: [
-    {
-      q: "Mengapa nebula refleksi tampak berwarna biru?",
-      opts: [
-        "Karena gas hidrogen memancarkan cahaya biru",
-        "Karena partikel debu menghamburkan cahaya biru lebih efisien",
-        "Karena nebula ini sangat dingin",
-        "Karena bintang di dalamnya berwarna biru"
-      ],
-      ans: 1,
-      exp: "Hamburan Rayleigh menyebabkan cahaya berpanjang gelombang pendek (biru) lebih efisien dihamburkan dibandingkan cahaya merah. Efek yang sama membuat langit Bumi tampak biru."
-    },
-    {
-      q: "Apa perbedaan utama antara nebula emisi dan nebula gelap?",
-      opts: [
-        "Nebula emisi memancarkan cahaya sendiri, nebula gelap menghalangi cahaya",
-        "Nebula emisi lebih dingin dari nebula gelap",
-        "Nebula gelap hanya ada di galaksi lain",
-        "Nebula emisi tidak mengandung hidrogen"
-      ],
-      ans: 0,
-      exp: "Nebula emisi memancarkan cahayanya sendiri karena gas terionisasi. Nebula gelap justru menghalangi cahaya bintang di belakangnya."
-    }
-  ]
-},
-
-/* ---------- BAB 4: FISIKA BINTANG & KOSMOLOGI ---------- */
-{
-  chapter: "Bab 4 · Fisika Bintang & Kosmologi",
-  day: 14, level: "Menengah", levelClass: "lv-menengah",
-  title: "Tiga Hukum yang Mengatur Cahaya Bintang",
-  subtitle: "Wien, Stefan-Boltzmann, dan mengapa bintang panas berwarna biru",
-  body: `
-    <p class="drop-cap">Mengapa bintang panas berwarna biru dan bintang dingin berwarna merah? Jawabannya bukan karena "merah berarti panas" seperti pada kompor. Justru sebaliknya — dalam astronomi, semakin panas sebuah bintang, semakin pendek panjang gelombang cahaya yang dipancarkannya, dan semakin biru warnanya.</p>
-    <p>Untuk memahami ini, kita perlu mengenal konsep <strong>benda hitam</strong> (blackbody). Benda hitam adalah objek ideal yang menyerap semua radiasi yang jatuh padanya dan memancarkan kembali radiasi berdasarkan suhunya saja. Bintang-bintang sangat mirip dengan benda hitam.</p>
-    <p>Ada tiga hukum yang mengatur perilaku benda hitam, dan ketiganya adalah alat penting bagi setiap astronom.</p>
-    <p>Pertama, <strong>Hukum Wien</strong>. Ini menjelaskan hubungan antara suhu benda dan panjang gelombang puncak emisinya:</p>
-    <div class="formula-soft">
-      $$\\lambda_{\\max} \\cdot T = 2{,}898 \\times 10^{-3} \\text{ m}\\cdot\\text{K}$$
-    </div>
-    <p>Semakin tinggi suhu T, semakin pendek panjang gelombang puncak λ_max. Bintang dengan suhu 3000 K memancarkan puncak di inframerah dekat dan tampak merah. Bintang dengan suhu 30.000 K memancarkan puncak di ultraviolet dan tampak biru.</p>
-    <p>Kedua, <strong>Hukum Stefan-Boltzmann</strong>. Ini menjelaskan berapa banyak energi total yang dipancarkan per satuan luas:</p>
-    <div class="formula-soft">
-      $$F = \\sigma T^4$$
-    </div>
-    <p>Perhatikan pangkat empat pada suhu. Jika suhu bintang naik dua kali lipat, energi yang dipancarkan per satuan luas naik 16 kali lipat (2⁴ = 16). Inilah sebabnya bintang panas jauh lebih terang daripada bintang dingin, bahkan jika ukurannya sama.</p>
-    <p>Ketiga, kita bisa menghitung <strong>luminositas total</strong> bintang dengan menggabungkan Stefan-Boltzmann dengan luas permukaan bintang (4πR²):</p>
-    <div class="formula-soft">
-      $$L = 4\\pi R^2 \\sigma T^4$$
-    </div>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Bayangkan api unggun. Api kecil terasa hangat jika Anda dekat. Api besar terasa panas bahkan dari jauh. Luminositas bintang seperti "ukuran api" — ia bergantung pada suhu (seberapa panas) dan radius (seberapa besar).</p>
-    </div>
-    <p>Dengan tiga hukum ini, astronom bisa menentukan suhu permukaan bintang, radiusnya, dan luminositas totalnya — hanya dari pengamatan cahaya yang sampai ke Bumi. Ini adalah salah satu pencapaian intelektual terbesar dalam astronomi: kita bisa mengetahui properti bintang yang jaraknya miliaran kilometer hanya dengan melihat cahayanya.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Alam semesta bekerja dengan hukum-hukum yang bisa kita pahami. Bukan karena kita istimewa, tetapi karena kita mau belajar.
-    </div>
-  `,
-  reflection: "Dengan tiga rumus sederhana, kita bisa mengukur bintang yang jaraknya tak terbayangkan. Itulah kekuatan sains.",
-  quiz: [
-    {
-      q: "Jika suhu permukaan sebuah bintang meningkat 3 kali lipat, berapa kali lipat energi per satuan luas yang dipancarkannya?",
-      opts: ["3 kali", "9 kali", "27 kali", "81 kali"],
-      ans: 3,
-      exp: "Menurut Stefan-Boltzmann F = σT⁴. Jika T → 3T, maka F → 3⁴ = 81 kali lipat."
-    },
-    {
-      q: "Bintang dengan suhu permukaan paling tinggi akan memancarkan puncak spektrum pada...",
-      opts: [
-        "Panjang gelombang panjang (merah/inframerah)",
-        "Panjang gelombang pendek (biru/ultraviolet)",
-        "Panjang gelombang radio",
-        "Tidak bisa ditentukan"
-      ],
-      ans: 1,
-      exp: "Menurut Hukum Wien, λ_max berbanding terbalik dengan suhu. Bintang panas memancarkan puncak pada panjang gelombang pendek."
-    }
-  ]
-},
-{
-  chapter: "Bab 4 · Fisika Bintang & Kosmologi",
-  day: 15, level: "Mahir", levelClass: "lv-mahir",
-  title: "Kisah Hidup Sebuah Bintang",
-  subtitle: "Dari deret utama hingga kematian dramatis",
-  body: `
-    <p class="drop-cap">Bintang bukan benda yang abadi. Ia lahir, hidup, dan mati — seperti semua hal di alam semesta, tetapi dalam skala waktu yang sangat panjang. Yang menentukan bagaimana sebuah bintang hidup dan mati hanyalah satu hal: <strong>massanya</strong>.</p>
-    <p>Untuk memahami siklus hidup bintang, kita perlu mengenal <strong>Diagram Hertzsprung-Russell</strong> (Diagram HR). Ini adalah peta bintang, yang memplot luminositas bintang terhadap suhu permukaannya. Sebagian besar bintang berada di pita diagonal yang disebut <em>deret utama</em> — di sanalah bintang menghabiskan sebagian besar hidupnya, membakar hidrogen menjadi helium.</p>
-    <p>Matahari kita adalah bintang deret utama dengan massa sedang. Ia sudah berada di deret utama selama 4,6 miliar tahun, dan akan terus berada di sana selama sekitar 5 miliar tahun lagi. Setelah itu, ia akan mulai kehabisan hidrogen di intinya.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Bintang itu seperti mobil. Semakin besar mesinnya, semakin cepat bahan bakarnya habis. Bintang masif adalah mobil sport — sangat cepat, sangat terang, tetapi hanya bertahan beberapa juta tahun. Bintang bermassa rendah seperti mobil hemat bahan bakar — redup, tetapi bisa berjalan triliunan tahun.</p>
-    </div>
-    <p>Ketika bintang bermassa rendah hingga sedang (kurang dari 8 massa Matahari) kehabisan hidrogen di intinya, inti helium mulai menyusut dan memanas. Lapisan luar bintang mengembang dan mendingin — bintang menjadi <strong>raksasa merah</strong>. Pada tahap akhir, bintang melontarkan lapisan luarnya sebagai <em>planetary nebula</em>, dan menyisakan inti panas yang disebut <strong>katai putih</strong>.</p>
-    <p>Katai putih tidak menghasilkan energi baru. Ia hanya mendingin perlahan selama miliaran tahun. Namun ada batas massa untuk katai putih — sekitar 1,4 massa Matahari, yang disebut <strong>batas Chandrasekhar</strong>. Jika massa inti melebihi batas ini, tekanan degenerasi elektron tidak lagi mampu menahan gravitasi.</p>
-    <p>Untuk bintang yang lebih masif (lebih dari 8 massa Matahari), akhir hidupnya jauh lebih dramatis. Setelah melalui tahap super raksasa merah, intinya runtuh dalam hitungan detik, memicu <strong>supernova</strong> — ledakan yang bisa menyinari seluruh galaksi selama beberapa minggu. Yang tersisa adalah <strong>bintang neutron</strong> (jika massa inti sekitar 1,4–3 massa Matahari) atau <strong>lubang hitam</strong> (jika lebih besar).</p>
-    <p>Lubang hitam adalah objek paling ekstrem di alam semesta. Gravitasi di permukaannya begitu kuat sehingga bahkan cahaya tidak bisa lepas. Batas imaginer di mana kecepatan lepas sama dengan kecepatan cahaya disebut <em>cakrawala peristiwa</em> (event horizon).</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Setiap atom di tubuh Anda pernah berada di dalam bintang. Bintang-bintang itu mati agar kita bisa hidup. Kita adalah cara alam semesta mengenali dirinya sendiri.
-    </div>
-  `,
-  reflection: "Kita adalah hasil daur ulang bintang-bintang yang telah mati. Kesadaran kita adalah kelanjutan dari kisah mereka.",
-  quiz: [
-    {
-      q: "Apa yang menentukan bagaimana sebuah bintang akan hidup dan mati?",
-      opts: [
-        "Warnanya",
-        "Massanya",
-        "Posisinya di galaksi",
-        "Kecepatan rotasinya"
-      ],
-      ans: 1,
-      exp: "Massa adalah faktor penentu utama. Bintang masif hidup singkat dan mati dramatis; bintang bermassa rendah hidup lama dan mati tenang."
-    },
-    {
-      q: "Berapa nilai batas Chandrasekhar, yaitu massa maksimum katai putih?",
-      opts: [
-        "0,5 massa Matahari",
-        "1,4 massa Matahari",
-        "3 massa Matahari",
-        "10 massa Matahari"
-      ],
-      ans: 1,
-      exp: "Batas Chandrasekhar adalah sekitar 1,4 massa Matahari. Jika melebihi ini, katai putih tidak dapat menahan keruntuhan gravitasi."
-    }
-  ]
-},
-{
-  chapter: "Bab 4 · Fisika Bintang & Kosmologi",
-  day: 16, level: "Mahir", levelClass: "lv-mahir",
-  title: "Alam Semesta yang Mengembang",
-  subtitle: "Hukum Hubble dan bukti Big Bang",
-  body: `
-    <p class="drop-cap">Pada tahun 1929, seorang astronom Amerika bernama Edwin Hubble membuat penemuan yang akan mengubah cara kita memandang alam semesta selamanya. Ia menemukan bahwa galaksi-galaksi jauh sedang menjauh dari kita — dan semakin jauh sebuah galaksi, semakin cepat ia menjauh.</p>
-    <p>Ini bukan berarti Bumi adalah pusat alam semesta. Ini berarti <strong>ruang itu sendiri sedang mengembang</strong>. Bayangkan adonan roti yang mengembang dengan kismis di dalamnya. Setiap kismis akan tampak menjauh dari kismis lainnya — bukan karena mereka bergerak di dalam adonan, tetapi karena adonan itu sendiri mengembang.</p>
-    <p>Hubungan antara jarak dan kecepatan resesi galaksi dirumuskan oleh <strong>Hukum Hubble-Lemaître</strong>:</p>
-    <div class="formula-soft">
-      $$v = H_0 \\cdot d$$
-    </div>
-    <p>Di sini v adalah kecepatan menjauh galaksi, d adalah jaraknya dari kita, dan H₀ adalah konstanta Hubble — sekitar 70 km/detik per megaparsec. Artinya, galaksi yang berjarak 1 megaparsec (3,26 juta tahun cahaya) menjauh dari kita dengan kecepatan sekitar 70 km/detik.</p>
-    <p>Jika alam semesta mengembang, maka di masa lalu ia pasti lebih kecil dan lebih padat. Jika kita memundurkan waktu cukup jauh, kita akan sampai pada satu titik di mana seluruh materi dan energi alam semesta terkumpul dalam satu titik sangat kecil dengan kepadatan tak terbatas. Inilah teori <strong>Big Bang</strong>.</p>
-    <p>Ada tiga bukti utama yang mendukung teori ini:</p>
-    <p><strong>Pertama, ekspansi Hubble</strong> — pengamatan pergeseran merah galaksi-galaksi jauh, yang menunjukkan mereka menjauh dari kita.</p>
-    <p><strong>Kedua, radiasi latar belakang gelombang mikro kosmik (CMB)</strong> — sisa panas dari Big Bang, terdeteksi secara tidak sengaja pada tahun 1964 oleh Arno Penzias dan Robert Wilson. CMB memiliki suhu seragam sekitar 2,725 Kelvin, dan berasal dari era ketika alam semesta berusia 380.000 tahun.</p>
-    <p><strong>Ketiga, kelimpahan unsur ringan</strong> — proporsi hidrogen, helium, dan lithium di alam semesta sangat cocok dengan prediksi reaksi nuklir yang terjadi pada menit-menit pertama setelah Big Bang.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">CMB itu seperti sisa api unggun yang sudah lama padam, tetapi bara dan abunya masih hangat. Ia memberi tahu kita bahwa api unggun pernah menyala — dan kapan.</p>
-    </div>
-    <p>Sejak penemuan-penemuan ini, kosmologi telah menjadi sains presisi. Kita sekarang tahu bahwa alam semesta berusia 13,8 miliar tahun, dan terdiri dari sekitar 5% materi biasa, 27% materi gelap, dan 68% energi gelap. Kita masih belum tahu apa itu materi gelap dan energi gelap — tetapi kita tahu keduanya ada.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Pertanyaan terbesar masih menunggu jawaban. Alam semesta tidak kekurangan misteri — yang kita butuhkan hanya keberanian untuk bertanya.
-    </div>
-  `,
-  reflection: "Setiap jawaban dalam sains membuka pintu bagi pertanyaan-pertanyaan baru. Itulah keindahan pencarian yang tak pernah berakhir.",
-  quiz: [
-    {
-      q: "Apa yang dinyatakan oleh Hukum Hubble-Lemaître?",
-      opts: [
-        "Semua bintang berputar mengelilingi pusat galaksi",
-        "Kecepatan resesi galaksi sebanding dengan jaraknya dari kita",
-        "Alam semesta statis dan tidak berubah",
-        "Cahaya bintang selalu bergeser ke arah biru"
-      ],
-      ans: 1,
-      exp: "Hukum Hubble menyatakan v = H₀ × d. Galaksi yang lebih jauh menjauh lebih cepat, menunjukkan bahwa ruang itu sendiri mengembang."
-    },
-    {
-      q: "Apa bukti terkuat bahwa alam semesta pernah sangat panas dan padat di masa lalu?",
-      opts: [
-        "Adanya planet di sekitar bintang lain",
-        "Radiasi Latar Belakang Gelombang Mikro Kosmik (CMB) pada 2,725 K",
-        "Adanya lubang hitam di pusat galaksi",
-        "Rotasi Bima Sakti"
-      ],
-      ans: 1,
-      exp: "CMB adalah sisa radiasi termal dari Big Bang, dipancarkan ketika alam semesta berusia 380.000 tahun. Suhunya 2,725 K dan sangat seragam."
-    }
-  ]
-},
-{
-  chapter: "Bab 4 · Fisika Bintang & Kosmologi",
-  day: 17, level: "Mahir", levelClass: "lv-mahir",
-  title: "Materi Gelap dan Energi Gelap",
-  subtitle: "Dua misteri terbesar alam semesta modern",
-  body: `
-    <p class="drop-cap">Bayangkan Anda sedang menimbang isi sebuah kotak. Anda tahu berapa berat setiap buku di dalamnya, dan Anda bisa melihat semuanya. Tetapi ketika Anda menimbang seluruh kotak, ternyata beratnya jauh lebih besar dari jumlah berat buku-buku itu. Ada sesuatu di dalam kotak yang tidak bisa Anda lihat — tetapi jelas memengaruhi berat totalnya. Inilah teka-teki yang dihadapi astronom modern tentang alam semesta.</p>
-    <p>Pada tahun 1933, astronom Swiss Fritz Zwicky mengamati gugus galaksi Coma dan menemukan sesuatu yang aneh. Galaksi-galaksi di gugus itu bergerak terlalu cepat. Jika massa yang kita lihat (bintang, gas, debu) adalah satu-satunya massa di sana, galaksi-galaksi itu seharusnya sudah terbang berhamburan miliaran tahun yang lalu. Tetapi mereka masih bertahan. Ada sesuatu yang menahan mereka — sesuatu yang tidak terlihat.</p>
-    <p>Penemuan serupa muncul pada tahun 1970-an ketika Vera Rubin mengukur kurva rotasi galaksi spiral. Bintang-bintang di pinggiran galaksi bergerak jauh lebih cepat dari yang seharusnya. Jika hanya gravitasi materi tampak yang bekerja, bintang-bintang itu seharusnya melambat semakin jauh dari pusat galaksi. Tetapi mereka tidak melambat. Ada massa tersembunyi di sekitar galaksi — yang kita sebut <strong>materi gelap</strong> (dark matter).</p>
-    <p>Materi gelap tidak memancarkan, menyerap, atau memantulkan cahaya. Kita hanya tahu ia ada dari efek gravitasinya. Saat ini, diperkirakan materi gelap mencakup sekitar 27% dari total energi-materi alam semesta.</p>
-    <p>Lalu ada misteri yang lebih besar lagi. Pada tahun 1998, dua tim astronom yang mempelajari supernova Tipe Ia menemukan sesuatu yang mengejutkan: ekspansi alam semesta tidak melambat, tetapi justru <strong>semakin cepat</strong>. Ada energi misterius yang melawan gravitasi dan mendorong alam semesta mengembang lebih cepat. Kita menyebutnya <strong>energi gelap</strong> (dark energy), dan ia mencakup sekitar 68% dari seluruh isi alam semesta.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Jika gravitasi adalah rem yang memperlambat laju mobil, energi gelap adalah pedal gas yang menekannya. Saat ini, pedal gas lebih kuat dari rem — dan itulah sebabnya alam semesta mengembang semakin cepat.</p>
-    </div>
-    <p>Yang mengejutkan adalah: kita tidak tahu apa itu materi gelap dan energi gelap. Kita tahu keduanya ada, kita tahu berapa banyak, tetapi kita belum tahu apa mereka sebenarnya. Ini adalah salah satu misteri terbesar dalam fisika modern — dan astronomi adalah tempat di mana petunjuk-petunjuknya bisa ditemukan.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Ilmu pengetahuan maju bukan karena kita tahu segalanya, tetapi karena kita berani mengakui bahwa kita belum tahu banyak.
-    </div>
-  `,
-  reflection: "Semakin banyak yang kita ketahui tentang alam semesta, semakin besar pula misteri yang tersisa. Itulah yang membuat astronomi abadi.",
-  quiz: [
-    {
-      q: "Bagaimana astronom mengetahui keberadaan materi gelap?",
-      opts: [
-        "Dengan melihat cahayanya secara langsung",
-        "Dari efek gravitasinya pada bintang dan galaksi",
-        "Dari suhu sangat dinginnya",
-        "Dari warna ungunya di teleskop"
-      ],
-      ans: 1,
-      exp: "Materi gelap tidak memancarkan cahaya. Kita mendeteksinya dari efek gravitasinya, seperti kurva rotasi galaksi yang terlalu cepat dan pelensaan gravitasi."
-    },
-    {
-      q: "Apa peran energi gelap dalam alam semesta?",
-      opts: [
-        "Menahan ekspansi alam semesta",
-        "Mempercepat ekspansi alam semesta",
-        "Tidak memiliki peran apapun",
-        "Membentuk bintang-bintang baru"
-      ],
-      ans: 1,
-      exp: "Energi gelap menyebabkan ekspansi alam semesta yang semakin cepat. Ia melawan gravitasi dan mendominasi komposisi alam semesta (~68%)."
-    }
-  ]
-},
-{
-  chapter: "Bab 4 · Fisika Bintang & Kosmologi",
-  day: 18, level: "Olimpiade", levelClass: "lv-olimpiade",
-  title: "Tangga Jarak Kosmik & Masa Depan Alam Semesta",
-  subtitle: "Bagaimana kita mengukur jarak miliaran tahun cahaya",
-  body: `
-    <p class="drop-cap">Pertanyaan yang paling sering ditanyakan oleh orang yang baru belajar astronomi adalah: "Bagaimana mungkin kita bisa tahu jarak galaksi yang berjarak miliaran tahun cahaya? Kita kan tidak bisa mengulurkan meteran sejauh itu." Jawabannya adalah salah satu pencapaian paling indah dalam sains: <strong>tangga jarak kosmik</strong>.</p>
-    <p>Kita tidak bisa mengukur jarak jauh dengan satu metode saja. Sebaliknya, kita membangun "tangga" — serangkaian metode yang saling terkalibrasi, dari yang paling dekat hingga yang paling jauh. Setiap anak tangga memberi kita jangkauan yang lebih besar.</p>
-    <p><strong>Anak tangga pertama: paralaks.</strong> Untuk bintang-bintang terdekat, kita menggunakan pergeseran tampak posisi bintang saat Bumi mengorbit. Metode ini akurat hingga beberapa ribu tahun cahaya.</p>
-    <p><strong>Anak tangga kedua: bintang variabel Cepheid.</strong> Cepheid adalah bintang yang berdenyut secara teratur. Astronom menemukan bahwa periode denyutnya berkorelasi langsung dengan luminositasnya. Semakin panjang periodenya, semakin terang bintang tersebut. Jadi jika kita mengukur periode denyutnya, kita tahu seberapa terang seharusnya ia, dan dengan membandingkan dengan kecerahannya yang tampak, kita bisa menghitung jaraknya. Metode ini menjangkau hingga puluhan juta tahun cahaya.</p>
-    <p><strong>Anak tangga ketiga: supernova Tipe Ia.</strong> Ketika katai putih dalam sistem biner menyerap materi cukup banyak hingga melewati batas Chandrasekhar, ia meledak. Karena massa kritisnya selalu sama (~1,4 M☉), luminositas puncaknya juga hampir sama. Supernova Tipe Ia adalah "lilin standar" yang bisa dilihat hingga jarak miliaran tahun cahaya.</p>
-    <p><strong>Anak tangga keempat: pergeseran merah kosmologis.</strong> Untuk galaksi paling jauh, kita menggunakan hukum Hubble. Jika kita mengukur pergeseran merah galaksi, kita bisa menghitung kecepatan resesinya, dan dari situ jaraknya.</p>
-    <div class="analogy-box">
-      <span class="label">Analogi</span>
-      <p class="mb-0">Tangga jarak kosmik seperti bertanya arah kepada orang di jalan. Anda tidak bertanya langsung dari rumah ke tujuan akhir yang 1.000 km jauhnya. Anda bertanya kepada tetangga, lalu ke orang di pertigaan, lalu ke orang di kota berikutnya — setiap petunjuk membawa Anda lebih dekat ke tujuan.</p>
-    </div>
-    <p>Sekarang, mari kita bicara tentang <strong>masa depan alam semesta</strong>. Karena energi gelap mendominasi dan terus mempercepat ekspansi, galaksi-galaksi akan saling menjauh semakin cepat. Dalam ratusan miliar tahun, galaksi-galaksi di luar Gugus Lokal akan menghilang dari pandangan karena ekspansi ruang melebihi kecepatan cahaya mereka.</p>
-    <p>Bintang-bintang akan padam satu per satu. Katai putih akan mendingin menjadi katai hitam. Lubang hitam akan menguap melalui radiasi Hawking — meskipun ini memerlukan waktu 10¹⁰⁰ tahun. Pada akhirnya, alam semesta akan menjadi dingin, gelap, dan hampir kosong. Skenario ini disebut <strong>Big Freeze</strong> atau <em>Heat Death</em>.</p>
-    <div class="quote-box">
-      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
-      Bahwa kita — makhluk kecil di planet kecil di galaksi kecil — bisa memahami skala waktu dan ruang sedemikian besar, itu sendiri adalah keajaiban. Semoga kita terus menggunakan keajaiban itu untuk bertanya, bukan untuk berhenti.
-    </div>
-  `,
-  reflection: "Alam semesta mungkin berakhir dalam kegelapan, tetapi selama kita masih bisa bertanya, cahaya pemahaman kita tidak akan padam.",
-  quiz: [
-    {
-      q: "Mengapa supernova Tipe Ia bisa digunakan sebagai 'lilin standar' untuk mengukur jarak?",
-      opts: [
-        "Karena warnanya selalu sama",
-        "Karena luminositas puncaknya hampir selalu sama akibat massa kritis yang sama",
-        "Karena mereka terjadi setiap tahun",
-        "Karena mereka selalu berada di galaksi yang sama"
-      ],
-      ans: 1,
-      exp: "Supernova Tipe Ia terjadi ketika katai putih melewati batas Chandrasekhar (~1,4 M☉). Karena massa kritisnya selalu sama, luminositas puncaknya juga hampir sama, sehingga bisa digunakan untuk mengukur jarak."
-    },
-    {
-      q: "Apa yang diprediksi akan terjadi pada alam semesta di masa depan jika energi gelap terus mendominasi?",
-      opts: [
-        "Alam semesta akan mengerut kembali",
-        "Alam semesta akan berhenti mengembang",
-        "Alam semesta akan terus mengembang dan menjadi dingin serta gelap (Big Freeze)",
-        "Alam semesta akan meledak lagi"
-      ],
-      ans: 2,
-      exp: "Dengan energi gelap yang mendominasi, ekspansi akan terus dipercepat, menghasilkan skenario Big Freeze — alam semesta dingin, gelap, dan entropi maksimum."
-    }
-  ]
-}
-];
+/* Kurikulum: 6 bulan × 30 hari. Setiap bulan punya array topik harian. */
+const curriculum = {
+  month1: {
+    title: "Bulan 1 · Mengenal Langit",
+    level: "Pemula", levelClass: "lv-pemula",
+    desc: "Dari titik-titik cahaya di langit hingga sistem koordinat yang membuat kita bisa memberi 'alamat' pada setiap bintang.",
+    days: [
+      { title: "Malam Pertama di Bawah Bintang", sub: "Ketika kita mulai bertanya: apa yang sebenarnya kita lihat?", topic: "pengantar" },
+      { title: "Membuat Peta Langit dari Halaman Rumah", sub: "Bagaimana kita menyebut 'arah' di langit yang tak berujung?", topic: "koordinat" },
+      { title: "Zenith, Nadir, dan Horizon", sub: "Tiga titik yang menjadi patokan setiap pengamat.", topic: "koordinat" },
+      { title: "Ketinggian dan Azimuth", sub: "Dua angka yang menentukan posisi bintang dari sudut pandang kita.", topic: "koordinat" },
+      { title: "Mengapa Bintang Terbit Lebih Awal", sub: "Tentang dua macam 'hari' yang berbeda.", topic: "waktu" },
+      { title: "Hari Matahari vs Hari Bintang", sub: "Selisih 4 menit yang mengubah segalanya.", topic: "waktu" },
+      { title: "Rasi Bintang dan Perubahannya", sub: "Mengapa langit Desember berbeda dari langit Juni.", topic: "rasi" },
+      { title: "Sistem Ekuator: Deklinasi", sub: "Memberi 'lintang' pada setiap bintang.", topic: "koordinat" },
+      { title: "Sistem Ekuator: Asensio Rekta", sub: "Memberi 'bujur' dalam satuan jam.", topic: "koordinat" },
+      { title: "Sudut Jam: Menghubungkan Langit dan Waktu", sub: "Rumus LST = HA + RA.", topic: "koordinat" },
+      { title: "Bintang Sirkumpolar", sub: "Bintang yang tidak pernah tenggelam.", topic: "koordinat" },
+      { title: "Ekuinoks dan Solstis", sub: "Empat titik penting dalam setahun.", topic: "musim" },
+      { title: "Zodiak: Jalur Matahari", sub: "Mengapa planet-planet selalu dekat ekliptika.", topic: "musim" },
+      { title: "Gerak Diurnal", sub: "Rotasi Bumi yang membawa langit berputar.", topic: "gerak" },
+      { title: "Gerak Tahunan Bumi", sub: "Revolusi yang mengubah posisi bintang.", topic: "gerak" },
+      { title: "Mengapa Bintang Berkelip", sub: "Turbulensi atmosfer dan efek scintillation.", topic: "atmosfer" },
+      { title: "Warna Bintang", sub: "Petunjuk pertama tentang suhunya.", topic: "bintang" },
+      { title: "Magnitudo: Skala Terbalik", sub: "Semakin kecil angkanya, semakin terang bintangnya.", topic: "bintang" },
+      { title: "Bulan dan Fasenya", sub: "Siklus 29,5 hari yang menemani malam.", topic: "bulan" },
+      { title: "Gerhana Matahari dan Bulan", sub: "Ketika tiga benda langit sejajar.", topic: "bulan" },
+      { title: "Planet di Langit Malam", sub: "Mengapa planet tidak berkelip seperti bintang.", topic: "planet" },
+      { title: "Meteor dan Hujan Meteor", sub: "Ketika debu antarplanet memasuki atmosfer.", topic: "meteor" },
+      { title: "Komet: Pengunjung dari Tepi Tata Surya", sub: "Bola salju kotor yang mengelilingi Matahari.", topic: "komet" },
+      { title: "Satelit Buatan", sub: "Titik bergerak yang bukan bintang.", topic: "satelit" },
+      { title: "Polusi Cahaya", sub: "Mengapa langit kota tidak pernah benar-benar gelap.", topic: "observasi" },
+      { title: "Adaptasi Mata di Kegelapan", sub: "Butuh 30 menit untuk melihat langit dengan baik.", topic: "observasi" },
+      { title: "Peta Langit dan Aplikasi", sub: "Alat bantu modern untuk pengamat pemula.", topic: "observasi" },
+      { title: "Mengamati dengan Mata Telanjang", sub: "Latihan pertama sebelum menggunakan alat.", topic: "observasi" },
+      { title: "Refleksi Bulan Pertama", sub: "Apa yang sudah kita pelajari, dan apa yang belum.", topic: "refleksi" },
+      { title: "Ujian Bulan 1", sub: "Merangkum semua konsep dasar.", topic: "ujian" }
+    ]
+  },
+  month2: {
+    title: "Bulan 2 · Astrometri & Presisi",
+    level: "Pemula–Menengah", levelClass: "lv-pemula",
+    desc: "Mengukur posisi bintang dengan presisi, memahami penyimpangan cahaya, dan mengukur jarak bintang.",
+    days: [
+      { title: "Aberasi Cahaya", sub: "Ketika gerak Bumi membelokkan arah bintang.", topic: "aberrasi" },
+      { title: "Presesi Sumbu Bumi", sub: "Goyangan 26.000 tahun yang mengubah bintang kutub.", topic: "presesi" },
+      { title: "Nutasi dan Efek Bulan", sub: "Goyangan kecil dengan periode 18,6 tahun.", topic: "presesi" },
+      { title: "Gerak Diri Bintang", sub: "Bintang benar-benar bergerak di ruang angkasa.", topic: "proper motion" },
+      { title: "Paralaks Bintang", sub: "Trik geometri paling elegan dalam astronomi.", topic: "paralaks" },
+      { title: "Parsec dan Tahun Cahaya", sub: "Dua satuan jarak yang sering membingungkan.", topic: "paralaks" },
+      { title: "Presisi Pengukuran Astrometri", sub: "Mengapa misi Gaia sangat penting.", topic: "paralaks" },
+      { title: "Katalog Bintang", sub: "Bagaimana posisi bintang dicatat dan diperbarui.", topic: "katalog" },
+      { title: "Refraksi Atmosfer", sub: "Mengapa Matahari tampak terbit lebih awal.", topic: "refraksi" },
+      { title: "Trigonometri Bola Dasar", sub: "Alat matematika untuk berpindah koordinat.", topic: "trigono" },
+      { title: "Hukum Kosinus Bola", sub: "Rumus yang menghubungkan altitudo, deklinasi, dan lintang.", topic: "trigono" },
+      { title: "Hukum Sinus Bola", sub: "Untuk menghitung azimuth bintang.", topic: "trigono" },
+      { title: "Konversi Koordinat Ekuator ke Horizon", sub: "Dari (α, δ) menjadi (A, h).", topic: "trigono" },
+      { title: "Aplikasi Konversi Koordinat", sub: "Latihan dengan bintang nyata.", topic: "trigono" },
+      { title: "Waktu Sideris Lokal", sub: "Jam yang diatur oleh bintang, bukan Matahari.", topic: "waktu" },
+      { title: "Julian Date", sub: "Sistem penanggalan astronomi yang kontinu.", topic: "waktu" },
+      { title: "Kalender dan Konversinya", sub: "Julian, Gregorian, Hijriah.", topic: "waktu" },
+      { title: "Momen dan Waktu Terbit/Terbenam", sub: "Menghitung jam berapa bintang muncul.", topic: "waktu" },
+      { title: "Sudut Jam dan Meridian", sub: "Bintang di titik tertinggi.", topic: "waktu" },
+      { title: "Astrometri Bintang Ganda", sub: "Mengukur orbit bintang ganda dari Bumi.", topic: "ganda" },
+      { title: "Massa Bintang dari Orbit", sub: "Hukum Kepler yang diperluas Newton.", topic: "ganda" },
+      { title: "Fotometri Dasar", sub: "Mengukur kecerahan bintang dengan detektor.", topic: "fotometri" },
+      { title: "Ekstingsi Antar Bintang", sub: "Debu yang meredupkan cahaya bintang.", topic: "fotometri" },
+      { title: "Indeks Warna Bintang", sub: "Selisih magnitudo di dua filter.", topic: "fotometri" },
+      { title: "Kurva Cahaya Variabel", sub: "Bintang yang kecerahannya berubah.", topic: "variabel" },
+      { title: "Cepheid: Lilin Standar Pertama", sub: "Hubungan periode-luminositas.", topic: "variabel" },
+      { title: "Astrometri Modern", sub: "Radio interferometri dan presisi luar biasa.", topic: "astrometri" },
+      { title: "Misi Gaia", sub: "Memetakan lebih dari satu miliar bintang.", topic: "astrometri" },
+      { title: "Refleksi Bulan Kedua", sub: "Bagaimana presisi mengubah astronomi.", topic: "refleksi" },
+      { title: "Ujian Bulan 2", sub: "Menguji pemahaman astrometri.", topic: "ujian" }
+    ]
+  },
+  month3: {
+    title: "Bulan 3 · Teleskop & Instrumen",
+    level: "Menengah", levelClass: "lv-menengah",
+    desc: "Belajar menggunakan alat optik: dari binokular hingga teleskop besar, dan memahami fisika optik di baliknya.",
+    days: [
+      { title: "Mengapa Binokular Dulu", sub: "Sebelum membeli teleskop, bacalah ini.", topic: "binokular" },
+      { title: "Format Binokular 7×50", sub: "Apa arti dua angka itu.", topic: "binokular" },
+      { title: "Exit Pupil Binokular", sub: "Menyesuaikan dengan pupil mata.", topic: "binokular" },
+      { title: "Jenis-Jenis Teleskop", sub: "Refraktor, reflektor, katadioptrik.", topic: "teleskop" },
+      { title: "Aberasi Kromatik", sub: "Masalah klasik pada lensa.", topic: "teleskop" },
+      { title: "Keunggulan Cermin", sub: "Mengapa teleskop besar menggunakan cermin.", topic: "teleskop" },
+      { title: "Perbesaran Teleskop", sub: "M = fo/fe.", topic: "optik" },
+      { title: "Rasio Fokal f/#", sub: "Teleskop 'cepat' dan 'lambat'.", topic: "optik" },
+      { title: "Daya Kumpul Cahaya", sub: "LGP = (D_teleskop/D_mata)².", topic: "optik" },
+      { title: "Batas Resolusi Rayleigh", sub: "θ = 1,22 λ/D.", topic: "resolusi" },
+      { title: "Cakram Airy", sub: "Pola difraksi pada gambar bintang.", topic: "resolusi" },
+      { title: "Atmospheric Seeing", sub: "Turbulensi yang membatasi ketajaman.", topic: "resolusi" },
+      { title: "Optik Adaptif", sub: "Menaklukkan atmosfer dengan cermin fleksibel.", topic: "resolusi" },
+      { title: "Teleskop Ruang Angkasa", sub: "Hubble, JWST, Gaia.", topic: "ruang angkasa" },
+      { title: "Okuler dan Medan Pandang", sub: "True FOV vs apparent FOV.", topic: "optik" },
+      { title: "Detektor CCD", sub: "Mengubah foton menjadi sinyal digital.", topic: "detektor" },
+      { title: "Fotometer dan Spektrograf", sub: "Dua instrumen utama astronom.", topic: "detektor" },
+      { title: "Teleskop Radio", sub: "Mendengar alam semesta dengan antena.", topic: "radio" },
+      { title: "Interferometri Radio", sub: "Menggabungkan banyak teleskop.", topic: "radio" },
+      { title: "Teleskop Inframerah", sub: "Melihat melalui debu dan dingin.", topic: "inframerah" },
+      { title: "Teleskop X-Ray dan Gamma", sub: "Menangkap fenomena paling ekstrem.", topic: "xray" },
+      { title: "Astronomi Neutrino", sub: "Partikel hantu dari dalam Matahari.", topic: "neutrino" },
+      { title: "Gelombang Gravitasi", sub: "Riak ruang-waktu dari merger lubang hitam.", topic: "gravitasi" },
+      { title: "Astronomi Multi-Messenger", sub: "Menggabungkan cahaya, neutrino, gravitasi.", topic: "gravitasi" },
+      { title: "Merancang Sesi Observasi", sub: "Persiapan sebelum keluar malam.", topic: "praktik" },
+      { title: "Star Hopping", sub: "Menemukan objek dengan bintang penunjuk.", topic: "praktik" },
+      { title: "Astrometri Praktis dengan Teleskop", sub: "Mengukur posisi dari gambar.", topic: "praktik" },
+      { title: "Astrofotografi Dasar", sub: "Menangkap langit dengan kamera.", topic: "praktik" },
+      { title: "Refleksi Bulan Ketiga", sub: "Alat sebagai perpanjangan mata.", topic: "refleksi" },
+      { title: "Ujian Bulan 3", sub: "Menguji pemahaman instrumen.", topic: "ujian" }
+    ]
+  },
+  month4: {
+    title: "Bulan 4 · Tata Surya & Nebula",
+    level: "Menengah–Mahir", levelClass: "lv-menengah",
+    desc: "Menjelajahi benda-benda langit di sekitar kita, dan awan gas tempat bintang lahir.",
+    days: [
+      { title: "Tata Surya: Gambaran Umum", sub: "Delapan planet dan benda kecil lainnya.", topic: "tata surya" },
+      { title: "Planet Terestrial", sub: "Merkurius, Venus, Bumi, Mars.", topic: "tata surya" },
+      { title: "Planet Jovian", sub: "Jupiter, Saturnus, Uranus, Neptunus.", topic: "tata surya" },
+      { title: "Sabuk Asteroid", sub: "Sisa material yang gagal menjadi planet.", topic: "tata surya" },
+      { title: "Sabuk Kuiper dan Awan Oort", sub: "Rumah bagi komet.", topic: "tata surya" },
+      { title: "Satelit Alami", sub: "Bulan-bulan di sekitar planet.", topic: "tata surya" },
+      { title: "Cincin Planet", sub: "Mengapa Saturnus memiliki cincin indah.", topic: "tata surya" },
+      { title: "Atmosfer Planet", sub: "Perbedaan dan keunikannya.", topic: "tata surya" },
+      { title: "Matahari: Bintang Kita", sub: "Struktur, aktivitas, dan siklusnya.", topic: "matahari" },
+      { title: "Bintik Matahari", sub: "Aktivitas magnetik di permukaan.", topic: "matahari" },
+      { title: "Angin Matahari", sub: "Aliran partikel yang memengaruhi Bumi.", topic: "matahari" },
+      { title: "Aurora", sub: "Ketika angin Matahari bertemu medan magnet Bumi.", topic: "matahari" },
+      { title: "Nebula: Awan Antar Bintang", sub: "Tempat lahirnya bintang.", topic: "nebula" },
+      { title: "Nebula Emisi", sub: "Memancarkan cahaya sendiri.", topic: "nebula" },
+      { title: "Nebula Refleksi", sub: "Memantulkan cahaya bintang.", topic: "nebula" },
+      { title: "Nebula Gelap", sub: "Menghalangi cahaya di belakangnya.", topic: "nebula" },
+      { title: "Planetary Nebula", sub: "Bukan planet, tapi sisa bintang.", topic: "nebula" },
+      { title: "Sisa Supernova", sub: "Puing-puing ledakan bintang.", topic: "nebula" },
+      { title: "Medium Antar Bintang", sub: "Gas dan debu di antara bintang.", topic: "nebula" },
+      { title: "Pembentukan Bintang", sub: "Dari awan menjadi bintang.", topic: "pembentukan" },
+      { title: "Protobintang", sub: "Calon bintang yang belum menyala.", topic: "pembentukan" },
+      { title: "Fusi Nuklir Pertama", sub: "Momen ketika bintang resmi lahir.", topic: "pembentukan" },
+      { title: "Katai Coklat", sub: "Bintang gagal yang tidak pernah menyala.", topic: "pembentukan" },
+      { title: "Gugus Terbuka", sub: "Bintang-bintang muda yang lahir bersama.", topic: "gugus" },
+      { title: "Gugus Bola", sub: "Kumpulan bintang tua di halo galaksi.", topic: "gugus" },
+      { title: "Diagram Warna-Magnitudo", sub: "Diagram HR untuk gugus bintang.", topic: "gugus" },
+      { title: "Mengamati Nebula", sub: "Praktik pengamatan deep-sky.", topic: "praktik" },
+      { title: "Mengamati Planet", sub: "Detail yang bisa dilihat dengan teleskop kecil.", topic: "praktik" },
+      { title: "Refleksi Bulan Keempat", sub: "Dari benda langit ke proses fisika.", topic: "refleksi" },
+      { title: "Ujian Bulan 4", sub: "Menguji pemahaman tata surya dan nebula.", topic: "ujian" }
+    ]
+  },
+  month5: {
+    title: "Bulan 5 · Fisika Bintang & Mekanika",
+    level: "Mahir", levelClass: "lv-mahir",
+    desc: "Menyelami fisika yang mengatur cahaya bintang, gerak orbit, dan spektrum yang mengungkap rahasia.",
+    days: [
+      { title: "Radiasi Benda Hitam", sub: "Model ideal untuk cahaya bintang.", topic: "radiasi" },
+      { title: "Hukum Wien", sub: "Suhu menentukan warna puncak.", topic: "radiasi" },
+      { title: "Hukum Stefan-Boltzmann", sub: "F = σT⁴.", topic: "radiasi" },
+      { title: "Luminositas Bintang", sub: "L = 4πR²σT⁴.", topic: "radiasi" },
+      { title: "Kelas Spektral OBAFGKM", sub: "Mengurutkan bintang berdasarkan suhu.", topic: "spektrum" },
+      { title: "Garis Absorpsi", sub: "Sidik jari unsur kimia bintang.", topic: "spektrum" },
+      { title: "Spektroskopi Astronomi", sub: "Membaca cahaya bintang.", topic: "spektrum" },
+      { title: "Efek Doppler", sub: "Pergeseran warna karena gerak.", topic: "spektrum" },
+      { title: "Magnitudo Semu dan Mutlak", sub: "Modulus jarak m - M.", topic: "magnitudo" },
+      { title: "Formula Pogson", sub: "Hubungan magnitudo dan fluks.", topic: "magnitudo" },
+      { title: "Diagram HR: Pengantar", sub: "Peta bintang paling penting.", topic: "HR" },
+      { title: "Deret Utama", sub: "Tempat bintang menghabiskan hidupnya.", topic: "HR" },
+      { title: "Raksasa Merah", sub: "Bintang yang mengembang di usia tua.", topic: "HR" },
+      { title: "Katai Putih", sub: "Sisa bintang yang mendingin perlahan.", topic: "HR" },
+      { title: "Superraksasa", sub: "Bintang paling terang di alam semesta.", topic: "HR" },
+      { title: "Kesetimbangan Hidrostatik", sub: "Gravitasi vs tekanan gas.", topic: "struktur" },
+      { title: "Reaksi Fusi Proton-Proton", sub: "Sumber energi bintang seperti Matahari.", topic: "struktur" },
+      { title: "Siklus CNO", sub: "Fusi di bintang masif.", topic: "struktur" },
+      { title: "Transport Energi: Radiasi", sub: "Foton berjalan dari inti ke permukaan.", topic: "struktur" },
+      { title: "Transport Energi: Konveksi", sub: "Plasma panas naik, dingin turun.", topic: "struktur" },
+      { title: "Hukum Kepler", sub: "Tiga hukum yang mengatur orbit.", topic: "mekanika" },
+      { title: "Hukum Gravitasi Newton", sub: "F = G m₁ m₂ / r².", topic: "mekanika" },
+      { title: "Elemen Orbit", sub: "Enam parameter yang mendefinisikan orbit.", topic: "mekanika" },
+      { title: "Anomali Orbit", sub: "Sejati, eksentrik, rata-rata.", topic: "mekanika" },
+      { title: "Persamaan Kepler", sub: "M = E - e sin E.", topic: "mekanika" },
+      { title: "Titik Lagrange", sub: "Lima titik stabil dalam sistem dua benda.", topic: "mekanika" },
+      { title: "Batas Roche", sub: "Batas di mana satelit hancur.", topic: "mekanika" },
+      { title: "Pasang Surut", sub: "Efek gravitasi Bulan dan Matahari.", topic: "mekanika" },
+      { title: "Refleksi Bulan Kelima", sub: "Fisika sebagai bahasa alam semesta.", topic: "refleksi" },
+      { title: "Ujian Bulan 5", sub: "Menguji pemahaman fisika bintang.", topic: "ujian" }
+    ]
+  },
+  month6: {
+    title: "Bulan 6 · Galaksi & Kosmologi",
+    level: "Olimpiade", levelClass: "lv-olimpiade",
+    desc: "Dari galaksi kita hingga tepi alam semesta yang teramati, dan misteri yang belum terpecahkan.",
+    days: [
+      { title: "Bima Sakti: Rumah Kita", sub: "Galaksi spiral berbatang.", topic: "galaksi" },
+      { title: "Struktur Bima Sakti", sub: "Piringan, bulge, halo.", topic: "galaksi" },
+      { title: "Pusat Galaksi", sub: "Sagittarius A* dan lubang hitam supermasif.", topic: "galaksi" },
+      { title: "Lengan Spiral", sub: "Mengapa galaksi memiliki lengan.", topic: "galaksi" },
+      { title: "Jenis-Jenis Galaksi", sub: "Klasifikasi Hubble.", topic: "galaksi" },
+      { title: "Galaksi Eliptis", sub: "Bentuk paling sederhana.", topic: "galaksi" },
+      { title: "Galaksi Spiral", sub: "Bentuk paling indah.", topic: "galaksi" },
+      { title: "Galaksi Irregular", sub: "Tanpa bentuk yang jelas.", topic: "galaksi" },
+      { title: "Galaksi Aktif (AGN)", sub: "Inti galaksi yang sangat terang.", topic: "AGN" },
+      { title: "Quasar", sub: "AGN paling terang di alam semesta.", topic: "AGN" },
+      { title: "Blazar", sub: "Quasar dengan jet mengarah ke Bumi.", topic: "AGN" },
+      { title: "Model Unifikasi AGN", sub: "Satu objek, banyak wajah.", topic: "AGN" },
+      { title: "Gugus Galaksi", sub: "Kumpulan galaksi yang terikat gravitasi.", topic: "struktur besar" },
+      { title: "Supergugus", sub: "Struktur terbesar di alam semesta.", topic: "struktur besar" },
+      { title: "Jaring Kosmik", sub: "Filamen, dinding, dan void.", topic: "struktur besar" },
+      { title: "Pembentukan Galaksi", sub: "Hierarkis: dari kecil menjadi besar.", topic: "pembentukan" },
+      { title: "Merger Galaksi", sub: "Ketika dua galaksi bertabrakan.", topic: "pembentukan" },
+      { title: "Hukum Hubble-Lemaître", sub: "v = H₀ d.", topic: "kosmologi" },
+      { title: "Pergeseran Merah Kosmologis", sub: "z = Δλ/λ.", topic: "kosmologi" },
+      { title: "Big Bang: Gagasan Dasar", sub: "Alam semesta memiliki awal.", topic: "kosmologi" },
+      { title: "Radiasi CMB", sub: "Sisa panas Big Bang pada 2,725 K.", topic: "kosmologi" },
+      { title: "Nukleosintesis Big Bang", sub: "Kelimpahan hidrogen dan helium.", topic: "kosmologi" },
+      { title: "Inflasi Kosmik", sub: "Ekspansi eksponensial di awal alam semesta.", topic: "kosmologi" },
+      { title: "Materi Gelap", sub: "Massa tak terlihat yang menahan galaksi.", topic: "materi gelap" },
+      { title: "Energi Gelap", sub: "Mendorong ekspansi alam semesta.", topic: "energi gelap" },
+      { title: "Model ΛCDM", sub: "Model kosmologi standar.", topic: "kosmologi" },
+      { title: "Tangga Jarak Kosmik", sub: "Dari paralaks hingga supernova.", topic: "kosmologi" },
+      { title: "Eksoplanet: Dunia Lain", sub: "Planet di sekitar bintang lain.", topic: "eksoplanet" },
+      { title: "Zona Layak Huni", sub: "Wilayah di mana air bisa cair.", topic: "eksoplanet" },
+      { title: "Masa Depan Alam Semesta", sub: "Big Freeze dan takdir akhir.", topic: "kosmologi" }
+    ]
+  }
+};
 
 /* =========================================================
-   APLIKASI
+   STATE
    ========================================================= */
-let currentDay = 0;
-let progress = { completed: [], quiz: {} };
+let state = {
+  completed: [],
+  quiz: {},
+  currentDay: 1
+};
 
-function init() {
-  loadProgress();
-  buildChapterTabs();
-  renderDay(0);
-  renderStars();
-  updateProgressUI();
-}
-
-function loadProgress() {
+function loadState() {
   try {
-    const saved = localStorage.getItem('bintang_cerita_progress');
-    if (saved) progress = JSON.parse(saved);
+    const saved = localStorage.getItem('bintang_cerita_6bulan');
+    if (saved) state = JSON.parse(saved);
   } catch(e) {}
-  if (!progress.completed) progress.completed = [];
-  if (!progress.quiz) progress.quiz = {};
+  if (!state.completed) state.completed = [];
+  if (!state.quiz) state.quiz = {};
+  if (!state.currentDay) state.currentDay = 1;
 }
 
-function saveProgress() {
-  localStorage.setItem('bintang_cerita_progress', JSON.stringify(progress));
+function saveState() {
+  localStorage.setItem('bintang_cerita_6bulan', JSON.stringify(state));
 }
 
-function buildChapterTabs() {
-  const tabsEl = document.getElementById('chapterTabs');
-  tabsEl.innerHTML = '';
-  const chapters = [...new Set(stories.map(s => s.chapter))];
-  chapters.forEach((chap, i) => {
+/* =========================================================
+   RENDER HELPERS
+   ========================================================= */
+function getAllDaysFlat() {
+  const arr = [];
+  const months = ['month1','month2','month3','month4','month5','month6'];
+  months.forEach((mKey, mIdx) => {
+    curriculum[mKey].days.forEach((d, dIdx) => {
+      arr.push({
+        ...d,
+        day: mIdx * 30 + dIdx + 1,
+        monthIndex: mIdx,
+        monthKey: mKey,
+        monthTitle: curriculum[mKey].title,
+        monthLevel: curriculum[mKey].level,
+        monthLevelClass: curriculum[mKey].levelClass
+      });
+    });
+  });
+  return arr;
+}
+
+const ALL_DAYS = getAllDaysFlat();
+
+/* Bangun narasi dinamis untuk setiap hari */
+function buildStoryBody(dayData) {
+  const { title, sub, topic, day } = dayData;
+
+  // Basis narasi: paragraf pembuka generik yang dipersonalisasi
+  const topicNarratives = {
+    pengantar: {
+      opening: "Bayangkan Anda berdiri di halaman rumah pada malam yang cerah, jauh dari lampu kota. Di atas kepala, ribuan titik cahaya bertaburan. Ada yang berkelip, ada yang tenang.",
+      body: "Bintang-bintang ini telah memandu manusia selama ribuan tahun — untuk navigasi, pertanian, dan renungan. Yang menakjubkan, cahaya yang Anda lihat malam ini mungkin sudah berjalan ratusan atau ribuan tahun sebelum mencapai mata Anda.",
+      insight: "Anda tidak sedang melihat langit 'sekarang'. Anda sedang melihat masa lalu alam semesta."
+    },
+    koordinat: {
+      opening: "Kalau saya bertanya, 'Di mana rumahmu?', Anda akan menjawab dengan alamat. Langit juga butuh alamat seperti itu — kalau tidak, kita akan tersesat di antara miliaran bintang.",
+      body: "Ada dua cara memberi alamat pada sebuah bintang: dari sudut pandang kita (sistem horizon: ketinggian dan azimuth) atau dari bola langit itu sendiri (sistem ekuator: deklinasi dan asensio rekta).",
+      insight: "Sistem horizon cepat berubah karena rotasi Bumi. Sistem ekuator tetap sepanjang masa — itulah sebabnya astronom menyukainya."
+    },
+    waktu: {
+      opening: "Pernahkah Anda memperhatikan bahwa bintang yang muncul awal Januari berbeda dengan awal Juli? Itu bukan kebetulan — Bumi punya dua macam 'hari'.",
+      body: "Hari Matahari (24 jam) adalah waktu dari satu tengah hari ke tengah hari berikutnya. Hari Sideris (23 jam 56 menit 4 detik) adalah rotasi Bumi relatif terhadap bintang. Selisih 4 menit per hari inilah yang membuat langit berubah sepanjang tahun.",
+      insight: "Perubahan kecil yang konsisten — 4 menit sehari — bisa menghasilkan perubahan besar dalam setahun."
+    },
+    rasi: {
+      opening: "Rasi bintang bukan sekadar gambar imajiner. Mereka adalah penanda waktu, penunjuk arah, dan saksi perubahan langit sepanjang tahun.",
+      body: "Karena Bumi mengelilingi Matahari, posisi Matahari terhadap latar belakang bintang bergeser ~1° per hari. Akibatnya, rasi bintang yang terlihat di malam hari terus berubah sepanjang tahun.",
+      insight: "Langit adalah kalender raksasa yang bekerja tanpa henti."
+    },
+    musim: {
+      opening: "Mengapa ada musim? Jawabannya bukan karena Bumi lebih dekat ke Matahari, tetapi karena sumbu Bumi miring 23,5°.",
+      body: "Kemiringan ini membuat belahan Bumi utara dan selatan menerima sinar Matahari pada sudut yang berbeda sepanjang tahun. Titik ekuinoks dan solstis menandai transisi musim.",
+      insight: "Musim adalah tarian antara kemiringan Bumi dan cahaya Matahari."
+    },
+    gerak: {
+      opening: "Semua yang Anda lihat di langit bergerak — bukan karena bintang berpindah, tetapi karena Bumi kita bergerak.",
+      body: "Rotasi Bumi membuat langit berputar dari timur ke barat. Revolusi Bumi mengubah posisi bintang sepanjang tahun. Dan ada juga gerakan yang lebih halus: presesi sumbu, aberrasi cahaya, dan gerak diri bintang.",
+      insight: "Tidak ada yang benar-benar diam di alam semesta."
+    },
+    bintang: {
+      opening: "Setiap bintang adalah reaktor fusi raksasa yang berjuang melawan gravitasinya sendiri. Warnanya, kecerahannya, dan hidupnya ditentukan oleh massa.",
+      body: "Bintang panas berwarna biru, bintang dingin berwarna merah. Bintang masif hidup singkat dan mati dramatis; bintang bermassa rendah hidup lama dan mati tenang.",
+      insight: "Warna bintang adalah kartu identitas suhunya."
+    },
+    bulan: {
+      opening: "Bulan adalah tetangga paling dekat kita di ruang angkasa — dan yang paling akrab. Namun tetap menyimpan misteri.",
+      body: "Fase Bulan terbentuk karena posisinya terhadap Matahari dan Bumi. Gerhana terjadi ketika tiga benda ini berada dalam satu garis. Bulan juga menyebabkan pasang surut laut di Bumi.",
+      insight: "Yang paling akrab kadang justru yang paling menarik untuk dipelajari."
+    },
+    planet: {
+      opening: "Di antara ribuan bintang, ada beberapa titik yang tidak berkelip. Mereka adalah planet — anggota tata surya kita.",
+      body: "Planet tampak sebagai cakram kecil karena jaraknya jauh lebih dekat daripada bintang. Gerakan mereka di langit mengikuti jalur ekliptika.",
+      insight: "Mengamati planet adalah cara paling langsung untuk menyadari bahwa Bumi hanyalah salah satu dari banyak dunia."
+    },
+    tata_surya: {
+      opening: "Tata Surya kita adalah sistem yang teratur: Matahari di pusat, delapan planet mengorbit, dan miliaran benda kecil di antaranya.",
+      body: "Planet terbagi menjadi dua kelompok: terestrial (berbatu, kecil) dan Jovian (raksasa gas/es). Di luar Neptunus terbentang Sabuk Kuiper dan Awan Oort, sumber komet.",
+      insight: "Keteraturan Tata Surya mencerminkan hukum gravitasi yang bekerja sejak kelahirannya."
+    },
+    matahari: {
+      opening: "Matahari adalah bintang kita — sumber energi bagi seluruh kehidupan di Bumi. Namun ia juga objek astronomi yang penuh aktivitas.",
+      body: "Di permukaannya ada bintik matahari, di atmosfernya ada prominensa, dan dari korona nya mengalir angin Matahari yang bisa memicu aurora di Bumi.",
+      insight: "Matahari bukan bola api yang tenang. Ia adalah bintang yang hidup dan berdenyut."
+    },
+    nebula: {
+      opening: "Nebula adalah awan gas dan debu antar bintang. Mereka bisa memancarkan cahaya, memantulkannya, atau justru menghalanginya.",
+      body: "Ada nebula emisi (memancarkan cahaya sendiri), nebula refleksi (memantulkan cahaya), nebula gelap (menghalangi cahaya), planetary nebula (sisa bintang sekarat), dan sisa supernova (puing ledakan bintang).",
+      insight: "Nebula adalah bukti bahwa alam semesta terus mendaur ulang materi."
+    },
+    gugus: {
+      opening: "Bintang tidak selalu sendiri. Banyak yang lahir dan hidup dalam gugus — kumpulan bintang yang terikat gravitasi.",
+      body: "Gugus terbuka berisi bintang muda di piringan galaksi. Gugus bola berisi bintang tua di halo galaksi. Keduanya memberi petunjuk tentang sejarah Bima Sakti.",
+      insight: "Dengan mempelajari gugus, kita bisa membaca umur dan evolusi galaksi."
+    },
+    radiasi: {
+      opening: "Bintang adalah benda hitam yang sangat baik. Artinya, warnanya hanya bergantung pada suhu — bukan komposisi atau ukurannya.",
+      body: "Hukum Wien menghubungkan suhu dengan panjang gelombang puncak. Hukum Stefan-Boltzmann menghubungkan suhu dengan energi total. Dengan keduanya, kita bisa mengukur bintang dari jauh.",
+      insight: "Dengan tiga rumus sederhana, kita bisa mengetahui properti bintang miliaran kilometer jauhnya."
+    },
+    spektrum: {
+      opening: "Cahaya bintang adalah surat yang datang membawa pesan. Untuk membacanya, kita perlu membedahnya menjadi spektrum.",
+      body: "Garis absorpsi dalam spektrum mengungkap komposisi kimia bintang. Pergeseran garis mengungkap kecepatannya. Inilah dasar spektroskopi astronomi.",
+      insight: "Cahaya adalah utusan paling setia dari bintang-bintang."
+    },
+    magnitudo: {
+      opening: "Astronom mengukur kecerahan bintang dengan skala terbalik: semakin kecil angkanya, semakin terang bintangnya.",
+      body: "Magnitudo semu (m) mengukur kecerahan tampak. Magnitudo mutlak (M) mengukur kecerahan pada jarak standar 10 pc. Modulus jarak menghubungkan keduanya.",
+      insight: "Skala logaritmik memungkinkan kita membandingkan kecerahan dari bulan hingga quasar dalam satu sistem."
+    },
+    HR: {
+      opening: "Diagram Hertzsprung-Russell adalah peta bintang — mungkin alat paling penting dalam astrofisika.",
+      body: "Diagram ini memplot luminositas terhadap suhu. Sebagian besar bintang berada di deret utama. Ada juga raksasa merah, superraksasa, dan katai putih.",
+      insight: "Dengan menempatkan bintang di diagram HR, kita bisa membaca umur, ukuran, dan takdirnya."
+    },
+    struktur: {
+      opening: "Bagaimana bintang bisa tetap stabil selama miliaran tahun? Jawabannya adalah kesetimbangan hidrostatik.",
+      body: "Gravitasi menarik materi ke dalam, tekanan gas dan radiasi mendorongnya keluar. Keseimbangan inilah yang membuat bintang stabil di deret utama.",
+      insight: "Bintang adalah pertempuran abadi antara gravitasi dan tekanan."
+    },
+    mekanika: {
+      opening: "Gerak benda langit diatur oleh hukum Kepler dan Newton. Dari orbit planet hingga gerak galaksi, semuanya mengikuti aturan yang sama.",
+      body: "Hukum Kepler menjelaskan bentuk dan kecepatan orbit. Hukum Newton menjelaskan mengapa. Bersama-sama, keduanya menjadi dasar mekanika langit.",
+      insight: "Alam semesta bergerak dengan keteraturan matematis yang bisa kita pahami."
+    },
+    galaksi: {
+      opening: "Bima Sakti adalah rumah kita — galaksi spiral berbatang dengan ratusan miliar bintang.",
+      body: "Ia memiliki piringan, bulge pusat, halo, dan lubang hitam supermasif di intinya. Matahari kita berada sekitar 26.000 tahun cahaya dari pusat.",
+      insight: "Kita hidup di pinggiran galaksi yang indah, dan baru mulai memahaminya."
+    },
+    AGN: {
+      opening: "Beberapa galaksi memiliki inti yang sangat terang — lebih terang dari seluruh galaksi biasa. Ini adalah Active Galactic Nuclei (AGN).",
+      body: "Sumber energinya adalah lubang hitam supermasif yang menelan materi. Perbedaan penampakan (quasar, blazar, Seyfert) terutama karena sudut pandang kita.",
+      insight: "Satu objek bisa tampak sangat berbeda tergantung dari mana kita melihatnya."
+    },
+    kosmologi: {
+      opening: "Alam semesta mengembang. Ini bukan teori — ini fakta yang diamati oleh Edwin Hubble pada 1929.",
+      body: "Galaksi-galaksi menjauh dari kita, dan semakin jauh, semakin cepat. Ini berarti ruang itu sendiri mengembang. Jika kita memundurkan waktu, kita sampai pada Big Bang.",
+      insight: "Kita hidup di alam semesta yang memiliki awal — dan mungkin juga akhir."
+    },
+    materi_gelap: {
+      opening: "Ada sesuatu di alam semesta yang tidak bisa kita lihat, tetapi jelas memengaruhi gravitasi. Kita menyebutnya materi gelap.",
+      body: "Kurva rotasi galaksi menunjukkan galaksi berputar terlalu cepat untuk massa tampaknya. Materi gelap — sekitar 27% dari isi alam semesta — menjelaskan ini.",
+      insight: "Kita tahu materi gelap ada. Kita belum tahu apa itu."
+    },
+    energi_gelap: {
+      opening: "Pada 1998, astronom menemukan sesuatu yang mengejutkan: ekspansi alam semesta tidak melambat, tetapi justru semakin cepat.",
+      body: "Ada energi misterius yang melawan gravitasi dan mendorong alam semesta mengembang. Kita menyebutnya energi gelap — sekitar 68% dari isi alam semesta.",
+      insight: "Misteri terbesar alam semesta mungkin masih menunggu untuk dipecahkan."
+    },
+    eksoplanet: {
+      opening: "Sejak 1995, kita telah menemukan lebih dari 5.000 planet di sekitar bintang lain. Kita menyebutnya eksoplanet.",
+      body: "Metode transit dan kecepatan radial adalah dua cara utama mendeteksi eksoplanet. Zona layak huni adalah wilayah di mana air bisa berwujud cair.",
+      insight: "Pertanyaan 'apakah kita sendiri?' semakin mendekati jawaban."
+    },
+    ujian: {
+      opening: "Hari ini bukan cerita baru. Hari ini adalah waktu untuk melihat kembali — merenungkan apa yang sudah kita pelajari.",
+      body: "Semua konsep yang tampak rumit sebenarnya saling terhubung. Koordinat langit, fisika bintang, evolusi, dan kosmologi — semuanya adalah bagian dari satu cerita besar.",
+      insight: "Belajar bukan tentang menghafal, tetapi tentang menghubungkan."
+    },
+    refleksi: {
+      opening: "Setiap bulan, kita berhenti sejenak untuk merenungkan perjalanan. Bukan untuk menguji, tetapi untuk mensyukuri.",
+      body: "Kita sudah menempuh perjalanan panjang — dari titik-titik cahaya di langit hingga struktur terdalam alam semesta. Setiap hari adalah satu langkah kecil.",
+      insight: "Perjalanan seribu tahun cahaya dimulai dengan satu malam menatap langit."
+    },
+    default: {
+      opening: "Setiap hari dalam program ini adalah satu langkah kecil menuju pemahaman yang lebih dalam tentang alam semesta.",
+      body: "Kita akan menjelajahi konsep ini dengan sabar — tidak terburu-buru, karena astronomi adalah ilmu yang mengajarkan kesabaran.",
+      insight: "Setiap konsep yang tampak rumit pada akhirnya adalah cerita tentang hubungan antar hal."
+    }
+  };
+
+  const narrative = topicNarratives[topic] || topicNarratives.default;
+
+  return `
+    <p class="drop-cap">${narrative.opening}</p>
+    <p>${narrative.body}</p>
+    <p>Hari ini kita akan menyelami lebih dalam: <em>${title}</em>. ${sub} Kita akan melihat bagaimana konsep ini terhubung dengan apa yang sudah kita pelajari sebelumnya — dan mengapa ia penting untuk memahami alam semesta.</p>
+    <div class="analogy-box">
+      <span class="label">Analogi</span>
+      <p class="mb-0">Setiap konsep dalam astronomi seperti anak tangga. Tidak ada yang bisa melompat langsung ke puncak. Tetapi dengan melangkah satu per satu — 5 menit setiap hari — Anda akan sampai ke tempat yang tidak pernah Anda bayangkan sebelumnya.</p>
+    </div>
+    <div class="quote-box">
+      <i class="fa-solid fa-feather-pointed text-star-400 mr-2"></i>
+      ${narrative.insight}
+    </div>
+    <p>Materi lengkap untuk hari ini akan terus diperkaya seiring program berjalan. Untuk saat ini, ambil waktu 5 menit untuk benar-benar memahami gagasan utamanya. Jangan terburu-buru. Astronomi adalah ilmu tentang waktu yang sangat panjang — dan kita pun boleh belajar dengan sabar.</p>
+  `;
+}
+
+/* Bangun kuis dinamis */
+function buildQuiz(dayData) {
+  return [
+    {
+      q: `Apa gagasan utama dari "${dayData.title}"?`,
+      opts: [
+        "Konsep ini tidak penting untuk astronomi",
+        "Konsep ini adalah salah satu fondasi penting dalam memahami alam semesta",
+        "Konsep ini hanya berlaku untuk bintang tertentu",
+        "Konsep ini sudah usang dan tidak dipakai lagi"
+      ],
+      ans: 1,
+      exp: `Setiap konsep dalam kurikulum ini dipilih karena menjadi fondasi — tanpa memahaminya, konsep-konsep berikutnya akan sulit dipahami.`
+    },
+    {
+      q: `Mengapa kita mempelajari topik ini pada hari ke-${dayData.day}?`,
+      opts: [
+        "Karena kebetulan",
+        "Karena topik ini membutuhkan pemahaman dari hari-hari sebelumnya",
+        "Karena topik ini paling mudah",
+        "Karena topik ini tidak berhubungan dengan yang lain"
+      ],
+      ans: 1,
+      exp: `Kurikulum ini disusun secara berurutan. Setiap hari membangun pemahaman dari hari-hari sebelumnya, seperti anak tangga.`
+    }
+  ];
+}
+
+/* =========================================================
+   RENDER UI
+   ========================================================= */
+function switchMainTab(name) {
+  const tabs = ['cerita','bola','teleskop','hr','peta'];
+  tabs.forEach(t => {
+    document.getElementById('view-' + t).classList.toggle('hidden', t !== name);
+    document.getElementById('tab-' + t).classList.toggle('active', t === name);
+  });
+  if (name === 'bola') calculateCelestial();
+  if (name === 'teleskop') updateTelescopeSim();
+  if (name === 'hr') updateHRLab();
+  if (name === 'peta') renderProgressGrid();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderMonthTabs() {
+  const el = document.getElementById('monthTabs');
+  el.innerHTML = '';
+  const months = [
+    { key: 'month1', label: 'Bulan 1 · Dasar' },
+    { key: 'month2', label: 'Bulan 2 · Astrometri' },
+    { key: 'month3', label: 'Bulan 3 · Teleskop' },
+    { key: 'month4', label: 'Bulan 4 · Tata Surya' },
+    { key: 'month5', label: 'Bulan 5 · Fisika' },
+    { key: 'month6', label: 'Bulan 6 · Kosmologi' }
+  ];
+  months.forEach((m, idx) => {
     const btn = document.createElement('button');
-    btn.className = 'chapter-tab';
-    btn.textContent = chap;
+    btn.className = 'month-tab';
+    btn.textContent = m.label;
     btn.onclick = () => {
-      const idx = stories.findIndex(s => s.chapter === chap);
-      if (idx >= 0) renderDay(idx);
+      const startDay = idx * 30 + 1;
+      renderDay(startDay);
     };
-    tabsEl.appendChild(btn);
+    el.appendChild(btn);
   });
 }
 
-function renderDay(index) {
-  if (index < 0 || index >= stories.length) return;
-  currentDay = index;
-  const s = stories[index];
-
-  // Update chapter tabs active
-  document.querySelectorAll('#chapterTabs .chapter-tab').forEach(t => {
-    t.classList.toggle('active', t.textContent === s.chapter);
+function renderDayPills() {
+  const el = document.getElementById('dayPills');
+  el.innerHTML = '';
+  ALL_DAYS.forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = 'day-pill';
+    if (state.completed.includes(d.day)) btn.classList.add('done');
+    if (d.day === state.currentDay) btn.classList.add('active');
+    btn.textContent = d.day;
+    btn.title = d.title;
+    btn.onclick = () => renderDay(d.day);
+    el.appendChild(btn);
   });
+}
+
+function renderDay(dayNum) {
+  if (dayNum < 1 || dayNum > TOTAL_DAYS) return;
+  state.currentDay = dayNum;
+  saveState();
+
+  const dayData = ALL_DAYS[dayNum - 1];
+  const monthKey = dayData.monthKey;
+  const monthInfo = curriculum[monthKey];
 
   // Header
   const chip = document.getElementById('levelChip');
-  chip.className = 'level-chip ' + s.levelClass;
-  chip.textContent = s.level;
-  document.getElementById('storyTitle').textContent = s.title;
-  document.getElementById('storySubtitle').textContent = s.subtitle;
+  chip.className = 'level-chip ' + monthInfo.levelClass;
+  chip.textContent = monthInfo.level;
+
+  document.getElementById('monthChip').textContent = monthInfo.title;
+  document.getElementById('storyTitle').textContent = `Hari ${dayNum}: ${dayData.title}`;
+  document.getElementById('storySubtitle').textContent = dayData.sub;
 
   // Body
-  document.getElementById('storyBody').innerHTML = s.body;
+  document.getElementById('storyBody').innerHTML = buildStoryBody(dayData);
 
   // Reflection
-  document.getElementById('reflectionText').textContent = s.reflection;
+  document.getElementById('reflectionText').textContent = monthInfo.desc;
+
+  // Inline sim hint
+  const inlineSim = document.getElementById('inlineSim');
+  const simTopics = ['koordinat','paralaks','trigono','optik','resolusi','radiasi','HR','mekanika'];
+  if (simTopics.includes(dayData.topic)) {
+    inlineSim.classList.remove('hidden');
+    let simName = '';
+    if (['koordinat','trigono'].includes(dayData.topic)) simName = 'Simulasi Bola Langit';
+    else if (['optik','resolusi'].includes(dayData.topic)) simName = 'Simulasi Teleskop';
+    else if (['radiasi','HR'].includes(dayData.topic)) simName = 'Lab Diagram HR';
+    else simName = 'Simulasi terkait';
+    document.getElementById('inlineSimDesc').innerHTML = `Topik hari ini berhubungan dengan <strong>${simName}</strong>. Buka tab simulasi untuk bereksperimen langsung.`;
+  } else {
+    inlineSim.classList.add('hidden');
+  }
 
   // Quiz
-  renderQuiz(s);
-
-  // Nav
-  document.getElementById('btnPrev').disabled = index === 0;
-  document.getElementById('btnNext').disabled = index === stories.length - 1;
-  document.getElementById('counterText').textContent = `${index + 1} / ${stories.length}`;
+  renderQuiz(buildQuiz(dayData), dayData.day);
 
   // Status
-  updateDayStatus(s.day);
+  updateDayStatus(dayData.day);
 
-  // Progress bar
-  const percent = Math.round(((index + 1) / stories.length) * 100);
-  document.getElementById('progressFill').style.width = percent + '%';
-  document.getElementById('progressLabel').textContent = `Hari ${s.day} dari ${stories.length}`;
-  document.getElementById('progressPercent').textContent = percent + '%';
+  // Nav
+  document.getElementById('btnPrev').disabled = dayNum === 1;
+  document.getElementById('btnNext').disabled = dayNum === TOTAL_DAYS;
+  document.getElementById('counterText').textContent = `${dayNum} / ${TOTAL_DAYS}`;
 
-  // Render math
+  // Progress
+  const pct = Math.round((dayNum / TOTAL_DAYS) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `Hari ${dayNum} dari ${TOTAL_DAYS}`;
+  document.getElementById('progressPercent').textContent = pct + '%';
+
+  // Update month tabs & day pills
+  renderMonthTabs();
+  document.querySelectorAll('#monthTabs .month-tab').forEach((btn, idx) => {
+    btn.classList.toggle('active', Math.floor((dayNum - 1) / 30) === idx);
+  });
+  renderDayPills();
+
+  // KaTeX
   setTimeout(() => {
     if (window.renderMathInElement) {
       renderMathInElement(document.getElementById('storyCard'), {
@@ -1211,42 +1103,36 @@ function renderDay(index) {
     }
   }, 30);
 
-  // Scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function renderQuiz(story) {
+function renderQuiz(quiz, dayNum) {
   const container = document.getElementById('quizContainer');
   container.innerHTML = '';
-  story.quiz.forEach((q, qi) => {
+  quiz.forEach((q, qi) => {
     const box = document.createElement('div');
     box.className = 'mb-6';
     box.innerHTML = `<p class="font-semibold text-sm text-slate-200 mb-3">${qi + 1}. ${q.q}</p>`;
-
     const optsWrap = document.createElement('div');
     q.opts.forEach((opt, oi) => {
       const btn = document.createElement('button');
       btn.className = 'quiz-opt';
       btn.textContent = String.fromCharCode(65 + oi) + '. ' + opt;
       btn.onclick = () => {
-        // Disable all
         optsWrap.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
-        if (oi === q.ans) {
-          btn.classList.add('correct');
-        } else {
+        if (oi === q.ans) btn.classList.add('correct');
+        else {
           btn.classList.add('wrong');
           optsWrap.querySelectorAll('.quiz-opt')[q.ans].classList.add('correct');
         }
-        // Show feedback
         const fb = document.createElement('div');
         fb.className = 'feedback show ' + (oi === q.ans ? 'ok' : 'no');
         fb.innerHTML = (oi === q.ans ? '✓ Tepat. ' : '✗ Belum tepat. ') + q.exp;
         box.appendChild(fb);
 
-        // Save to progress
-        if (!progress.quiz[story.day]) progress.quiz[story.day] = {};
-        progress.quiz[story.day][qi] = (oi === q.ans ? 1 : 0);
-        saveProgress();
+        if (!state.quiz[dayNum]) state.quiz[dayNum] = {};
+        state.quiz[dayNum][qi] = (oi === q.ans ? 1 : 0);
+        saveState();
       };
       optsWrap.appendChild(btn);
     });
@@ -1256,17 +1142,16 @@ function renderQuiz(story) {
 }
 
 function updateDayStatus(day) {
-  const isDone = progress.completed.includes(day);
+  const isDone = state.completed.includes(day);
   const statusEl = document.getElementById('dayStatus');
   const btn = document.getElementById('btnComplete');
-
   if (isDone) {
-    statusEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i><span class="text-emerald-300 text-sm">Hari ini sudah selesai dipelajari</span>`;
+    statusEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i><span class="text-emerald-300 text-sm">Hari ini sudah selesai</span>`;
     btn.innerHTML = `<i class="fa-solid fa-check"></i> Selesai`;
     btn.className = 'px-5 py-2.5 rounded-xl bg-slate-700 text-slate-300 font-semibold text-sm flex items-center gap-2 cursor-default';
     btn.onclick = null;
   } else {
-    statusEl.innerHTML = `<i class="fa-regular fa-circle text-slate-500"></i><span class="text-slate-400 text-sm">Hari ini belum ditandai selesai</span>`;
+    statusEl.innerHTML = `<i class="fa-regular fa-circle text-slate-500"></i><span class="text-slate-400 text-sm">Belum ditandai selesai</span>`;
     btn.innerHTML = `<i class="fa-solid fa-check-circle"></i> Tandai Selesai`;
     btn.className = 'px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-sm shadow-lg shadow-emerald-600/20 transition flex items-center gap-2';
     btn.onclick = markComplete;
@@ -1274,72 +1159,402 @@ function updateDayStatus(day) {
 }
 
 function markComplete() {
-  const day = stories[currentDay].day;
-  if (!progress.completed.includes(day)) {
-    progress.completed.push(day);
-    saveProgress();
+  const day = state.currentDay;
+  if (!state.completed.includes(day)) {
+    state.completed.push(day);
+    saveState();
     updateDayStatus(day);
-    updateProgressUI();
-
-    // Auto next after short delay if not last
-    if (currentDay < stories.length - 1) {
-      setTimeout(() => changeDay(1), 600);
-    }
+    renderDayPills();
+    if (day < TOTAL_DAYS) setTimeout(() => renderDay(day + 1), 500);
   }
 }
 
 function changeDay(delta) {
-  const newIndex = currentDay + delta;
-  if (newIndex >= 0 && newIndex < stories.length) {
-    renderDay(newIndex);
+  const next = state.currentDay + delta;
+  if (next >= 1 && next <= TOTAL_DAYS) renderDay(next);
+}
+
+function openSimFromStory() {
+  const dayData = ALL_DAYS[state.currentDay - 1];
+  if (['koordinat','trigono'].includes(dayData.topic)) switchMainTab('bola');
+  else if (['optik','resolusi'].includes(dayData.topic)) switchMainTab('teleskop');
+  else if (['radiasi','HR'].includes(dayData.topic)) switchMainTab('hr');
+  else switchMainTab('bola');
+}
+
+/* =========================================================
+   SIMULASI: BOLA LANGIT
+   ========================================================= */
+function applyStarPreset() {
+  const v = document.getElementById('starPreset').value;
+  const ra = document.getElementById('starRA');
+  const dec = document.getElementById('starDec');
+  if (v === 'sirius') { ra.value = 6.75; dec.value = -16.7; }
+  else if (v === 'canopus') { ra.value = 6.40; dec.value = -52.7; }
+  else if (v === 'betelgeuse') { ra.value = 5.92; dec.value = 7.4; }
+  else if (v === 'vega') { ra.value = 18.62; dec.value = 38.8; }
+  else if (v === 'polaris') { ra.value = 2.53; dec.value = 89.2; }
+  else if (v === 'acrux') { ra.value = 12.44; dec.value = -63.1; }
+  calculateCelestial();
+}
+
+function calculateCelestial() {
+  const phi = parseFloat(document.getElementById('obsLat').value) * Math.PI / 180;
+  const lst = parseFloat(document.getElementById('obsLST').value);
+  const ra = parseFloat(document.getElementById('starRA').value);
+  const dec = parseFloat(document.getElementById('starDec').value) * Math.PI / 180;
+
+  let haH = lst - ra;
+  while (haH < 0) haH += 24;
+  while (haH >= 24) haH -= 24;
+  const haR = (haH * 15) * Math.PI / 180;
+
+  const sinH = Math.sin(phi) * Math.sin(dec) + Math.cos(phi) * Math.cos(dec) * Math.cos(haR);
+  const altR = Math.asin(Math.max(-1, Math.min(1, sinH)));
+  const altD = altR * 180 / Math.PI;
+
+  let cosA = (Math.sin(dec) - Math.sin(phi) * Math.sin(altR)) / (Math.cos(phi) * Math.cos(altR));
+  cosA = Math.max(-1, Math.min(1, cosA));
+  let azR = Math.acos(cosA);
+  if (Math.sin(haR) > 0) azR = 2 * Math.PI - azR;
+  const azD = azR * 180 / Math.PI;
+
+  const hH = Math.floor(haH);
+  const hM = Math.floor((haH - hH) * 60);
+  document.getElementById('outHA').textContent = `${String(hH).padStart(2,'0')}h ${String(hM).padStart(2,'0')}m`;
+  document.getElementById('outAlt').textContent = `${altD >= 0 ? '+' : ''}${altD.toFixed(1)}°`;
+  document.getElementById('outAz').textContent = `${azD.toFixed(1)}°`;
+  const vis = document.getElementById('outVisibility');
+  if (altD > 0) {
+    vis.textContent = 'Tampak ✓';
+    vis.className = 'text-sm font-bold text-emerald-400 mt-1';
+  } else {
+    vis.textContent = 'Di bawah horizon ✗';
+    vis.className = 'text-sm font-bold text-rose-400 mt-1';
   }
+
+  drawCelestial(altD, azD, phi * 180 / Math.PI);
 }
 
-function updateProgressUI() {
-  const percent = Math.round((progress.completed.length / stories.length) * 100);
-  // Progress bar sudah di-update di renderDay, tapi untuk keseluruhan hari yang selesai:
-  // Kita bisa tampilkan info tambahan jika perlu
+function drawCelestial(altD, azD, latD) {
+  const c = document.getElementById('celestialCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const w = c.width = c.clientWidth;
+  const h = c.height = c.clientHeight;
+  const cx = w/2, cy = h/2, r = Math.min(w,h) * 0.38;
+
+  ctx.clearRect(0,0,w,h);
+
+  // Outer circle
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2);
+  ctx.strokeStyle = '#334155'; ctx.lineWidth = 2; ctx.stroke();
+
+  // Horizon
+  ctx.beginPath(); ctx.ellipse(cx, cy, r, r*0.28, 0, 0, Math.PI*2);
+  ctx.strokeStyle = '#10B981'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = 'rgba(16,185,129,0.06)'; ctx.fill();
+
+  // Zenith
+  ctx.beginPath(); ctx.arc(cx, cy - r, 5, 0, Math.PI*2);
+  ctx.fillStyle = '#06B6D4'; ctx.fill();
+  ctx.fillStyle = '#06B6D4'; ctx.font = 'bold 11px Inter';
+  ctx.fillText('Zenith', cx - 20, cy - r - 10);
+
+  // Equator
+  ctx.beginPath();
+  const eqTilt = (90 - latD) * Math.PI/180;
+  ctx.ellipse(cx, cy, r, Math.abs(r * Math.sin(eqTilt) * 0.35), 0, 0, Math.PI*2);
+  ctx.strokeStyle = 'rgba(168,85,247,0.5)'; ctx.setLineDash([4,4]); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Star
+  const azR = azD * Math.PI/180;
+  const altR = altD * Math.PI/180;
+  const sx = cx + r * Math.cos(altR) * Math.sin(azR);
+  const sy = cy - r * Math.sin(altR) * 0.85 + r * Math.cos(altR) * Math.cos(azR) * 0.18;
+
+  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(sx, sy);
+  ctx.strokeStyle = 'rgba(245,158,11,0.4)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+  ctx.beginPath(); ctx.arc(sx, sy, altD >= 0 ? 7 : 4, 0, Math.PI*2);
+  ctx.fillStyle = altD >= 0 ? '#F59E0B' : '#64748B';
+  ctx.shadowColor = altD >= 0 ? '#F59E0B' : 'transparent';
+  ctx.shadowBlur = 12; ctx.fill(); ctx.shadowBlur = 0;
+
+  ctx.fillStyle = '#FFF'; ctx.font = '11px Inter';
+  ctx.fillText(`Bintang (h=${altD.toFixed(0)}°)`, sx + 10, sy - 6);
 }
 
-/* Bintang berkelip di latar belakang */
-function renderStars() {
-  const canvas = document.getElementById('starfield');
-  const ctx = canvas.getContext('2d');
-  let w = canvas.width = window.innerWidth;
-  let h = canvas.height = window.innerHeight;
+/* =========================================================
+   SIMULASI: TELESKOP
+   ========================================================= */
+function updateTelescopeSim() {
+  const D = parseFloat(document.getElementById('sliderScopeD').value);
+  const fo = parseFloat(document.getElementById('sliderScopeFo').value);
+  const fe = parseFloat(document.getElementById('sliderScopeFe').value);
+  const target = document.getElementById('scopeTarget').value;
 
-  window.addEventListener('resize', () => {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
+  document.getElementById('valScopeD').textContent = `${D} mm`;
+  document.getElementById('valScopeFo').textContent = `${fo} mm`;
+  document.getElementById('valScopeFe').textContent = `${fe} mm`;
+
+  const mag = fo/fe;
+  const fR = fo/D;
+  const ray = 138/D;
+  const ep = D/mag;
+  const lgp = Math.pow(D/7, 2);
+
+  document.getElementById('outMag').textContent = `${mag.toFixed(0)}x`;
+  document.getElementById('outFRatio').textContent = `f/${fR.toFixed(1)}`;
+  document.getElementById('outRayleigh').textContent = `${ray.toFixed(2)}"`;
+  document.getElementById('outExitPupil').textContent = `${ep.toFixed(2)} mm`;
+  document.getElementById('outLGP').textContent = `${lgp.toFixed(0)}x dari mata`;
+
+  const fov = 52/mag;
+  document.getElementById('fovLabelText').textContent = `~${fov.toFixed(2)}°`;
+
+  drawTelescope(target, mag, D, fov);
+}
+
+function drawTelescope(target, mag, D, fov) {
+  const c = document.getElementById('telescopeCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const w = c.width = c.clientWidth;
+  const h = c.height = c.clientHeight;
+  const cx = w/2, cy = h/2;
+
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = '#050714'; ctx.fillRect(0,0,w,h);
+
+  // Background stars
+  for (let i = 0; i < 40; i++) {
+    const sx = (Math.sin(i*99+mag)*0.5+0.5)*w;
+    const sy = (Math.cos(i*33+mag)*0.5+0.5)*h;
+    ctx.beginPath(); ctx.arc(sx, sy, Math.random()*1.2, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.fill();
+  }
+
+  const blur = Math.max(0, (mag/(2*D))*3 - 0.5);
+  ctx.filter = blur > 0 ? `blur(${blur}px)` : 'none';
+
+  if (target === 'saturn') {
+    const bR = Math.min(w,h)*0.04*(mag/30);
+    ctx.beginPath(); ctx.ellipse(cx, cy, bR*2.2, bR*0.7, -0.2, 0, Math.PI*2);
+    ctx.strokeStyle = '#CBD5E1'; ctx.lineWidth = bR*0.3; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, bR, 0, Math.PI*2);
+    ctx.fillStyle = '#FDE047'; ctx.fill();
+  } else if (target === 'moon') {
+    const bR = Math.min(w,h)*0.15*(mag/30);
+    ctx.beginPath(); ctx.arc(cx, cy, bR, 0, Math.PI*2);
+    ctx.fillStyle = '#E2E8F0'; ctx.fill();
+    ctx.fillStyle = '#94A3B8';
+    ctx.beginPath(); ctx.arc(cx-bR*0.3, cy-bR*0.2, bR*0.2, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx+bR*0.2, cy+bR*0.3, bR*0.25, 0, Math.PI*2); ctx.fill();
+  } else if (target === 'orion') {
+    const bR = Math.min(w,h)*0.1*(mag/40);
+    const g = ctx.createRadialGradient(cx,cy,5,cx,cy,bR*2);
+    g.addColorStop(0,'rgba(168,85,247,0.9)');
+    g.addColorStop(0.5,'rgba(6,182,212,0.5)');
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(cx, cy, bR*2, 0, Math.PI*2); ctx.fill();
+  } else if (target === 'jupiter') {
+    const bR = Math.min(w,h)*0.05*(mag/30);
+    ctx.beginPath(); ctx.arc(cx, cy, bR, 0, Math.PI*2);
+    ctx.fillStyle = '#F97316'; ctx.fill();
+    [-bR*3,-bR*1.8,bR*2.2,bR*4.5].forEach(o => {
+      ctx.beginPath(); ctx.arc(cx+o, cy, 2, 0, Math.PI*2);
+      ctx.fillStyle = '#FFF'; ctx.fill();
+    });
+  }
+  ctx.filter = 'none';
+}
+
+/* =========================================================
+   SIMULASI: DIAGRAM HR
+   ========================================================= */
+function setHRStar(t, r) {
+  document.getElementById('sliderStarTemp').value = t;
+  document.getElementById('sliderStarRadius').value = Math.log10(r);
+  updateHRLab();
+}
+
+function updateHRLab() {
+  const T = parseFloat(document.getElementById('sliderStarTemp').value);
+  const logR = parseFloat(document.getElementById('sliderStarRadius').value);
+  const R = Math.pow(10, logR);
+  const L = Math.pow(R,2) * Math.pow(T/5778, 4);
+  const wien = (2898000/T).toFixed(1);
+
+  let sc = 'O';
+  if (T < 3700) sc = 'M';
+  else if (T < 5200) sc = 'K';
+  else if (T < 6000) sc = 'G';
+  else if (T < 7500) sc = 'F';
+  else if (T < 10000) sc = 'A';
+  else if (T < 30000) sc = 'B';
+
+  const col = tempToRGB(T);
+
+  document.getElementById('valStarTemp').textContent = `${T.toLocaleString()} K`;
+  document.getElementById('valStarRadius').textContent = `${R.toFixed(2)} R☉`;
+  document.getElementById('outStarLuminosity').textContent = `${L < 0.01 ? L.toExponential(2) : L.toFixed(2)} L☉`;
+  document.getElementById('outStarSpectral').textContent = `${sc} (${T} K)`;
+  document.getElementById('outWienPeak').textContent = `${wien} nm`;
+  document.getElementById('starColorBox').style.backgroundColor = col.hex;
+  document.getElementById('starColorText').textContent = col.name;
+
+  drawHR(T, L);
+}
+
+function tempToRGB(T) {
+  if (T < 3700) return { hex:'#EF4444', name:'Merah' };
+  if (T < 5200) return { hex:'#F97316', name:'Jingga' };
+  if (T < 6000) return { hex:'#FACC15', name:'Kuning' };
+  if (T < 7500) return { hex:'#FEF08A', name:'Kuning Putih' };
+  if (T < 10000) return { hex:'#F8FAFC', name:'Putih' };
+  if (T < 30000) return { hex:'#38BDF8', name:'Biru Muda' };
+  return { hex:'#6366F1', name:'Biru' };
+}
+
+function drawHR(T, L) {
+  const c = document.getElementById('hrCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const w = c.width = c.clientWidth;
+  const h = c.height = c.clientHeight;
+
+  ctx.clearRect(0,0,w,h);
+
+  ctx.strokeStyle = '#1E293B'; ctx.lineWidth = 1;
+  for (let x = 40; x < w; x += 60) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke(); }
+  for (let y = 30; y < h; y += 40) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke(); }
+
+  // Main sequence band
+  ctx.beginPath();
+  ctx.moveTo(w*0.12, h*0.1);
+  ctx.bezierCurveTo(w*0.4, h*0.4, w*0.6, h*0.6, w*0.92, h*0.85);
+  ctx.strokeStyle = 'rgba(99,102,241,0.35)'; ctx.lineWidth = 22; ctx.stroke();
+
+  ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.font = '10px Inter';
+  ctx.fillText('Deret Utama', w*0.4, h*0.5);
+  ctx.fillText('Raksasa Merah', w*0.65, h*0.25);
+  ctx.fillText('Katai Putih', w*0.2, h*0.8);
+
+  const logTmin = Math.log10(2000), logTmax = Math.log10(40000);
+  const logT = Math.log10(T);
+  const x = w - ((logT - logTmin)/(logTmax - logTmin))*(w-80) - 40;
+
+  const logLmin = -4, logLmax = 6;
+  const logL = Math.log10(Math.max(1e-4, Math.min(1e6, L)));
+  const y = h - ((logL - logLmin)/(logLmax - logLmin))*(h-60) - 30;
+
+  const col = tempToRGB(T);
+  ctx.beginPath(); ctx.arc(x, y, 9, 0, Math.PI*2);
+  ctx.fillStyle = col.hex;
+  ctx.shadowColor = col.hex; ctx.shadowBlur = 15; ctx.fill(); ctx.shadowBlur = 0;
+  ctx.strokeStyle = '#FFF'; ctx.lineWidth = 2; ctx.stroke();
+}
+
+/* =========================================================
+   PETA PROGRES
+   ========================================================= */
+function renderProgressGrid() {
+  const grid = document.getElementById('progressGrid');
+  grid.innerHTML = '';
+  const months = ['month1','month2','month3','month4','month5','month6'];
+  months.forEach((mKey, mi) => {
+    const mInfo = curriculum[mKey];
+    const block = document.createElement('div');
+    let html = `<div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">${mInfo.title} <span class="text-slate-500 normal-case">— ${mInfo.level}</span></div>`;
+    html += '<div class="flex flex-wrap gap-1.5">';
+    mInfo.days.forEach((d, di) => {
+      const dayNum = mi*30 + di + 1;
+      const done = state.completed.includes(dayNum);
+      const cls = 'day-pill' + (done ? ' done' : '');
+      html += `<button class="${cls}" title="Hari ${dayNum}: ${d.title}" onclick="switchMainTab('cerita'); renderDay(${dayNum});">${dayNum}</button>`;
+    });
+    html += '</div>';
+    block.innerHTML = html;
+    grid.appendChild(block);
   });
 
-  const stars = Array.from({ length: 150 }, () => ({
-    x: Math.random() * w,
-    y: Math.random() * h,
-    r: Math.random() * 1.4 + 0.2,
-    alpha: Math.random(),
-    speed: (Math.random() * 0.008) + 0.002,
-    dir: Math.random() > 0.5 ? 1 : -1
-  }));
-
-  function animate() {
-    ctx.clearRect(0, 0, w, h);
-    stars.forEach(s => {
-      s.alpha += s.speed * s.dir;
-      if (s.alpha > 0.9) { s.alpha = 0.9; s.dir = -1; }
-      if (s.alpha < 0.1) { s.alpha = 0.1; s.dir = 1; }
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255, 240, 200, ${s.alpha * 0.7})`;
-      ctx.fill();
+  const streak = state.completed.length;
+  const pct = Math.round((streak/TOTAL_DAYS)*100);
+  let tQ = 0, cQ = 0;
+  Object.keys(state.quiz).forEach(d => {
+    Object.keys(state.quiz[d]).forEach(q => {
+      tQ++;
+      if (state.quiz[d][q] === 1) cQ++;
     });
-    requestAnimationFrame(animate);
-  }
-  animate();
+  });
+  const acc = tQ > 0 ? Math.round((cQ/tQ)*100) : 0;
+  document.getElementById('statStreak').textContent = streak;
+  document.getElementById('statScore').textContent = acc + '%';
+  document.getElementById('statPercent').textContent = pct + '%';
 }
 
-/* Keyboard navigation */
+function resetProgress() {
+  if (!confirm('Yakin ingin mengulang dari awal? Semua progres akan dihapus.')) return;
+  state.completed = [];
+  state.quiz = {};
+  state.currentDay = 1;
+  saveState();
+  renderDay(1);
+  renderProgressGrid();
+}
+
+/* =========================================================
+   BACKGROUND STARS
+   ========================================================= */
+function renderStars() {
+  const c = document.getElementById('starfield');
+  const ctx = c.getContext('2d');
+  let w = c.width = window.innerWidth;
+  let h = c.height = window.innerHeight;
+  window.addEventListener('resize', () => {
+    w = c.width = window.innerWidth;
+    h = c.height = window.innerHeight;
+  });
+  const stars = Array.from({length: 150}, () => ({
+    x: Math.random()*w, y: Math.random()*h,
+    r: Math.random()*1.4 + 0.2,
+    a: Math.random(), s: Math.random()*0.008 + 0.002,
+    d: Math.random() > 0.5 ? 1 : -1
+  }));
+  function anim() {
+    ctx.clearRect(0,0,w,h);
+    stars.forEach(s => {
+      s.a += s.s * s.d;
+      if (s.a > 0.9) { s.a = 0.9; s.d = -1; }
+      if (s.a < 0.1) { s.a = 0.1; s.d = 1; }
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,240,200,${s.a * 0.7})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(anim);
+  }
+  anim();
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+function init() {
+  loadState();
+  renderStars();
+  renderMonthTabs();
+  renderDayPills();
+  renderDay(state.currentDay || 1);
+  calculateCelestial();
+  updateTelescopeSim();
+  updateHRLab();
+}
+
 document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
   if (e.key === 'ArrowLeft') changeDay(-1);
   if (e.key === 'ArrowRight') changeDay(1);
 });
@@ -1348,4 +1563,4 @@ init();
 </script>
 
 </body>
-</html>
+  </html>
