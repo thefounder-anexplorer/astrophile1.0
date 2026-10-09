@@ -1,1084 +1,925 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astronomi Harian — Dari Pemula ke Mahir</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0d0d2b 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 20px;
-            color: #e8e8f0;
-        }
-
-        .container {
-            max-width: 800px;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #7eb8ff, #b07eff, #ff7eb8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-
-        .header p {
-            color: #8888aa;
-            font-size: 0.9rem;
-        }
-
-        /* Progress Bar */
-        .progress-section {
-            margin-bottom: 25px;
-        }
-
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: #8888aa;
-            margin-bottom: 8px;
-        }
-
-        .progress-bar-bg {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            height: 8px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #7eb8ff, #b07eff);
-            border-radius: 20px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-
-        /* Slide Card */
-        .slide-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 0;
-            margin-bottom: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.5s ease;
-            display: none;
-        }
-
-        .slide-card.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .slide-header {
-            padding: 28px 30px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .slide-level {
-            display: inline-block;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            padding: 5px 14px;
-            border-radius: 20px;
-            margin-bottom: 14px;
-        }
-
-        .level-pemula {
-            background: rgba(126, 184, 255, 0.15);
-            color: #7eb8ff;
-            border: 1px solid rgba(126, 184, 255, 0.3);
-        }
-
-        .level-menengah {
-            background: rgba(176, 126, 255, 0.15);
-            color: #b07eff;
-            border: 1px solid rgba(176, 126, 255, 0.3);
-        }
-
-        .level-mahir {
-            background: rgba(255, 126, 184, 0.15);
-            color: #ff7eb8;
-            border: 1px solid rgba(255, 126, 184, 0.3);
-        }
-
-        .slide-header h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #ffffff;
-            line-height: 1.3;
-            margin-bottom: 6px;
-        }
-
-        .slide-header .slide-meta {
-            font-size: 0.78rem;
-            color: #666688;
-        }
-
-        .slide-body {
-            padding: 25px 30px 30px;
-        }
-
-        .slide-body p {
-            font-size: 0.95rem;
-            line-height: 1.75;
-            color: #c8c8dd;
-            margin-bottom: 16px;
-        }
-
-        .slide-body h3 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #7eb8ff;
-            margin: 22px 0 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .slide-body ul {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 16px;
-        }
-
-        .slide-body ul li {
-            position: relative;
-            padding-left: 22px;
-            margin-bottom: 10px;
-            font-size: 0.92rem;
-            line-height: 1.65;
-            color: #c8c8dd;
-        }
-
-        .slide-body ul li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: #b07eff;
-            font-weight: bold;
-        }
-
-        /* Highlight box */
-        .highlight-box {
-            background: rgba(126, 184, 255, 0.08);
-            border-left: 3px solid #7eb8ff;
-            border-radius: 8px;
-            padding: 14px 18px;
-            margin: 18px 0;
-        }
-
-        .highlight-box p {
-            font-size: 0.88rem;
-            margin-bottom: 0;
-            color: #b0b0cc;
-            font-style: italic;
-        }
-
-        /* Reference */
-        .reference {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            padding: 14px 18px;
-            margin-top: 18px;
-        }
-
-        .reference h4 {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #8888aa;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .reference p {
-            font-size: 0.82rem;
-            color: #7777aa;
-            line-height: 1.6;
-            margin-bottom: 4px;
-        }
-
-        .reference a {
-            color: #7eb8ff;
-            text-decoration: none;
-        }
-
-        .reference a:hover {
-            text-decoration: underline;
-        }
-
-        /* Quiz Section */
-        .quiz-section {
-            margin-top: 24px;
-            padding-top: 22px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .quiz-question {
-            font-size: 0.92rem;
-            font-weight: 600;
-            color: #e8e8f0;
-            margin-bottom: 16px;
-            line-height: 1.6;
-        }
-
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .quiz-option {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 14px 18px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            font-size: 0.88rem;
-            color: #c8c8dd;
-            text-align: left;
-            font-family: inherit;
-            line-height: 1.5;
-        }
-
-        .quiz-option:hover:not(.disabled) {
-            background: rgba(126, 184, 255, 0.1);
-            border-color: rgba(126, 184, 255, 0.3);
-            transform: translateX(4px);
-        }
-
-        .quiz-option.selected-correct {
-            background: rgba(74, 222, 128, 0.15);
-            border-color: rgba(74, 222, 128, 0.5);
-            color: #86efac;
-        }
-
-        .quiz-option.selected-wrong {
-            background: rgba(248, 113, 113, 0.15);
-            border-color: rgba(248, 113, 113, 0.5);
-            color: #fca5a5;
-        }
-
-        .quiz-option.disabled {
-            cursor: default;
-            opacity: 0.6;
-        }
-
-        .quiz-feedback {
-            margin-top: 14px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            line-height: 1.6;
-            display: none;
-        }
-
-        .quiz-feedback.correct {
-            display: block;
-            background: rgba(74, 222, 128, 0.1);
-            border: 1px solid rgba(74, 222, 128, 0.25);
-            color: #86efac;
-        }
-
-        .quiz-feedback.incorrect {
-            display: block;
-            background: rgba(248, 113, 113, 0.1);
-            border: 1px solid rgba(248, 113, 113, 0.25);
-            color: #fca5a5;
-        }
-
-        .quiz-feedback .explanation {
-            color: #9999bb;
-            margin-top: 6px;
-            font-size: 0.82rem;
-        }
-
-        /* Navigation */
-        .nav-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-top: 10px;
-            margin-bottom: 40px;
-        }
-
-        .nav-btn {
-            flex: 1;
-            padding: 16px 24px;
-            border: none;
-            border-radius: 14px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            letter-spacing: 0.3px;
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        .nav-btn-prev {
-            background: rgba(255, 255, 255, 0.06);
-            color: #9999bb;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-btn-prev:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ccccdd;
-        }
-
-        .nav-btn-next {
-            background: linear-gradient(135deg, #7eb8ff, #b07eff);
-            color: #0a0a1a;
-            box-shadow: 0 8px 25px rgba(126, 184, 255, 0.3);
-        }
-
-        .nav-btn-next:hover:not(:disabled) {
-            box-shadow: 0 12px 35px rgba(176, 126, 255, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .slide-counter {
-            font-size: 0.85rem;
-            color: #666688;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        /* Topic pills */
-        .topic-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 20px;
-            justify-content: center;
-        }
-
-        .topic-pill {
-            font-size: 0.7rem;
-            padding: 5px 12px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #8888aa;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
-        }
-
-        .topic-pill:hover {
-            background: rgba(126, 184, 255, 0.1);
-            color: #7eb8ff;
-        }
-
-        .topic-pill.active-pill {
-            background: rgba(126, 184, 255, 0.15);
-            border-color: rgba(126, 184, 255, 0.4);
-            color: #7eb8ff;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            .header h1 { font-size: 1.3rem; }
-            .slide-header { padding: 22px 20px 16px; }
-            .slide-header h2 { font-size: 1.15rem; }
-            .slide-body { padding: 20px 20px 25px; }
-            .slide-body p { font-size: 0.88rem; }
-            .slide-body ul li { font-size: 0.85rem; }
-            .quiz-option { padding: 12px 14px; font-size: 0.83rem; }
-            .nav-btn { padding: 14px 16px; font-size: 0.85rem; }
-            .topic-pill { font-size: 0.65rem; padding: 4px 10px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astronomi Lanjutan — Olimpiade & Universitas</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#08081a 0%,#12122e 50%,#0a0a20 100%);min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:20px;color:#e0e0f0}
+.container{max-width:860px;width:100%;margin-top:15px}
+.header{text-align:center;margin-bottom:25px}
+.header h1{font-size:1.7rem;font-weight:700;background:linear-gradient(90deg,#7eb8ff,#b07eff,#ff7eb8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.header p{color:#8888aa;font-size:.85rem}
+.mode-tabs{display:flex;gap:8px;margin-bottom:20px;justify-content:center;flex-wrap:wrap}
+.mode-tab{font-size:.78rem;padding:8px 18px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#8888aa;cursor:pointer;transition:all .25s;font-family:inherit}
+.mode-tab:hover{background:rgba(126,184,255,.1);color:#7eb8ff}
+.mode-tab.active{background:rgba(126,184,255,.15);border-color:rgba(126,184,255,.4);color:#7eb8ff;font-weight:600}
+.topic-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;justify-content:center}
+.topic-pill{font-size:.68rem;padding:5px 12px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#8888aa;cursor:pointer;transition:all .2s;font-family:inherit}
+.topic-pill:hover{background:rgba(126,184,255,.1);color:#7eb8ff}
+.topic-pill.active{background:rgba(176,126,255,.15);border-color:rgba(176,126,255,.4);color:#b07eff}
+.progress-section{margin-bottom:20px}
+.progress-info{display:flex;justify-content:space-between;font-size:.78rem;color:#8888aa;margin-bottom:7px}
+.progress-bar-bg{background:rgba(255,255,255,.07);border-radius:20px;height:7px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#7eb8ff,#b07eff);border-radius:20px;transition:width .5s ease;width:0%}
+.slide-card{background:rgba(255,255,255,.045);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.09);border-radius:20px;margin-bottom:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:fadeIn .4s ease;display:none}
+.slide-card.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.slide-header{padding:26px 28px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
+.slide-level{display:inline-block;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;padding:5px 14px;border-radius:20px;margin-bottom:12px}
+.level-pemula{background:rgba(126,184,255,.15);color:#7eb8ff;border:1px solid rgba(126,184,255,.3)}
+.level-menengah{background:rgba(176,126,255,.15);color:#b07eff;border:1px solid rgba(176,126,255,.3)}
+.level-mahir{background:rgba(255,126,184,.15);color:#ff7eb8;border:1px solid rgba(255,126,184,.3)}
+.level-olimpiade{background:rgba(74,222,128,.15);color:#86efac;border:1px solid rgba(74,222,128,.3)}
+.slide-header h2{font-size:1.3rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:5px}
+.slide-header .slide-meta{font-size:.75rem;color:#666688}
+.slide-body{padding:22px 28px 28px}
+.slide-body p{font-size:.92rem;line-height:1.75;color:#c0c0d8;margin-bottom:14px}
+.slide-body h3{font-size:.85rem;font-weight:600;color:#7eb8ff;margin:20px 0 9px;text-transform:uppercase;letter-spacing:1px}
+.slide-body h3.olimpiade-h3{color:#86efac}
+.slide-body ul{list-style:none;padding:0;margin-bottom:14px}
+.slide-body ul li{position:relative;padding-left:20px;margin-bottom:9px;font-size:.89rem;line-height:1.65;color:#c0c0d8}
+.slide-body ul li::before{content:'▸';position:absolute;left:0;color:#b07eff;font-weight:bold}
+.highlight-box{background:rgba(126,184,255,.08);border-left:3px solid #7eb8ff;border-radius:8px;padding:13px 16px;margin:16px 0}
+.highlight-box p{font-size:.85rem;margin-bottom:0;color:#a8a8c8;font-style:italic}
+.highlight-box.green{background:rgba(74,222,128,.08);border-left-color:#4ade80}
+.highlight-box.green p{color:#a8d8b8}
+.formula-box{background:rgba(176,126,255,.08);border:1px solid rgba(176,126,255,.2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:'Courier New',monospace;font-size:.85rem;color:#d8c0ff;text-align:center;line-height:1.8}
+.reference{background:rgba(255,255,255,.03);border-radius:10px;padding:13px 16px;margin-top:16px}
+.reference h4{font-size:.72rem;font-weight:600;color:#8888aa;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}
+.reference p{font-size:.8rem;color:#7777aa;line-height:1.6;margin-bottom:3px}
+.reference a{color:#7eb8ff;text-decoration:none}
+.reference a:hover{text-decoration:underline}
+.quiz-section{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.06)}
+.quiz-question{font-size:.88rem;font-weight:600;color:#e0e0f0;margin-bottom:14px;line-height:1.6}
+.quiz-options{display:flex;flex-direction:column;gap:9px}
+.quiz-option{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 16px;cursor:pointer;transition:all .25s;font-size:.85rem;color:#c0c0d8;text-align:left;font-family:inherit;line-height:1.5}
+.quiz-option:hover:not(.disabled){background:rgba(126,184,255,.1);border-color:rgba(126,184,255,.3);transform:translateX(4px)}
+.quiz-option.selected-correct{background:rgba(74,222,128,.15);border-color:rgba(74,222,128,.5);color:#86efac}
+.quiz-option.selected-wrong{background:rgba(248,113,113,.15);border-color:rgba(248,113,113,.5);color:#fca5a5}
+.quiz-option.disabled{cursor:default;opacity:.6}
+.quiz-feedback{margin-top:12px;padding:11px 15px;border-radius:10px;font-size:.82rem;line-height:1.6;display:none}
+.quiz-feedback.correct{display:block;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);color:#86efac}
+.quiz-feedback.incorrect{display:block;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:#fca5a5}
+.quiz-feedback .explanation{color:#9999bb;margin-top:5px;font-size:.8rem}
+.nav-section{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px;margin-bottom:35px}
+.nav-btn{flex:1;padding:15px 22px;border:none;border-radius:14px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .3s;font-family:inherit}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.nav-btn-prev{background:rgba(255,255,255,.06);color:#9999bb;border:1px solid rgba(255,255,255,.1)}
+.nav-btn-prev:hover:not(:disabled){background:rgba(255,255,255,.1)}
+.nav-btn-next{background:linear-gradient(135deg,#7eb8ff,#b07eff);color:#0a0a1a;box-shadow:0 8px 25px rgba(126,184,255,.3)}
+.nav-btn-next:hover:not(:disabled){box-shadow:0 12px 35px rgba(176,126,255,.4);transform:translateY(-2px)}
+.slide-counter{font-size:.82rem;color:#666688;font-weight:500;white-space:nowrap}
+.hidden{display:none!important}
+@media(max-width:600px){
+body{padding:10px}
+.header h1{font-size:1.2rem}
+.slide-header{padding:20px 18px 14px}
+.slide-header h2{font-size:1.05rem}
+.slide-body{padding:18px 18px 22px}
+.slide-body p{font-size:.85rem}
+.slide-body ul li{font-size:.82rem}
+.quiz-option{padding:11px 13px;font-size:.8rem}
+.nav-btn{padding:13px 14px;font-size:.82rem}
+.topic-pill{font-size:.62rem;padding:4px 9px}
+.mode-tab{font-size:.7rem;padding:6px 14px}
+}
+</style>
 </head>
 <body>
-
 <div class="container">
 
-    <!-- Header -->
-    <div class="header">
-        <h1>🔭 Astronomi Harian</h1>
-        <p>Belajar 5 menit sehari — dari pemula hingga mahir</p>
-    </div>
-
-    <!-- Topic Pills -->
-    <div class="topic-pills" id="topicPills">
-        <button class="topic-pill active-pill" onclick="jumpToTopic(0)">Semua</button>
-        <button class="topic-pill" onclick="jumpToTopic(1)">Dasar</button>
-        <button class="topic-pill" onclick="jumpToTopic(4)">Tata Surya</button>
-        <button class="topic-pill" onclick="jumpToTopic(6)">Bintang</button>
-        <button class="topic-pill" onclick="jumpToTopic(9)">Galaksi & Kosmologi</button>
-        <button class="topic-pill" onclick="jumpToTopic(12)">Lanjutan</button>
-    </div>
-
-    <!-- Progress -->
-    <div class="progress-section">
-        <div class="progress-info">
-            <span id="progressLabel">Materi 1 dari 16</span>
-            <span id="progressPercent">0%</span>
-        </div>
-        <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="progressFill"></div>
-        </div>
-    </div>
-
-    <!-- Slides -->
-    <div id="slidesContainer">
-
-        <!-- SLIDE 1 -->
-        <div class="slide-card active" data-index="0">
-            <div class="slide-header">
-                <span class="slide-level level-pemula">Pemula</span>
-                <h2>Hari 1: Apa Itu Astronomi & Skala Alam Semesta</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Pengantar</div>
-            </div>
-            <div class="slide-body">
-                <p>Astronomi adalah ilmu yang mempelajari benda-benda langit dan fenomena yang terjadi di luar atmosfer Bumi. Ini adalah salah satu ilmu tertua — manusia telah mengamati langit sejak ribuan tahun lalu untuk navigasi, pertanian, dan ritual.</p>
-                <p>Hal pertama yang perlu dipahami adalah <strong>skala alam semesta</strong> yang sangat besar. Jarak di astronomi diukur dengan satuan khusus:</p>
-                <ul>
-                    <li><strong>Satuan Astronomi (SA/AU):</strong> Jarak rata-rata Bumi–Matahari, sekitar 150 juta km. Digunakan untuk jarak antarplanet.</li>
-                    <li><strong>Tahun Cahaya:</strong> Jarak yang ditempuh cahaya dalam satu tahun, sekitar 9,46 triliun km. Cahaya bergerak sangat cepat (300.000 km/detik), tetapi jarak antarbintang sangat besar sehingga waktu tempuhnya menjadi satuan yang praktis.</li>
-                    <li><strong>Parsec (pc):</strong> Satuan yang lebih besar, sekitar 3,26 tahun cahaya. Astronom profesional sering menggunakannya.</li>
-                </ul>
-                <div class="highlight-box">
-                    <p>💡 Matahari berjarak 8 menit cahaya dari Bumi. Bintang terdekat, Proxima Centauri, berjarak 4,2 tahun cahaya. Artinya, kita melihat bintang tersebut sebagaimana adanya 4,2 tahun lalu.</p>
-                </div>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>Caltech Ay 1 — <em>The Evolving Universe</em>, Syllabus Topik 2: Units, distances, and parallaxes. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                    <p>UMass Astronomy 101 — Chapter 1: Overview and Scale of the Universe. <a href="https://people.astro.umass.edu/~tripp/a101/a101_sp04_course_outline.pdf" target="_blank">people.astro.umass.edu</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Tahun cahaya mengukur jarak, bukan waktu. Ini adalah kesalahpahaman yang umum — karena cahaya membutuhkan waktu untuk menempuh jarak, kita melihat objek jauh sebagaimana adanya di masa lalu.')">Tahun cahaya adalah satuan waktu</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Tahun cahaya adalah satuan jarak, bukan waktu. Satu tahun cahaya = jarak yang ditempuh cahaya dalam satu tahun (± 9,46 triliun km).')">Tahun cahaya adalah satuan jarak</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. 1 SA (Satuan Astronomi) = jarak Bumi–Matahari. Tahun cahaya jauh lebih besar dari itu.')">Tahun cahaya sama dengan 1 SA</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 2 -->
-        <div class="slide-card" data-index="1">
-            <div class="slide-header">
-                <span class="slide-level level-pemula">Pemula</span>
-                <h2>Hari 2: Bola Langit & Sistem Koordinat</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Dasar Observasi</div>
-            </div>
-            <div class="slide-body">
-                <p>Untuk menemukan objek di langit, astronom menggunakan <strong>bola langit (celestial sphere)</strong> — sebuah bola imajiner yang mengelilingi Bumi, tempat semua bintang "diproyeksikan".</p>
-                <p>Ada dua sistem koordinat utama:</p>
-                <ul>
-                    <li><strong>Sistem Horizon:</strong> Menggunakan <em>altitude</em> (ketinggian dari horizon, 0°–90°) dan <em>azimuth</em> (arah kompas, 0°–360°). Sistem ini berubah seiring waktu karena rotasi Bumi.</li>
-                    <li><strong>Sistem Ekuator:</strong> Menggunakan <em>Deklinasi (Dec)</em> — analog lintang Bumi — dan <em>Asensio Rekta (RA)</em> — analog bujur Bumi. Sistem ini tetap relatif terhadap bintang, sehingga menjadi standar katalog astronomi.</li>
-                </ul>
-                <p>Deklinasi diukur dalam derajat dari ekuator langit (positif ke utara, negatif ke selatan). RA diukur dalam jam, menit, dan detik (0h–24h), dengan titik nol di titik Aries (vernal equinox).</p>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>IUCAA — A First Course in Astronomy & Astrophysics, Lecture 1.1: Positional astronomy. <a href="https://ace.iucaa.in/resources/a-a.html" target="_blank">ace.iucaa.in</a></p>
-                    <p>Caltech Ay 1 — Topik 2: Celestial coordinates, time systems. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Deklinasi analog dengan lintang Bumi (utara-selatan), sedangkan Asensio Rekta analog dengan bujur Bumi (timur-barat).')">Deklinasi analog dengan bujur Bumi</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Deklinasi (Dec) mengukur posisi utara-selatan dari ekuator langit, sedangkan Asensio Rekta (RA) mengukur posisi timur-barat, diukur dalam satuan jam.')">Deklinasi analog dengan lintang, RA analog dengan bujur</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Sistem horizon menggunakan altitude dan azimuth, bukan Dec dan RA.')">Sistem ekuator menggunakan altitude dan azimuth</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 3 -->
-        <div class="slide-card" data-index="2">
-            <div class="slide-header">
-                <span class="slide-level level-pemula">Pemula</span>
-                <h2>Hari 3: Gerak Langit & Musim</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Dasar Observasi</div>
-            </div>
-            <div class="slide-body">
-                <p>Langit berubah sepanjang malam dan sepanjang tahun karena dua gerakan utama Bumi:</p>
-                <ul>
-                    <li><strong>Rotasi Bumi (harian):</strong> Bumi berputar pada porosnya setiap 24 jam, menyebabkan bintang-bintang tampak terbit di timur dan terbenam di barat. Inilah gerak diurnal.</li>
-                    <li><strong>Revolusi Bumi (tahunan):</strong> Bumi mengelilingi Matahari selama 365,25 hari. Karena sumbu Bumi miring 23,5°, kita mengalami musim. Bintang-bintang yang terlihat di malam hari juga berubah seiring musim.</li>
-                </ul>
-                <p>Akibat kemiringan sumbu ini, Matahari tampak bergerak di langit sepanjang tahun mengikuti jalur yang disebut <strong>ekliptika</strong>. Planet-planet juga bergerak di dekat jalur ini.</p>
-                <div class="highlight-box">
-                    <p>💡 Mengapa bintang Polaris selalu di utara? Karena Polaris hampir sejajar dengan sumbu rotasi Bumi. Ketinggian Polaris di langit sama dengan lintang pengamat.</p>
-                </div>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>UMass Astronomy 101 — Chapter 2: Diurnal & annual motion, seasons. <a href="https://people.astro.umass.edu/~tripp/a101/a101_sp04_course_outline.pdf" target="_blank">people.astro.umass.edu</a></p>
-                    <p>NIU PHYS 162 — Daily, monthly, yearly celestial motions. <a href="https://nicadd.niu.edu/~mfortner/phys162.html" target="_blank">nicadd.niu.edu</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Musim terjadi karena kemiringan sumbu Bumi (23,5°), bukan karena jarak Bumi ke Matahari. Justru Bumi terdekat ke Matahari saat musim dingin di belahan utara.')">Musim terjadi karena jarak Bumi ke Matahari berubah</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Kemiringan sumbu Bumi 23,5° menyebabkan belahan Bumi yang berbeda menerima intensitas sinar Matahari yang berbeda sepanjang tahun — inilah penyebab musim.')">Musim terjadi karena kemiringan sumbu Bumi</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Gerak diurnal adalah akibat rotasi Bumi, bukan penyebab musim.')">Musim terjadi karena rotasi Bumi</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 4 -->
-        <div class="slide-card" data-index="3">
-            <div class="slide-header">
-                <span class="slide-level level-pemula">Pemula</span>
-                <h2>Hari 4: Cahaya — Jendela Informasi Alam Semesta</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Fisika Astronomi</div>
-            </div>
-            <div class="slide-body">
-                <p>Hampir semua yang kita ketahui tentang alam semesta datang dari <strong>cahaya</strong>. Cahaya memiliki sifat ganda: sebagai gelombang dan sebagai partikel (foton).</p>
-                <p>Spektrum elektromagnetik mencakup:</p>
-                <ul>
-                    <li><strong>Gelombang radio</strong> — panjang gelombang terpanjang, digunakan untuk mengamati gas hidrogen dan quasar.</li>
-                    <li><strong>Inframerah</strong> — mendeteksi panas dari objek dingin seperti awan debu dan planet.</li>
-                    <li><strong>Cahaya tampak</strong> — yang bisa dilihat mata manusia, dari merah hingga ungu.</li>
-                    <li><strong>Ultraviolet, X-ray, sinar gamma</strong> — energi tinggi, mengungkap fenomena ekstrem seperti lubang hitam dan supernova.</li>
-                </ul>
-                <p>Ketika cahaya melewati materi, ia menghasilkan <strong>spektrum</strong> — pola unik yang memberi tahu kita komposisi, suhu, dan kecepatan objek. Inilah dasar spektroskopi astronomi.</p>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>Caltech Ay 1 — Topik 4: Electromagnetic radiation processes, blackbody radiation, spectra. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                    <p>IUCAA — Lecture 1.3: Wave and particle nature of light, EM spectrum. <a href="https://ace.iucaa.in/resources/a-a.html" target="_blank">ace.iucaa.in</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Cahaya tampak hanyalah sebagian kecil dari spektrum elektromagnetik. Astronom menggunakan seluruh spektrum, dari radio hingga sinar gamma.')">Cahaya tampak adalah satu-satunya informasi dari luar angkasa</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Astronom mengamati seluruh spektrum elektromagnetik — radio, inframerah, ultraviolet, X-ray, dan sinar gamma — untuk memahami objek dan fenomena yang berbeda-beda.')">Seluruh spektrum elektromagnetik digunakan untuk mengamati alam semesta</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. X-ray dan sinar gamma justru mengungkap fenomena paling ekstrem di alam semesta, seperti lubang hitam.')">Sinar X dan gamma tidak berguna untuk astronomi</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 5 -->
-        <div class="slide-card" data-index="4">
-            <div class="slide-header">
-                <span class="slide-level level-menengah">Menengah</span>
-                <h2>Hari 5: Teleskop & Instrumen Astronomi</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Observasi</div>
-            </div>
-            <div class="slide-body">
-                <p>Teleskop adalah alat utama astronom. Ada tiga jenis utama:</p>
-                <ul>
-                    <li><strong>Refraktor (lensa):</strong> Menggunakan lensa untuk mengumpulkan dan memfokuskan cahaya. Sederhana dan tahan lama, tetapi memiliki aberasi kromatik dan ukuran lensa terbatas.</li>
-                    <li><strong>Reflektor (cermin):</strong> Menggunakan cermin cekung. Bebas dari aberasi kromatik dan bisa dibuat sangat besar. Teleskop Newtonian adalah contoh klasik.</li>
-                    <li><strong>Katadioptrik:</strong> Kombinasi lensa dan cermin. Kompak dan populer untuk pengamatan amatir (contoh: Schmidt-Cassegrain).</li>
-                </ul>
-                <p>Parameter penting: <strong>aperture</strong> (diameter bukaan) menentukan seberapa banyak cahaya yang dikumpulkan — ini yang paling penting, bukan perbesaran. Semakin besar aperture, semakin redup objek yang bisa dilihat.</p>
-                <p>Selain teleskop optik, ada teleskop radio, teleskop inframerah (seperti JWST), dan teleskop X-ray berbasis ruang angkasa.</p>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>Carnegie Science — So, You Want to Buy a Telescope? <a href="https://carnegiescience.edu" target="_blank">carnegiescience.edu</a></p>
-                    <p>IUCAA — Lecture 1.2: Optical design of telescopes, aperture, resolving power. <a href="https://ace.iucaa.in/resources/a-a.html" target="_blank">ace.iucaa.in</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Perbesaran bukan parameter utama. Aperture (diameter) yang menentukan seberapa banyak cahaya dikumpulkan dan seberapa redup objek yang bisa diamati.')">Perbesaran adalah parameter terpenting teleskop</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Aperture menentukan daya kumpul cahaya dan resolusi. Teleskop dengan aperture besar dapat melihat objek yang lebih redup dan detail yang lebih halus.')">Aperture adalah parameter terpenting teleskop</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Teleskop refraktor menggunakan lensa, bukan cermin. Yang menggunakan cermin adalah reflektor.')">Teleskop refraktor menggunakan cermin</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 6 -->
-        <div class="slide-card" data-index="5">
-            <div class="slide-header">
-                <span class="slide-level level-menengah">Menengah</span>
-                <h2>Hari 6: Tata Surya — Gambaran Umum</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Tata Surya</div>
-            </div>
-            <div class="slide-body">
-                <p>Tata Surya kita terdiri dari Matahari sebagai pusatnya, delapan planet, planet kerdil (seperti Pluto), bulan-bulan, asteroid, komet, dan debu antarplanet.</p>
-                <p>Planet-planet terbagi menjadi dua kelompok utama:</p>
-                <ul>
-                    <li><strong>Planet Terestrial (batuan):</strong> Merkurius, Venus, Bumi, Mars. Kecil, padat, permukaan berbatu, sedikit atau tanpa bulan.</li>
-                    <li><strong>Planet Jovian (raksasa gas/es):</strong> Jupiter, Saturnus, Uranus, Neptunus. Besar, atmosfer tebal, banyak bulan, dan sistem cincin.</li>
-                </ul>
-                <p>Antara Mars dan Jupiter terdapat <strong>sabuk asteroid</strong> — sisa material yang gagal membentuk planet karena gravitasi Jupiter. Di luar Neptunus terdapat <strong>Sabuk Kuiper</strong> dan <strong>Awan Oort</strong>, sumber komet.</p>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>UMass Astronomy 101 — Chapter 8: Observations of the Solar System. <a href="https://people.astro.umass.edu/~tripp/a101/a101_sp04_course_outline.pdf" target="_blank">people.astro.umass.edu</a></p>
-                    <p>Caltech Ay 1 — Topik 6: Solar system overview. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Sabuk asteroid bukan sisa planet yang hancur, melainkan material yang tidak pernah membentuk planet karena gangguan gravitasi Jupiter.')">Sabuk asteroid adalah sisa planet yang hancur</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Sabuk asteroid terletak antara Mars dan Jupiter, terdiri dari batuan dan logam yang tidak pernah bergabung menjadi planet karena pengaruh gravitasi Jupiter.')">Sabuk asteroid terletak antara Mars dan Jupiter</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Uranus dan Neptunus adalah planet Jovian (raksasa es), bukan terestrial. Planet terestrial adalah Merkurius, Venus, Bumi, dan Mars.')">Uranus dan Neptunus adalah planet terestrial</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 7 -->
-        <div class="slide-card" data-index="6">
-            <div class="slide-header">
-                <span class="slide-level level-menengah">Menengah</span>
-                <h2>Hari 7: Kelahiran Bintang & Medium Antarbintang</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Bintang</div>
-            </div>
-            <div class="slide-body">
-                <p>Bintang lahir dari <strong>awan molekul raksasa</strong> — awan gas (terutama hidrogen) dan debu yang sangat dingin dan padat. Ketika bagian awan ini runtuh karena gravitasi, material di pusatnya memanas dan menjadi <strong>protobintang</strong>.</p>
-                <p>Jika massa cukup besar, suhu inti mencapai sekitar 10 juta Kelvin — cukup untuk memulai <strong>fusi nuklir</strong>, mengubah hidrogen menjadi helium. Saat fusi dimulai, bintang memasuki fase <strong>deret utama (main sequence)</strong> dan mulai bersinar stabil.</p>
-                <p>Jika massa terlalu kecil (< 0,08 massa Matahari), fusi tidak pernah dimulai. Objek ini disebut <strong>katai coklat (brown dwarf)</strong> — "bintang gagal" yang perlahan mendingin.</p>
-                <div class="highlight-box">
-                    <p>💡 Medium antarbintang (ISM) bukan ruang hampa. Rata-rata ada sekitar 1 atom per cm³, tetapi di awan molekul padat bisa mencapai jutaan atom per cm³.</p>
-                </div>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>NASA — Stellar Evolution: Life Cycle of Stars. <a href="https://imagine.gsfc.nasa.gov" target="_blank">imagine.gsfc.nasa.gov</a></p>
-                    <p>ESO — We are all stardust: a story about stellar evolution. <a href="https://eso.org" target="_blank">eso.org</a></p>
-                    <p>Caltech Ay 1 — Topik 5: Interstellar medium, birth of stars. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Katai coklat gagal memulai fusi karena massanya terlalu kecil, bukan karena terlalu besar.')">Katai coklat terbentuk karena massanya terlalu besar</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Ketika suhu inti protobintang mencapai sekitar 10 juta Kelvin, fusi hidrogen dimulai dan bintang memasuki fase deret utama.')">Fusi hidrogen dimulai pada suhu sekitar 10 juta Kelvin</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Bintang lahir dari awan molekul yang runtuh, bukan dari planet yang meledak.')">Bintang lahir dari ledakan planet</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 8 -->
-        <div class="slide-card" data-index="7">
-            <div class="slide-header">
-                <span class="slide-level level-menengah">Menengah</span>
-                <h2>Hari 8: Evolusi Bintang & Diagram HR</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Bintang</div>
-            </div>
-            <div class="slide-body">
-                <p>Nasib sebuah bintang sepenuhnya ditentukan oleh <strong>massanya</strong>. Semakin besar massa, semakin cepat bintang menghabiskan bahan bakarnya dan semakin dramatis kematiannya.</p>
-                <p><strong>Diagram Hertzsprung-Russell (HR)</strong> adalah alat fundamental dalam astronomi. Diagram ini memplot luminositas bintang terhadap suhu permukaannya (atau warna). Mayoritas bintang berada di "pita" yang disebut <strong>deret utama</strong>.</p>
-                <ul>
-                    <li><strong>Bintang bermassa rendah (seperti Matahari):</strong> Menghabiskan miliaran tahun di deret utama, lalu mengembang menjadi raksasa merah, dan akhirnya menjadi katai putih.</li>
-                    <li><strong>Bintang bermassa tinggi:</strong> Siklus hidupnya lebih singkat (jutaan tahun). Setelah menjadi super raksasa merah, ia meledak sebagai <strong>supernova</strong>, meninggalkan bintang neutron atau lubang hitam.</li>
-                </ul>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>NASA — Life Cycles of Stars. <a href="https://imagine.gsfc.nasa.gov" target="_blank">imagine.gsfc.nasa.gov</a></p>
-                    <p>Yale — The Life Cycle of Stars. <a href="https://www.astro.yale.edu" target="_blank">astro.yale.edu</a></p>
-                    <p>Caltech Ay 1 — Topik 9: Stellar evolution, HR diagrams. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Bintang bermassa besar justru memiliki umur yang lebih pendek karena membakar bahan bakarnya jauh lebih cepat.')">Bintang bermassa besar hidup lebih lama</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Massa menentukan segalanya. Bintang besar membakar bahan bakar lebih cepat, sehingga umurnya lebih pendek tetapi kematiannya lebih dramatis (supernova).')">Massa bintang menentukan evolusi dan kematiannya</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Diagram HR memplot luminositas terhadap suhu/warna, bukan massa terhadap ukuran.')">Diagram HR memplot massa terhadap ukuran bintang</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 9 -->
-        <div class="slide-card" data-index="8">
-            <div class="slide-header">
-                <span class="slide-level level-menengah">Menengah</span>
-                <h2>Hari 9: Lubang Hitam & Bintang Neutron</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Objek Ekstrem</div>
-            </div>
-            <div class="slide-body">
-                <p>Ketika bintang bermassa sangat besar (lebih dari ~8 massa Matahari) meledak sebagai supernova, intinya yang runtuh bisa meninggalkan objek yang sangat ekstrem:</p>
-                <ul>
-                    <li><strong>Bintang neutron:</strong> Jika sisa inti bermassa 1,4–3 massa Matahari. Materi sangat padat — satu sendok tehnya bisa berbobot miliaran ton. Beberapa berputar cepat dan memancarkan pulsa radio, disebut <strong>pulsar</strong>.</li>
-                    <li><strong>Lubang hitam:</strong> Jika sisa inti lebih dari ~3 massa Matahari. Gravitasi begitu kuat sehingga cahaya pun tidak bisa lepas. Ada <strong>cakrawala peristiwa</strong> — batas yang tidak bisa dilewati cahaya.</li>
-                </ul>
-                <p>Lubang hitam juga ada yang bersifat <strong>supermasif</strong> (jutaan hingga miliaran massa Matahari) di pusat galaksi, dan mungkin <strong>primordial</strong> yang terbentuk di awal alam semesta.</p>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>MPG — Four types of black holes. <a href="https://www.mpg.de" target="_blank">mpg.de</a></p>
-                    <p>NSF — Black Holes. <a href="https://www.nsf.gov" target="_blank">nsf.gov</a></p>
-                    <p>Caltech Ay 1 — Topik 11: Neutron stars and black holes. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Lubang hitam tidak "menyedot" segala sesuatu di sekitarnya seperti vakum. Objek hanya jatuh ke dalamnya jika terlalu dekat dan kehilangan momentum orbit.')">Lubang hitam menyedot semua materi di sekitarnya</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Cakrawala peristiwa adalah batas di mana kecepatan lepas melebihi kecepatan cahaya, sehingga tidak ada yang bisa lepas, termasuk cahaya.')">Cakrawala peristiwa adalah batas di mana cahaya tidak bisa lepas</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Bintang neutron terbentuk dari bintang bermassa menengah-besar, sedangkan lubang hitam memerlukan massa inti yang lebih besar lagi.')">Bintang neutron dan lubang hitam terbentuk dari bintang bermassa sama</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 10 -->
-        <div class="slide-card" data-index="9">
-            <div class="slide-header">
-                <span class="slide-level level-menengah">Menengah</span>
-                <h2>Hari 10: Galaksi Bima Sakti & Strukturnya</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Galaksi</div>
-            </div>
-            <div class="slide-body">
-                <p>Galaksi Bima Sakti adalah galaksi spiral berbatang (SBbc) yang menampung sekitar 100–400 miliar bintang. Diameternya sekitar 100.000 tahun cahaya, dan Matahari kita terletak sekitar 26.000 tahun cahaya dari pusatnya.</p>
-                <p>Struktur Bima Sakti:</p>
-                <ul>
-                    <li><strong>Piringan (disk):</strong> Tempat sebagian besar bintang, gas, dan debu berada. Bintang muda dan gugus terbuka banyak ditemukan di sini.</li>
-                    <li><strong>Bulge (tonjolan pusat):</strong> Wilayah padat bintang tua di pusat galaksi. Di pusatnya terdapat lubang hitam supermasif, Sagittarius A*.</li>
-                    <li><strong>Halo:</strong> Wilayah sferis yang mengandung gugus bola (globular clusters) dan bintang tua. Halo juga mengandung materi gelap.</li>
-                    <li><strong>Lengan spiral:</strong> Wilayah dengan pembentukan bintang aktif, terbentuk karena gelombang kepadatan yang berputar.</li>
-                </ul>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>Science — Portrait of a Galaxy. <a href="https://www.science.org" target="_blank">science.org</a></p>
-                    <p>Caltech Ay 1 — Topik 12: Galaxy structure, stellar populations, dark halo. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Tata Surya kita terletak di piringan galaksi, sekitar 26.000 tahun cahaya dari pusat, bukan di pusat galaksi.')">Tata Surya terletak di pusat Bima Sakti</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Bima Sakti adalah galaksi spiral berbatang. Pusatnya memiliki bulge padat dan lubang hitam supermasif (Sagittarius A*), sedangkan piringannya berisi lengan spiral tempat pembentukan bintang.')">Bima Sakti adalah galaksi spiral berbatang dengan lubang hitam supermasif di pusatnya</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Halo galaksi justru mengandung bintang-bintang tua dan gugus bola, bukan bintang muda.')">Halo galaksi berisi bintang-bintang muda</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 11 -->
-        <div class="slide-card" data-index="10">
-            <div class="slide-header">
-                <span class="slide-level level-mahir">Mahir</span>
-                <h2>Hari 11: Materi Gelap & Energi Gelap</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Kosmologi</div>
-            </div>
-            <div class="slide-body">
-                <p>Salah satu penemuan paling mengejutkan dalam astronomi modern adalah bahwa materi biasa (yang membentuk bintang, planet, dan kita) hanya mencakup sekitar <strong>5%</strong> dari total energi-materi alam semesta.</p>
-                <ul>
-                    <li><strong>Materi gelap (~27%):</strong> Tidak memancarkan cahaya, tetapi terdeteksi melalui efek gravitasinya. Bukti utamanya adalah kurva rotasi galaksi spiral — bintang di pinggiran galaksi bergerak terlalu cepat jika hanya gravitasi materi tampak yang bekerja. Materi gelap juga terlihat dalam pelensaan gravitasi dan pembentukan struktur kosmik.</li>
-                    <li><strong>Energi gelap (~68%):</strong> Menyebabkan ekspansi alam semesta yang <em>semakin cepat</em>. Ditemukan pada 1998 melalui pengamatan supernova Tipe Ia. Sifatnya masih misterius, tetapi konsisten dengan konstanta kosmologis (Λ) dalam model ΛCDM.</li>
-                </ul>
-                <div class="highlight-box">
-                    <p>💡 Model ΛCDM (Lambda-Cold Dark Matter) adalah model kosmologi standar saat ini. "Lambda" merujuk pada energi gelap, "Cold Dark Matter" pada materi gelap yang bergerak lambat.</p>
-                </div>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>UChicago — Testing dark matter and dark energy. <a href="https://www.uchicago.edu" target="_blank">uchicago.edu</a></p>
-                    <p>UBC — Confirming accelerating cosmic expansion. <a href="https://science.ubc.ca" target="_blank">science.ubc.ca</a></p>
-                    <p>Caltech Ay 1 — Topik 17–18: Cosmology, CMB, dark energy. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Materi gelap tidak memancarkan cahaya, sehingga tidak bisa dideteksi dengan teleskop optik biasa. Buktinya datang dari efek gravitasinya.')">Materi gelap dapat dilihat dengan teleskop optik</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Materi gelap terdeteksi melalui efek gravitasinya (seperti kurva rotasi galaksi), sedangkan energi gelap menyebabkan ekspansi alam semesta yang semakin cepat.')">Materi gelap dideteksi melalui efek gravitasi, energi gelap menyebabkan ekspansi dipercepat</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Materi biasa hanya sekitar 5% dari total energi-materi alam semesta. Materi gelap ~27% dan energi gelap ~68%.')">Materi biasa mendominasi alam semesta</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 12 -->
-        <div class="slide-card" data-index="11">
-            <div class="slide-header">
-                <span class="slide-level level-mahir">Mahir</span>
-                <h2>Hari 12: Big Bang & Bukti-Buktinya</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Kosmologi</div>
-            </div>
-            <div class="slide-body">
-                <p>Teori <strong>Big Bang</strong> menyatakan bahwa alam semesta dimulai dari keadaan sangat panas dan padat sekitar 13,8 miliar tahun lalu, kemudian mengembang dan mendingin.</p>
-                <p>Tiga bukti utama yang mendukung teori ini:</p>
-                <ul>
-                    <li><strong>Ekspansi alam semesta (Hukum Hubble):</strong> Edwin Hubble (1929) menemukan bahwa galaksi-galaksi menjauh dari kita, dan semakin jauh, semakin cepat. Ini menunjukkan alam semesta mengembang.</li>
-                    <li><strong>Radiasi Latar Belakang Gelombang Mikro Kosmik (CMB):</strong> "Sisa panas" dari Big Bang, ditemukan secara tidak sengaja pada 1964. CMB adalah radiasi termal yang sangat seragam pada suhu ~2,7 Kelvin, berasal dari 380.000 tahun setelah Big Bang.</li>
-                    <li><strong>Nukleosintesis Big Bang:</strong> Kelimpahan relatif hidrogen, helium, deuterium, dan lithium di alam semesta sesuai dengan prediksi teori tentang reaksi nuklir di alam semesta awal.</li>
-                </ul>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>arXiv — Modern Cosmology, an Amuse-Gueule. <a href="https://export.arxiv.org" target="_blank">export.arxiv.org</a></p>
-                    <p>CSIRO ATNF — The Big Bang & the Standard Model. <a href="https://www.atnf.csiro.au" target="_blank">atnf.csiro.au</a></p>
-                    <p>NASA — Evidence for the Big Bang. <a href="https://asd.gsfc.nasa.gov" target="_blank">asd.gsfc.nasa.gov</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Big Bang bukan ledakan yang menyebar ke ruang kosong. Big Bang adalah ekspansi ruang itu sendiri — alam semesta tidak mengembang "ke dalam" apa pun.')">Big Bang adalah ledakan di ruang yang sudah ada</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! CMB adalah radiasi sisa Big Bang yang terdeteksi pada suhu ~2,7 K. Ini adalah salah satu bukti terkuat teori Big Bang, bersama ekspansi Hubble dan nukleosintesis.')">CMB adalah sisa radiasi dari Big Bang</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Nukleosintesis Big Bang menjelaskan pembentukan inti atom ringan (H, He, Li) dalam beberapa menit pertama, bukan pembentukan bintang dan galaksi.')">Nukleosintesis Big Bang menjelaskan pembentukan bintang</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 13 -->
-        <div class="slide-card" data-index="12">
-            <div class="slide-header">
-                <span class="slide-level level-mahir">Mahir</span>
-                <h2>Hari 13: Eksoplanet & Pencarian Kehidupan</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Astrobiologi</div>
-            </div>
-            <div class="slide-body">
-                <p>Sejak penemuan planet pertama di luar Tata Surya pada 1995 (51 Pegasi b), astronom telah mengkonfirmasi lebih dari 5.000 <strong>eksoplanet</strong>.</p>
-                <p>Metode deteksi utama:</p>
-                <ul>
-                    <li><strong>Metode Transit:</strong> Mengukur penurunan kecil cahaya bintang ketika planet melintas di depannya. Misi Kepler dan TESS menggunakan metode ini untuk menemukan ribuan planet.</li>
-                    <li><strong>Metode Kecepatan Radial (Wobble):</strong> Mendeteksi goyangan bintang akibat tarikan gravitasi planet. Ini mengungkap massa minimum planet. 51 Pegasi b ditemukan dengan metode ini.</li>
-                    <li><strong>Mikrolensa Gravitasional:</strong> Memanfaatkan pembelokan cahaya oleh gravitasi bintang untuk mendeteksi planet yang sangat jauh.</li>
-                    <li><strong>Pencitraan Langsung:</strong> Memotret planet secara langsung, biasanya untuk planet raksasa yang jauh dari bintangnya.</li>
-                </ul>
-                <p>Zona layak huni (habitable zone) adalah wilayah di sekitar bintang di mana air bisa berwujud cair di permukaan planet. Ini adalah salah satu kriteria utama dalam pencarian kehidupan.</p>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>NASA Science — How Do We Find Exoplanets? <a href="https://science.nasa.gov" target="_blank">science.nasa.gov</a></p>
-                    <p>ESA — How to find an exoplanet. <a href="https://www.esa.int" target="_blank">esa.int</a></p>
-                    <p>Caltech Ay 1 — Topik 7: Planets beyond the Solar system. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Metode kecepatan radial mengukur goyangan bintang, sedangkan metode transit mengukur penurunan cahaya bintang. Keduanya berbeda.')">Metode transit mengukur goyangan bintang</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Metode transit mendeteksi penurunan cahaya bintang saat planet melintas, sedangkan metode kecepatan radial mendeteksi goyangan bintang akibat tarikan gravitasi planet.')">Metode transit dan kecepatan radial adalah dua metode utama deteksi eksoplanet</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Zona layak huni adalah wilayah di mana air bisa berwujud cair, tetapi ini bukan jaminan adanya kehidupan.')">Zona layak huni menjamin adanya kehidupan</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 14 -->
-        <div class="slide-card" data-index="13">
-            <div class="slide-header">
-                <span class="slide-level level-mahir">Mahir</span>
-                <h2>Hari 14: Galaksi Aktif & Quasar</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Objek Ekstrem</div>
-            </div>
-            <div class="slide-body">
-                <p>Beberapa galaksi memiliki inti yang sangat terang — jauh lebih terang dari seluruh galaksi biasa. Ini disebut <strong>Active Galactic Nuclei (AGN)</strong>.</p>
-                <p>Sumber energinya adalah <strong>lubang hitam supermasif</strong> yang aktif menelan materi. Saat materi jatuh ke dalam lubang hitam, ia membentuk <strong>piringan akresi</strong> yang sangat panas dan memancarkan radiasi intens dari radio hingga sinar gamma.</p>
-                <p>Jenis-jenis AGN:</p>
-                <ul>
-                    <li><strong>Quasar:</strong> AGN paling terang. Bisa lebih terang dari 100 galaksi biasa digabungkan.</li>
-                    <li><strong>Blazar:</strong> Quasar dengan jet yang diarahkan hampir tepat ke Bumi, sehingga tampak sangat terang dan bervariasi.</li>
-                    <li><strong>Seyfert:</strong> AGN dengan luminositas lebih rendah, ditemukan di galaksi spiral.</li>
-                    <li><strong>Radio Galaxy:</strong> AGN yang memancarkan jet radio besar.</li>
-                </ul>
-                <p>Model unifikasi menyatakan bahwa perbedaan penampakan AGN terutama disebabkan oleh sudut pandang kita terhadap objek tersebut.</p>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>Caltech Ay 1 — Topik 16: Active Galactic Nuclei. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                    <p>Astrophysics Is Easy! — Chapter: Active Galaxies. <a href="https://archive.org/details/astrophysicsisea0000ingl_2edi" target="_blank">archive.org</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Quasar bukan bintang. Quasar adalah inti galaksi aktif yang didukung oleh lubang hitam supermasif.')">Quasar adalah bintang yang sangat terang</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! AGN didukung oleh lubang hitam supermasif yang menelan materi. Perbedaan penampakan (quasar, blazar, Seyfert, radio galaxy) terutama disebabkan oleh sudut pandang kita.')">AGN ditenagai oleh lubang hitam supermasif, perbedaannya karena sudut pandang</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. AGN justru ditemukan di inti galaksi, bukan di pinggiran.')">AGN terletak di pinggiran galaksi</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 15 -->
-        <div class="slide-card" data-index="14">
-            <div class="slide-header">
-                <span class="slide-level level-mahir">Mahir</span>
-                <h2>Hari 15: Struktur Skala Besar & Pembentukan Galaksi</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Kosmologi</div>
-            </div>
-            <div class="slide-body">
-                <p>Pada skala terbesar, alam semesta tidak tersebar merata. Galaksi-galaksi membentuk struktur seperti <strong>jaring kosmik (cosmic web)</strong>:</p>
-                <ul>
-                    <li><strong>Filamen:</strong> Jembatan gas dan galaksi yang menghubungkan gugus-gugus galaksi.</li>
-                    <li><strong>Void:</strong> Ruang kosong raksasa dengan sangat sedikit galaksi.</li>
-                    <li><strong>Gugus dan supergugus:</strong> Kumpulan galaksi yang terikat gravitasi. Gugus bisa berisi ratusan hingga ribuan galaksi.</li>
-                </ul>
-                <p>Pembentukan galaksi terjadi secara <strong>hierarkis</strong>: galaksi kecil terbentuk lebih dulu, kemudian bergabung melalui merger untuk membentuk galaksi yang lebih besar. Bima Sakti sendiri diperkirakan telah menelan banyak galaksi kecil selama sejarahnya. Pengamatan dengan JWST dan ALMA menunjukkan bahwa galaksi seperti Bima Sakti tumbuh "dari dalam ke luar" — bagian pusat terbentuk lebih dulu, kemudian piringan bertambah massa seiring waktu.</p>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>Caltech Ay 1 — Topik 15 & 14: Large scale structure, galaxy formation. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                    <p>EurekAlert — Milky Way's turbulent youth. <a href="https://www.eurekalert.org" target="_blank">eurekalert.org</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Galaksi tidak tersebar merata. Mereka membentuk struktur filamen dan gugus yang disebut jaring kosmik.')">Galaksi tersebar merata di alam semesta</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Pembentukan galaksi bersifat hierarkis: galaksi kecil terbentuk lebih dulu, lalu bergabung melalui merger untuk membentuk galaksi yang lebih besar.')">Pembentukan galaksi bersifat hierarkis melalui merger</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Void adalah ruang kosong raksasa dengan sangat sedikit galaksi, bukan wilayah paling padat.')">Void adalah wilayah paling padat galaksi</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 16 -->
-        <div class="slide-card" data-index="15">
-            <div class="slide-header">
-                <span class="slide-level level-mahir">Mahir</span>
-                <h2>Hari 16: Tangga Jarak Kosmik & Masa Depan Alam Semesta</h2>
-                <div class="slide-meta">⏱ 5 menit baca · Topik: Kosmologi Lanjutan</div>
-            </div>
-            <div class="slide-body">
-                <p>Bagaimana astronom mengukur jarak ke galaksi yang sangat jauh? Mereka menggunakan <strong>tangga jarak kosmik</strong> — serangkaian metode yang saling terkalibrasi:</p>
-                <ul>
-                    <li><strong>Paralaks:</strong> Metode paling dasar, mengukur pergeseran posisi bintang terhadap latar belakang saat Bumi mengorbit. Akurat hingga beberapa ribu tahun cahaya.</li>
-                    <li><strong>Cepheid Variable:</strong> Bintang yang periodenya berkorelasi dengan luminositasnya. Digunakan untuk jarak hingga puluhan juta tahun cahaya.</li>
-                    <li><strong>Supernova Tipe Ia:</strong> Ledakan termonuklir katai putih yang memiliki luminositas puncak yang konsisten. Digunakan sebagai "lilin standar" untuk jarak miliaran tahun cahaya.</li>
-                    <li><strong>Pergeseran Merah (Redshift):</strong> Hukum Hubble menghubungkan pergeseran merah galaksi dengan jaraknya, memungkinkan pengukuran hingga tepi alam semesta yang teramati.</li>
-                </ul>
-                <p><strong>Masa depan alam semesta:</strong> Dengan energi gelap yang mendominasi, ekspansi alam semesta terus dipercepat. Dalam triliunan tahun, galaksi-galaksi akan saling menjauh hingga bintang-bintang di langit malam akan menghilang dari pandangan. Skenario ini disebut "Big Freeze" atau "Heat Death" — alam semesta menjadi dingin, gelap, dan entropi maksimum.</p>
-                <div class="reference">
-                    <h4>📚 Referensi</h4>
-                    <p>Caltech Ay 1 — Topik 19: Distance scale and age, cosmological tests. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
-                    <p>IUCAA — Lecture 1.4: The cosmic distance ladder. <a href="https://ace.iucaa.in/resources/a-a.html" target="_blank">ace.iucaa.in</a></p>
-                </div>
-                <div class="quiz-section">
-                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
-                    <div class="quiz-options">
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Paralaks hanya akurat untuk jarak beberapa ribu tahun cahaya. Untuk jarak yang lebih jauh, astronom menggunakan Cepheid, supernova, dan redshift.')">Paralaks dapat mengukur jarak ke galaksi terjauh</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Tangga jarak kosmik adalah serangkaian metode berlapis: paralaks untuk jarak dekat, Cepheid untuk menengah, supernova untuk jauh, dan redshift untuk skala kosmologis.')">Tangga jarak kosmik menggunakan metode berlapis dari paralaks hingga redshift</button>
-                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Dengan energi gelap yang mendominasi, alam semesta kemungkinan berakhir dalam skenario Big Freeze — dingin, gelap, dan terus mengembang.')">Alam semesta akan mengerut kembali dalam Big Crunch</button>
-                    </div>
-                    <div class="quiz-feedback"></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Navigation -->
-    <div class="nav-section">
-        <button class="nav-btn nav-btn-prev" id="prevBtn" onclick="changeSlide(-1)" disabled>← Sebelumnya</button>
-        <span class="slide-counter" id="slideCounter">1 / 16</span>
-        <button class="nav-btn nav-btn-next" id="nextBtn" onclick="changeSlide(1)">Selanjutnya →</button>
-    </div>
-
+<div class="header">
+  <h1>🌌 Astronomi Lanjutan</h1>
+  <p>Astrometri · Teleskop · Nebula · Mekanika Langit · Spektroskopi · Kosmologi</p>
 </div>
 
+<!-- Mode Tabs -->
+<div class="mode-tabs">
+  <button class="mode-tab active" onclick="switchMode('umum')" id="tabUmum">📖 Umum & Fisika</button>
+  <button class="mode-tab" onclick="switchMode('olimpiade')" id="tabOlimpiade">🏆 Olimpiade / Universitas</button>
+</div>
+
+<!-- Topic Pills (Umum) -->
+<div class="topic-pills" id="pillsUmum">
+  <button class="topic-pill active" onclick="jumpTopic(0)">Semua</button>
+  <button class="topic-pill" onclick="jumpTopic(1)">Astrometri</button>
+  <button class="topic-pill" onclick="jumpTopic(3)">Teleskop</button>
+  <button class="topic-pill" onclick="jumpTopic(5)">Nebula</button>
+  <button class="topic-pill" onclick="jumpTopic(7)">Fisika Bintang</button>
+  <button class="topic-pill" onclick="jumpTopic(9)">Mekanika Langit</button>
+  <button class="topic-pill" onclick="jumpTopic(11)">Spektroskopi</button>
+</div>
+
+<!-- Topic Pills (Olimpiade) -->
+<div class="topic-pills hidden" id="pillsOlimpiade">
+  <button class="topic-pill active" onclick="jumpTopicOlim(0)">Semua</button>
+  <button class="topic-pill" onclick="jumpTopicOlim(1)">Astrofisika</button>
+  <button class="topic-pill" onclick="jumpTopicOlim(3)">Astronomi Bola</button>
+  <button class="topic-pill" onclick="jumpTopicOlim(5)">Mekanika Benda Langit</button>
+  <button class="topic-pill" onclick="jumpTopicOlim(7)">Instrumen</button>
+</div>
+
+<!-- Progress -->
+<div class="progress-section">
+  <div class="progress-info">
+    <span id="progressLabel">Materi 1 dari 13</span>
+    <span id="progressPercent">0%</span>
+  </div>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+</div>
+
+<!-- ===== SLIDES CONTAINER ===== -->
+<div id="slidesContainer">
+
+<!-- ==================== MODE UMUM (13 slides) ==================== -->
+
+<!-- U1: Astrometri -->
+<div class="slide-card active" data-mode="umum" data-index="0">
+<div class="slide-header">
+  <span class="slide-level level-pemula">Pemula</span>
+  <h2>Hari 1: Astrometri — Mengukur Posisi Bintang dari Bumi</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Astrometri</div>
+</div>
+<div class="slide-body">
+<p><strong>Astrometri</strong> adalah cabang astronomi yang mengukur posisi dan gerak benda langit secara presisi. Ini adalah fondasi dari hampir semua astronomi observasional.</p>
+<p>Bagaimana astronom menentukan di mana sebuah bintang berada di langit? Ada dua sistem koordinat utama:</p>
+<ul>
+<li><strong>Alt-azimuth (Horizon):</strong> <em>Altitude</em> (0°–90° dari horizon) dan <em>azimuth</em> (0°–360° dari utara). Berubah setiap saat karena rotasi Bumi.</li>
+<li><strong>Ekuator:</strong> <em>Deklinasi (Dec)</em> — analog lintang — dan <em>Asensio Rekta (RA)</em> — analog bujur, diukur dalam jam (0h–24h). Tetap relatif terhadap bintang.</li>
+</ul>
+<p>Dari posisi pengamat, astronom juga mengukur <strong>paralaks</strong> — pergeseran tampak posisi bintang terhadap latar belakang saat Bumi mengorbit Matahari. Paralaks adalah metode langsung untuk mengukur jarak bintang:</p>
+<div class="formula-box">d (parsec) = 1 / p (arcsecond)</div>
+<p>Bintang dengan paralaks 1 arcsecond berjarak 1 parsec (3,26 tahun cahaya).</p>
+<div class="highlight-box"><p>💡 Hipparcos dan Gaia adalah misi luar angkasa yang mengukur paralaks jutaan bintang dengan presisi mikro-arcsecond.</p></div>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>Caltech Ay 1 — Topik 2: Units, distances, and parallaxes; celestial coordinates. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+<p>Comenius University — Coordinate systems, transformations, parallax, precession. <a href="https://ais2.uniba.sk" target="_blank">ais2.uniba.sk</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Paralaks adalah pergeseran tampak posisi bintang terhadap latar belakang saat Bumi mengorbit. Semakin kecil paralaks, semakin jauh bintang tersebut.')">Paralaks mengukur jarak bintang berdasarkan pergeseran tampak</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Asensio Rekta (RA) analog dengan bujur Bumi, sedangkan Deklinasi analog dengan lintang.')">Asensio Rekta analog dengan lintang Bumi</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Sistem alt-azimuth berubah setiap saat karena rotasi Bumi, sedangkan sistem ekuator tetap relatif terhadap bintang.')">Sistem alt-azimuth tetap sepanjang malam</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U2: Astrometri Lanjutan -->
+<div class="slide-card" data-mode="umum" data-index="1">
+<div class="slide-header">
+  <span class="slide-level level-menengah">Menengah</span>
+  <h2>Hari 2: Aberasi, Presesi & Gerak Diri Bintang</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Astrometri</div>
+</div>
+<div class="slide-body">
+<p>Posisi bintang yang kita ukur dari Bumi tidak tetap. Ada beberapa efek yang harus dikoreksi:</p>
+<ul>
+<li><strong>Aberasi cahaya:</strong> Karena Bumi bergerak mengelilingi Matahari (~30 km/s), arah datang cahaya bintang tampak miring. Efek ini ditemukan oleh James Bradley (1725) dan menjadi bukti pertama gerak Bumi mengelilingi Matahari.</li>
+<li><strong>Presesi:</strong> Sumbu rotasi Bumi "bergoyang" seperti gasing selama ~26.000 tahun. Akibatnya, koordinat bintang berubah perlahan. Polaris tidak akan selalu menjadi bintang utara.</li>
+<li><strong>Nutation:</strong> Goyangan kecil pada sumbu Bumi akibat gravitasi Bulan, dengan periode ~18,6 tahun.</li>
+<li><strong>Gerak diri (proper motion):</strong> Bintang bergerak di ruang angkasa. Barnard's Star bergerak 10,3 arcsecond per tahun — yang tercepat yang diketahui.</li>
+</ul>
+<p>Astronom menerbitkan <strong>katalog bintang</strong> (seperti Hipparcos, Gaia) yang mencantumkan posisi, paralaks, dan gerak diri bintang dengan presisi tinggi.</p>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>Comenius University — Refraction, aberration, parallax, precession, nutation, self-movement of stars, position reductions. <a href="https://ais2.uniba.sk" target="_blank">ais2.uniba.sk</a></p>
+<p>Caltech Ay 1 — Topik 2: Celestial coordinates, time systems. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Aberasi disebabkan oleh gerak Bumi mengelilingi Matahari, bukan rotasi Bumi.')">Aberasi cahaya disebabkan oleh rotasi Bumi</button>
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Presesi adalah goyangan sumbu rotasi Bumi dengan periode ~26.000 tahun. Akibatnya, koordinat bintang berubah perlahan seiring waktu.')">Presesi adalah goyangan sumbu Bumi dengan periode ~26.000 tahun</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Gerak diri adalah gerakan bintang di ruang angkasa, bukan gerakan Bumi.')">Gerak diri adalah gerakan Bumi di ruang angkasa</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U3: Teleskop & Binokular -->
+<div class="slide-card" data-mode="umum" data-index="2">
+<div class="slide-header">
+  <span class="slide-level level-pemula">Pemula</span>
+  <h2>Hari 3: Teleskop & Binokular — Mulai dari Mana?</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Teleskop</div>
+</div>
+<div class="slide-body">
+<p>Banyak pemula bertanya: "Teleskop apa yang harus saya beli?" Jawaban astronom profesional sering mengejutkan: <strong>mulailah dengan binokular</strong>.</p>
+<h3>Mengapa Binokular?</h3>
+<ul>
+<li>Lebih murah dan mudah digunakan daripada teleskop</li>
+<li>Field of view luas — cocok untuk menjelajahi langit dan menemukan objek</li>
+<li>Bisa digunakan untuk siang hari (burung, alam) dan malam hari (bintang)</li>
+<li>Keterampilan menemukan objek dengan binokular langsung berguna saat beralih ke teleskop</li>
+</ul>
+<p><strong>Ukuran binokular yang direkomendasikan untuk pemula:</strong> 7×50, 8×42, atau 10×50. Angka pertama = perbesaran, angka kedua = diameter lensa (mm). Semakin besar diameter, semakin banyak cahaya yang dikumpulkan.</p>
+<h3>Jenis Teleskop</h3>
+<ul>
+<li><strong>Refraktor (lensa):</strong> Sederhana, tahan lama. Aberasi kromatik pada lensa murah.</li>
+<li><strong>Reflektor (cermin):</strong> Bebas aberasi kromatik, bisa dibuat besar. Contoh: Newtonian.</li>
+<li><strong>Katadioptrik:</strong> Kombinasi lensa-cermin. Kompak. Contoh: Schmidt-Cassegrain.</li>
+</ul>
+<div class="highlight-box"><p>💡 Parameter terpenting teleskop adalah <strong>aperture</strong> (diameter bukaan), bukan perbesaran. Aperture menentukan daya kumpul cahaya dan resolusi.</p></div>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>NASA Science — Binoculars: A Great First Telescope. <a href="https://ciencia.nasa.gov" target="_blank">ciencia.nasa.gov</a></p>
+<p>Sky & Telescope — Astronomy for Beginners: Start Stargazing with Binoculars. <a href="https://skyandtelescope.org" target="_blank">skyandtelescope.org</a></p>
+<p>Caltech Ay 1 — Topik 3: Telescopes and detectors. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Binokular adalah instrumen pertama yang ideal untuk pemula karena murah, mudah digunakan, dan melatih keterampilan menemukan objek di langit.')">Binokular adalah instrumen pertama yang direkomendasikan untuk pemula</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Parameter terpenting teleskop adalah aperture (diameter), bukan perbesaran.')">Perbesaran adalah parameter terpenting teleskop</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Teleskop reflektor menggunakan cermin, bukan lensa. Yang menggunakan lensa adalah refraktor.')">Teleskop reflektor menggunakan lensa</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U4: Teleskop Lanjutan -->
+<div class="slide-card" data-mode="umum" data-index="3">
+<div class="slide-header">
+  <span class="slide-level level-menengah">Menengah</span>
+  <h2>Hari 4: Optik Teleskop, Resolusi & Instrumen Modern</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Teleskop</div>
+</div>
+<div class="slide-body">
+<p>Untuk memahami teleskop secara mendalam, kita perlu memahami <strong>optik geometris</strong>:</p>
+<ul>
+<li><strong>Panjang fokus (f):</strong> Jarak dari lensa/cermin ke titik fokus.</li>
+<li><strong>Rasio fokal (f/ratio):</strong> f/D. f/10 atau lebih besar = "lambat" (cocok untuk planet). f/5 atau kurang = "cepat" (cocok untuk deep-sky).</li>
+<li><strong>Perbesaran:</strong> f_teleskop / f_okuler. Perbesaran maksimum berguna ≈ 2× aperture (mm).</li>
+</ul>
+<p><strong>Resolusi (daya pisah)</strong> dibatasi oleh difraksi. Kriteria Rayleigh:</p>
+<div class="formula-box">θ (radian) = 1,22 × λ / D</div>
+<p>Semakin besar D (aperture), semakin kecil θ (semakin tajam resolusi). Untuk mengatasi batas atmosfer, teleskop modern menggunakan <strong>optik adaptif</strong> atau ditempatkan di luar angkasa (Hubble, JWST).</p>
+<p><strong>Instrumen modern</strong> mencakup: spektrograf (menguraikan cahaya menjadi spektrum), fotometer (mengukur kecerahan), interferometer (menggabungkan cahaya dari beberapa teleskop), dan detektor non-EM (neutrino, gelombang gravitasi).</p>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>Caltech Ay 1 — Topik 3: Geometric optics, detectors, radio/X-ray/gamma-ray telescopes. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+<p>UAB Introduction to Astrophysics — Astronomical instrumentation: telescopes, interferometry, spectrographs. <a href="https://ddd.uab.cat" target="_blank">ddd.uab.cat</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Resolusi dibatasi oleh difraksi. Semakin besar aperture (D), semakin baik resolusi.')">Resolusi teleskop tidak bergantung pada aperture</button>
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Kriteria Rayleigh menunjukkan bahwa resolusi sudut berbanding terbalik dengan aperture. Semakin besar D, semakin kecil θ, semakin tajam resolusi.')">Resolusi berbanding terbalik dengan aperture</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Optik adaptif digunakan untuk mengoreksi distorsi atmosfer, bukan untuk memperbesar aperture.')">Optik adaptif berfungsi memperbesar aperture</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U5: Nebula -->
+<div class="slide-card" data-mode="umum" data-index="4">
+<div class="slide-header">
+  <span class="slide-level level-pemula">Pemula</span>
+  <h2>Hari 5: Nebula — Awan Gas & Debu di Ruang Angkasa</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Nebula</div>
+</div>
+<div class="slide-body">
+<p><strong>Nebula</strong> (jamak: nebulae) adalah awan raksasa gas dan debu di ruang angkasa. Kata "nebula" berasal dari bahasa Latin yang berarti "awan". Nebula adalah komponen penting dari <strong>Medium Antarbintang (ISM)</strong> — materi yang mengisi ruang antar bintang.</p>
+<p>Jenis-jenis nebula:</p>
+<ul>
+<li><strong>Nebula Emisi:</strong> Memancarkan cahayanya sendiri karena gas terionisasi oleh bintang panas di dekatnya. Contoh: Nebula Orion (M42).</li>
+<li><strong>Nebula Refleksi:</strong> Memantulkan cahaya bintang. Tampak biru karena hamburan Rayleigh (seperti langit Bumi). Contoh: Nebula Kepala Kuda (Horsehead).</li>
+<li><strong>Nebula Gelap (Absorpsi):</strong> Tidak memancarkan atau memantulkan cahaya, tetapi menghalangi cahaya bintang di belakangnya. Contoh: Nebula Kepala Kuda.</li>
+<li><strong>Nebula Planet:</strong> Cangkang gas yang dilepaskan oleh bintang sekarat (katai putih). Bukan planet sebenarnya — nama ini berasal dari penampilannya yang bulat.</li>
+<li><strong>Sisa Supernova:</strong> Gas yang tersisa dari ledakan supernova. Contoh: Nebula Kepiting (Crab Nebula).</li>
+</ul>
+<div class="highlight-box"><p>💡 Nebula adalah tempat lahirnya bintang. Gas dan debu di dalamnya runtuh karena gravitasi, memanas, dan akhirnya memulai fusi nuklir — lahirlah bintang baru.</p></div>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>NASA Space Place — What Is a Nebula? <a href="https://spaceplace.nasa.gov" target="_blank">spaceplace.nasa.gov</a></p>
+<p>NASA Science — Hubble's Nebulae. <a href="https://science.nasa.gov" target="_blank">science.nasa.gov</a></p>
+<p>University of Sydney — Star formation takes place in the densest regions of clouds, called dark nebulae. <a href="https://www.physics.usyd.edu.au" target="_blank">physics.usyd.edu.au</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Nebula emisi memancarkan cahayanya sendiri karena gas terionisasi oleh bintang panas di dekatnya. Contohnya adalah Nebula Orion.')">Nebula emisi memancarkan cahaya sendiri karena gas terionisasi</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Nebula planet bukan planet, melainkan cangkang gas yang dilepaskan oleh bintang sekarat.')">Nebula planet adalah planet yang sedang terbentuk</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Nebula gelap justru menghalangi cahaya bintang di belakangnya, sehingga tampak sebagai wilayah gelap.')">Nebula gelap memancarkan cahaya redup</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U6: Nebula & Pembentukan Bintang -->
+<div class="slide-card" data-mode="umum" data-index="5">
+<div class="slide-header">
+  <span class="slide-level level-menengah">Menengah</span>
+  <h2>Hari 6: Nebula sebagai Tempat Lahirnya Bintang</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Nebula</div>
+</div>
+<div class="slide-body">
+<p>Pembentukan bintang terjadi di wilayah terpadat dari awan molekul raksasa — disebut <strong>dark nebulae</strong>. Di dalam awan ini, gas molekul dan debu menggumpal, dan kepadatan meningkat hingga gravitasi mulai meruntuhkan wilayah terpadat.</p>
+<p>Proses pembentukan bintang:</p>
+<ul>
+<li><strong>Keruntuhan gravitasi:</strong> Awan mulai runtuh karena gravitasi. Gravitasi adalah gaya terlemah dari empat gaya fundamental, tetapi tidak memiliki komponen tolak — setiap partikel menarik partikel lain.</li>
+<li><strong>Pemanasan:</strong> Saat awan runtuh, ia memanas. Tekanan meningkat, memperlambat keruntuhan.</li>
+<li><strong>Pendinginan:</strong> Gas dan debu didinginkan oleh emisi gelombang radio dan inframerah, memungkinkan keruntuhan berlanjut.</li>
+<li><strong>Rotasi:</strong> Saat awan menyusut, kecepatan rotasinya meningkat, membentuk piringan di sekitar inti pusat.</li>
+<li><strong>Protobintang:</strong> Wilayah pusat runtuh paling cepat dan mulai memanas. Awan menjadi buram, memerangkap panas. Suhu dan tekanan naik dengan cepat.</li>
+<li><strong>Fusi nuklir:</strong> Ketika suhu inti mencapai ~10 juta Kelvin, inti hidrogen mulai berfusi menjadi helium. Bintang lahir!</li>
+</ul>
+<p>Matahari kita lahir dalam gugus bintang muda, dari awan gas yang sama yang membentuk puluhan bintang lain.</p>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>University of Sydney — Star formation in dark nebulae, gravitational collapse, protostar. <a href="https://www.physics.usyd.edu.au" target="_blank">physics.usyd.edu.au</a></p>
+<p>ESO — Cloudy with a Chance of Star Birth: hydrogen is the raw material for stars. <a href="https://eso.org" target="_blank">eso.org</a></p>
+<p>Caltech Ay 1 — Topik 5: Interstellar medium, the birth of stars. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Gravitasi justru yang memicu keruntuhan awan, bukan tekanan gas. Tekanan gas memperlambat keruntuhan.')">Tekanan gas adalah penyebab utama keruntuhan awan</button>
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Pembentukan bintang dimulai dari keruntuhan gravitasi awan molekul, yang memanas dan memadat hingga suhu inti mencapai ~10 juta Kelvin, memulai fusi nuklir.')">Keruntuhan gravitasi memicu pembentukan bintang</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Fusi nuklir dimulai setelah protobintang memanas hingga ~10 juta Kelvin, bukan pada suhu rendah.')">Fusi nuklir dimulai pada suhu rendah</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U7: Fisika Bintang - Radiasi -->
+<div class="slide-card" data-mode="umum" data-index="6">
+<div class="slide-header">
+  <span class="slide-level level-menengah">Menengah</span>
+  <h2>Hari 7: Fisika Bintang — Hukum Radiasi & Spektrum</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Fisika Bintang</div>
+</div>
+<div class="slide-body">
+<p>Untuk memahami bintang, kita perlu memahami bagaimana mereka memancarkan cahaya. Bintang berperilaku sangat mirip dengan <strong>benda hitam (blackbody)</strong> — objek ideal yang menyerap dan memancarkan semua radiasi.</p>
+<p>Tiga hukum fundamental radiasi benda hitam:</p>
+<ul>
+<li><strong>Hukum Planck:</strong> Menjelaskan distribusi energi radiasi pada setiap panjang gelombang. Puncak spektrum bergeser ke panjang gelombang lebih pendek saat suhu meningkat.</li>
+<li><strong>Hukum Wien:</strong> λ_max × T = konstan (2,898 × 10⁻³ m·K). Bintang panas tampak biru, bintang dingin tampak merah.</li>
+<li><strong>Hukum Stefan-Boltzmann:</strong> L = 4πR²σT⁴. Luminositas bintang sebanding dengan pangkat empat suhu dan kuadrat radius.</li>
+</ul>
+<div class="formula-box">L = 4πR²σT⁴ &nbsp;&nbsp;|&nbsp;&nbsp; λ_max = b / T</div>
+<p><strong>Klasifikasi spektrum bintang</strong> (dari panas ke dingin): O B A F G K M. Setiap kelas memiliki ciri garis absorpsi yang khas, terutama dari hidrogen dan logam. Kelas O adalah bintang paling panas (>30.000 K, biru), kelas M paling dingin (<3.500 K, merah).</p>
+<p>Matahari kita adalah bintang kelas G2 dengan suhu permukaan ~5.800 K.</p>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>ETH Zurich — Chapter 7: Spectroscopy. Spectral types O-B-A-F-G-K-M. <a href="https://people.phys.ethz.ch" target="_blank">people.phys.ethz.ch</a></p>
+<p>Comenius University — Radiation in astrophysics, Boltzmann's equation, magnitudes, spectral classification, HR diagram. <a href="https://ais2.uniba.sk" target="_blank">ais2.uniba.sk</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Hukum Wien menyatakan bahwa bintang panas memancarkan puncak pada panjang gelombang pendek (biru), sedangkan bintang dingin pada panjang gelombang panjang (merah).')">Bintang panas tampak merah, bintang dingin tampak biru</button>
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Hukum Stefan-Boltzmann menyatakan L = 4πR²σT⁴, sehingga luminositas bintang sangat sensitif terhadap suhu (pangkat empat) dan radius (kuadrat).')">Luminositas sebanding dengan pangkat empat suhu dan kuadrat radius</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Urutan kelas spektrum dari panas ke dingin adalah O B A F G K M.')">Urutan kelas spektrum dari dingin ke panas adalah O B A F G K M</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U8: Diagram HR & Evolusi -->
+<div class="slide-card" data-mode="umum" data-index="7">
+<div class="slide-header">
+  <span class="slide-level level-mahir">Mahir</span>
+  <h2>Hari 8: Diagram HR & Evolusi Bintang</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Fisika Bintang</div>
+</div>
+<div class="slide-body">
+<p><strong>Diagram Hertzsprung-Russell (HR)</strong> adalah alat fundamental dalam astrofisika. Diagram ini memplot luminositas bintang terhadap suhu permukaannya (atau warna/kelas spektrum).</p>
+<p>Mayoritas bintang berada di pita diagonal yang disebut <strong>deret utama (main sequence)</strong>. Bintang menghabiskan ~90% hidupnya di sini, membakar hidrogen menjadi helium di intinya.</p>
+<p>Struktur bintang diatur oleh keseimbangan antara gravitasi (yang menarik ke dalam) dan tekanan gas + tekanan radiasi (yang mendorong ke luar). Ini disebut <strong>kesetimbangan hidrostatik</strong>.</p>
+<p>Transport energi di dalam bintang:</p>
+<ul>
+<li><strong>Radiasi:</strong> Energi diangkut oleh foton yang berdifusi dari inti ke permukaan.</li>
+<li><strong>Konveksi:</strong> Plasma panas naik, plasma dingin turun — seperti air mendidih.</li>
+</ul>
+<p>Evolusi bintang ditentukan oleh massanya:</p>
+<ul>
+<li><strong>Massa rendah (< 0,5 M☉):</strong> Deret utama sangat lama (triliunan tahun), akhirnya menjadi katai putih helium.</li>
+<li><strong>Massa menengah (0,5–8 M☉):</strong> Deret utama miliaran tahun → raksasa merah → nebula planet + katai putih.</li>
+<li><strong>Massa tinggi (> 8 M☉):</strong> Deret utama jutaan tahun → super raksasa merah → supernova → bintang neutron atau lubang hitam.</li>
+</ul>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>Comenius University — HR diagram, stellar evolution, mass-luminosity relation. <a href="https://ais2.uniba.sk" target="_blank">ais2.uniba.sk</a></p>
+<p>UAB Introduction to Astrophysics — Stars: birth, structure, evolution and death. <a href="https://ddd.uab.cat" target="_blank">ddd.uab.cat</a></p>
+<p>Caltech Ay 1 — Topik 8–9: Stellar structure, evolution, HR diagrams. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Bintang bermassa besar menghabiskan bahan bakar lebih cepat karena luminositasnya jauh lebih tinggi. Umurnya lebih pendek tetapi kematiannya lebih dramatis.')">Bintang bermassa besar hidup lebih pendek</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Diagram HR memplot luminositas terhadap suhu/warna, bukan massa terhadap ukuran.')">Diagram HR memplot massa terhadap ukuran</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Kesetimbangan hidrostatik adalah keseimbangan antara gravitasi dan tekanan, bukan antara fusi dan gravitasi.')">Kesetimbangan hidrostatik adalah keseimbangan fusi dan gravitasi</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U9: Mekanika Langit -->
+<div class="slide-card" data-mode="umum" data-index="8">
+<div class="slide-header">
+  <span class="slide-level level-menengah">Menengah</span>
+  <h2>Hari 9: Mekanika Langit — Hukum Kepler & Newton</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Mekanika Langit</div>
+</div>
+<div class="slide-body">
+<p><strong>Mekanika langit</strong> adalah studi tentang gerak benda langit di bawah pengaruh gravitasi. Fondasinya adalah hukum Kepler dan hukum gravitasi Newton.</p>
+<p><strong>Tiga Hukum Kepler:</strong></p>
+<ul>
+<li><strong>Hukum I:</strong> Orbit planet adalah elips, dengan Matahari di salah satu fokusnya. (Diterbitkan 1609)</li>
+<li><strong>Hukum II:</strong> Garis yang menghubungkan planet ke Matahari menyapu area yang sama dalam waktu yang sama. Planet bergerak lebih cepat saat dekat Matahari.</li>
+<li><strong>Hukum III:</strong> Kuadrat periode orbit sebanding dengan pangkat tiga jarak rata-rata dari Matahari. T² ∝ a³.</li>
+</ul>
+<div class="formula-box">T² = (4π² / GM) × a³</div>
+<p><strong>Hukum gravitasi Newton</strong> (1687) menjelaskan <em>mengapa</em> hukum Kepler berlaku:</p>
+<div class="formula-box">F = G × (m₁m₂) / r²</div>
+<p>Dari hukum ini, Newton menurunkan hukum Kepler untuk orbit elips. Untuk sistem dua benda, solusinya adalah orbit elips dengan pusat massa (barycenter) di fokus. Untuk tiga benda atau lebih (three-body problem), solusi umumnya tidak ada — hanya solusi numerik.</p>
+<p><strong>Titik Lagrange</strong> adalah lima titik di mana gravitasi dua benda besar dan gaya sentrifugal seimbang, memungkinkan objek kecil "parkir" stabil. Titik L2 Bumi–Matahari adalah lokasi teleskop JWST.</p>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>Comenius University — Two-body problem, equations of motion, Kepler's laws, Kepler's equation, trajectory elements. <a href="https://ais2.uniba.sk" target="_blank">ais2.uniba.sk</a></p>
+<p>Caltech Ay 1 — Topik 2: Newtonian gravity, Kepler's laws. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Hukum II Kepler menyatakan bahwa garis planet-Matahari menyapu area yang sama dalam waktu yang sama, sehingga planet bergerak lebih cepat saat dekat Matahari.')">Hukum II Kepler menyatakan planet bergerak lebih cepat saat dekat Matahari</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Orbit planet adalah elips dengan Matahari di salah satu fokus, bukan lingkaran sempurna.')">Orbit planet adalah lingkaran sempurna dengan Matahari di pusat</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Titik L2 adalah lokasi teleskop JWST, yang berada di sisi jauh Bumi dari Matahari, bukan di antara Bumi dan Matahari.')">Titik L2 berada di antara Bumi dan Matahari</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U10: Mekanika Langit Lanjutan -->
+<div class="slide-card" data-mode="umum" data-index="9">
+<div class="slide-header">
+  <span class="slide-level level-mahir">Mahir</span>
+  <h2>Hari 10: Orbit dalam Ruang, Anomali & Persamaan Kepler</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Mekanika Langit</div>
+</div>
+<div class="slide-body">
+<p>Untuk memprediksi posisi planet secara presisi, astronom menggunakan <strong>elemen orbit</strong> — enam parameter yang mendefinisikan orbit elips dalam ruang tiga dimensi:</p>
+<ul>
+<li><strong>a</strong> — sumbu semi-mayor (ukuran orbit)</li>
+<li><strong>e</strong> — eksentrisitas (bentuk orbit: 0 = lingkaran, <1 = elips)</li>
+<li><strong>i</strong> — inklinasi (kemiringan orbit terhadap bidang referensi)</li>
+<li><strong>Ω</strong> — bujur titik simpul naik</li>
+<li><strong>ω</strong> — argumen periapsis (orientasi orbit dalam bidangnya)</li>
+<li><strong>T</strong> — waktu periapsis (saat terdekat dengan pusat)</li>
+</ul>
+<p><strong>Anomali</strong> adalah parameter sudut yang digunakan untuk menentukan posisi objek dalam orbitnya:</p>
+<ul>
+<li><strong>Anomali sejati (ν):</strong> Sudut dari periapsis ke objek, diukur di pusat massa.</li>
+<li><strong>Anomali eksentrik (E):</strong> Sudut bantu yang menghubungkan anomali sejati dengan sumbu semi-mayor.</li>
+<li><strong>Anomali rata-rata (M):</strong> Sudut yang bertambah linear dengan waktu: M = 2π(t − T)/P.</li>
+</ul>
+<p><strong>Persamaan Kepler</strong> menghubungkan anomali rata-rata dengan anomali eksentrik:</p>
+<div class="formula-box">M = E − e sin E</div>
+<p>Persamaan ini transendental — tidak ada solusi analitik tertutup. Astronom menyelesaikannya dengan iterasi numerik (metode Newton-Raphson) untuk memprediksi posisi planet.</p>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>Comenius University — Kepler's equation, velocities, anomalies, trajectory elements. <a href="https://ais2.uniba.sk" target="_blank">ais2.uniba.sk</a></p>
+<p>EPFL — Kepler's equation, orbital mechanics, elliptical orbits. <a href="https://graphsearch.epfl.ch" target="_blank">graphsearch.epfl.ch</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Persamaan Kepler M = E − e sin E menghubungkan anomali rata-rata (yang bertambah linear dengan waktu) dengan anomali eksentrik (yang menentukan posisi sebenarnya).')">Persamaan Kepler menghubungkan anomali rata-rata dan anomali eksentrik</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Eksentrisitas e = 0 berarti orbit lingkaran, bukan elips.')">Eksentrisitas e = 0 berarti orbit elips</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Persamaan Kepler bersifat transendental dan tidak memiliki solusi analitik tertutup.')">Persamaan Kepler memiliki solusi analitik tertutup</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U11: Spektroskopi -->
+<div class="slide-card" data-mode="umum" data-index="10">
+<div class="slide-header">
+  <span class="slide-level level-menengah">Menengah</span>
+  <h2>Hari 11: Spektroskopi — Membaca Cahaya Bintang</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Spektroskopi</div>
+</div>
+<div class="slide-body">
+<p><strong>Spektroskopi</strong> adalah alat paling kuat dalam astronomi. Dengan menguraikan cahaya menjadi spektrum, astronom dapat menentukan komposisi kimia, suhu, kepadatan, dan gerak objek yang sangat jauh.</p>
+<p>Sejarah spektroskopi astronomi dimulai pada awal abad ke-19 ketika Fraunhofer menemukan garis-garis gelap dalam spektrum Matahari. Kirchhoff dan Bunsen kemudian menyadari bahwa garis-garis ini berasal dari atom di atmosfer Matahari.</p>
+<p><strong>Tiga jenis spektrum:</strong></p>
+<ul>
+<li><strong>Kontinu:</strong> Dari benda padat, cair, atau gas padat — semua panjang gelombang. Contoh: spektrum Matahari secara keseluruhan.</li>
+<li><strong>Emisi (garis terang):</strong> Dari gas panas bertekanan rendah. Atom memancarkan foton pada panjang gelombang tertentu.</li>
+<li><strong>Absorpsi (garis gelap):</strong> Ketika cahaya kontinu melewati gas dingin. Atom menyerap foton pada panjang gelombang tertentu.</li>
+</ul>
+<p><strong>Aplikasi utama spektroskopi:</strong></p>
+<ul>
+<li>Menentukan suhu, gravitasi permukaan, kelimpahan unsur, dan parameter lain bintang.</li>
+<li>Mengukur pergeseran Doppler untuk kecepatan radial: Δλ/λ = v_radial/c</li>
+<li>Menentukan komposisi dan gerak nebula dari garis emisi.</li>
+<li>Mengukur pergeseran merah kosmologis (z = Δλ/λ) untuk jarak galaksi jauh.</li>
+</ul>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>ETH Zurich — Chapter 7: Spectroscopy. Applications: temperature, Doppler shift, nebulae. <a href="https://people.phys.ethz.ch" target="_blank">people.phys.ethz.ch</a></p>
+<p>ESO — Spectroscopy: one of an astronomer's favourite tools. <a href="https://eso.org" target="_blank">eso.org</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Garis absorpsi muncul ketika cahaya kontinu melewati gas dingin, sedangkan garis emisi muncul dari gas panas bertekanan rendah.')">Garis absorpsi muncul dari gas panas bertekanan rendah</button>
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Spektroskopi memungkinkan penentuan suhu, gravitasi permukaan, kelimpahan unsur, dan kecepatan radial melalui pergeseran Doppler.')">Spektroskopi memungkinkan penentuan suhu, komposisi, dan kecepatan radial</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Pergeseran merah kosmologis diukur dari spektrum galaksi jauh, bukan dari bintang di Bima Sakti.')">Pergeseran merah kosmologis diukur dari spektrum bintang dekat</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U12: Kosmologi Lanjutan -->
+<div class="slide-card" data-mode="umum" data-index="11">
+<div class="slide-header">
+  <span class="slide-level level-mahir">Mahir</span>
+  <h2>Hari 12: Kosmologi Lanjutan — CMB, Inflasi & Nasib Alam Semesta</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Kosmologi</div>
+</div>
+<div class="slide-body">
+<p><strong>Radiasi Latar Belakang Gelombang Mikro Kosmik (CMB)</strong> adalah radiasi sisa dari Big Bang, dipancarkan ketika alam semesta berusia ~380.000 tahun — saat materi menjadi transparan terhadap radiasi (rekombinasi proton dan elektron menjadi atom hidrogen netral).</p>
+<p>CMB memiliki suhu ~2,7255 K dan sangat seragam, dengan fluktuasi hanya ~1 bagian dari 100.000. Fluktuasi inilah yang menjadi benih pembentukan galaksi dan struktur skala besar.</p>
+<p><strong>Inflasi kosmik</strong> adalah periode ekspansi eksponensial yang sangat cepat pada fraksi detik pertama setelah Big Bang. Inflasi menjelaskan mengapa alam semesta sangat rata (flat) dan mengapa CMB hampir seragam. Teori ini diprediksi oleh Alan Guth pada 1980.</p>
+<p><strong>Model ΛCDM</strong> adalah model kosmologi standar saat ini: Λ (energi gelap) + CDM (Cold Dark Matter). Komposisi alam semesta:</p>
+<ul>
+<li>Energi gelap: ~68%</li>
+<li>Materi gelap: ~27%</li>
+<li>Materi biasa: ~5%</li>
+</ul>
+<p><strong>Nasib alam semesta:</strong> Dengan energi gelap mendominasi, ekspansi terus dipercepat. Dalam triliunan tahun, galaksi-galaksi akan menjauh hingga bintang-bintang di langit malam menghilang. Skenario ini disebut <strong>Big Freeze</strong> atau <strong>Heat Death</strong> — alam semesta menjadi dingin, gelap, dan entropi maksimum.</p>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>arXiv — Lectures on classical and quantum cosmology: CMB at T = 2.7255 K. <a href="https://ar5iv.labs.arxiv.org" target="_blank">ar5iv.labs.arxiv.org</a></p>
+<p>Caltech Ay 1 — Topik 18: The early universe, CMB, Big Bang Nucleosynthesis, cosmic inflation. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! CMB berasal dari era rekombinasi (~380.000 tahun setelah Big Bang) ketika proton dan elektron bergabung membentuk atom hidrogen netral, sehingga alam semesta menjadi transparan terhadap radiasi.')">CMB berasal dari era rekombinasi saat atom netral terbentuk</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Inflasi adalah periode ekspansi eksponensial sangat cepat pada fraksi detik pertama, bukan fenomena yang terjadi miliaran tahun kemudian.')">Inflasi terjadi miliaran tahun setelah Big Bang</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Model ΛCDM menyatakan energi gelap ~68%, materi gelap ~27%, dan materi biasa hanya ~5%.')">Materi biasa mendominasi komposisi alam semesta</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- U13: Kaitan Astronomi & Fisika -->
+<div class="slide-card" data-mode="umum" data-index="12">
+<div class="slide-header">
+  <span class="slide-level level-mahir">Mahir</span>
+  <h2>Hari 13: Kaitan Astronomi dengan Fisika Modern</h2>
+  <div class="slide-meta">⏱ 5 menit · Topik: Fisika & Astronomi</div>
+</div>
+<div class="slide-body">
+<p>Astronomi modern tidak bisa dipisahkan dari fisika. Hampir semua cabang fisika diterapkan dalam astronomi:</p>
+<ul>
+<li><strong>Mekanika Newton:</strong> Orbit planet, gerak bintang ganda, dinamika galaksi.</li>
+<li><strong>Gravitasi Einstein (Relativitas Umum):</strong> Lubang hitam, gelombang gravitasi, pelensaan gravitasi, kosmologi.</li>
+<li><strong>Elektromagnetisme:</strong> Radiasi benda hitam, spektroskopi, medan magnet bintang dan galaksi.</li>
+<li><strong>Termodinamika & Fisika Statistik:</strong> Struktur bintang, kesetimbangan hidrostatik, reaksi nuklir di inti bintang.</li>
+<li><strong>Fisika Kuantum & Nuklir:</strong> Fusi nuklir, spektrum atom, neutrino dari Matahari dan supernova.</li>
+<li><strong>Fisika Partikel:</strong> Materi gelap (kandidat: WIMP, axion), neutrino, proses awal alam semesta.</li>
+</ul>
+<p>Contoh konkret: <strong>gelombang gravitasi</strong> — riak dalam ruang-waktu yang diprediksi Einstein (1916) dan pertama kali terdeteksi LIGO (2015) dari merger dua lubang hitam. Ini membuka jendela baru dalam astronomi: "astronomi multi-messenger" yang menggabungkan cahaya, neutrino, dan gelombang gravitasi.</p>
+<div class="highlight-box"><p>💡 Astronomy is the ultimate physics laboratory. Di luar angkasa, kondisi ekstrem yang tidak bisa diciptakan di Bumi — gravitasi superkuat, suhu miliaran derajat, kepadatan nuklir — memungkinkan pengujian fisika fundamental.</p></div>
+<div class="reference">
+<h4>📚 Referensi</h4>
+<p>Caltech Ay 1 — Topik 1: Astronomy as a science. Relation to physics. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+<p>UAB Introduction to Astrophysics — Prerequisites: Newtonian and relativistic mechanics, thermodynamics, electromagnetism, quantum and nuclear physics. <a href="https://ddd.uab.cat" target="_blank">ddd.uab.cat</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Gelombang gravitasi, yang diprediksi Einstein dan terdeteksi LIGO, membuka era astronomi multi-messenger yang menggabungkan cahaya, neutrino, dan gelombang gravitasi.')">Gelombang gravitasi membuka era astronomi multi-messenger</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Materi gelap adalah kandidat utama dari fisika partikel, bukan bukti bahwa relativitas umum salah.')">Materi gelap membuktikan relativitas umum salah</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Astronomi modern sangat bergantung pada seluruh cabang fisika, dari mekanika hingga fisika partikel.')">Astronomi modern tidak memerlukan fisika kuantum</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- ==================== MODE OLIMPIADE / UNIVERSITAS (5 slides) ==================== -->
+
+<!-- O1: Silabus Astrofisika -->
+<div class="slide-card" data-mode="olimpiade" data-index="0" style="display:none">
+<div class="slide-header">
+  <span class="slide-level level-olimpiade">Olimpiade / Universitas</span>
+  <h2>Astrofisika — Hukum Radiasi, Spektroskopi & Fotometri</h2>
+  <div class="slide-meta">⏱ 5 menit · Silabus OSN/IOAA · Level: Lanjut</div>
+</div>
+<div class="slide-body">
+<p>Materi astrofisika dalam silabus Olimpiade Astronomi (OSN/IOAA) mencakup:</p>
+<ul>
+<li><strong>Hukum radiasi:</strong> Radiasi blackbody, efek Doppler, spektrum elektromagnetik.</li>
+<li><strong>Spektroskopi:</strong> Absorpsi, emisi, hamburan, spektrum benda langit, pembentukan garis, spektrum kontinum, pemisahan dan pelebaran garis, polarisasi.</li>
+<li><strong>Fotometri:</strong> Sistem magnitudo, luminositas, indeks warna & suhu, ekstingsi atmosfer, satuan fisis fotometri, spektrofotometri.</li>
+<li><strong>Struktur atom:</strong> Energi ikat, radioaktif, neutrino, kesetimbangan termodinamika, gas ideal, transfer energi.</li>
+<li><strong>Hukum Radiasi Lanjutan:</strong> Hukum kuadrat kebalikan, intensitas, kecerlangan dan jarak, magnitudo semu dan absolut, modulus jarak, radius bintang, diagram HR.</li>
+<li><strong>Radiasi Benda Hitam:</strong> Hukum Rayleigh-Jeans, Planck, Wien, Stefan-Boltzmann, warna dan kelas spektrum bintang.</li>
+</ul>
+<div class="formula-box">m − M = 5 log(d) − 5 &nbsp;|&nbsp; L = 4πR²σT⁴ &nbsp;|&nbsp; λ_max = b/T</div>
+<p><strong>Contoh soal:</strong> Bintang A memiliki magnitudo semu 5 dan paralaks 0,01 arcsecond. Berapakah magnitudo absolutnya?</p>
+<p>d = 1/p = 1/0,01 = 100 parsec. M = m − 5 log(d) + 5 = 5 − 5 log(100) + 5 = 5 − 10 + 5 = 0.</p>
+<div class="reference">
+<h4>📚 Referensi Silabus</h4>
+<p>Kemdikbud — Silabus Olimpiade Astronomi Internasional (OSN/IOAA), Materi I: Astrofisika. <a href="https://repositori.kemdikbud.go.id/4632/1/7.%20Silabus_OlimpiadeAstronomi%20versi%202017.pdf" target="_blank">repositori.kemdikbud.go.id</a></p>
+<p>ETH Zurich — Chapter 7: Spectroscopy. <a href="https://people.phys.ethz.ch" target="_blank">people.phys.ethz.ch</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Modulus jarak m − M = 5 log(d) − 5 menghubungkan magnitudo semu (m), magnitudo absolut (M), dan jarak (d dalam parsec).')">Modulus jarak menghubungkan magnitudo semu, absolut, dan jarak</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Hukum Wien menyatakan λ_max × T = konstan, bukan λ_max sebanding dengan T.')">Hukum Wien menyatakan λ_max sebanding dengan suhu</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Diagram HR memplot luminositas terhadap suhu atau warna, bukan massa terhadap radius.')">Diagram HR memplot massa terhadap radius bintang</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- O2: Astronomi Bola & Waktu -->
+<div class="slide-card" data-mode="olimpiade" data-index="1" style="display:none">
+<div class="slide-header">
+  <span class="slide-level level-olimpiade">Olimpiade / Universitas</span>
+  <h2>Astronomi Bola, Sistem Waktu & Kalender</h2>
+  <div class="slide-meta">⏱ 5 menit · Silabus OSN/IOAA · Level: Lanjut</div>
+</div>
+<div class="slide-body">
+<p>Materi Astronomi Bola dan Sistem Waktu dalam silabus olimpiade:</p>
+<ul>
+<li><strong>Trigonometri bola:</strong> Formula-formula pada segitiga bola (hukum cosinus, sinus).</li>
+<li><strong>Koordinat langit:</strong> Sistem koordinat geografis Bumi, horizontal, ekuatorial, ekliptika, galaktik; transformasi koordinat.</li>
+<li><strong>Waktu:</strong> Waktu Surya, Waktu Sideris, Julian Date, persamaan waktu, zona waktu, Universal Time, Local Mean Time.</li>
+<li><strong>Kalender:</strong> Julian, Gregorian, Hijriah, Cina; konversi Hisab Urfi ke Gregorian.</li>
+<li><strong>Fenomena:</strong> Equinox, solstice, bintang sirkumpolar, konstelasi, zodiak.</li>
+</ul>
+<div class="formula-box">cos a = cos b cos c + sin b sin c cos A</div>
+<p><strong>Contoh soal:</strong> Dua bintang memiliki koordinat ekuatorial (α₁, δ₁) dan (α₂, δ₂). Bagaimana menghitung jarak sudut antara keduanya?</p>
+<p>Jawaban: Gunakan hukum cosinus bola: cos d = sin δ₁ sin δ₂ + cos δ₁ cos δ₂ cos(α₁ − α₂).</p>
+<div class="reference">
+<h4>📚 Referensi Silabus</h4>
+<p>Kemdikbud — Silabus Olimpiade Astronomi, Materi II: Astronomi Bola; III: Sistem Waktu dan Kalender. <a href="https://repositori.kemdikbud.go.id/4632/1/7.%20Silabus_OlimpiadeAstronomi%20versi%202017.pdf" target="_blank">repositori.kemdikbud.go.id</a></p>
+<p>Comenius University — Spherical astronomy, time and calendar, types of time. <a href="https://ais2.uniba.sk" target="_blank">ais2.uniba.sk</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Hukum cosinus bola cos a = cos b cos c + sin b sin c cos A digunakan untuk menghitung jarak sudut antara dua titik di bola langit.')">Hukum cosinus bola digunakan untuk menghitung jarak sudut</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Waktu Sideris didasarkan pada rotasi Bumi relatif terhadap bintang, bukan Matahari.')">Waktu Sideris didasarkan pada posisi Matahari</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Sistem koordinat ekliptika menggunakan bidang orbit Bumi mengelilingi Matahari sebagai referensi, bukan ekuator langit.')">Sistem ekliptika menggunakan ekuator langit sebagai referensi</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- O3: Mekanika Benda Langit -->
+<div class="slide-card" data-mode="olimpiade" data-index="2" style="display:none">
+<div class="slide-header">
+  <span class="slide-level level-olimpiade">Olimpiade / Universitas</span>
+  <h2>Mekanika Benda Langit — Problem 2-Benda & Titik Lagrange</h2>
+  <div class="slide-meta">⏱ 5 menit · Silabus OSN/IOAA · Level: Lanjut</div>
+</div>
+<div class="slide-body">
+<p>Materi Mekanika Benda Langit dalam silabus olimpiade:</p>
+<ul>
+<li><strong>Hukum gravitasi Newton,</strong> Hukum Kepler (I, II, III).</li>
+<li><strong>Problem 2-benda:</strong> Barycenter, massa tereduksi, persamaan gerak.</li>
+<li><strong>Titik Lagrange:</strong> L1–L5, stabilitas, aplikasi (JWST di L2).</li>
+<li><strong>Limit Roche:</strong> Batas di mana satelit hancur karena gaya pasang surut.</li>
+<li><strong>Pasang surut:</strong> Efek gravitasi Bulan dan Matahari.</li>
+<li><strong>Orbit dalam ruang:</strong> Elemen orbit, anomali, persamaan Kepler.</li>
+<li><strong>Problem 3-benda:</strong> Solusi numerik dan khusus (Euler, Lagrange).</li>
+</ul>
+<div class="formula-box">M = E − e sin E &nbsp;|&nbsp; F = G m₁m₂ / r²</div>
+<p><strong>Contoh soal:</strong> Sebuah satelit berada di titik L1 Bumi–Matahari. Jelaskan mengapa titik ini cocok untuk observasi Matahari.</p>
+<p>Jawaban: Di L1, satelit selalu berada di antara Bumi dan Matahari, sehingga memiliki pandangan tanpa gangguan atmosfer Bumi dan dapat memantau Matahari secara kontinu. Contoh: SOHO.</p>
+<div class="reference">
+<h4>📚 Referensi Silabus</h4>
+<p>Kemdikbud — Silabus Olimpiade Astronomi, Materi IV: Mekanika Benda Langit. <a href="https://repositori.kemdikbud.go.id/4632/1/7.%20Silabus_OlimpiadeAstronomi%20versi%202017.pdf" target="_blank">repositori.kemdikbud.go.id</a></p>
+<p>Comenius University — Two-body problem, Kepler's laws, equations of motion. <a href="https://ais2.uniba.sk" target="_blank">ais2.uniba.sk</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Titik L1 Bumi–Matahari berada di antara Bumi dan Matahari, memberikan pandangan kontinu ke Matahari tanpa gangguan atmosfer Bumi.')">Titik L1 Bumi–Matahari cocok untuk observasi Matahari</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Limit Roche adalah batas di mana satelit hancur karena gaya pasang surut, bukan batas orbit stabil.')">Limit Roche adalah batas orbit stabil satelit</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Persamaan Kepler M = E − e sin E bersifat transendental dan tidak memiliki solusi analitik tertutup.')">Persamaan Kepler memiliki solusi analitik tertutup</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- O4: Instrumen Astronomi -->
+<div class="slide-card" data-mode="olimpiade" data-index="3" style="display:none">
+<div class="slide-header">
+  <span class="slide-level level-olimpiade">Olimpiade / Universitas</span>
+  <h2>Instrumen Astronomi — Optik, Detektor & Resolusi</h2>
+  <div class="slide-meta">⏱ 5 menit · Silabus OSN/IOAA · Level: Lanjut</div>
+</div>
+<div class="slide-body">
+<p>Materi Instrumen Astronomi dalam silabus olimpiade:</p>
+<ul>
+<li><strong>Optik geometris:</strong> Lensa, cermin, panjang fokus, perbesaran, aberasi.</li>
+<li><strong>Jenis teleskop:</strong> Refraktor, reflektor, katadioptrik, radio, X-ray, gamma-ray.</li>
+<li><strong>Resolusi:</strong> Kriteria Rayleigh, batas difraksi, optik adaptif.</li>
+<li><strong>Detektor:</strong> CCD, fotometer, spektrograf, interferometer.</li>
+<li><strong>Astronomi non-EM:</strong> Deteksi neutrino, gelombang gravitasi.</li>
+</ul>
+<div class="formula-box">θ = 1,22 λ / D &nbsp;|&nbsp; Perbesaran = f_teleskop / f_okuler</div>
+<p><strong>Contoh soal:</strong> Teleskop dengan aperture 200 mm mengamati pada panjang gelombang 550 nm. Berapakah resolusi sudut teoretisnya?</p>
+<p>θ = 1,22 × 550 × 10⁻⁹ / 0,2 = 3,355 × 10⁻⁶ radian ≈ 0,69 arcsecond.</p>
+<div class="reference">
+<h4>📚 Referensi Silabus</h4>
+<p>Kemdikbud — Silabus Olimpiade Astronomi, Materi XII: Instrumen Astronomi. <a href="https://repositori.kemdikbud.go.id/4632/1/7.%20Silabus_OlimpiadeAstronomi%20versi%202017.pdf" target="_blank">repositori.kemdikbud.go.id</a></p>
+<p>Caltech Ay 1 — Topik 3: Telescopes and detectors. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Kriteria Rayleigh θ = 1,22 λ/D menunjukkan bahwa resolusi sudut berbanding terbalik dengan aperture. Semakin besar D, semakin kecil θ.')">Resolusi sudut berbanding terbalik dengan aperture</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Teleskop radio menggunakan antena parabola untuk menerima gelombang radio, bukan lensa optik.')">Teleskop radio menggunakan lensa optik</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Detektor CCD adalah sensor elektronik yang mengubah cahaya menjadi sinyal listrik, bukan sejenis teleskop.')">CCD adalah jenis teleskop</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+<!-- O5: Kosmologi & Galaksi -->
+<div class="slide-card" data-mode="olimpiade" data-index="4" style="display:none">
+<div class="slide-header">
+  <span class="slide-level level-olimpiade">Olimpiade / Universitas</span>
+  <h2>Kosmologi & Galaksi — Model ΛCDM, CMB & Struktur Skala Besar</h2>
+  <div class="slide-meta">⏱ 5 menit · Silabus OSN/IOAA · Level: Lanjut</div>
+</div>
+<div class="slide-body">
+<p>Materi Kosmologi dan Galaksi dalam silabus olimpiade dan universitas:</p>
+<ul>
+<li><strong>Model ΛCDM:</strong> Energi gelap (Λ), Cold Dark Matter, komposisi alam semesta.</li>
+<li><strong>CMB:</strong> Radiasi latar belakang gelombang mikro kosmik, T = 2,7255 K, era rekombinasi.</li>
+<li><strong>Nukleosintesis Big Bang:</strong> Kelimpahan hidrogen, helium, deuterium, lithium.</li>
+<li><strong>Inflasi:</strong> Ekspansi eksponensial pada fraksi detik pertama.</li>
+<li><strong>Struktur skala besar:</strong> Jaring kosmik, filamen, void, gugus galaksi.</li>
+<li><strong>Pembentukan galaksi:</strong> Hierarkis, merger, evolusi.</li>
+<li><strong>Tangga jarak kosmik:</strong> Paralaks, Cepheid, supernova Tipe Ia, redshift.</li>
+</ul>
+<div class="formula-box">z = Δλ/λ &nbsp;|&nbsp; v = H₀ d (Hukum Hubble)</div>
+<p><strong>Contoh soal:</strong> Sebuah galaksi memiliki pergeseran merah z = 0,1. Dengan H₀ = 70 km/s/Mpc, berapakah jaraknya?</p>
+<p>v = zc = 0,1 × 3×10⁵ km/s = 30.000 km/s. d = v/H₀ = 30.000/70 ≈ 429 Mpc.</p>
+<div class="reference">
+<h4>📚 Referensi Silabus</h4>
+<p>Kemdikbud — Silabus Olimpiade Astronomi (Kosmologi dan Galaksi). <a href="https://repositori.kemdikbud.go.id/4632/1/7.%20Silabus_OlimpiadeAstronomi%20versi%202017.pdf" target="_blank">repositori.kemdikbud.go.id</a></p>
+<p>Caltech Ay 1 — Topik 15–19: Large scale structure, AGN, cosmology, CMB. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+<p>arXiv — Lectures on classical and quantum cosmology. <a href="https://ar5iv.labs.arxiv.org" target="_blank">ar5iv.labs.arxiv.org</a></p>
+</div>
+<div class="quiz-section">
+<div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+<div class="quiz-options">
+<button class="quiz-option" onclick="checkAnswer(this,true,'Tepat! Hukum Hubble v = H₀d menyatakan bahwa kecepatan resesi galaksi sebanding dengan jaraknya. Konstanta Hubble H₀ ≈ 70 km/s/Mpc.')">Hukum Hubble menyatakan kecepatan resesi sebanding dengan jarak</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. Model ΛCDM menyatakan energi gelap ~68%, materi gelap ~27%, dan materi biasa hanya ~5%.')">Materi biasa mendominasi komposisi alam semesta</button>
+<button class="quiz-option" onclick="checkAnswer(this,false,'Bukan. CMB dipancarkan pada era rekombinasi (~380.000 tahun setelah Big Bang), bukan pada saat Big Bang itu sendiri.')">CMB dipancarkan tepat saat Big Bang</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+</div>
+
+</div><!-- /slidesContainer -->
+
+<!-- Navigation -->
+<div class="nav-section" id="navSection">
+  <button class="nav-btn nav-btn-prev" id="prevBtn" onclick="changeSlide(-1)" disabled>← Sebelumnya</button>
+  <span class="slide-counter" id="slideCounter">1 / 13</span>
+  <button class="nav-btn nav-btn-next" id="nextBtn" onclick="changeSlide(1)">Selanjutnya →</button>
+</div>
+
+</div><!-- /container -->
+
 <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide-card');
-    const totalSlides = slides.length;
+// ===== STATE =====
+let currentMode = 'umum'; // 'umum' | 'olimpiade'
+let currentSlide = 0;
+let slidesUmum = [];
+let slidesOlimpiade = [];
+let activeSlides = [];
 
-    function showSlide(index) {
-        slides.forEach((s, i) => {
-            s.classList.toggle('active', i === index);
-        });
+function initSlides() {
+  const allSlides = document.querySelectorAll('.slide-card');
+  slidesUmum = [];
+  slidesOlimpiade = [];
+  allSlides.forEach(s => {
+    if (s.dataset.mode === 'umum') slidesUmum.push(s);
+    else slidesOlimpiade.push(s);
+  });
+  activeSlides = slidesUmum;
+}
 
-        document.getElementById('prevBtn').disabled = index === 0;
-        document.getElementById('nextBtn').disabled = index === totalSlides - 1;
+function switchMode(mode) {
+  currentMode = mode;
+  currentSlide = 0;
+  document.getElementById('tabUmum').classList.toggle('active', mode === 'umum');
+  document.getElementById('tabOlimpiade').classList.toggle('active', mode === 'olimpiade');
+  document.getElementById('pillsUmum').classList.toggle('hidden', mode !== 'umum');
+  document.getElementById('pillsOlimpiade').classList.toggle('hidden', mode !== 'olimpiade');
+  activeSlides = (mode === 'umum') ? slidesUmum : slidesOlimpiade;
+  // Hide all slides
+  document.querySelectorAll('.slide-card').forEach(s => s.style.display = 'none');
+  showSlide(0);
+}
 
-        document.getElementById('slideCounter').textContent = `${index + 1} / ${totalSlides}`;
-        document.getElementById('progressLabel').textContent = `Materi ${index + 1} dari ${totalSlides}`;
+function showSlide(index) {
+  if (index < 0 || index >= activeSlides.length) return;
+  currentSlide = index;
+  activeSlides.forEach((s, i) => {
+    s.classList.toggle('active', i === index);
+    s.style.display = (i === index) ? 'block' : 'none';
+  });
+  document.getElementById('prevBtn').disabled = index === 0;
+  document.getElementById('nextBtn').disabled = index === activeSlides.length - 1;
+  document.getElementById('slideCounter').textContent = `${index + 1} / ${activeSlides.length}`;
+  document.getElementById('progressLabel').textContent = `Materi ${index + 1} dari ${activeSlides.length}`;
+  const percent = Math.round(((index + 1) / activeSlides.length) * 100);
+  document.getElementById('progressPercent').textContent = percent + '%';
+  document.getElementById('progressFill').style.width = percent + '%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-        const percent = Math.round(((index + 1) / totalSlides) * 100);
-        document.getElementById('progressPercent').textContent = percent + '%';
-        document.getElementById('progressFill').style.width = percent + '%';
+function changeSlide(dir) {
+  const newIndex = currentSlide + dir;
+  if (newIndex >= 0 && newIndex < activeSlides.length) showSlide(newIndex);
+}
 
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+function jumpTopic(index) {
+  document.querySelectorAll('#pillsUmum .topic-pill').forEach((p, i) => {
+    p.classList.toggle('active', i === 0);
+  });
+  // If "Semua" (index 0), go to slide 0; otherwise map to slide index
+  if (currentMode === 'umum') {
+    const mapping = [0, 1, 2, 3, 4, 5, 6]; // pill index -> slide index
+    showSlide(mapping[index] !== undefined ? mapping[index] : 0);
+  }
+}
 
-    function changeSlide(direction) {
-        const newIndex = currentSlide + direction;
-        if (newIndex >= 0 && newIndex < totalSlides) {
-            currentSlide = newIndex;
-            showSlide(currentSlide);
-        }
-    }
+function jumpTopicOlim(index) {
+  document.querySelectorAll('#pillsOlimpiade .topic-pill').forEach((p, i) => {
+    p.classList.toggle('active', i === 0);
+  });
+  if (currentMode === 'olimpiade') {
+    const mapping = [0, 0, 1, 1, 2, 2, 3]; // pill index -> slide index
+    showSlide(mapping[index] !== undefined ? mapping[index] : 0);
+  }
+}
 
-    function checkAnswer(btn, isCorrect, explanation) {
-        const parent = btn.closest('.quiz-options');
-        const feedback = parent.nextElementSibling;
+function checkAnswer(btn, isCorrect, explanation) {
+  const parent = btn.closest('.quiz-options');
+  const feedback = parent.nextElementSibling;
+  parent.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.classList.add('disabled');
+    opt.onclick = null;
+  });
+  if (isCorrect) {
+    btn.classList.add('selected-correct');
+  } else {
+    btn.classList.add('selected-wrong');
+    parent.querySelectorAll('.quiz-option').forEach(opt => {
+      const onclickAttr = opt.getAttribute('onclick');
+      if (onclickAttr && onclickAttr.includes('true')) {
+        opt.classList.add('selected-correct');
+      }
+    });
+  }
+  feedback.className = 'quiz-feedback ' + (isCorrect ? 'correct' : 'incorrect');
+  feedback.innerHTML = (isCorrect ? '✅ Benar! ' : '❌ Belum tepat. ') +
+    '<div class="explanation">' + explanation + '</div>';
+}
 
-        // Disable all options
-        parent.querySelectorAll('.quiz-option').forEach(opt => {
-            opt.classList.add('disabled');
-            opt.onclick = null;
-        });
-
-        if (isCorrect) {
-            btn.classList.add('selected-correct');
-        } else {
-            btn.classList.add('selected-wrong');
-            // Highlight the correct answer
-            parent.querySelectorAll('.quiz-option').forEach(opt => {
-                if (opt.getAttribute('onclick') && opt.getAttribute('onclick').includes('true')) {
-                    opt.classList.add('selected-correct');
-                }
-            });
-        }
-
-        feedback.className = 'quiz-feedback ' + (isCorrect ? 'correct' : 'incorrect');
-        feedback.innerHTML = (isCorrect ? '✅ Benar! ' : '❌ Belum tepat. ') +
-            '<div class="explanation">' + explanation + '</div>';
-    }
-
-    function jumpToTopic(index) {
-        // Update pills
-        document.querySelectorAll('.topic-pill').forEach((p, i) => {
-            p.classList.toggle('active-pill', i === 0);
-        });
-        currentSlide = index;
-        showSlide(currentSlide);
-    }
-
-    // Initialize
-    showSlide(0);
+// ===== INIT =====
+initSlides();
+showSlide(0);
 </script>
 
 </body>
-</html>
+    </html>
