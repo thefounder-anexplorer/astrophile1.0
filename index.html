@@ -1,1145 +1,1084 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kesetimbangan Benda Tegar</title>
-  <script src="/_sdk/element_sdk.js"></script>
-  <style>
-    body {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      width: 100%;
-      min-height: 100%;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    .container {
-      width: 100%;
-      min-height: 100%;
-      padding: 40px 20px;
-    }
-
-    .header {
-      text-align: center;
-      color: white;
-      margin-bottom: 40px;
-    }
-
-    .header h1 {
-      font-size: 48px;
-      margin: 0 0 10px 0;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-
-    .header p {
-      font-size: 20px;
-      margin: 0;
-      opacity: 0.95;
-    }
-
-    .nav-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-    }
-
-    .nav-tab {
-      background: white;
-      color: #667eea;
-      border: none;
-      padding: 15px 30px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      transition: all 0.3s;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    .nav-tab:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    }
-
-    .nav-tab.active {
-      background: #764ba2;
-      color: white;
-    }
-
-    .content-section {
-      display: none;
-      background: white;
-      border-radius: 20px;
-      padding: 40px;
-      max-width: 1200px;
-      margin: 0 auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-
-    .content-section.active {
-      display: block;
-      animation: fadeIn 0.5s;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h2 {
-      color: #667eea;
-      font-size: 32px;
-      margin-top: 0;
-      margin-bottom: 20px;
-      border-bottom: 3px solid #764ba2;
-      padding-bottom: 10px;
-    }
-
-    h3 {
-      color: #764ba2;
-      font-size: 24px;
-      margin-top: 25px;
-      margin-bottom: 15px;
-    }
-
-    p {
-      line-height: 1.8;
-      color: #333;
-      font-size: 16px;
-      margin-bottom: 15px;
-    }
-
-    .formula {
-      background: #f8f9ff;
-      border-left: 4px solid #667eea;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 8px;
-      font-family: 'Courier New', monospace;
-      font-size: 18px;
-      text-align: center;
-    }
-
-    .example-box {
-      background: #fff8e1;
-      border: 2px solid #ffd54f;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 20px 0;
-    }
-
-    .simulation-container {
-      background: #f5f5f5;
-      border-radius: 15px;
-      padding: 30px;
-      margin: 20px 0;
-    }
-
-    .beam-container {
-      position: relative;
-      width: 100%;
-      height: 300px;
-      background: linear-gradient(to bottom, #e3f2fd 0%, #bbdefb 100%);
-      border-radius: 10px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-
-    .pivot {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 20px solid transparent;
-      border-right: 20px solid transparent;
-      border-bottom: 30px solid #555;
-    }
-
-    .beam {
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      width: 500px;
-      height: 15px;
-      background: linear-gradient(to bottom, #8d6e63, #6d4c41);
-      transform-origin: center center;
-      border-radius: 7px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-
-    .weight {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      background: #f44336;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      cursor: move;
-      user-select: none;
-    }
-
-    .controls {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      align-items: center;
-      margin-top: 20px;
-    }
-
-    .control-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .control-group label {
-      font-size: 14px;
-      font-weight: 600;
-      color: #555;
-    }
-
-    .control-group input {
-      padding: 10px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      width: 120px;
-      font-size: 14px;
-    }
-
-    .btn {
-      background: #667eea;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-
-    .btn:hover {
-      background: #764ba2;
-      transform: translateY(-2px);
-    }
-
-    .info-display {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-      border: 2px solid #667eea;
-    }
-
-    .info-display p {
-      margin: 5px 0;
-      font-size: 14px;
-    }
-
-    .quiz-container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .question-card {
-      perspective: 1000px;
-      min-height: 350px;
-      margin: 30px 0;
-    }
-
-    .card-inner {
-      position: relative;
-      width: 100%;
-      min-height: 350px;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-    }
-
-    .question-card.flipped .card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      min-height: 350px;
-      backface-visibility: hidden;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    }
-
-    .card-front {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .card-back {
-      background: white;
-      transform: rotateY(180deg);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .question-number {
-      font-size: 18px;
-      opacity: 0.9;
-      margin-bottom: 20px;
-    }
-
-    .question-text {
-      font-size: 28px;
-      font-weight: 600;
-      line-height: 1.6;
-      flex-grow: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      margin: 30px 0;
-    }
-
-    .answer-buttons {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .answer-btn {
-      padding: 18px 50px;
-      border: none;
-      border-radius: 12px;
-      font-size: 20px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
-      background: white;
-      color: #667eea;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-
-    .answer-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-    }
-
-    .answer-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .result-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .result-icon {
-      font-size: 40px;
-    }
-
-    .result-status {
-      font-size: 24px;
-      font-weight: 700;
-    }
-
-    .result-status.correct {
-      color: #4caf50;
-    }
-
-    .result-status.incorrect {
-      color: #f44336;
-    }
-
-    .explanation-box {
-      background: #f8f9ff;
-      border-left: 4px solid #667eea;
-      padding: 15px;
-      border-radius: 8px;
-      margin: 15px 0 0 0;
-    }
-
-    .explanation-box h4 {
-      color: #667eea;
-      margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
-
-    .explanation-box p {
-      margin: 0;
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    .navigation-buttons {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      margin-top: 30px;
-    }
-
-    .nav-btn {
-      padding: 15px 30px;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      background: #667eea;
-      color: white;
-    }
-
-    .nav-btn:hover {
-      background: #764ba2;
-      transform: translateY(-2px);
-    }
-
-    .nav-btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .progress-bar {
-      background: #e0e0e0;
-      height: 8px;
-      border-radius: 10px;
-      margin: 20px 0;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-      height: 100%;
-      transition: width 0.5s;
-      border-radius: 10px;
-    }
-
-    .score-display {
-      text-align: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 30px;
-      font-size: 24px;
-      font-weight: 600;
-    }
-
-    .experiment-setup {
-      background: #e8eaf6;
-      border-radius: 15px;
-      padding: 30px;
-      margin: 20px 0;
-    }
-
-    .torque-demo {
-      display: flex;
-      justify-content: space-around;
-      gap: 20px;
-      margin: 30px 0;
-      flex-wrap: wrap;
-    }
-
-    .demo-item {
-      flex: 1;
-      min-width: 250px;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    .demo-item h4 {
-      color: #667eea;
-      margin-top: 0;
-    }
-
-    .result-box {
-      background: #c8e6c9;
-      border: 2px solid #4caf50;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 15px;
-      font-weight: 600;
-    }
-
-    ul {
-      line-height: 2;
-      color: #333;
-    }
-
-    li {
-      margin-bottom: 10px;
-    }
-  </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
- </head>
- <body>
-  <div class="container">
-   <header class="header">
-    <h1 id="main-title">Kesetimbangan Benda Tegar</h1>
-    <p id="subtitle">Pelajari konsep fisika dengan interaktif</p>
-   </header>
-   <nav class="nav-tabs"><button class="nav-tab active" onclick="showSection('materi')">📚 Materi</button> <button class="nav-tab" onclick="showSection('simulasi')">🎮 Simulasi</button> <button class="nav-tab" onclick="showSection('percobaan')">🔬 Percobaan Torsi</button> <button class="nav-tab" onclick="showSection('kuis')">🎯 Kuis</button>
-   </nav><!-- Materi Section -->
-   <section id="materi" class="content-section active">
-    <h2>Materi Kesetimbangan Benda Tegar</h2>
-    <h3>Pengertian Kesetimbangan Benda Tegar</h3>
-    <p>Benda tegar adalah benda yang bentuk dan ukurannya tidak berubah meskipun dikenai gaya. Kesetimbangan benda tegar terjadi ketika benda tersebut tidak mengalami perubahan gerak translasi maupun rotasi.</p>
-    <h3>Syarat Kesetimbangan Benda Tegar</h3>
-    <p>Agar benda tegar berada dalam kesetimbangan, dua syarat harus dipenuhi:</p>
-    <div class="example-box">
-     <h4>1. Kesetimbangan Translasi</h4>
-     <p>Resultan semua gaya yang bekerja pada benda sama dengan nol:</p>
-     <div class="formula">
-      ΣF = 0
-     </div>
-     <p>Artinya: ΣFx = 0 dan ΣFy = 0</p>
-    </div>
-    <div class="example-box">
-     <h4>2. Kesetimbangan Rotasi</h4>
-     <p>Resultan semua momen gaya (torsi) terhadap sembarang titik sama dengan nol:</p>
-     <div class="formula">
-      Στ = 0
-     </div>
-     <p>Dimana: τ = F × r (torsi = gaya × lengan momen)</p>
-    </div>
-    <h3>Momen Gaya (Torsi)</h3>
-    <p>Momen gaya atau torsi adalah kemampuan suatu gaya untuk memutar benda terhadap suatu poros. Besarnya torsi bergantung pada:</p>
-    <ul>
-     <li>Besar gaya yang bekerja (F)</li>
-     <li>Jarak tegak lurus dari garis kerja gaya terhadap poros (r)</li>
-     <li>Sudut antara gaya dan lengan momen (θ)</li>
-    </ul>
-    <div class="formula">
-     τ = r × F × sin θ
-    </div>
-    <h3>Jenis-jenis Kesetimbangan</h3>
-    <p><strong>1. Kesetimbangan Stabil:</strong> Benda kembali ke posisi semula setelah diberi gangguan kecil. Pusat massa berada di bawah titik tumpu.</p>
-    <p><strong>2. Kesetimbangan Labil:</strong> Benda tidak kembali ke posisi semula setelah diberi gangguan kecil. Pusat massa berada di atas titik tumpu.</p>
-    <p><strong>3. Kesetimbangan Netral:</strong> Benda tetap setimbang di posisi baru setelah diberi gangguan. Pusat massa berada di titik tumpu.</p>
-    <h3>Pusat Massa</h3>
-    <p>Pusat massa adalah titik dimana seluruh massa benda dapat dianggap terkonsentrasi. Untuk benda yang homogen dan simetris, pusat massa terletak di pusat geometris benda tersebut.</p>
-    <h3>Contoh Penerapan</h3>
-    <div class="example-box">
-     <h4>Contoh 1: Papan Jungkat-Jungkit</h4>
-     <p>Sebuah papan sepanjang 4 meter bertumpu pada titik tengahnya. Anak A dengan massa 40 kg duduk di ujung kiri. Dimana anak B dengan massa 50 kg harus duduk agar seimbang?</p>
-     <p><strong>Penyelesaian:</strong></p>
-     <p>Untuk kesetimbangan rotasi: Στ = 0</p>
-     <p>τA = τB</p>
-     <p>mA × g × rA = mB × g × rB</p>
-     <p>40 × 2 = 50 × rB</p>
-     <p>rB = 1,6 meter dari titik tumpu</p>
-    </div>
-   </section><!-- Simulasi Section -->
-   <section id="simulasi" class="content-section">
-    <h2>Simulasi Kesetimbangan Benda Tegar</h2>
-    <p>Seret beban untuk mengubah posisinya dan lihat bagaimana papan bereaksi. Sesuaikan massa dan jarak untuk mencapai kesetimbangan!</p>
-    <div class="simulation-container">
-     <div class="beam-container" id="beamContainer">
-      <div class="pivot"></div>
-      <div class="beam" id="beam"></div>
-      <div class="weight" id="weight1" style="bottom: 95px; left: 100px;"><span id="weight1Label">30 kg</span>
-      </div>
-      <div class="weight" id="weight2" style="bottom: 95px; left: 400px; background: #2196f3;"><span id="weight2Label">30 kg</span>
-      </div>
-     </div>
-     <div class="controls">
-      <div class="control-group"><label for="mass1">Massa Kiri (kg):</label> <input type="number" id="mass1" value="30" min="10" max="100" step="5">
-      </div>
-      <div class="control-group"><label for="mass2">Massa Kanan (kg):</label> <input type="number" id="mass2" value="30" min="10" max="100" step="5">
-      </div><button class="btn" onclick="updateSimulation()">Perbarui Simulasi</button> <button class="btn" onclick="resetSimulation()">Reset</button>
-     </div>
-     <div class="info-display">
-      <p><strong>Status:</strong> <span id="equilibriumStatus">Menghitung...</span></p>
-      <p><strong>Torsi Kiri:</strong> <span id="torqueLeft">0</span> N·m</p>
-      <p><strong>Torsi Kanan:</strong> <span id="torqueRight">0</span> N·m</p>
-      <p><strong>Sudut Papan:</strong> <span id="beamAngle">0</span>°</p>
-     </div>
-    </div>
-   </section><!-- Percobaan Section -->
-   <section id="percobaan" class="content-section">
-    <h2>Percobaan Torsi</h2>
-    <p>Lakukan percobaan virtual untuk memahami konsep torsi dan pengaruhnya terhadap kesetimbangan benda tegar.</p>
-    <div class="experiment-setup">
-     <h3>Setup Percobaan</h3>
-     <p>Percobaan ini mendemonstrasikan bagaimana gaya dan lengan momen mempengaruhi torsi yang dihasilkan.</p>
-     <div class="torque-demo">
-      <div class="demo-item">
-       <h4>Percobaan 1: Pengaruh Gaya</h4>
-       <p>Lengan momen tetap: r = 0.5 m</p>
-       <div class="control-group"><label for="force1">Gaya (N):</label> <input type="number" id="force1" value="10" min="0" max="100" step="5">
-       </div><button class="btn" onclick="calculateTorque1()" style="margin-top: 10px;">Hitung</button>
-       <div class="result-box" id="result1" style="display: none;">
-        <p>Torsi = <span id="torque1Value">0</span> N·m</p>
-       </div>
-      </div>
-      <div class="demo-item">
-       <h4>Percobaan 2: Pengaruh Jarak</h4>
-       <p>Gaya tetap: F = 20 N</p>
-       <div class="control-group"><label for="distance2">Lengan Momen (m):</label> <input type="number" id="distance2" value="0.5" min="0" max="2" step="0.1">
-       </div><button class="btn" onclick="calculateTorque2()" style="margin-top: 10px;">Hitung</button>
-       <div class="result-box" id="result2" style="display: none;">
-        <p>Torsi = <span id="torque2Value">0</span> N·m</p>
-       </div>
-      </div>
-      <div class="demo-item">
-       <h4>Percobaan 3: Pengaruh Sudut</h4>
-       <p>F = 25 N, r = 0.6 m</p>
-       <div class="control-group"><label for="angle3">Sudut (derajat):</label> <input type="number" id="angle3" value="90" min="0" max="180" step="15">
-       </div><button class="btn" onclick="calculateTorque3()" style="margin-top: 10px;">Hitung</button>
-       <div class="result-box" id="result3" style="display: none;">
-        <p>Torsi = <span id="torque3Value">0</span> N·m</p>
-        <p>Sin(θ) = <span id="sinValue">0</span></p>
-       </div>
-      </div>
-     </div>
-     <div class="example-box" style="margin-top: 30px;">
-      <h4>Kesimpulan Percobaan</h4>
-      <ul>
-       <li>Semakin besar gaya yang diberikan, semakin besar torsi yang dihasilkan (hubungan linear)</li>
-       <li>Semakin jauh jarak dari poros, semakin besar torsi yang dihasilkan (hubungan linear)</li>
-       <li>Torsi maksimum terjadi ketika sudut antara gaya dan lengan momen adalah 90° (sin 90° = 1)</li>
-       <li>Torsi bernilai nol ketika sudut 0° atau 180° (gaya searah atau berlawanan dengan lengan momen)</li>
-      </ul>
-     </div>
-    </div>
-   </section><!-- Kuis Section -->
-   <section id="kuis" class="content-section">
-    <h2>Kuis Kesetimbangan Benda Tegar</h2>
-    <p>Jawab pertanyaan dengan memilih Benar atau Salah. Kartu akan berputar untuk menunjukkan hasil dan penjelasannya!</p>
-    <div class="quiz-container">
-     <div class="score-display">
-      Skor: <span id="score">0</span> / <span id="total">15</span>
-     </div>
-     <div class="progress-bar">
-      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-     </div>
-     <div id="quizCard"></div>
-     <div class="navigation-buttons"><button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>⬅️ Sebelumnya</button> <button class="nav-btn" id="nextBtn" onclick="nextQuestion()" disabled>Berikutnya ➡️</button> <button class="nav-btn" id="resetBtn" onclick="resetQuiz()" style="background: #f44336;">🔄 Reset Kuis</button>
-     </div>
-    </div>
-   </section>
-  </div>
-  <script>
-    const defaultConfig = {
-      main_title: "Kesetimbangan Benda Tegar",
-      subtitle: "Pelajari konsep fisika dengan interaktif",
-      background_color: "#667eea",
-      secondary_surface_color: "#ffffff",
-      text_color: "#333333",
-      primary_action_color: "#667eea",
-      secondary_action_color: "#764ba2",
-      font_family: "Segoe UI",
-      font_size: 16
-    };
-
-    async function onConfigChange(config) {
-      const mainTitle = document.getElementById('main-title');
-      const subtitle = document.getElementById('subtitle');
-      
-      if (mainTitle) {
-        mainTitle.textContent = config.main_title || defaultConfig.main_title;
-      }
-      if (subtitle) {
-        subtitle.textContent = config.subtitle || defaultConfig.subtitle;
-      }
-
-      const backgroundColor = config.background_color || defaultConfig.background_color;
-      const secondarySurfaceColor = config.secondary_surface_color || defaultConfig.secondary_surface_color;
-      const textColor = config.text_color || defaultConfig.text_color;
-      const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
-      const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
-      
-      document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${secondaryActionColor} 100%)`;
-      
-      const contentSections = document.querySelectorAll('.content-section');
-      contentSections.forEach(section => {
-        section.style.background = secondarySurfaceColor;
-      });
-
-      const allText = document.querySelectorAll('p, li');
-      allText.forEach(el => {
-        el.style.color = textColor;
-      });
-
-      const buttons = document.querySelectorAll('.btn');
-      buttons.forEach(btn => {
-        btn.style.background = primaryActionColor;
-      });
-
-      const navTabs = document.querySelectorAll('.nav-tab');
-      navTabs.forEach(tab => {
-        if (!tab.classList.contains('active')) {
-          tab.style.color = primaryActionColor;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astronomi Harian — Dari Pemula ke Mahir</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      });
 
-      const activeTab = document.querySelector('.nav-tab.active');
-      if (activeTab) {
-        activeTab.style.background = secondaryActionColor;
-      }
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0d0d2b 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            color: #e8e8f0;
+        }
 
-      const customFont = config.font_family || defaultConfig.font_family;
-      const baseSize = config.font_size || defaultConfig.font_size;
-      const baseFontStack = 'Tahoma, Geneva, Verdana, sans-serif';
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin-top: 20px;
+        }
 
-      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
-      
-      if (mainTitle) mainTitle.style.fontSize = `${baseSize * 3}px`;
-      if (subtitle) subtitle.style.fontSize = `${baseSize * 1.25}px`;
-      
-      const h2Elements = document.querySelectorAll('h2');
-      h2Elements.forEach(el => el.style.fontSize = `${baseSize * 2}px`);
-      
-      const h3Elements = document.querySelectorAll('h3');
-      h3Elements.forEach(el => el.style.fontSize = `${baseSize * 1.5}px`);
-      
-      const paragraphs = document.querySelectorAll('p, li');
-      paragraphs.forEach(el => el.style.fontSize = `${baseSize}px`);
-    }
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange,
-        mapToCapabilities: (config) => ({
-          recolorables: [
-            {
-              get: () => config.background_color || defaultConfig.background_color,
-              set: (value) => {
-                config.background_color = value;
-                window.elementSdk.setConfig({ background_color: value });
-              }
-            },
-            {
-              get: () => config.secondary_surface_color || defaultConfig.secondary_surface_color,
-              set: (value) => {
-                config.secondary_surface_color = value;
-                window.elementSdk.setConfig({ secondary_surface_color: value });
-              }
-            },
-            {
-              get: () => config.text_color || defaultConfig.text_color,
-              set: (value) => {
-                config.text_color = value;
-                window.elementSdk.setConfig({ text_color: value });
-              }
-            },
-            {
-              get: () => config.primary_action_color || defaultConfig.primary_action_color,
-              set: (value) => {
-                config.primary_action_color = value;
-                window.elementSdk.setConfig({ primary_action_color: value });
-              }
-            },
-            {
-              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
-              set: (value) => {
-                config.secondary_action_color = value;
-                window.elementSdk.setConfig({ secondary_action_color: value });
-              }
-            }
-          ],
-          borderables: [],
-          fontEditable: {
-            get: () => config.font_family || defaultConfig.font_family,
-            set: (value) => {
-              config.font_family = value;
-              window.elementSdk.setConfig({ font_family: value });
-            }
-          },
-          fontSizeable: {
-            get: () => config.font_size || defaultConfig.font_size,
-            set: (value) => {
-              config.font_size = value;
-              window.elementSdk.setConfig({ font_size: value });
-            }
-          }
-        }),
-        mapToEditPanelValues: (config) => new Map([
-          ["main_title", config.main_title || defaultConfig.main_title],
-          ["subtitle", config.subtitle || defaultConfig.subtitle]
-        ])
-      });
-    }
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #7eb8ff, #b07eff, #ff7eb8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
 
-    // Navigation
-    function showSection(sectionId) {
-      const sections = document.querySelectorAll('.content-section');
-      sections.forEach(section => section.classList.remove('active'));
-      
-      const tabs = document.querySelectorAll('.nav-tab');
-      tabs.forEach(tab => tab.classList.remove('active'));
-      
-      document.getElementById(sectionId).classList.add('active');
-      event.target.classList.add('active');
-    }
+        .header p {
+            color: #8888aa;
+            font-size: 0.9rem;
+        }
 
-    // Simulation
-    let isDragging = false;
-    let currentWeight = null;
-    let offsetX = 0;
+        /* Progress Bar */
+        .progress-section {
+            margin-bottom: 25px;
+        }
 
-    const weight1 = document.getElementById('weight1');
-    const weight2 = document.getElementById('weight2');
-    const beam = document.getElementById('beam');
-    const beamContainer = document.getElementById('beamContainer');
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #8888aa;
+            margin-bottom: 8px;
+        }
 
-    function setupDragging(weightElement) {
-      weightElement.addEventListener('mousedown', startDrag);
-      weightElement.addEventListener('touchstart', startDrag);
-    }
+        .progress-bar-bg {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+        }
 
-    function startDrag(e) {
-      e.preventDefault();
-      isDragging = true;
-      currentWeight = e.target.closest('.weight');
-      const rect = currentWeight.getBoundingClientRect();
-      const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-      offsetX = clientX - rect.left;
-    }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #7eb8ff, #b07eff);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
 
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('touchmove', drag);
-    document.addEventListener('mouseup', stopDrag);
-    document.addEventListener('touchend', stopDrag);
+        /* Slide Card */
+        .slide-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 0;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.5s ease;
+            display: none;
+        }
 
-    function drag(e) {
-      if (!isDragging || !currentWeight) return;
-      
-      const containerRect = beamContainer.getBoundingClientRect();
-      const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-      let newLeft = clientX - containerRect.left - offsetX;
-      
-      newLeft = Math.max(10, Math.min(newLeft, containerRect.width - 70));
-      
-      currentWeight.style.left = newLeft + 'px';
-      updateSimulation();
-    }
+        .slide-card.active {
+            display: block;
+        }
 
-    function stopDrag() {
-      isDragging = false;
-      currentWeight = null;
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    setupDragging(weight1);
-    setupDragging(weight2);
+        .slide-header {
+            padding: 28px 30px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
 
-    function updateSimulation() {
-      const mass1 = parseFloat(document.getElementById('mass1').value);
-      const mass2 = parseFloat(document.getElementById('mass2').value);
-      
-      document.getElementById('weight1Label').textContent = mass1 + ' kg';
-      document.getElementById('weight2Label').textContent = mass2 + ' kg';
-      
-      const containerRect = beamContainer.getBoundingClientRect();
-      const centerX = containerRect.width / 2;
-      
-      const weight1Rect = weight1.getBoundingClientRect();
-      const weight2Rect = weight2.getBoundingClientRect();
-      
-      const weight1CenterX = weight1Rect.left - containerRect.left + 30;
-      const weight2CenterX = weight2Rect.left - containerRect.left + 30;
-      
-      const r1 = Math.abs(centerX - weight1CenterX) / 100;
-      const r2 = Math.abs(centerX - weight2CenterX) / 100;
-      
-      const g = 10;
-      
-      const torque1 = mass1 * g * r1 * (weight1CenterX < centerX ? -1 : 1);
-      const torque2 = mass2 * g * r2 * (weight2CenterX < centerX ? -1 : 1);
-      
-      const netTorque = torque1 + torque2;
-      
-      const maxAngle = 30;
-      let angle = (netTorque / 50) * maxAngle;
-      angle = Math.max(-maxAngle, Math.min(maxAngle, angle));
-      
-      beam.style.transform = `translateX(-50%) rotate(${angle}deg)`;
-      
-      document.getElementById('torqueLeft').textContent = Math.abs(torque1).toFixed(2);
-      document.getElementById('torqueRight').textContent = Math.abs(torque2).toFixed(2);
-      document.getElementById('beamAngle').textContent = angle.toFixed(2);
-      
-      const equilibriumStatus = document.getElementById('equilibriumStatus');
-      if (Math.abs(netTorque) < 5) {
-        equilibriumStatus.textContent = '✅ Setimbang!';
-        equilibriumStatus.style.color = '#4caf50';
-      } else {
-        equilibriumStatus.textContent = '❌ Tidak Setimbang';
-        equilibriumStatus.style.color = '#f44336';
-      }
-    }
+        .slide-level {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
 
-    function resetSimulation() {
-      document.getElementById('mass1').value = 30;
-      document.getElementById('mass2').value = 30;
-      weight1.style.left = '100px';
-      weight2.style.left = '400px';
-      updateSimulation();
-    }
+        .level-pemula {
+            background: rgba(126, 184, 255, 0.15);
+            color: #7eb8ff;
+            border: 1px solid rgba(126, 184, 255, 0.3);
+        }
 
-    // Percobaan Torsi
-    function calculateTorque1() {
-      const force = parseFloat(document.getElementById('force1').value);
-      const r = 0.5;
-      const torque = force * r;
-      
-      document.getElementById('torque1Value').textContent = torque.toFixed(2);
-      document.getElementById('result1').style.display = 'block';
-    }
+        .level-menengah {
+            background: rgba(176, 126, 255, 0.15);
+            color: #b07eff;
+            border: 1px solid rgba(176, 126, 255, 0.3);
+        }
 
-    function calculateTorque2() {
-      const distance = parseFloat(document.getElementById('distance2').value);
-      const F = 20;
-      const torque = F * distance;
-      
-      document.getElementById('torque2Value').textContent = torque.toFixed(2);
-      document.getElementById('result2').style.display = 'block';
-    }
+        .level-mahir {
+            background: rgba(255, 126, 184, 0.15);
+            color: #ff7eb8;
+            border: 1px solid rgba(255, 126, 184, 0.3);
+        }
 
-    function calculateTorque3() {
-      const angle = parseFloat(document.getElementById('angle3').value);
-      const angleRad = angle * Math.PI / 180;
-      const F = 25;
-      const r = 0.6;
-      const sinTheta = Math.sin(angleRad);
-      const torque = r * F * sinTheta;
-      
-      document.getElementById('torque3Value').textContent = torque.toFixed(2);
-      document.getElementById('sinValue').textContent = sinTheta.toFixed(3);
-      document.getElementById('result3').style.display = 'block';
-    }
+        .slide-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
 
-    // Quiz
-    const quizQuestions = [
-      { 
-        question: "Benda tegar adalah benda yang bentuknya dapat berubah saat diberi gaya", 
-        answer: false,
-        explanation: "Benda tegar adalah benda yang bentuk dan ukurannya TIDAK berubah meskipun dikenai gaya. Jarak antar partikel dalam benda tegar tetap konstan."
-      },
-      { 
-        question: "Syarat kesetimbangan benda tegar adalah resultan gaya dan resultan torsi sama dengan nol", 
-        answer: true,
-        explanation: "Benar! Dua syarat kesetimbangan benda tegar: (1) ΣF = 0 untuk kesetimbangan translasi, dan (2) Στ = 0 untuk kesetimbangan rotasi."
-      },
-      { 
-        question: "Torsi hanya bergantung pada besar gaya yang bekerja", 
-        answer: false,
-        explanation: "Torsi tidak hanya bergantung pada gaya, tetapi juga pada lengan momen (jarak tegak lurus dari poros) dan sudut. Rumusnya: τ = r × F × sin θ"
-      },
-      { 
-        question: "Semakin jauh jarak gaya dari poros, semakin besar torsi yang dihasilkan", 
-        answer: true,
-        explanation: "Benar! Torsi berbanding lurus dengan lengan momen (r). Semakin jauh gaya dari poros rotasi, semakin besar kemampuannya untuk memutar benda."
-      },
-      { 
-        question: "Pada kesetimbangan stabil, pusat massa berada di atas titik tumpu", 
-        answer: false,
-        explanation: "Pada kesetimbangan stabil, pusat massa berada di BAWAH titik tumpu. Ini membuat benda cenderung kembali ke posisi semula saat diberi gangguan."
-      },
-      { 
-        question: "Torsi maksimum terjadi ketika sudut antara gaya dan lengan momen adalah 90°", 
-        answer: true,
-        explanation: "Benar! Karena τ = r × F × sin θ, dan sin 90° = 1 (nilai maksimum), maka torsi maksimum terjadi saat gaya tegak lurus lengan momen."
-      },
-      { 
-        question: "Kesetimbangan rotasi terjadi ketika Στ ≠ 0", 
-        answer: false,
-        explanation: "Kesetimbangan rotasi terjadi ketika Στ = 0 (resultan torsi sama dengan nol). Jika Στ ≠ 0, benda akan mengalami percepatan sudut."
-      },
-      { 
-        question: "Pusat massa adalah titik dimana seluruh massa benda terkonsentrasi", 
-        answer: true,
-        explanation: "Benar! Pusat massa adalah titik dimana seluruh massa benda dapat dianggap terkonsentrasi. Pada benda homogen simetris, terletak di pusat geometris."
-      },
-      { 
-        question: "Pada jungkat-jungkit, anak yang lebih berat harus duduk lebih dekat ke titik tumpu", 
-        answer: true,
-        explanation: "Benar! Untuk kesetimbangan rotasi: m₁ × r₁ = m₂ × r₂. Anak yang lebih berat harus duduk lebih dekat agar menghasilkan torsi yang sama."
-      },
-      { 
-        question: "Kesetimbangan netral terjadi ketika benda kembali ke posisi semula setelah diberi gangguan", 
-        answer: false,
-        explanation: "Kesetimbangan netral terjadi ketika benda tetap setimbang di posisi BARU setelah diberi gangguan. Yang kembali ke posisi semula adalah kesetimbangan stabil."
-      },
-      { 
-        question: "Satuan torsi adalah Newton meter (N·m)", 
-        answer: true,
-        explanation: "Benar! Torsi = Gaya × Jarak, sehingga satuannya adalah Newton × meter = N·m. Sama seperti satuan energi, tetapi konsepnya berbeda."
-      },
-      { 
-        question: "Gaya yang bekerja pada poros rotasi menghasilkan torsi maksimum", 
-        answer: false,
-        explanation: "Gaya yang bekerja tepat pada poros rotasi (r = 0) menghasilkan torsi NOL, bukan maksimum. Torsi maksimum terjadi pada jarak terjauh dari poros."
-      },
-      { 
-        question: "Untuk kesetimbangan translasi, ΣFx = 0 dan ΣFy = 0", 
-        answer: true,
-        explanation: "Benar! Kesetimbangan translasi berarti tidak ada percepatan linear. Ini terjadi ketika resultan gaya pada sumbu x dan y sama dengan nol."
-      },
-      { 
-        question: "Lengan momen adalah jarak tegak lurus dari poros ke garis kerja gaya", 
-        answer: true,
-        explanation: "Benar! Lengan momen adalah jarak TEGAK LURUS (perpendicular) dari poros rotasi ke garis kerja gaya. Inilah yang menentukan efektivitas gaya dalam menghasilkan torsi."
-      },
-      { 
-        question: "Benda dapat setimbang meskipun hanya memenuhi syarat kesetimbangan translasi saja", 
-        answer: false,
-        explanation: "Benda tegar harus memenuhi KEDUA syarat: kesetimbangan translasi (ΣF = 0) DAN kesetimbangan rotasi (Στ = 0). Keduanya harus dipenuhi untuk mencapai kesetimbangan sempurna."
-      }
-    ];
+        .slide-header .slide-meta {
+            font-size: 0.78rem;
+            color: #666688;
+        }
 
-    let currentQuestionIndex = 0;
-    let userAnswers = {};
-    let correctAnswers = 0;
-    let isCardFlipped = false;
+        .slide-body {
+            padding: 25px 30px 30px;
+        }
 
-    function renderQuestion() {
-      const quizCard = document.getElementById('quizCard');
-      const question = quizQuestions[currentQuestionIndex];
-      const isAnswered = userAnswers.hasOwnProperty(currentQuestionIndex);
-      
-      quizCard.innerHTML = `
-        <div class="question-card ${isAnswered ? 'flipped' : ''}" id="currentCard">
-          <div class="card-inner">
-            <div class="card-front">
-              <div>
-                <div class="question-number">Pertanyaan ${currentQuestionIndex + 1} dari ${quizQuestions.length}</div>
-                <div class="question-text">${question.question}</div>
-              </div>
-              <div class="answer-buttons">
-                <button class="answer-btn" onclick="submitAnswer(true)" ${isAnswered ? 'disabled' : ''}>✓ BENAR</button>
-                <button class="answer-btn" onclick="submitAnswer(false)" ${isAnswered ? 'disabled' : ''}>✗ SALAH</button>
-              </div>
-            </div>
-            <div class="card-back">
-              <div class="result-header">
-                <div class="result-icon">${isAnswered && userAnswers[currentQuestionIndex].isCorrect ? '🎉' : '📚'}</div>
-                <div class="result-status ${isAnswered && userAnswers[currentQuestionIndex].isCorrect ? 'correct' : 'incorrect'}">
-                  ${isAnswered ? (userAnswers[currentQuestionIndex].isCorrect ? 'BENAR!' : 'SALAH!') : ''}
-                </div>
-              </div>
-              <div style="margin-bottom: 12px;">
-                <p style="font-size: 15px; font-weight: 600; color: #666; margin-bottom: 6px; margin-top: 0;">
-                  Jawaban Anda: ${isAnswered ? (userAnswers[currentQuestionIndex].userAnswer ? 'BENAR' : 'SALAH') : ''}
-                </p>
-                <p style="font-size: 15px; font-weight: 600; color: #4caf50; margin: 0;">
-                  Jawaban yang benar: ${question.answer ? 'BENAR' : 'SALAH'}
-                </p>
-              </div>
-              <div class="explanation-box">
-                <h4>💡 Penjelasan:</h4>
-                <p>${question.explanation}</p>
-              </div>
-            </div>
-          </div>
+        .slide-body p {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: #c8c8dd;
+            margin-bottom: 16px;
+        }
+
+        .slide-body h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #7eb8ff;
+            margin: 22px 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .slide-body ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 16px;
+        }
+
+        .slide-body ul li {
+            position: relative;
+            padding-left: 22px;
+            margin-bottom: 10px;
+            font-size: 0.92rem;
+            line-height: 1.65;
+            color: #c8c8dd;
+        }
+
+        .slide-body ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #b07eff;
+            font-weight: bold;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: rgba(126, 184, 255, 0.08);
+            border-left: 3px solid #7eb8ff;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 18px 0;
+        }
+
+        .highlight-box p {
+            font-size: 0.88rem;
+            margin-bottom: 0;
+            color: #b0b0cc;
+            font-style: italic;
+        }
+
+        /* Reference */
+        .reference {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-top: 18px;
+        }
+
+        .reference h4 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #8888aa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .reference p {
+            font-size: 0.82rem;
+            color: #7777aa;
+            line-height: 1.6;
+            margin-bottom: 4px;
+        }
+
+        .reference a {
+            color: #7eb8ff;
+            text-decoration: none;
+        }
+
+        .reference a:hover {
+            text-decoration: underline;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            margin-top: 24px;
+            padding-top: 22px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .quiz-question {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #e8e8f0;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 18px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.88rem;
+            color: #c8c8dd;
+            text-align: left;
+            font-family: inherit;
+            line-height: 1.5;
+        }
+
+        .quiz-option:hover:not(.disabled) {
+            background: rgba(126, 184, 255, 0.1);
+            border-color: rgba(126, 184, 255, 0.3);
+            transform: translateX(4px);
+        }
+
+        .quiz-option.selected-correct {
+            background: rgba(74, 222, 128, 0.15);
+            border-color: rgba(74, 222, 128, 0.5);
+            color: #86efac;
+        }
+
+        .quiz-option.selected-wrong {
+            background: rgba(248, 113, 113, 0.15);
+            border-color: rgba(248, 113, 113, 0.5);
+            color: #fca5a5;
+        }
+
+        .quiz-option.disabled {
+            cursor: default;
+            opacity: 0.6;
+        }
+
+        .quiz-feedback {
+            margin-top: 14px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .quiz-feedback.correct {
+            display: block;
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.25);
+            color: #86efac;
+        }
+
+        .quiz-feedback.incorrect {
+            display: block;
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.25);
+            color: #fca5a5;
+        }
+
+        .quiz-feedback .explanation {
+            color: #9999bb;
+            margin-top: 6px;
+            font-size: 0.82rem;
+        }
+
+        /* Navigation */
+        .nav-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+            margin-bottom: 40px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-btn-prev {
+            background: rgba(255, 255, 255, 0.06);
+            color: #9999bb;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn-prev:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ccccdd;
+        }
+
+        .nav-btn-next {
+            background: linear-gradient(135deg, #7eb8ff, #b07eff);
+            color: #0a0a1a;
+            box-shadow: 0 8px 25px rgba(126, 184, 255, 0.3);
+        }
+
+        .nav-btn-next:hover:not(:disabled) {
+            box-shadow: 0 12px 35px rgba(176, 126, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .slide-counter {
+            font-size: 0.85rem;
+            color: #666688;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Topic pills */
+        .topic-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .topic-pill {
+            font-size: 0.7rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #8888aa;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .topic-pill:hover {
+            background: rgba(126, 184, 255, 0.1);
+            color: #7eb8ff;
+        }
+
+        .topic-pill.active-pill {
+            background: rgba(126, 184, 255, 0.15);
+            border-color: rgba(126, 184, 255, 0.4);
+            color: #7eb8ff;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .header h1 { font-size: 1.3rem; }
+            .slide-header { padding: 22px 20px 16px; }
+            .slide-header h2 { font-size: 1.15rem; }
+            .slide-body { padding: 20px 20px 25px; }
+            .slide-body p { font-size: 0.88rem; }
+            .slide-body ul li { font-size: 0.85rem; }
+            .quiz-option { padding: 12px 14px; font-size: 0.83rem; }
+            .nav-btn { padding: 14px 16px; font-size: 0.85rem; }
+            .topic-pill { font-size: 0.65rem; padding: 4px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <h1>🔭 Astronomi Harian</h1>
+        <p>Belajar 5 menit sehari — dari pemula hingga mahir</p>
+    </div>
+
+    <!-- Topic Pills -->
+    <div class="topic-pills" id="topicPills">
+        <button class="topic-pill active-pill" onclick="jumpToTopic(0)">Semua</button>
+        <button class="topic-pill" onclick="jumpToTopic(1)">Dasar</button>
+        <button class="topic-pill" onclick="jumpToTopic(4)">Tata Surya</button>
+        <button class="topic-pill" onclick="jumpToTopic(6)">Bintang</button>
+        <button class="topic-pill" onclick="jumpToTopic(9)">Galaksi & Kosmologi</button>
+        <button class="topic-pill" onclick="jumpToTopic(12)">Lanjutan</button>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-section">
+        <div class="progress-info">
+            <span id="progressLabel">Materi 1 dari 16</span>
+            <span id="progressPercent">0%</span>
         </div>
-      `;
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+    </div>
 
-      updateNavigationButtons();
-      updateProgress();
+    <!-- Slides -->
+    <div id="slidesContainer">
+
+        <!-- SLIDE 1 -->
+        <div class="slide-card active" data-index="0">
+            <div class="slide-header">
+                <span class="slide-level level-pemula">Pemula</span>
+                <h2>Hari 1: Apa Itu Astronomi & Skala Alam Semesta</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Pengantar</div>
+            </div>
+            <div class="slide-body">
+                <p>Astronomi adalah ilmu yang mempelajari benda-benda langit dan fenomena yang terjadi di luar atmosfer Bumi. Ini adalah salah satu ilmu tertua — manusia telah mengamati langit sejak ribuan tahun lalu untuk navigasi, pertanian, dan ritual.</p>
+                <p>Hal pertama yang perlu dipahami adalah <strong>skala alam semesta</strong> yang sangat besar. Jarak di astronomi diukur dengan satuan khusus:</p>
+                <ul>
+                    <li><strong>Satuan Astronomi (SA/AU):</strong> Jarak rata-rata Bumi–Matahari, sekitar 150 juta km. Digunakan untuk jarak antarplanet.</li>
+                    <li><strong>Tahun Cahaya:</strong> Jarak yang ditempuh cahaya dalam satu tahun, sekitar 9,46 triliun km. Cahaya bergerak sangat cepat (300.000 km/detik), tetapi jarak antarbintang sangat besar sehingga waktu tempuhnya menjadi satuan yang praktis.</li>
+                    <li><strong>Parsec (pc):</strong> Satuan yang lebih besar, sekitar 3,26 tahun cahaya. Astronom profesional sering menggunakannya.</li>
+                </ul>
+                <div class="highlight-box">
+                    <p>💡 Matahari berjarak 8 menit cahaya dari Bumi. Bintang terdekat, Proxima Centauri, berjarak 4,2 tahun cahaya. Artinya, kita melihat bintang tersebut sebagaimana adanya 4,2 tahun lalu.</p>
+                </div>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>Caltech Ay 1 — <em>The Evolving Universe</em>, Syllabus Topik 2: Units, distances, and parallaxes. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                    <p>UMass Astronomy 101 — Chapter 1: Overview and Scale of the Universe. <a href="https://people.astro.umass.edu/~tripp/a101/a101_sp04_course_outline.pdf" target="_blank">people.astro.umass.edu</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Tahun cahaya mengukur jarak, bukan waktu. Ini adalah kesalahpahaman yang umum — karena cahaya membutuhkan waktu untuk menempuh jarak, kita melihat objek jauh sebagaimana adanya di masa lalu.')">Tahun cahaya adalah satuan waktu</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Tahun cahaya adalah satuan jarak, bukan waktu. Satu tahun cahaya = jarak yang ditempuh cahaya dalam satu tahun (± 9,46 triliun km).')">Tahun cahaya adalah satuan jarak</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. 1 SA (Satuan Astronomi) = jarak Bumi–Matahari. Tahun cahaya jauh lebih besar dari itu.')">Tahun cahaya sama dengan 1 SA</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide-card" data-index="1">
+            <div class="slide-header">
+                <span class="slide-level level-pemula">Pemula</span>
+                <h2>Hari 2: Bola Langit & Sistem Koordinat</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Dasar Observasi</div>
+            </div>
+            <div class="slide-body">
+                <p>Untuk menemukan objek di langit, astronom menggunakan <strong>bola langit (celestial sphere)</strong> — sebuah bola imajiner yang mengelilingi Bumi, tempat semua bintang "diproyeksikan".</p>
+                <p>Ada dua sistem koordinat utama:</p>
+                <ul>
+                    <li><strong>Sistem Horizon:</strong> Menggunakan <em>altitude</em> (ketinggian dari horizon, 0°–90°) dan <em>azimuth</em> (arah kompas, 0°–360°). Sistem ini berubah seiring waktu karena rotasi Bumi.</li>
+                    <li><strong>Sistem Ekuator:</strong> Menggunakan <em>Deklinasi (Dec)</em> — analog lintang Bumi — dan <em>Asensio Rekta (RA)</em> — analog bujur Bumi. Sistem ini tetap relatif terhadap bintang, sehingga menjadi standar katalog astronomi.</li>
+                </ul>
+                <p>Deklinasi diukur dalam derajat dari ekuator langit (positif ke utara, negatif ke selatan). RA diukur dalam jam, menit, dan detik (0h–24h), dengan titik nol di titik Aries (vernal equinox).</p>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>IUCAA — A First Course in Astronomy & Astrophysics, Lecture 1.1: Positional astronomy. <a href="https://ace.iucaa.in/resources/a-a.html" target="_blank">ace.iucaa.in</a></p>
+                    <p>Caltech Ay 1 — Topik 2: Celestial coordinates, time systems. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Deklinasi analog dengan lintang Bumi (utara-selatan), sedangkan Asensio Rekta analog dengan bujur Bumi (timur-barat).')">Deklinasi analog dengan bujur Bumi</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Deklinasi (Dec) mengukur posisi utara-selatan dari ekuator langit, sedangkan Asensio Rekta (RA) mengukur posisi timur-barat, diukur dalam satuan jam.')">Deklinasi analog dengan lintang, RA analog dengan bujur</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Sistem horizon menggunakan altitude dan azimuth, bukan Dec dan RA.')">Sistem ekuator menggunakan altitude dan azimuth</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide-card" data-index="2">
+            <div class="slide-header">
+                <span class="slide-level level-pemula">Pemula</span>
+                <h2>Hari 3: Gerak Langit & Musim</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Dasar Observasi</div>
+            </div>
+            <div class="slide-body">
+                <p>Langit berubah sepanjang malam dan sepanjang tahun karena dua gerakan utama Bumi:</p>
+                <ul>
+                    <li><strong>Rotasi Bumi (harian):</strong> Bumi berputar pada porosnya setiap 24 jam, menyebabkan bintang-bintang tampak terbit di timur dan terbenam di barat. Inilah gerak diurnal.</li>
+                    <li><strong>Revolusi Bumi (tahunan):</strong> Bumi mengelilingi Matahari selama 365,25 hari. Karena sumbu Bumi miring 23,5°, kita mengalami musim. Bintang-bintang yang terlihat di malam hari juga berubah seiring musim.</li>
+                </ul>
+                <p>Akibat kemiringan sumbu ini, Matahari tampak bergerak di langit sepanjang tahun mengikuti jalur yang disebut <strong>ekliptika</strong>. Planet-planet juga bergerak di dekat jalur ini.</p>
+                <div class="highlight-box">
+                    <p>💡 Mengapa bintang Polaris selalu di utara? Karena Polaris hampir sejajar dengan sumbu rotasi Bumi. Ketinggian Polaris di langit sama dengan lintang pengamat.</p>
+                </div>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>UMass Astronomy 101 — Chapter 2: Diurnal & annual motion, seasons. <a href="https://people.astro.umass.edu/~tripp/a101/a101_sp04_course_outline.pdf" target="_blank">people.astro.umass.edu</a></p>
+                    <p>NIU PHYS 162 — Daily, monthly, yearly celestial motions. <a href="https://nicadd.niu.edu/~mfortner/phys162.html" target="_blank">nicadd.niu.edu</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Musim terjadi karena kemiringan sumbu Bumi (23,5°), bukan karena jarak Bumi ke Matahari. Justru Bumi terdekat ke Matahari saat musim dingin di belahan utara.')">Musim terjadi karena jarak Bumi ke Matahari berubah</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Kemiringan sumbu Bumi 23,5° menyebabkan belahan Bumi yang berbeda menerima intensitas sinar Matahari yang berbeda sepanjang tahun — inilah penyebab musim.')">Musim terjadi karena kemiringan sumbu Bumi</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Gerak diurnal adalah akibat rotasi Bumi, bukan penyebab musim.')">Musim terjadi karena rotasi Bumi</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="slide-card" data-index="3">
+            <div class="slide-header">
+                <span class="slide-level level-pemula">Pemula</span>
+                <h2>Hari 4: Cahaya — Jendela Informasi Alam Semesta</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Fisika Astronomi</div>
+            </div>
+            <div class="slide-body">
+                <p>Hampir semua yang kita ketahui tentang alam semesta datang dari <strong>cahaya</strong>. Cahaya memiliki sifat ganda: sebagai gelombang dan sebagai partikel (foton).</p>
+                <p>Spektrum elektromagnetik mencakup:</p>
+                <ul>
+                    <li><strong>Gelombang radio</strong> — panjang gelombang terpanjang, digunakan untuk mengamati gas hidrogen dan quasar.</li>
+                    <li><strong>Inframerah</strong> — mendeteksi panas dari objek dingin seperti awan debu dan planet.</li>
+                    <li><strong>Cahaya tampak</strong> — yang bisa dilihat mata manusia, dari merah hingga ungu.</li>
+                    <li><strong>Ultraviolet, X-ray, sinar gamma</strong> — energi tinggi, mengungkap fenomena ekstrem seperti lubang hitam dan supernova.</li>
+                </ul>
+                <p>Ketika cahaya melewati materi, ia menghasilkan <strong>spektrum</strong> — pola unik yang memberi tahu kita komposisi, suhu, dan kecepatan objek. Inilah dasar spektroskopi astronomi.</p>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>Caltech Ay 1 — Topik 4: Electromagnetic radiation processes, blackbody radiation, spectra. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                    <p>IUCAA — Lecture 1.3: Wave and particle nature of light, EM spectrum. <a href="https://ace.iucaa.in/resources/a-a.html" target="_blank">ace.iucaa.in</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Cahaya tampak hanyalah sebagian kecil dari spektrum elektromagnetik. Astronom menggunakan seluruh spektrum, dari radio hingga sinar gamma.')">Cahaya tampak adalah satu-satunya informasi dari luar angkasa</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Astronom mengamati seluruh spektrum elektromagnetik — radio, inframerah, ultraviolet, X-ray, dan sinar gamma — untuk memahami objek dan fenomena yang berbeda-beda.')">Seluruh spektrum elektromagnetik digunakan untuk mengamati alam semesta</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. X-ray dan sinar gamma justru mengungkap fenomena paling ekstrem di alam semesta, seperti lubang hitam.')">Sinar X dan gamma tidak berguna untuk astronomi</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="slide-card" data-index="4">
+            <div class="slide-header">
+                <span class="slide-level level-menengah">Menengah</span>
+                <h2>Hari 5: Teleskop & Instrumen Astronomi</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Observasi</div>
+            </div>
+            <div class="slide-body">
+                <p>Teleskop adalah alat utama astronom. Ada tiga jenis utama:</p>
+                <ul>
+                    <li><strong>Refraktor (lensa):</strong> Menggunakan lensa untuk mengumpulkan dan memfokuskan cahaya. Sederhana dan tahan lama, tetapi memiliki aberasi kromatik dan ukuran lensa terbatas.</li>
+                    <li><strong>Reflektor (cermin):</strong> Menggunakan cermin cekung. Bebas dari aberasi kromatik dan bisa dibuat sangat besar. Teleskop Newtonian adalah contoh klasik.</li>
+                    <li><strong>Katadioptrik:</strong> Kombinasi lensa dan cermin. Kompak dan populer untuk pengamatan amatir (contoh: Schmidt-Cassegrain).</li>
+                </ul>
+                <p>Parameter penting: <strong>aperture</strong> (diameter bukaan) menentukan seberapa banyak cahaya yang dikumpulkan — ini yang paling penting, bukan perbesaran. Semakin besar aperture, semakin redup objek yang bisa dilihat.</p>
+                <p>Selain teleskop optik, ada teleskop radio, teleskop inframerah (seperti JWST), dan teleskop X-ray berbasis ruang angkasa.</p>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>Carnegie Science — So, You Want to Buy a Telescope? <a href="https://carnegiescience.edu" target="_blank">carnegiescience.edu</a></p>
+                    <p>IUCAA — Lecture 1.2: Optical design of telescopes, aperture, resolving power. <a href="https://ace.iucaa.in/resources/a-a.html" target="_blank">ace.iucaa.in</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Perbesaran bukan parameter utama. Aperture (diameter) yang menentukan seberapa banyak cahaya dikumpulkan dan seberapa redup objek yang bisa diamati.')">Perbesaran adalah parameter terpenting teleskop</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Aperture menentukan daya kumpul cahaya dan resolusi. Teleskop dengan aperture besar dapat melihat objek yang lebih redup dan detail yang lebih halus.')">Aperture adalah parameter terpenting teleskop</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Teleskop refraktor menggunakan lensa, bukan cermin. Yang menggunakan cermin adalah reflektor.')">Teleskop refraktor menggunakan cermin</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="slide-card" data-index="5">
+            <div class="slide-header">
+                <span class="slide-level level-menengah">Menengah</span>
+                <h2>Hari 6: Tata Surya — Gambaran Umum</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Tata Surya</div>
+            </div>
+            <div class="slide-body">
+                <p>Tata Surya kita terdiri dari Matahari sebagai pusatnya, delapan planet, planet kerdil (seperti Pluto), bulan-bulan, asteroid, komet, dan debu antarplanet.</p>
+                <p>Planet-planet terbagi menjadi dua kelompok utama:</p>
+                <ul>
+                    <li><strong>Planet Terestrial (batuan):</strong> Merkurius, Venus, Bumi, Mars. Kecil, padat, permukaan berbatu, sedikit atau tanpa bulan.</li>
+                    <li><strong>Planet Jovian (raksasa gas/es):</strong> Jupiter, Saturnus, Uranus, Neptunus. Besar, atmosfer tebal, banyak bulan, dan sistem cincin.</li>
+                </ul>
+                <p>Antara Mars dan Jupiter terdapat <strong>sabuk asteroid</strong> — sisa material yang gagal membentuk planet karena gravitasi Jupiter. Di luar Neptunus terdapat <strong>Sabuk Kuiper</strong> dan <strong>Awan Oort</strong>, sumber komet.</p>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>UMass Astronomy 101 — Chapter 8: Observations of the Solar System. <a href="https://people.astro.umass.edu/~tripp/a101/a101_sp04_course_outline.pdf" target="_blank">people.astro.umass.edu</a></p>
+                    <p>Caltech Ay 1 — Topik 6: Solar system overview. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Sabuk asteroid bukan sisa planet yang hancur, melainkan material yang tidak pernah membentuk planet karena gangguan gravitasi Jupiter.')">Sabuk asteroid adalah sisa planet yang hancur</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Sabuk asteroid terletak antara Mars dan Jupiter, terdiri dari batuan dan logam yang tidak pernah bergabung menjadi planet karena pengaruh gravitasi Jupiter.')">Sabuk asteroid terletak antara Mars dan Jupiter</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Uranus dan Neptunus adalah planet Jovian (raksasa es), bukan terestrial. Planet terestrial adalah Merkurius, Venus, Bumi, dan Mars.')">Uranus dan Neptunus adalah planet terestrial</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="slide-card" data-index="6">
+            <div class="slide-header">
+                <span class="slide-level level-menengah">Menengah</span>
+                <h2>Hari 7: Kelahiran Bintang & Medium Antarbintang</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Bintang</div>
+            </div>
+            <div class="slide-body">
+                <p>Bintang lahir dari <strong>awan molekul raksasa</strong> — awan gas (terutama hidrogen) dan debu yang sangat dingin dan padat. Ketika bagian awan ini runtuh karena gravitasi, material di pusatnya memanas dan menjadi <strong>protobintang</strong>.</p>
+                <p>Jika massa cukup besar, suhu inti mencapai sekitar 10 juta Kelvin — cukup untuk memulai <strong>fusi nuklir</strong>, mengubah hidrogen menjadi helium. Saat fusi dimulai, bintang memasuki fase <strong>deret utama (main sequence)</strong> dan mulai bersinar stabil.</p>
+                <p>Jika massa terlalu kecil (< 0,08 massa Matahari), fusi tidak pernah dimulai. Objek ini disebut <strong>katai coklat (brown dwarf)</strong> — "bintang gagal" yang perlahan mendingin.</p>
+                <div class="highlight-box">
+                    <p>💡 Medium antarbintang (ISM) bukan ruang hampa. Rata-rata ada sekitar 1 atom per cm³, tetapi di awan molekul padat bisa mencapai jutaan atom per cm³.</p>
+                </div>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>NASA — Stellar Evolution: Life Cycle of Stars. <a href="https://imagine.gsfc.nasa.gov" target="_blank">imagine.gsfc.nasa.gov</a></p>
+                    <p>ESO — We are all stardust: a story about stellar evolution. <a href="https://eso.org" target="_blank">eso.org</a></p>
+                    <p>Caltech Ay 1 — Topik 5: Interstellar medium, birth of stars. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Katai coklat gagal memulai fusi karena massanya terlalu kecil, bukan karena terlalu besar.')">Katai coklat terbentuk karena massanya terlalu besar</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Ketika suhu inti protobintang mencapai sekitar 10 juta Kelvin, fusi hidrogen dimulai dan bintang memasuki fase deret utama.')">Fusi hidrogen dimulai pada suhu sekitar 10 juta Kelvin</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Bintang lahir dari awan molekul yang runtuh, bukan dari planet yang meledak.')">Bintang lahir dari ledakan planet</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="slide-card" data-index="7">
+            <div class="slide-header">
+                <span class="slide-level level-menengah">Menengah</span>
+                <h2>Hari 8: Evolusi Bintang & Diagram HR</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Bintang</div>
+            </div>
+            <div class="slide-body">
+                <p>Nasib sebuah bintang sepenuhnya ditentukan oleh <strong>massanya</strong>. Semakin besar massa, semakin cepat bintang menghabiskan bahan bakarnya dan semakin dramatis kematiannya.</p>
+                <p><strong>Diagram Hertzsprung-Russell (HR)</strong> adalah alat fundamental dalam astronomi. Diagram ini memplot luminositas bintang terhadap suhu permukaannya (atau warna). Mayoritas bintang berada di "pita" yang disebut <strong>deret utama</strong>.</p>
+                <ul>
+                    <li><strong>Bintang bermassa rendah (seperti Matahari):</strong> Menghabiskan miliaran tahun di deret utama, lalu mengembang menjadi raksasa merah, dan akhirnya menjadi katai putih.</li>
+                    <li><strong>Bintang bermassa tinggi:</strong> Siklus hidupnya lebih singkat (jutaan tahun). Setelah menjadi super raksasa merah, ia meledak sebagai <strong>supernova</strong>, meninggalkan bintang neutron atau lubang hitam.</li>
+                </ul>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>NASA — Life Cycles of Stars. <a href="https://imagine.gsfc.nasa.gov" target="_blank">imagine.gsfc.nasa.gov</a></p>
+                    <p>Yale — The Life Cycle of Stars. <a href="https://www.astro.yale.edu" target="_blank">astro.yale.edu</a></p>
+                    <p>Caltech Ay 1 — Topik 9: Stellar evolution, HR diagrams. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Bintang bermassa besar justru memiliki umur yang lebih pendek karena membakar bahan bakarnya jauh lebih cepat.')">Bintang bermassa besar hidup lebih lama</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Massa menentukan segalanya. Bintang besar membakar bahan bakar lebih cepat, sehingga umurnya lebih pendek tetapi kematiannya lebih dramatis (supernova).')">Massa bintang menentukan evolusi dan kematiannya</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Diagram HR memplot luminositas terhadap suhu/warna, bukan massa terhadap ukuran.')">Diagram HR memplot massa terhadap ukuran bintang</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9 -->
+        <div class="slide-card" data-index="8">
+            <div class="slide-header">
+                <span class="slide-level level-menengah">Menengah</span>
+                <h2>Hari 9: Lubang Hitam & Bintang Neutron</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Objek Ekstrem</div>
+            </div>
+            <div class="slide-body">
+                <p>Ketika bintang bermassa sangat besar (lebih dari ~8 massa Matahari) meledak sebagai supernova, intinya yang runtuh bisa meninggalkan objek yang sangat ekstrem:</p>
+                <ul>
+                    <li><strong>Bintang neutron:</strong> Jika sisa inti bermassa 1,4–3 massa Matahari. Materi sangat padat — satu sendok tehnya bisa berbobot miliaran ton. Beberapa berputar cepat dan memancarkan pulsa radio, disebut <strong>pulsar</strong>.</li>
+                    <li><strong>Lubang hitam:</strong> Jika sisa inti lebih dari ~3 massa Matahari. Gravitasi begitu kuat sehingga cahaya pun tidak bisa lepas. Ada <strong>cakrawala peristiwa</strong> — batas yang tidak bisa dilewati cahaya.</li>
+                </ul>
+                <p>Lubang hitam juga ada yang bersifat <strong>supermasif</strong> (jutaan hingga miliaran massa Matahari) di pusat galaksi, dan mungkin <strong>primordial</strong> yang terbentuk di awal alam semesta.</p>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>MPG — Four types of black holes. <a href="https://www.mpg.de" target="_blank">mpg.de</a></p>
+                    <p>NSF — Black Holes. <a href="https://www.nsf.gov" target="_blank">nsf.gov</a></p>
+                    <p>Caltech Ay 1 — Topik 11: Neutron stars and black holes. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Lubang hitam tidak "menyedot" segala sesuatu di sekitarnya seperti vakum. Objek hanya jatuh ke dalamnya jika terlalu dekat dan kehilangan momentum orbit.')">Lubang hitam menyedot semua materi di sekitarnya</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Cakrawala peristiwa adalah batas di mana kecepatan lepas melebihi kecepatan cahaya, sehingga tidak ada yang bisa lepas, termasuk cahaya.')">Cakrawala peristiwa adalah batas di mana cahaya tidak bisa lepas</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Bintang neutron terbentuk dari bintang bermassa menengah-besar, sedangkan lubang hitam memerlukan massa inti yang lebih besar lagi.')">Bintang neutron dan lubang hitam terbentuk dari bintang bermassa sama</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10 -->
+        <div class="slide-card" data-index="9">
+            <div class="slide-header">
+                <span class="slide-level level-menengah">Menengah</span>
+                <h2>Hari 10: Galaksi Bima Sakti & Strukturnya</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Galaksi</div>
+            </div>
+            <div class="slide-body">
+                <p>Galaksi Bima Sakti adalah galaksi spiral berbatang (SBbc) yang menampung sekitar 100–400 miliar bintang. Diameternya sekitar 100.000 tahun cahaya, dan Matahari kita terletak sekitar 26.000 tahun cahaya dari pusatnya.</p>
+                <p>Struktur Bima Sakti:</p>
+                <ul>
+                    <li><strong>Piringan (disk):</strong> Tempat sebagian besar bintang, gas, dan debu berada. Bintang muda dan gugus terbuka banyak ditemukan di sini.</li>
+                    <li><strong>Bulge (tonjolan pusat):</strong> Wilayah padat bintang tua di pusat galaksi. Di pusatnya terdapat lubang hitam supermasif, Sagittarius A*.</li>
+                    <li><strong>Halo:</strong> Wilayah sferis yang mengandung gugus bola (globular clusters) dan bintang tua. Halo juga mengandung materi gelap.</li>
+                    <li><strong>Lengan spiral:</strong> Wilayah dengan pembentukan bintang aktif, terbentuk karena gelombang kepadatan yang berputar.</li>
+                </ul>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>Science — Portrait of a Galaxy. <a href="https://www.science.org" target="_blank">science.org</a></p>
+                    <p>Caltech Ay 1 — Topik 12: Galaxy structure, stellar populations, dark halo. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Tata Surya kita terletak di piringan galaksi, sekitar 26.000 tahun cahaya dari pusat, bukan di pusat galaksi.')">Tata Surya terletak di pusat Bima Sakti</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Bima Sakti adalah galaksi spiral berbatang. Pusatnya memiliki bulge padat dan lubang hitam supermasif (Sagittarius A*), sedangkan piringannya berisi lengan spiral tempat pembentukan bintang.')">Bima Sakti adalah galaksi spiral berbatang dengan lubang hitam supermasif di pusatnya</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Halo galaksi justru mengandung bintang-bintang tua dan gugus bola, bukan bintang muda.')">Halo galaksi berisi bintang-bintang muda</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11 -->
+        <div class="slide-card" data-index="10">
+            <div class="slide-header">
+                <span class="slide-level level-mahir">Mahir</span>
+                <h2>Hari 11: Materi Gelap & Energi Gelap</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Kosmologi</div>
+            </div>
+            <div class="slide-body">
+                <p>Salah satu penemuan paling mengejutkan dalam astronomi modern adalah bahwa materi biasa (yang membentuk bintang, planet, dan kita) hanya mencakup sekitar <strong>5%</strong> dari total energi-materi alam semesta.</p>
+                <ul>
+                    <li><strong>Materi gelap (~27%):</strong> Tidak memancarkan cahaya, tetapi terdeteksi melalui efek gravitasinya. Bukti utamanya adalah kurva rotasi galaksi spiral — bintang di pinggiran galaksi bergerak terlalu cepat jika hanya gravitasi materi tampak yang bekerja. Materi gelap juga terlihat dalam pelensaan gravitasi dan pembentukan struktur kosmik.</li>
+                    <li><strong>Energi gelap (~68%):</strong> Menyebabkan ekspansi alam semesta yang <em>semakin cepat</em>. Ditemukan pada 1998 melalui pengamatan supernova Tipe Ia. Sifatnya masih misterius, tetapi konsisten dengan konstanta kosmologis (Λ) dalam model ΛCDM.</li>
+                </ul>
+                <div class="highlight-box">
+                    <p>💡 Model ΛCDM (Lambda-Cold Dark Matter) adalah model kosmologi standar saat ini. "Lambda" merujuk pada energi gelap, "Cold Dark Matter" pada materi gelap yang bergerak lambat.</p>
+                </div>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>UChicago — Testing dark matter and dark energy. <a href="https://www.uchicago.edu" target="_blank">uchicago.edu</a></p>
+                    <p>UBC — Confirming accelerating cosmic expansion. <a href="https://science.ubc.ca" target="_blank">science.ubc.ca</a></p>
+                    <p>Caltech Ay 1 — Topik 17–18: Cosmology, CMB, dark energy. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Materi gelap tidak memancarkan cahaya, sehingga tidak bisa dideteksi dengan teleskop optik biasa. Buktinya datang dari efek gravitasinya.')">Materi gelap dapat dilihat dengan teleskop optik</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Materi gelap terdeteksi melalui efek gravitasinya (seperti kurva rotasi galaksi), sedangkan energi gelap menyebabkan ekspansi alam semesta yang semakin cepat.')">Materi gelap dideteksi melalui efek gravitasi, energi gelap menyebabkan ekspansi dipercepat</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Materi biasa hanya sekitar 5% dari total energi-materi alam semesta. Materi gelap ~27% dan energi gelap ~68%.')">Materi biasa mendominasi alam semesta</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12 -->
+        <div class="slide-card" data-index="11">
+            <div class="slide-header">
+                <span class="slide-level level-mahir">Mahir</span>
+                <h2>Hari 12: Big Bang & Bukti-Buktinya</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Kosmologi</div>
+            </div>
+            <div class="slide-body">
+                <p>Teori <strong>Big Bang</strong> menyatakan bahwa alam semesta dimulai dari keadaan sangat panas dan padat sekitar 13,8 miliar tahun lalu, kemudian mengembang dan mendingin.</p>
+                <p>Tiga bukti utama yang mendukung teori ini:</p>
+                <ul>
+                    <li><strong>Ekspansi alam semesta (Hukum Hubble):</strong> Edwin Hubble (1929) menemukan bahwa galaksi-galaksi menjauh dari kita, dan semakin jauh, semakin cepat. Ini menunjukkan alam semesta mengembang.</li>
+                    <li><strong>Radiasi Latar Belakang Gelombang Mikro Kosmik (CMB):</strong> "Sisa panas" dari Big Bang, ditemukan secara tidak sengaja pada 1964. CMB adalah radiasi termal yang sangat seragam pada suhu ~2,7 Kelvin, berasal dari 380.000 tahun setelah Big Bang.</li>
+                    <li><strong>Nukleosintesis Big Bang:</strong> Kelimpahan relatif hidrogen, helium, deuterium, dan lithium di alam semesta sesuai dengan prediksi teori tentang reaksi nuklir di alam semesta awal.</li>
+                </ul>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>arXiv — Modern Cosmology, an Amuse-Gueule. <a href="https://export.arxiv.org" target="_blank">export.arxiv.org</a></p>
+                    <p>CSIRO ATNF — The Big Bang & the Standard Model. <a href="https://www.atnf.csiro.au" target="_blank">atnf.csiro.au</a></p>
+                    <p>NASA — Evidence for the Big Bang. <a href="https://asd.gsfc.nasa.gov" target="_blank">asd.gsfc.nasa.gov</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Big Bang bukan ledakan yang menyebar ke ruang kosong. Big Bang adalah ekspansi ruang itu sendiri — alam semesta tidak mengembang "ke dalam" apa pun.')">Big Bang adalah ledakan di ruang yang sudah ada</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! CMB adalah radiasi sisa Big Bang yang terdeteksi pada suhu ~2,7 K. Ini adalah salah satu bukti terkuat teori Big Bang, bersama ekspansi Hubble dan nukleosintesis.')">CMB adalah sisa radiasi dari Big Bang</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Nukleosintesis Big Bang menjelaskan pembentukan inti atom ringan (H, He, Li) dalam beberapa menit pertama, bukan pembentukan bintang dan galaksi.')">Nukleosintesis Big Bang menjelaskan pembentukan bintang</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13 -->
+        <div class="slide-card" data-index="12">
+            <div class="slide-header">
+                <span class="slide-level level-mahir">Mahir</span>
+                <h2>Hari 13: Eksoplanet & Pencarian Kehidupan</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Astrobiologi</div>
+            </div>
+            <div class="slide-body">
+                <p>Sejak penemuan planet pertama di luar Tata Surya pada 1995 (51 Pegasi b), astronom telah mengkonfirmasi lebih dari 5.000 <strong>eksoplanet</strong>.</p>
+                <p>Metode deteksi utama:</p>
+                <ul>
+                    <li><strong>Metode Transit:</strong> Mengukur penurunan kecil cahaya bintang ketika planet melintas di depannya. Misi Kepler dan TESS menggunakan metode ini untuk menemukan ribuan planet.</li>
+                    <li><strong>Metode Kecepatan Radial (Wobble):</strong> Mendeteksi goyangan bintang akibat tarikan gravitasi planet. Ini mengungkap massa minimum planet. 51 Pegasi b ditemukan dengan metode ini.</li>
+                    <li><strong>Mikrolensa Gravitasional:</strong> Memanfaatkan pembelokan cahaya oleh gravitasi bintang untuk mendeteksi planet yang sangat jauh.</li>
+                    <li><strong>Pencitraan Langsung:</strong> Memotret planet secara langsung, biasanya untuk planet raksasa yang jauh dari bintangnya.</li>
+                </ul>
+                <p>Zona layak huni (habitable zone) adalah wilayah di sekitar bintang di mana air bisa berwujud cair di permukaan planet. Ini adalah salah satu kriteria utama dalam pencarian kehidupan.</p>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>NASA Science — How Do We Find Exoplanets? <a href="https://science.nasa.gov" target="_blank">science.nasa.gov</a></p>
+                    <p>ESA — How to find an exoplanet. <a href="https://www.esa.int" target="_blank">esa.int</a></p>
+                    <p>Caltech Ay 1 — Topik 7: Planets beyond the Solar system. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Metode kecepatan radial mengukur goyangan bintang, sedangkan metode transit mengukur penurunan cahaya bintang. Keduanya berbeda.')">Metode transit mengukur goyangan bintang</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Metode transit mendeteksi penurunan cahaya bintang saat planet melintas, sedangkan metode kecepatan radial mendeteksi goyangan bintang akibat tarikan gravitasi planet.')">Metode transit dan kecepatan radial adalah dua metode utama deteksi eksoplanet</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Zona layak huni adalah wilayah di mana air bisa berwujud cair, tetapi ini bukan jaminan adanya kehidupan.')">Zona layak huni menjamin adanya kehidupan</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14 -->
+        <div class="slide-card" data-index="13">
+            <div class="slide-header">
+                <span class="slide-level level-mahir">Mahir</span>
+                <h2>Hari 14: Galaksi Aktif & Quasar</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Objek Ekstrem</div>
+            </div>
+            <div class="slide-body">
+                <p>Beberapa galaksi memiliki inti yang sangat terang — jauh lebih terang dari seluruh galaksi biasa. Ini disebut <strong>Active Galactic Nuclei (AGN)</strong>.</p>
+                <p>Sumber energinya adalah <strong>lubang hitam supermasif</strong> yang aktif menelan materi. Saat materi jatuh ke dalam lubang hitam, ia membentuk <strong>piringan akresi</strong> yang sangat panas dan memancarkan radiasi intens dari radio hingga sinar gamma.</p>
+                <p>Jenis-jenis AGN:</p>
+                <ul>
+                    <li><strong>Quasar:</strong> AGN paling terang. Bisa lebih terang dari 100 galaksi biasa digabungkan.</li>
+                    <li><strong>Blazar:</strong> Quasar dengan jet yang diarahkan hampir tepat ke Bumi, sehingga tampak sangat terang dan bervariasi.</li>
+                    <li><strong>Seyfert:</strong> AGN dengan luminositas lebih rendah, ditemukan di galaksi spiral.</li>
+                    <li><strong>Radio Galaxy:</strong> AGN yang memancarkan jet radio besar.</li>
+                </ul>
+                <p>Model unifikasi menyatakan bahwa perbedaan penampakan AGN terutama disebabkan oleh sudut pandang kita terhadap objek tersebut.</p>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>Caltech Ay 1 — Topik 16: Active Galactic Nuclei. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                    <p>Astrophysics Is Easy! — Chapter: Active Galaxies. <a href="https://archive.org/details/astrophysicsisea0000ingl_2edi" target="_blank">archive.org</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Quasar bukan bintang. Quasar adalah inti galaksi aktif yang didukung oleh lubang hitam supermasif.')">Quasar adalah bintang yang sangat terang</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! AGN didukung oleh lubang hitam supermasif yang menelan materi. Perbedaan penampakan (quasar, blazar, Seyfert, radio galaxy) terutama disebabkan oleh sudut pandang kita.')">AGN ditenagai oleh lubang hitam supermasif, perbedaannya karena sudut pandang</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. AGN justru ditemukan di inti galaksi, bukan di pinggiran.')">AGN terletak di pinggiran galaksi</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 15 -->
+        <div class="slide-card" data-index="14">
+            <div class="slide-header">
+                <span class="slide-level level-mahir">Mahir</span>
+                <h2>Hari 15: Struktur Skala Besar & Pembentukan Galaksi</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Kosmologi</div>
+            </div>
+            <div class="slide-body">
+                <p>Pada skala terbesar, alam semesta tidak tersebar merata. Galaksi-galaksi membentuk struktur seperti <strong>jaring kosmik (cosmic web)</strong>:</p>
+                <ul>
+                    <li><strong>Filamen:</strong> Jembatan gas dan galaksi yang menghubungkan gugus-gugus galaksi.</li>
+                    <li><strong>Void:</strong> Ruang kosong raksasa dengan sangat sedikit galaksi.</li>
+                    <li><strong>Gugus dan supergugus:</strong> Kumpulan galaksi yang terikat gravitasi. Gugus bisa berisi ratusan hingga ribuan galaksi.</li>
+                </ul>
+                <p>Pembentukan galaksi terjadi secara <strong>hierarkis</strong>: galaksi kecil terbentuk lebih dulu, kemudian bergabung melalui merger untuk membentuk galaksi yang lebih besar. Bima Sakti sendiri diperkirakan telah menelan banyak galaksi kecil selama sejarahnya. Pengamatan dengan JWST dan ALMA menunjukkan bahwa galaksi seperti Bima Sakti tumbuh "dari dalam ke luar" — bagian pusat terbentuk lebih dulu, kemudian piringan bertambah massa seiring waktu.</p>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>Caltech Ay 1 — Topik 15 & 14: Large scale structure, galaxy formation. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                    <p>EurekAlert — Milky Way's turbulent youth. <a href="https://www.eurekalert.org" target="_blank">eurekalert.org</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Galaksi tidak tersebar merata. Mereka membentuk struktur filamen dan gugus yang disebut jaring kosmik.')">Galaksi tersebar merata di alam semesta</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Pembentukan galaksi bersifat hierarkis: galaksi kecil terbentuk lebih dulu, lalu bergabung melalui merger untuk membentuk galaksi yang lebih besar.')">Pembentukan galaksi bersifat hierarkis melalui merger</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Void adalah ruang kosong raksasa dengan sangat sedikit galaksi, bukan wilayah paling padat.')">Void adalah wilayah paling padat galaksi</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 16 -->
+        <div class="slide-card" data-index="15">
+            <div class="slide-header">
+                <span class="slide-level level-mahir">Mahir</span>
+                <h2>Hari 16: Tangga Jarak Kosmik & Masa Depan Alam Semesta</h2>
+                <div class="slide-meta">⏱ 5 menit baca · Topik: Kosmologi Lanjutan</div>
+            </div>
+            <div class="slide-body">
+                <p>Bagaimana astronom mengukur jarak ke galaksi yang sangat jauh? Mereka menggunakan <strong>tangga jarak kosmik</strong> — serangkaian metode yang saling terkalibrasi:</p>
+                <ul>
+                    <li><strong>Paralaks:</strong> Metode paling dasar, mengukur pergeseran posisi bintang terhadap latar belakang saat Bumi mengorbit. Akurat hingga beberapa ribu tahun cahaya.</li>
+                    <li><strong>Cepheid Variable:</strong> Bintang yang periodenya berkorelasi dengan luminositasnya. Digunakan untuk jarak hingga puluhan juta tahun cahaya.</li>
+                    <li><strong>Supernova Tipe Ia:</strong> Ledakan termonuklir katai putih yang memiliki luminositas puncak yang konsisten. Digunakan sebagai "lilin standar" untuk jarak miliaran tahun cahaya.</li>
+                    <li><strong>Pergeseran Merah (Redshift):</strong> Hukum Hubble menghubungkan pergeseran merah galaksi dengan jaraknya, memungkinkan pengukuran hingga tepi alam semesta yang teramati.</li>
+                </ul>
+                <p><strong>Masa depan alam semesta:</strong> Dengan energi gelap yang mendominasi, ekspansi alam semesta terus dipercepat. Dalam triliunan tahun, galaksi-galaksi akan saling menjauh hingga bintang-bintang di langit malam akan menghilang dari pandangan. Skenario ini disebut "Big Freeze" atau "Heat Death" — alam semesta menjadi dingin, gelap, dan entropi maksimum.</p>
+                <div class="reference">
+                    <h4>📚 Referensi</h4>
+                    <p>Caltech Ay 1 — Topik 19: Distance scale and age, cosmological tests. <a href="https://sites.astro.caltech.edu/~george/ay1/Ay1_syllabus.html" target="_blank">sites.astro.caltech.edu</a></p>
+                    <p>IUCAA — Lecture 1.4: The cosmic distance ladder. <a href="https://ace.iucaa.in/resources/a-a.html" target="_blank">ace.iucaa.in</a></p>
+                </div>
+                <div class="quiz-section">
+                    <div class="quiz-question">❓ Apakah Anda sudah memahami materi ini?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Paralaks hanya akurat untuk jarak beberapa ribu tahun cahaya. Untuk jarak yang lebih jauh, astronom menggunakan Cepheid, supernova, dan redshift.')">Paralaks dapat mengukur jarak ke galaksi terjauh</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, true, 'Tepat! Tangga jarak kosmik adalah serangkaian metode berlapis: paralaks untuk jarak dekat, Cepheid untuk menengah, supernova untuk jauh, dan redshift untuk skala kosmologis.')">Tangga jarak kosmik menggunakan metode berlapis dari paralaks hingga redshift</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, false, 'Bukan. Dengan energi gelap yang mendominasi, alam semesta kemungkinan berakhir dalam skenario Big Freeze — dingin, gelap, dan terus mengembang.')">Alam semesta akan mengerut kembali dalam Big Crunch</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-section">
+        <button class="nav-btn nav-btn-prev" id="prevBtn" onclick="changeSlide(-1)" disabled>← Sebelumnya</button>
+        <span class="slide-counter" id="slideCounter">1 / 16</span>
+        <button class="nav-btn nav-btn-next" id="nextBtn" onclick="changeSlide(1)">Selanjutnya →</button>
+    </div>
+
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide-card');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+        slides.forEach((s, i) => {
+            s.classList.toggle('active', i === index);
+        });
+
+        document.getElementById('prevBtn').disabled = index === 0;
+        document.getElementById('nextBtn').disabled = index === totalSlides - 1;
+
+        document.getElementById('slideCounter').textContent = `${index + 1} / ${totalSlides}`;
+        document.getElementById('progressLabel').textContent = `Materi ${index + 1} dari ${totalSlides}`;
+
+        const percent = Math.round(((index + 1) / totalSlides) * 100);
+        document.getElementById('progressPercent').textContent = percent + '%';
+        document.getElementById('progressFill').style.width = percent + '%';
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function submitAnswer(userAnswer) {
-      const question = quizQuestions[currentQuestionIndex];
-      const isCorrect = userAnswer === question.answer;
-      
-      userAnswers[currentQuestionIndex] = {
-        userAnswer: userAnswer,
-        isCorrect: isCorrect
-      };
-
-      if (isCorrect) {
-        correctAnswers++;
-      }
-
-      updateScore();
-      
-      setTimeout(() => {
-        const card = document.getElementById('currentCard');
-        if (card) {
-          card.classList.add('flipped');
-          isCardFlipped = true;
-          updateNavigationButtons();
+    function changeSlide(direction) {
+        const newIndex = currentSlide + direction;
+        if (newIndex >= 0 && newIndex < totalSlides) {
+            currentSlide = newIndex;
+            showSlide(currentSlide);
         }
-      }, 300);
     }
 
-    function nextQuestion() {
-      if (currentQuestionIndex < quizQuestions.length - 1) {
-        currentQuestionIndex++;
-        isCardFlipped = false;
-        renderQuestion();
-      }
+    function checkAnswer(btn, isCorrect, explanation) {
+        const parent = btn.closest('.quiz-options');
+        const feedback = parent.nextElementSibling;
+
+        // Disable all options
+        parent.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.classList.add('disabled');
+            opt.onclick = null;
+        });
+
+        if (isCorrect) {
+            btn.classList.add('selected-correct');
+        } else {
+            btn.classList.add('selected-wrong');
+            // Highlight the correct answer
+            parent.querySelectorAll('.quiz-option').forEach(opt => {
+                if (opt.getAttribute('onclick') && opt.getAttribute('onclick').includes('true')) {
+                    opt.classList.add('selected-correct');
+                }
+            });
+        }
+
+        feedback.className = 'quiz-feedback ' + (isCorrect ? 'correct' : 'incorrect');
+        feedback.innerHTML = (isCorrect ? '✅ Benar! ' : '❌ Belum tepat. ') +
+            '<div class="explanation">' + explanation + '</div>';
     }
 
-    function previousQuestion() {
-      if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        isCardFlipped = userAnswers.hasOwnProperty(currentQuestionIndex);
-        renderQuestion();
-      }
+    function jumpToTopic(index) {
+        // Update pills
+        document.querySelectorAll('.topic-pill').forEach((p, i) => {
+            p.classList.toggle('active-pill', i === 0);
+        });
+        currentSlide = index;
+        showSlide(currentSlide);
     }
 
-    function updateNavigationButtons() {
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      
-      prevBtn.disabled = currentQuestionIndex === 0;
-      
-      const hasAnswered = userAnswers.hasOwnProperty(currentQuestionIndex);
-      nextBtn.disabled = currentQuestionIndex === quizQuestions.length - 1 || !hasAnswered;
-    }
+    // Initialize
+    showSlide(0);
+</script>
 
-    function updateProgress() {
-      const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
-      document.getElementById('progressFill').style.width = progress + '%';
-    }
-
-    function updateScore() {
-      document.getElementById('score').textContent = correctAnswers;
-    }
-
-    function resetQuiz() {
-      currentQuestionIndex = 0;
-      userAnswers = {};
-      correctAnswers = 0;
-      isCardFlipped = false;
-      updateScore();
-      renderQuestion();
-    }
-
-    renderQuestion();
-    updateSimulation();
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aa3731a158e2ce1',t:'MTc2NTEwNDQ5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
