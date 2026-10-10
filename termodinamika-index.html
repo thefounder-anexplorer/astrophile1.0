@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Termodinamika — Belajar dari Nol</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  body { background: radial-gradient(ellipse at top, #2b1214 0%, #0a0b1a 70%); color:#d8dbe8; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+  #starfield { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .paper {
+    background: linear-gradient(180deg, rgba(60,26,26,0.85) 0%, rgba(43,18,20,0.9) 100%);
+    border: 1px solid rgba(239,68,68,0.2);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    transition: all 0.3s ease;
+  }
+  .paper:hover { border-color: rgba(239,68,68,0.5); transform: translateY(-4px); box-shadow: 0 25px 70px rgba(239,68,68,0.15); }
+  .paper-locked { opacity: 0.55; cursor: not-allowed; }
+  .paper-locked:hover { transform: none; border-color: rgba(239,68,68,0.2); box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+  .stage-badge { font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; }
+  .badge-active { background: rgba(74,222,128,0.15); color:#86efac; border:1px solid rgba(74,222,128,0.4); }
+  .badge-soon { background: rgba(148,163,184,0.15); color:#94a3b8; border:1px solid rgba(148,163,184,0.3); }
+  .progress-mini { height: 6px; background: rgba(255,255,255,0.06); border-radius: 20px; overflow: hidden; }
+  .progress-mini > div { height: 100%; background: linear-gradient(90deg, #ef4444, #f59e0b); transition: width 0.5s; }
+</style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<div class="relative z-10 max-w-5xl mx-auto px-4 py-10 sm:py-16">
+
+  <!-- Header -->
+  <header class="text-center mb-12">
+    <a href="index.html" class="inline-flex items-center gap-2 text-xs text-slate-400 hover:text-red-400 mb-4 transition">
+      <i class="fa-solid fa-arrow-left"></i> Kembali ke Portal
+    </a>
+    <div class="inline-flex items-center gap-3 mb-4">
+      <i class="fa-solid fa-fire text-red-400 text-2xl"></i>
+      <h1 class="font-serif text-3xl sm:text-5xl font-bold bg-gradient-to-r from-red-300 via-orange-400 to-amber-500 bg-clip-text text-transparent">
+        Termodinamika
+      </h1>
+      <i class="fa-solid fa-fire text-red-400 text-2xl"></i>
+    </div>
+    <p class="text-slate-400 text-base sm:text-lg italic max-w-2xl mx-auto leading-relaxed">
+      Belajar termodinamika dari nol — lima menit sehari, dengan cerita yang mengalir, visual yang jelas, dan simulasi interaktif.
+    </p>
+  </header>
+
+  <!-- Progress Global -->
+  <div class="paper rounded-2xl p-5 mb-8">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h3 class="text-sm font-bold text-red-300 mb-1">Progres Anda</h3>
+        <p id="globalStatus" class="text-xs text-slate-400">Belum dimulai — pilih tahap di bawah</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-40 progress-mini"><div id="globalProgressBar" style="width:0%"></div></div>
+        <span id="globalProgressPercent" class="text-sm font-bold text-red-400">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage Cards -->
+  <h2 class="font-serif text-2xl font-bold text-white mb-5 text-center">Pilih Tahap Perjalanan</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+
+    <!-- TAHAP 1 — AKTIF -->
+    <a href="termodinamika-tahap-1.html" class="paper rounded-2xl p-6 block">
+      <div class="flex items-start justify-between mb-4">
+        <span class="stage-badge badge-active">Aktif</span>
+        <span class="text-xs text-slate-500 font-mono">30 hari</span>
+      </div>
+      <div class="mb-3">
+        <span class="text-6xl font-serif font-bold text-red-400">I</span>
+      </div>
+      <h3 class="font-serif text-xl font-bold text-white mb-2">Dasar Termodinamika</h3>
+      <p class="text-sm text-slate-400 leading-relaxed mb-4">
+        Suhu, kalor, gas ideal, hukum I & II, entropi, mesin kalor, dan siklus Carnot — fondasi fisika energi.
+      </p>
+      <div class="flex items-center gap-3 text-xs text-slate-500">
+        <span><i class="fa-solid fa-book-open text-red-400 mr-1"></i>30 cerita</span>
+        <span><i class="fa-solid fa-flask text-orange-400 mr-1"></i>4 simulasi</span>
+        <span><i class="fa-solid fa-circle-question text-amber-400 mr-1"></i>60 kuis</span>
+      </div>
+      <div class="mt-5 pt-4 border-t border-white/5 flex items-center justify-between">
+        <span id="tahap1Status" class="text-xs text-slate-500">Belum dimulai</span>
+        <span class="text-red-400 font-bold text-sm">Mulai <i class="fa-solid fa-arrow-right ml-1"></i></span>
+      </div>
+    </a>
+
+    <!-- TAHAP 2 -->
+    <div class="paper paper-locked rounded-2xl p-6">
+      <div class="flex items-start justify-between mb-4">
+        <span class="stage-badge badge-soon">Segera</span>
+        <span class="text-xs text-slate-500 font-mono">30 hari</span>
+      </div>
+      <div class="mb-3"><span class="text-6xl font-serif font-bold text-slate-600">II</span></div>
+      <h3 class="font-serif text-xl font-bold text-slate-400 mb-2">Gas & Kinetik</h3>
+      <p class="text-sm text-slate-500 leading-relaxed">
+        Teori kinetik gas, distribusi Maxwell-Boltzmann, tumbukan, dan transportasi.
+      </p>
+      <div class="mt-5 pt-4 border-t border-white/5 flex items-center justify-between">
+        <span class="text-xs text-slate-600">Dalam pengembangan</span>
+        <i class="fa-solid fa-lock text-slate-600"></i>
+      </div>
+    </div>
+
+    <!-- TAHAP 3 -->
+    <div class="paper paper-locked rounded-2xl p-6">
+      <div class="flex items-start justify-between mb-4">
+        <span class="stage-badge badge-soon">Segera</span>
+        <span class="text-xs text-slate-500 font-mono">30 hari</span>
+      </div>
+      <div class="mb-3"><span class="text-6xl font-serif font-bold text-slate-600">III</span></div>
+      <h3 class="font-serif text-xl font-bold text-slate-400 mb-2">Potensial & Fasa</h3>
+      <p class="text-sm text-slate-500 leading-relaxed">
+        Potensial termodinamika, transisi fasa, diagram P-V-T, dan kesetimbangan.
+      </p>
+      <div class="mt-5 pt-4 border-t border-white/5 flex items-center justify-between">
+        <span class="text-xs text-slate-600">Dalam pengembangan</span>
+        <i class="fa-solid fa-lock text-slate-600"></i>
+      </div>
+    </div>
+
+    <!-- TAHAP 4 -->
+    <div class="paper paper-locked rounded-2xl p-6">
+      <div class="flex items-start justify-between mb-4">
+        <span class="stage-badge badge-soon">Segera</span>
+        <span class="text-xs text-slate-500 font-mono">30 hari</span>
+      </div>
+      <div class="mb-3"><span class="text-6xl font-serif font-bold text-slate-600">IV</span></div>
+      <h3 class="font-serif text-xl font-bold text-slate-400 mb-2">Statistik Termal</h3>
+      <p class="text-sm text-slate-500 leading-relaxed">
+        Ensembel statistik, fungsi partisi, statistik Bose-Einstein dan Fermi-Dirac.
+      </p>
+      <div class="mt-5 pt-4 border-t border-white/5 flex items-center justify-between">
+        <span class="text-xs text-slate-600">Dalam pengembangan</span>
+        <i class="fa-solid fa-lock text-slate-600"></i>
+      </div>
+    </div>
+
+    <!-- TAHAP 5 -->
+    <div class="paper paper-locked rounded-2xl p-6">
+      <div class="flex items-start justify-between mb-4">
+        <span class="stage-badge badge-soon">Segera</span>
+        <span class="text-xs text-slate-500 font-mono">30 hari</span>
+      </div>
+      <div class="mb-3"><span class="text-6xl font-serif font-bold text-slate-600">V</span></div>
+      <h3 class="font-serif text-xl font-bold text-slate-400 mb-2">Aplikasi Teknik</h3>
+      <p class="text-sm text-slate-500 leading-relaxed">
+        Refrigerator, pompa kalor, mesin uap, turbin, dan pembangkit listrik.
+      </p>
+      <div class="mt-5 pt-4 border-t border-white/5 flex items-center justify-between">
+        <span class="text-xs text-slate-600">Dalam pengembangan</span>
+        <i class="fa-solid fa-lock text-slate-600"></i>
+      </div>
+    </div>
+
+    <!-- TAHAP 6 -->
+    <div class="paper paper-locked rounded-2xl p-6">
+      <div class="flex items-start justify-between mb-4">
+        <span class="stage-badge badge-soon">Segera</span>
+        <span class="text-xs text-slate-500 font-mono">30 hari</span>
+      </div>
+      <div class="mb-3"><span class="text-6xl font-serif font-bold text-slate-600">VI</span></div>
+      <h3 class="font-serif text-xl font-bold text-slate-400 mb-2">Olimpiade & Lanjutan</h3>
+      <p class="text-sm text-slate-500 leading-relaxed">
+        Soal-soal olimpiade, termodinamika kuantum, dan fisika statistik lanjutan.
+      </p>
+      <div class="mt-5 pt-4 border-t border-white/5 flex items-center justify-between">
+        <span class="text-xs text-slate-600">Dalam pengembangan</span>
+        <i class="fa-solid fa-lock text-slate-600"></i>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Cara Belajar -->
+  <div class="paper rounded-2xl p-6 sm:p-8 mb-8">
+    <h2 class="font-serif text-xl font-bold text-white mb-4 text-center">Cara Belajar di Sini</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-sm">
+      <div class="text-center">
+        <i class="fa-solid fa-clock text-red-400 text-3xl mb-3"></i>
+        <h3 class="font-bold text-white mb-2">5 Menit Sehari</h3>
+        <p class="text-slate-400 leading-relaxed">Setiap hari adalah satu cerita pendek yang bisa diselesaikan dalam 5 menit.</p>
+      </div>
+      <div class="text-center">
+        <i class="fa-solid fa-flask text-orange-400 text-3xl mb-3"></i>
+        <h3 class="font-bold text-white mb-2">Visual & Simulasi</h3>
+        <p class="text-slate-400 leading-relaxed">Konsep abstrak seperti entropi dan siklus Carnot disertai simulasi interaktif.</p>
+      </div>
+      <div class="text-center">
+        <i class="fa-solid fa-circle-check text-amber-400 text-3xl mb-3"></i>
+        <h3 class="font-bold text-white mb-2">Kuis Pemahaman</h3>
+        <p class="text-slate-400 leading-relaxed">Di akhir setiap hari ada kuis untuk memastikan Anda mengikuti cerita.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center text-xs text-slate-600 pb-8">
+    <p>Termodinamika — dibuat dengan sabar untuk pembelajar yang tekun</p>
+  </footer>
+
+</div>
+
+<script>
+function renderStars() {
+  const c = document.getElementById('starfield');
+  const ctx = c.getContext('2d');
+  let w = c.width = window.innerWidth;
+  let h = c.height = window.innerHeight;
+  window.addEventListener('resize', () => {
+    w = c.width = window.innerWidth;
+    h = c.height = window.innerHeight;
+  });
+  const stars = Array.from({length: 120}, () => ({
+    x: Math.random()*w, y: Math.random()*h,
+    r: Math.random()*1.4 + 0.2,
+    a: Math.random(), s: Math.random()*0.008 + 0.002,
+    d: Math.random() > 0.5 ? 1 : -1,
+    hue: Math.random() * 60 + 10 // merah-oranye
+  }));
+  function anim() {
+    ctx.clearRect(0,0,w,h);
+    stars.forEach(s => {
+      s.a += s.s * s.d;
+      if (s.a > 0.9) { s.a = 0.9; s.d = -1; }
+      if (s.a < 0.1) { s.a = 0.1; s.d = 1; }
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `hsla(${s.hue}, 90%, 70%, ${s.a * 0.7})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(anim);
+  }
+  anim();
+}
+renderStars();
+
+function updateStageStatus() {
+  try {
+    const saved = localStorage.getItem('termodinamika_tahap1');
+    if (saved) {
+      const state = JSON.parse(saved);
+      const done = (state.completed || []).length;
+      const total = 30;
+      const pct = Math.round((done / total) * 100);
+
+      document.getElementById('globalProgressBar').style.width = pct + '%';
+      document.getElementById('globalProgressPercent').textContent = pct + '%';
+
+      if (done === 0) {
+        document.getElementById('globalStatus').textContent = 'Belum dimulai — pilih tahap di bawah';
+        document.getElementById('tahap1Status').textContent = 'Belum dimulai';
+      } else if (done < total) {
+        document.getElementById('globalStatus').textContent = `Tahap I sedang berjalan — ${done} dari ${total} hari selesai`;
+        document.getElementById('tahap1Status').textContent = `${done}/${total} hari selesai`;
+      } else {
+        document.getElementById('globalStatus').textContent = 'Selamat! Anda telah menyelesaikan Tahap I';
+        document.getElementById('tahap1Status').textContent = '✓ Selesai';
+      }
+    } else {
+      document.getElementById('globalStatus').textContent = 'Belum dimulai — pilih tahap di bawah';
+      document.getElementById('tahap1Status').textContent = 'Belum dimulai';
+    }
+  } catch(e) { console.warn(e); }
+}
+updateStageStatus();
+</script>
+
+</body>
+</html>
