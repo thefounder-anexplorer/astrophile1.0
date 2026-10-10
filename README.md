@@ -1,2 +1,2 @@
-# MEDIA AJAR FISIKA
-progress kelas F2 tahun 2025
+# HOME FOR A ETERNAL SCHOLAR
+Tempat belajar 5 menit
