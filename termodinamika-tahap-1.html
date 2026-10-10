@@ -1,0 +1,2316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tahap I — Dasar Termodinamika (30 Hari)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  body { background: radial-gradient(ellipse at top, #2b1214 0%, #0a0b1a 60%); color:#d8dbe8; font-family: 'Inter', system-ui, sans-serif; }
+  #starfield { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .paper {
+    background: linear-gradient(180deg, rgba(60,26,26,0.85) 0%, rgba(43,18,20,0.9) 100%);
+    border: 1px solid rgba(239,68,68,0.2);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+  .story-text { font-family: Georgia, serif; font-size: 1.05rem; line-height: 1.95; color:#d1d5e0; }
+  .story-text p { margin-bottom: 1.15rem; }
+  .story-text em { color:#fca5a5; font-style: italic; }
+  .story-text strong { color:#ef4444; font-weight: 600; }
+  .story-text h3 { color: #ef4444; font-weight: bold; font-size: 1.1rem; margin: 1.75rem 0 0.75rem; font-family: 'Inter', sans-serif; }
+  .drop-cap::first-letter {
+    font-size: 3.2rem; float: left; line-height: 0.9;
+    padding: 4px 8px 0 0; color: #ef4444; font-weight: bold; font-family: Georgia, serif;
+  }
+  .quote-box { background: rgba(239,68,68,0.05); border-left: 3px solid #ef4444; padding: 14px 18px; border-radius: 6px; font-style: italic; color:#a8adc0; margin: 1.25rem 0; }
+  .analogy-box { background: rgba(251,146,60,0.07); border: 1px dashed rgba(251,146,60,0.35); border-radius: 12px; padding: 16px 20px; margin: 1.25rem 0; }
+  .analogy-box .label { font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; color: #fb923c; text-transform: uppercase; margin-bottom: 6px; display: inline-block; }
+  .formula-soft { text-align: center; padding: 12px; margin: 1rem 0; background: rgba(15,17,34,0.6); border-radius: 10px; border: 1px solid rgba(239,68,68,0.2); font-family: 'Georgia', serif; font-size: 1.1rem; color: #fca5a5; }
+  .visual-box { background: rgba(15,17,34,0.6); border: 1px solid rgba(239,68,68,0.15); border-radius: 14px; padding: 18px; margin: 1.5rem 0; }
+  .visual-box .visual-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; color: #ef4444; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .visual-box .visual-caption { font-size: 0.82rem; color: #8b90a8; margin-top: 12px; line-height: 1.6; font-family: 'Inter', sans-serif; }
+  .term-card { background: rgba(251,146,60,0.08); border: 1px solid rgba(251,146,60,0.2); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; }
+  .term-card .term-name { font-weight: 700; color: #fdba74; font-size: 0.88rem; margin-bottom: 4px; font-family: 'Inter', sans-serif; }
+  .term-card .term-desc { font-size: 0.85rem; color: #b0b5c8; line-height: 1.6; font-family: 'Inter', sans-serif; }
+  .quiz-opt { display: block; width: 100%; text-align: left; background: rgba(60,26,26,0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 13px 16px; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.92rem; color:#c8ccd9; margin-bottom: 8px; }
+  .quiz-opt:hover:not(:disabled) { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.4); transform: translateX(4px); }
+  .quiz-opt.correct { background: rgba(74,222,128,0.15); border-color: rgba(74,222,128,0.5); color:#86efac; }
+  .quiz-opt.wrong { background: rgba(248,113,113,0.15); border-color: rgba(248,113,113,0.5); color:#fca5a5; }
+  .quiz-opt:disabled { cursor: default; opacity: 0.7; }
+  .feedback { padding: 12px 16px; border-radius: 10px; font-size: 0.88rem; line-height: 1.6; margin-top: 10px; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: rgba(74,222,128,0.1); border:1px solid rgba(74,222,128,0.3); color:#86efac; }
+  .feedback.no { background: rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.3); color:#fca5a5; }
+  .level-chip { font-size: 0.68rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; }
+  .lv-pemula { background: rgba(96,165,250,0.15); color:#93c5fd; border:1px solid rgba(96,165,250,0.3); }
+  .main-tab { padding: 10px 18px; border-radius: 12px; font-size: 0.85rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color:#a8adc0; cursor: pointer; transition: all 0.2s; font-family: inherit; font-weight: 500; }
+  .main-tab:hover { color: #ef4444; border-color: rgba(239,68,68,0.3); }
+  .main-tab.active { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.5); color:#ef4444; }
+  .sim-input { background: rgba(10,11,26,0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 8px 12px; color: #d8dbe8; font-size: 0.85rem; font-family: inherit; width: 100%; }
+  .sim-input:focus { outline: none; border-color: #ef4444; }
+  .sim-label { font-size: 0.72rem; color: #8b90a8; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; display: block; }
+  .sim-panel { background: rgba(43,18,20,0.7); border: 1px solid rgba(239,68,68,0.15); border-radius: 16px; padding: 20px; }
+  .nav-arrow { padding: 12px 20px; border-radius: 12px; font-weight: 600; font-size: 0.88rem; transition: all 0.25s; cursor: pointer; font-family: inherit; }
+  .nav-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+  .nav-prev { background: rgba(255,255,255,0.05); color:#a8adc0; border:1px solid rgba(255,255,255,0.1); }
+  .nav-prev:hover:not(:disabled) { background: rgba(255,255,255,0.1); }
+  .nav-next { background: linear-gradient(135deg, #ef4444, #f97316); color:#fff; border:none; box-shadow: 0 6px 20px rgba(239,68,68,0.25); }
+  .nav-next:hover:not(:disabled) { box-shadow: 0 10px 28px rgba(239,68,68,0.4); transform: translateY(-2px); }
+  .progress-thin { height: 4px; background: rgba(255,255,255,0.06); border-radius: 20px; overflow: hidden; }
+  .progress-thin > div { height: 100%; background: linear-gradient(90deg, #ef4444, #f59e0b); transition: width 0.5s; }
+  .day-pill { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: #8b90a8; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; font-weight: 600; font-family: inherit; }
+  .day-pill:hover { border-color: rgba(239,68,68,0.4); color:#ef4444; }
+  .day-pill.active { background: rgba(239,68,68,0.15); border-color: #ef4444; color:#ef4444; }
+  .day-pill.done { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.4); color:#86efac; }
+  .day-pill.active.done { background: rgba(74,222,128,0.2); border-color: #86efac; color:#86efac; }
+  @media (max-width: 640px) { .story-text { font-size: 0.98rem; line-height: 1.85; } .drop-cap::first-letter { font-size: 2.6rem; } }
+</style>
+</head>
+<body class="min-h-screen">
+
+<canvas id="starfield"></canvas>
+
+<div class="relative z-10 max-w-4xl mx-auto px-4 py-6 sm:py-10">
+
+  <header class="text-center mb-6">
+    <a href="termodinamika-index.html" class="inline-flex items-center gap-2 text-xs text-slate-400 hover:text-red-400 mb-3 transition">
+      <i class="fa-solid fa-arrow-left"></i> Kembali ke Termodinamika
+    </a>
+    <div class="inline-flex items-center gap-2 mb-2">
+      <i class="fa-solid fa-fire text-red-400 text-xl"></i>
+      <h1 class="font-serif text-2xl sm:text-3xl font-bold bg-gradient-to-r from-red-300 via-orange-400 to-amber-500 bg-clip-text text-transparent">
+        Tahap I — Dasar Termodinamika
+      </h1>
+      <i class="fa-solid fa-fire text-red-400 text-xl"></i>
+    </div>
+    <p class="text-sm text-slate-400 italic">30 hari pertama — dari suhu dan kalor hingga mesin Carnot</p>
+  </header>
+
+  <!-- Tabs -->
+  <div class="flex flex-wrap justify-center gap-2 mb-6">
+    <button class="main-tab active" onclick="switchTab('cerita', this)"><i class="fa-solid fa-book-open mr-1"></i> Cerita Harian</button>
+    <button class="main-tab" onclick="switchTab('gas', this)"><i class="fa-solid fa-flask mr-1"></i> Simulasi Gas Ideal</button>
+    <button class="main-tab" onclick="switchTab('carnot', this)"><i class="fa-solid fa-gears mr-1"></i> Simulasi Siklus Carnot</button>
+    <button class="main-tab" onclick="switchTab('peta', this)"><i class="fa-solid fa-map mr-1"></i> Peta Progres</button>
+  </div>
+
+  <!-- ========== TAB: CERITA ========== -->
+  <section id="view-cerita">
+
+    <div class="mb-5">
+      <div class="flex justify-between items-center text-xs text-slate-400 mb-2">
+        <span id="progressLabel">Hari 1 dari 30</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-thin"><div id="progressFill" style="width:0%"></div></div>
+    </div>
+
+    <div class="mb-5">
+      <div class="text-xs text-slate-500 mb-2">Pilih hari:</div>
+      <div id="dayPills" class="flex flex-wrap gap-2"></div>
+    </div>
+
+    <article class="paper rounded-3xl p-6 sm:p-10 mb-6">
+      <div class="mb-6 pb-5 border-b border-white/5">
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          <span id="levelChip" class="level-chip lv-pemula">Pemula</span>
+          <span class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"></i>5 menit</span>
+        </div>
+        <h2 id="storyTitle" class="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight mb-2"></h2>
+        <p id="storySubtitle" class="text-sm text-slate-400 italic"></p>
+      </div>
+
+      <div id="storyBody" class="story-text"></div>
+
+      <div class="quote-box">
+        <i class="fa-solid fa-feather-pointed text-red-400 mr-2"></i>
+        <span id="reflectionText"></span>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-white/5">
+        <h3 class="font-semibold text-red-400 mb-1 flex items-center gap-2 text-sm">
+          <i class="fa-solid fa-circle-question"></i> Cek Pemahaman
+        </h3>
+        <p class="text-xs text-slate-500 mb-4">Tidak ada nilai — hanya untuk memastikan Anda mengikuti cerita.</p>
+        <div id="quizContainer"></div>
+      </div>
+
+      <div class="mt-8 pt-5 border-t border-white/5 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2 text-sm" id="dayStatus"></div>
+        <button id="btnComplete" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-sm shadow-lg transition flex items-center gap-2">
+          <i class="fa-solid fa-check-circle"></i> Tandai Selesai
+        </button>
+      </div>
+    </article>
+
+    <div class="flex justify-between items-center gap-3 mb-10">
+      <button id="btnPrev" class="nav-arrow nav-prev" onclick="changeDay(-1)" disabled><i class="fa-solid fa-chevron-left mr-1"></i> Sebelumnya</button>
+      <span id="counterText" class="text-xs text-slate-500">1 / 30</span>
+      <button id="btnNext" class="nav-arrow nav-next" onclick="changeDay(1)">Berikutnya <i class="fa-solid fa-chevron-right ml-1"></i></button>
+    </div>
+
+  </section>
+
+  <!-- ========== TAB: SIMULASI GAS IDEAL ========== -->
+  <section id="view-gas" class="hidden">
+    <div class="paper rounded-3xl p-6 sm:p-8 mb-6">
+      <h2 class="font-serif text-2xl font-bold text-white mb-2">🧪 Simulasi Gas Ideal</h2>
+      <p class="text-sm text-slate-400 mb-6">Geser tekanan, volume, dan suhu — lihat bagaimana gas ideal bereaksi sesuai Hukum Boyle, Charles, dan Gay-Lussac.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="sim-panel">
+          <h3 class="text-sm font-bold text-orange-300 mb-4 uppercase tracking-wider">Pengaturan Gas</h3>
+
+          <div class="mb-4">
+            <label class="sim-label">Jumlah mol (n)</label>
+            <input type="number" id="gasN" value="1" step="0.1" min="0.1" max="5" class="sim-input" oninput="updateGasSim()">
+          </div>
+
+          <div class="mb-4">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">Suhu T (K)</span>
+              <span id="valGasT" class="font-bold text-orange-300">300 K</span>
+            </div>
+            <input type="range" id="gasT" min="100" max="1000" step="10" value="300" class="w-full" oninput="updateGasSim()">
+          </div>
+
+          <div class="mb-4">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">Volume V (L)</span>
+              <span id="valGasV" class="font-bold text-orange-300">22.4 L</span>
+            </div>
+            <input type="range" id="gasV" min="5" max="50" step="0.5" value="22.4" class="w-full" oninput="updateGasSim()">
+          </div>
+
+          <div class="bg-black/40 rounded-xl p-4">
+            <h4 class="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">Hasil</h4>
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div><span class="text-slate-500">Tekanan P (atm)</span><p id="outGasP" class="text-lg font-bold text-red-300">—</p></div>
+              <div><span class="text-slate-500">Energi kinetik rata-rata</span><p id="outGasKE" class="text-xs font-bold text-orange-300">—</p></div>
+              <div class="col-span-2"><span class="text-slate-500">v_rms (m/s)</span><p id="outGasVrms" class="text-base font-bold text-amber-300">—</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-panel flex flex-col items-center">
+          <h3 class="text-sm font-bold text-orange-300 mb-3 uppercase tracking-wider self-start">Visualisasi</h3>
+          <div class="relative w-full aspect-square">
+            <canvas id="gasCanvas" class="w-full h-full rounded-2xl bg-black/60 border border-white/10"></canvas>
+          </div>
+          <p class="text-xs text-slate-400 mt-3 text-center">Partikel bergerak lebih cepat saat suhu tinggi. Tekanan bertambah saat volume diperkecil.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TAB: SIMULASI SIKLUS CARNOT ========== -->
+  <section id="view-carnot" class="hidden">
+    <div class="paper rounded-3xl p-6 sm:p-8 mb-6">
+      <h2 class="font-serif text-2xl font-bold text-white mb-2">⚙️ Simulasi Siklus Carnot</h2>
+      <p class="text-sm text-slate-400 mb-6">Atur suhu reservoir panas dan dingin, lalu lihat efisiensi mesin Carnot yang dihasilkan.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="sim-panel">
+          <h3 class="text-sm font-bold text-red-300 mb-4 uppercase tracking-wider">Parameter Mesin</h3>
+
+          <div class="mb-4">
+            <label class="sim-label">Suhu reservoir panas (T_hot) — K</label>
+            <input type="number" id="carnotTHot" value="500" step="10" min="300" max="1500" class="sim-input" oninput="updateCarnotSim()">
+          </div>
+
+          <div class="mb-4">
+            <label class="sim-label">Suhu reservoir dingin (T_cold) — K</label>
+            <input type="number" id="carnotTCold" value="300" step="10" min="100" max="1400" class="sim-input" oninput="updateCarnotSim()">
+          </div>
+
+          <div class="bg-black/40 rounded-xl p-4">
+            <h4 class="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">Hasil</h4>
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div><span class="text-slate-500">Efisiensi Carnot</span><p id="outCarnotEff" class="text-lg font-bold text-red-300">—</p></div>
+              <div><span class="text-slate-500">Kerja maksimum (Q=1000 J)</span><p id="outCarnotW" class="text-lg font-bold text-orange-300">—</p></div>
+              <div class="col-span-2 pt-2 border-t border-white/10">
+                <span class="text-slate-500">Rasio Q_hot : Q_cold : W</span>
+                <p id="outCarnotRatio" class="text-sm font-bold text-amber-300">—</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 text-xs text-slate-500 leading-relaxed">
+            <strong class="text-slate-300">Rumus:</strong> η = 1 − T_cold / T_hot. Mesin Carnot adalah mesin paling efisien secara teori — tidak ada mesin nyata yang bisa melampauinya.
+          </div>
+        </div>
+
+        <div class="sim-panel flex flex-col items-center">
+          <h3 class="text-sm font-bold text-red-300 mb-3 uppercase tracking-wider self-start">Diagram P-V Siklus Carnot</h3>
+          <div class="relative w-full aspect-square">
+            <canvas id="carnotCanvas" class="w-full h-full rounded-2xl bg-black/60 border border-white/10"></canvas>
+          </div>
+          <p class="text-xs text-slate-400 mt-3 text-center">Siklus terdiri dari 4 proses: 2 isotermal + 2 adiabatik. Luas area = kerja total.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TAB: PETA PROGRES ========== -->
+  <section id="view-peta" class="hidden">
+    <div class="paper rounded-3xl p-6 sm:p-8 mb-6">
+      <h2 class="font-serif text-2xl font-bold text-white mb-2">🗺️ Peta Progres 30 Hari</h2>
+      <p class="text-sm text-slate-400 mb-6">Lihat perjalanan Anda. Klik kotak untuk melompat ke hari tersebut.</p>
+
+      <div class="grid grid-cols-3 gap-4 mb-6 text-center">
+        <div class="sim-panel"><i class="fa-solid fa-check text-emerald-400 text-2xl mb-1"></i><p id="statDone" class="text-2xl font-bold text-white">0</p><p class="text-xs text-slate-400">Hari selesai</p></div>
+        <div class="sim-panel"><i class="fa-solid fa-star text-amber-400 text-2xl mb-1"></i><p id="statScore" class="text-2xl font-bold text-white">0%</p><p class="text-xs text-slate-400">Akurasi kuis</p></div>
+        <div class="sim-panel"><i class="fa-solid fa-calendar text-red-400 text-2xl mb-1"></i><p id="statPercent" class="text-2xl font-bold text-white">0%</p><p class="text-xs text-slate-400">Progres total</p></div>
+      </div>
+
+      <div id="progressGrid" class="space-y-2"></div>
+
+      <div class="mt-6 pt-4 border-t border-white/10 text-center">
+        <button onclick="resetProgress()" class="px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs">
+          <i class="fa-solid fa-rotate-left mr-1"></i> Reset Progres
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-600 pb-8">
+    <p>Termodinamika — Tahap I · 30 Hari Pertama</p>
+  </footer>
+
+</div>
+
+<script>
+/* =========================================================
+   30 HARI TERMODINAMIKA
+   Hari 1-10 ditulis lengkap di sini. Hari 11-30 mengikuti
+   pola yang sama dengan topik yang sudah disiapkan.
+   ========================================================= */
+const stories = [
+  {
+    day: 1, level: "Pemula", levelClass: "lv-pemula",
+    title: "Ketika Tangan Menyentuh Air Panas",
+    subtitle: "Mengapa kita bisa merasakan 'panas' dan 'dingin'?",
+    body: `
+      <p class="drop-cap">Pagi itu Anda menuang air panas ke dalam gelas. Uapnya mengepul, dan ketika jari Anda mendekat, Anda bisa merasakan hangatnya bahkan sebelum menyentuh. Pertanyaan pertama yang muncul mungkin sederhana: <em>apa sebenarnya yang membuat sesuatu terasa panas?</em></p>
+      <p>Sejak kecil kita sudah akrab dengan kata "panas" dan "dingin". Kita tahu bahwa air mendidih itu panas, es itu dingin. Tetapi apa sesungguhnya yang membuat sesuatu menjadi panas atau dingin? Jawabannya tidak sesederhana yang kita duga.</p>
+      <p>Selama ribuan tahun, manusia mengira panas adalah zat — sesuatu seperti cairan yang bisa mengalir dari benda panas ke benda dingin. Mereka menyebutnya <em>caloric</em>. Ketika Anda memegang sendok di air panas, caloric itu mengalir dari air ke sendok, dan itulah sebabnya sendok menjadi panas. Teori ini terdengar masuk akal.</p>
+      <p>Tetapi teori ini salah. Dan buktinya ditemukan pada abad ke-19 oleh seorang ilmuwan bernama Benjamin Thompson (yang kemudian menjadi Count Rumford). Ketika ia mengawasi pembuatan lubang meriam di Munich, ia memperhatikan sesuatu yang aneh: <strong>panas terus muncul ketika logam dibor</strong>, dan jumlahnya tidak ada habisnya.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Kalau Anda menggosokkan kedua telapak tangan, tangan Anda menjadi hangat. Tidak ada "zat" yang mengalir — gerakan itu sendiri menghasilkan panas. Inilah petunjuk pertama bahwa panas sebenarnya adalah bentuk energi dari gerakan.</p>
+      </div>
+      <p>Kita baru memahami apa itu panas pada pertengahan abad ke-19. Panas adalah <strong>bentuk energi</strong> — energi yang mengalir dari benda bersuhu tinggi ke benda bersuhu rendah. Pada tingkat atom, panas adalah energi kinetik dari partikel-partikel yang bergerak: molekul air bergerak cepat saat suhunya tinggi, dan bergerak lambat saat suhunya rendah.</p>
+      <p>Istilah-istilah yang perlu Anda bedakan sejak awal:</p>
+      <div class="term-card">
+        <div class="term-name">🌡️ Suhu</div>
+        <div class="term-desc">Ukuran seberapa panas atau dinginnya suatu benda. Menggambarkan energi kinetik rata-rata partikel. Satuannya Kelvin (K), Celsius (°C), atau Fahrenheit (°F).</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">🔥 Kalor</div>
+        <div class="term-desc">Energi yang mengalir dari benda bersuhu tinggi ke benda bersuhu rendah. Satuannya Joule (J) atau kalori. Kalor <em>bukan</em> sifat benda, tapi proses perpindahan energi.</div>
+      </div>
+      <p>Perbedaan ini penting. Suhu adalah sifat benda — "berapa derajat air ini?" Kalor adalah perpindahan energi — "berapa banyak energi yang mengalir dari kompor ke air?" Air bisa bersuhu 100°C di dalam mangkuk kecil atau di dalam kolam besar. Suhunya sama, tetapi kalor yang dibutuhkan untuk memanaskannya sangat berbeda.</p>
+      <div class="quote-box">
+        <i class="fa-solid fa-feather-pointed text-red-400 mr-2"></i>
+        Panas bukanlah zat. Panas adalah gerakan. Semua benda di sekitar kita — meski tampak diam — sedang bergerak di tingkat atom.
+      </div>
+    `,
+    reflection: "Ketika kita menyentuh benda panas, kita sebenarnya sedang merasakan getaran miliaran atom yang tidak pernah berhenti bergerak.",
+    quiz: [
+      {
+        q: "Apa perbedaan utama antara suhu dan kalor?",
+        opts: [
+          "Suhu adalah energi, kalor adalah sifat benda",
+          "Suhu mengukur seberapa panas benda; kalor adalah energi yang mengalir antar benda",
+          "Keduanya sama saja",
+          "Suhu diukur dalam Joule, kalor dalam Kelvin"
+        ],
+        ans: 1,
+        exp: "Suhu adalah ukuran energi kinetik rata-rata partikel dalam benda. Kalor adalah energi yang mengalir dari benda bersuhu tinggi ke benda bersuhu rendah. Suhu adalah sifat benda, kalor adalah proses perpindahan energi."
+      },
+      {
+        q: "Mengapa teori 'caloric' (panas sebagai zat) akhirnya ditinggalkan?",
+        opts: [
+          "Karena terlalu rumit",
+          "Karena percobaan menunjukkan panas bisa dihasilkan terus-menerus oleh gerakan (seperti pemboran logam)",
+          "Karena tidak ada yang percaya",
+          "Karena ditemukan oleh orang yang salah"
+        ],
+        ans: 1,
+        exp: "Percobaan Count Rumford saat membuat lubang meriam menunjukkan bahwa panas terus muncul selama logam dibor, tanpa habis. Ini tidak konsisten dengan teori caloric sebagai zat yang bisa habis."
+      }
+    ]
+  },
+  {
+    day: 2, level: "Pemula", levelClass: "lv-pemula",
+    title: "Tiga Skala Termometer",
+    subtitle: "Celsius, Fahrenheit, dan Kelvin — mengapa berbeda?",
+    body: `
+      <p class="drop-cap">Anda bangun pagi dan melihat termometer: 25°C. Di Amerika, kerabat Anda melihat termometer yang sama menunjukkan 77°F. Angka berbeda, tetapi suhunya sama. Mengapa ada banyak skala? Dan mengapa ada yang memakai angka negatif?</p>
+      <p>Sejarah termometer dimulai pada abad ke-17, ketika para ilmuwan mulai mencari cara untuk mengukur "derajat panas" secara kuantitatif. Masalahnya, tidak ada titik acuan universal. Setiap orang memilih titik acuan sendiri — titik beku air, titik didih air, suhu tubuh manusia, atau suhu ruangan tertentu.</p>
+      <p><strong>Anders Celsius</strong> (1701–1744), astronom Swedia, mengusulkan skala dengan 0 untuk titik beku air dan 100 untuk titik didih air (pada tekanan 1 atmosfer). Sederhana dan masuk akal.</p>
+      <p><strong>Daniel Gabriel Fahrenheit</strong> (1686–1736), fisikawan Jerman-Belanda, memilih titik acuan yang lebih aneh. Ia menetapkan 0°F sebagai suhu campuran es, air, dan garam (yang terendah yang bisa ia buat di laboratorium). Ia menetapkan 96°F untuk suhu tubuh manusia. Akibatnya, titik beku air menjadi 32°F dan titik didih menjadi 212°F.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan Anda dan teman Anda membuat aturan untuk mengukur panjang meja. Anda bilang ujung meja adalah 0 dan ujung lain adalah 100. Teman Anda bilang ujung kiri adalah 0 dan ujung kanan adalah 96. Keduanya benar — hanya berbeda titik acuan dan skala.</p>
+      </div>
+      <p>Lalu muncul masalah baru. Pada tahun 1848, <strong>Lord Kelvin</strong> menyadari bahwa ada batas alami untuk seberapa dingin sesuatu bisa menjadi. Tidak peduli seberapa banyak Anda mendinginkan, ada titik di mana partikel berhenti bergerak sama sekali. Titik ini disebut <strong>nol absolut</strong> — sekitar −273,15°C.</p>
+      <p>Kelvin mengusulkan skala yang dimulai dari nol absolut. Dalam skala ini, tidak ada suhu negatif — karena tidak ada yang lebih dingin dari nol absolut. Ini adalah skala yang paling alami untuk fisika, karena semua rumus termodinamika bekerja paling sederhana dalam Kelvin.</p>
+      <div class="term-card">
+        <div class="term-name">🌡️ Konversi suhu</div>
+        <div class="term-desc">
+          °C ke K: T(K) = T(°C) + 273,15<br>
+          °C ke °F: T(°F) = T(°C) × 9/5 + 32<br>
+          °F ke °C: T(°C) = (T(°F) − 32) × 5/9
+        </div>
+      </div>
+      <p>Suhu kamar 25°C sama dengan 298 K atau 77°F. Suhu tubuh manusia 37°C = 310 K = 98,6°F. Air membeku pada 0°C = 273 K = 32°F. Air mendidih pada 100°C = 373 K = 212°F.</p>
+      <p>Dalam fisika, kita hampir selalu menggunakan Kelvin. Mengapa? Karena rumus-rumus seperti Hukum Gas Ideal (PV = nRT) hanya bekerja jika T dalam Kelvin. Jika menggunakan Celsius, akan ada konstanta tambahan yang merepotkan.</p>
+    `,
+    reflection: "Skala adalah kesepakatan. Nol absolut adalah kenyataan yang tidak bisa ditawar.",
+    quiz: [
+      {
+        q: "Berapa suhu 25°C dalam Kelvin?",
+        opts: ["25 K", "248 K", "298 K", "325 K"],
+        ans: 2,
+        exp: "T(K) = T(°C) + 273,15 = 25 + 273 = 298 K."
+      },
+      {
+        q: "Mengapa fisika lebih suka menggunakan skala Kelvin?",
+        opts: [
+          "Karena lebih populer",
+          "Karena Kelvin dimulai dari nol absolut sehingga rumus-rumus termodinamika menjadi lebih sederhana",
+          "Karena Celsius terlalu dingin",
+          "Karena Fahrenheit sudah usang"
+        ],
+        ans: 1,
+        exp: "Skala Kelvin dimulai dari nol absolut (titik di mana partikel berhenti bergerak). Karena itu, tidak ada suhu negatif, dan rumus seperti PV = nRT bekerja tanpa konstanta tambahan."
+      }
+    ]
+  },
+  {
+    day: 3, level: "Pemula", levelClass: "lv-pemula",
+    title: "Ketika Zat Memuai",
+    subtitle: "Mengapa rel kereta api bisa melengkung di musim panas",
+    body: `
+      <p class="drop-cap">Di musim panas yang terik, Anda mungkin pernah melihat rel kereta api yang tampak bergelombang. Atau jembatan baja yang melengkung. Fenomena ini bukan kerusakan — ini adalah pemuaian termal, salah satu sifat paling dasar dari materi.</p>
+      <p>Ketika sebuah benda dipanaskan, partikel-partikelnya bergerak lebih cepat. Mereka membutuhkan lebih banyak ruang. Akibatnya, benda itu memuai — dimensinya bertambah. Sebaliknya, ketika didinginkan, partikel melambat dan benda menyusut.</p>
+      <p>Pemuaian ini bisa sangat kecil — satu meter besi hanya bertambah panjang sekitar 0,000012 meter untuk setiap kenaikan 1°C. Tetapi pada panjang rel kereta yang ratusan meter, pemuaian ini bisa mencapai beberapa sentimeter. Itulah sebabnya rel kereta api dibuat dengan celah kecil di antara sambungan, atau dipasang dengan teknik khusus.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan Anda mengisi sebuah kotak dengan orang yang berbaris rapi dan diam. Ketika mereka mulai bergerak dan berjalan, mereka membutuhkan lebih banyak ruang. Begitulah cara partikel dalam benda padat saat dipanaskan.</p>
+      </div>
+      <p>Rumus pemuaian panjang untuk benda padat:</p>
+      <div class="formula-soft">ΔL = α · L₀ · ΔT</div>
+      <p>Di sini ΔL adalah pertambahan panjang, α adalah koefisien muai panjang (khas untuk setiap material), L₀ adalah panjang awal, dan ΔT adalah perubahan suhu.</p>
+      <p>Setiap material memiliki koefisien muai yang berbeda. Logam biasanya memuai lebih banyak daripada kaca. Aluminium memuai lebih banyak daripada besi. Inilah sebabnya mengapa sambungan jembatan dan rel kereta menggunakan celah khusus atau bahan yang memuai sedikit.</p>
+      <p>Air adalah pengecualian yang menarik. Sebagian besar zat menyusut ketika didinginkan, tetapi air di antara 4°C dan 0°C justru <strong>memuai</strong> ketika didinginkan. Inilah sebabnya es terapung di atas air — karena es lebih ringan (kepadatan lebih rendah) daripada air cair. Ini juga sebabnya pipa air bisa pecah di musim dingin.</p>
+      <p>Pemuaian termal bukan hanya masalah — ini juga berguna. Termometer alkohol atau merkuri bekerja berdasarkan pemuaian. Bimetal (dua logam dengan koefisien muai berbeda yang direkatkan) digunakan dalam termostat untuk mengatur suhu secara otomatis.</p>
+      <p>Ini adalah pelajaran pertama kita tentang bagaimana suhu mempengaruhi dimensi benda. Di hari-hari berikutnya, kita akan melihat bagaimana suhu mempengaruhi gas — dan dari sanalah muncul salah satu hukum paling indah dalam fisika.</p>
+    `,
+    reflection: "Perubahan kecil yang konsisten — seperti pemuaian logam — bisa berdampak besar. Alam semesta bekerja dengan cara seperti itu.",
+    quiz: [
+      {
+        q: "Mengapa rel kereta api bisa melengkung di musim panas?",
+        opts: [
+          "Karena kereta terlalu berat",
+          "Karena logam memuai saat dipanaskan, dan panjang rel bertambah",
+          "Karena rel dibuat dari bahan yang buruk",
+          "Karena angin kencang"
+        ],
+        ans: 1,
+        exp: "Rel kereta memuai saat terkena panas. Jika tidak ada celah khusus atau teknik pemasangan yang tepat, pemuaian ini bisa menyebabkan rel melengkung."
+      },
+      {
+        q: "Mengapa es terapung di air?",
+        opts: [
+          "Karena es lebih dingin",
+          "Karena es lebih ringan (kepadatan lebih rendah) karena air memuai saat membeku",
+          "Karena es mengandung udara",
+          "Karena air menarik es ke atas"
+        ],
+        ans: 1,
+        exp: "Air adalah pengecualian: antara 4°C dan 0°C, air justru memuai ketika didinginkan. Ini membuat es memiliki kepadatan lebih rendah daripada air cair, sehingga es terapung."
+      }
+    ]
+  },
+  {
+    day: 4, level: "Pemula", levelClass: "lv-pemula",
+    title: "Kalor yang Dibutuhkan untuk Memanaskan",
+    subtitle: "Mengapa air butuh waktu lebih lama untuk panas",
+    body: `
+      <p class="drop-cap">Anda meletakkan dua panci di atas kompor. Satu berisi air, satu berisi minyak. Setelah beberapa menit, minyak sudah panas dan siap untuk menggoreng, tetapi air masih belum mendidih. Mengapa? Jawabannya adalah <strong>kalor jenis</strong> — salah satu sifat paling penting dalam termodinamika.</p>
+      <p>Kalor jenis adalah jumlah kalor yang dibutuhkan untuk menaikkan suhu 1 kg suatu zat sebesar 1°C. Setiap zat memiliki kalor jenis yang berbeda. Inilah sebabnya mengapa beberapa zat lebih mudah dipanaskan daripada yang lain.</p>
+      <p>Air adalah salah satu zat dengan kalor jenis tertinggi — sekitar 4.200 J/kg·°C. Artinya, untuk menaikkan suhu 1 kg air sebesar 1°C, kita membutuhkan 4.200 Joule energi. Bandingkan dengan besi yang hanya membutuhkan 450 J/kg·°C, atau tembaga yang hanya 390 J/kg·°C.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan kalor jenis seperti "kapasitas tangki bensin". Air seperti truk besar yang butuh banyak bensin untuk bergerak; besi seperti sepeda motor yang butuh sedikit. Untuk kenaikan suhu yang sama, air membutuhkan lebih banyak "bahan bakar" (kalor).</p>
+      </div>
+      <p>Rumus untuk menghitung kalor yang dibutuhkan:</p>
+      <div class="formula-soft">Q = m · c · ΔT</div>
+      <p>Di sini Q adalah kalor (Joule), m adalah massa (kg), c adalah kalor jenis (J/kg·°C), dan ΔT adalah perubahan suhu (°C).</p>
+      <p>Kalor jenis air yang sangat tinggi memiliki banyak konsekuensi penting. Pertama, itu sebabnya air sangat efektif sebagai pendingin — mesin mobil menggunakan air (atau cairan pendingin) karena air bisa menyerap banyak panas tanpa suhunya naik terlalu tinggi. Kedua, itu sebabnya laut memoderasi iklim — laut memanas dan mendingin jauh lebih lambat daripada daratan, sehingga kota-kota pantai memiliki suhu yang lebih stabil.</p>
+      <p>Ada juga istilah <strong>kalor lebur</strong> dan <strong>kalor uap</strong>. Ketika es meleleh, atau air menguap, suhunya tidak berubah meskipun kalor terus ditambahkan. Energi itu dipakai untuk memutuskan ikatan antar molekul, bukan untuk menaikkan suhu. Ini disebut <em>kalor laten</em>.</p>
+      <p>Kalor lebur air adalah 334.000 J/kg. Kalor uap air adalah 2.260.000 J/kg — sekitar 6,8 kali lebih besar. Itulah sebabnya menguapkan air membutuhkan energi jauh lebih banyak daripada melelehkannya.</p>
+      <p>Malam ini, coba perhatikan: ketika Anda merebus air, berapa lama waktu yang dibutuhkan dari suhu kamar hingga mendidih? Dan berapa lama dari mulai mendidih sampai air habis? Perhatikan bahwa fase kedua membutuhkan lebih banyak energi, meskipun suhunya tidak berubah.</p>
+    `,
+    reflection: "Kalor jenis mengajarkan kita tentang kelembaman termal — beberapa zat berubah suhu dengan cepat, yang lain dengan lambat. Alam tidak pernah adil dalam hal ini.",
+    quiz: [
+      {
+        q: "Zat dengan kalor jenis tinggi akan...",
+        opts: [
+          "Lebih cepat panas ketika dipanaskan",
+          "Lebih lambat panas ketika dipanaskan karena butuh lebih banyak energi untuk menaikkan suhunya",
+          "Tidak bisa dipanaskan",
+          "Selalu berupa logam"
+        ],
+        ans: 1,
+        exp: "Kalor jenis tinggi berarti butuh lebih banyak energi untuk menaikkan suhu 1 kg zat sebesar 1°C. Air memiliki kalor jenis sangat tinggi, itulah sebabnya air lambat panas."
+      },
+      {
+        q: "Mengapa air efektif sebagai pendingin mesin?",
+        opts: [
+          "Karena air murah",
+          "Karena air memiliki kalor jenis tinggi sehingga bisa menyerap banyak panas tanpa suhunya naik terlalu tinggi",
+          "Karena air mudah didapat",
+          "Karena air tidak bisa memuai"
+        ],
+        ans: 1,
+        exp: "Kalor jenis air yang tinggi membuatnya mampu menyerap banyak kalor untuk setiap kenaikan suhu. Ini menjadikannya pendingin yang sangat efektif."
+      }
+    ]
+  },
+  {
+    day: 5, level: "Pemula", levelClass: "lv-pemula",
+    title: "Kalor yang Mengalir",
+    subtitle: "Konduksi, konveksi, dan radiasi",
+    body: `
+      <p class="drop-cap">Anda memegang sendok logam di ujungnya, dan ujung lainnya tercelup dalam sup panas. Setelah beberapa saat, ujung yang Anda pegang terasa hangat. Kalor telah mengalir melalui sendok — dari ujung panas ke ujung dingin. Fenomena ini disebut <strong>konduksi</strong>.</p>
+      <p>Kalor selalu mengalir dari benda bersuhu tinggi ke benda bersuhu rendah. Tidak pernah sebaliknya. Ini adalah salah satu prinsip paling dasar dalam termodinamika — dan pada akhirnya, kita akan melihat bagaimana prinsip ini mengarah pada konsep entropi.</p>
+      <p>Ada tiga cara kalor berpindah:</p>
+      <h3>1. Konduksi — melalui kontak langsung</h3>
+      <p>Kalor mengalir melalui materi tanpa perpindahan materi itu sendiri. Partikel-partikel di ujung panas bergetar lebih cepat, menabrak partikel tetangga, dan mentransfer energi. Ini berlangsung berantai hingga mencapai ujung dingin.</p>
+      <p>Logam adalah konduktor panas yang baik (karena elektron bebasnya mudah bergerak). Kayu, plastik, dan udara adalah isolator — konduktor yang buruk. Inilah sebabnya gagang panci dibuat dari kayu atau plastik: untuk memperlambat aliran kalor ke tangan Anda.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Konduksi seperti barisan orang yang mengoper ember. Setiap orang mengoper ke tetangganya, tanpa berpindah tempat. Energi berpindah, tetapi materi tetap di tempatnya.</p>
+      </div>
+      <h3>2. Konveksi — melalui aliran fluida</h3>
+      <p>Dalam cairan dan gas, kalor bisa berpindah melalui aliran fluida itu sendiri. Zat yang dipanaskan memuai, menjadi kurang padat, dan naik. Zat yang dingin turun. Sirkulasi ini disebut <em>arus konveksi</em>.</p>
+      <p>Air yang direbus di panci menunjukkan konveksi: air panas dari bawah naik ke atas, air dingin dari atas turun ke bawah. Angin di atmosfer juga merupakan konveksi skala besar. Arus laut global juga didorong oleh konveksi.</p>
+      <h3>3. Radiasi — tanpa medium</h3>
+      <p>Radiasi adalah satu-satunya cara kalor bisa berpindah melalui ruang hampa. Matahari memanaskan Bumi melalui radiasi. Api unggun menghangatkan Anda dari kejauhan melalui radiasi. Semua benda memancarkan radiasi termal, dan semakin panas, semakin banyak yang dipancarkan.</p>
+      <p>Radiasi termal dipancarkan dalam bentuk gelombang elektromagnetik — terutama inframerah untuk benda bersuhu kamar, dan cahaya tampak untuk benda yang sangat panas seperti Matahari.</p>
+      <p>Dalam kehidupan sehari-hari, ketiga mekanisme ini sering bekerja bersamaan. Ketika Anda memanaskan sup di atas kompor: kompor menghantar kalor ke panci melalui konduksi, air dalam panci bersirkulasi melalui konveksi, dan Anda merasakan hangatnya uap dari kejauhan melalui radiasi.</p>
+      <div class="quote-box">
+        <i class="fa-solid fa-feather-pointed text-red-400 mr-2"></i>
+        Kalor selalu mengalir dari panas ke dingin. Arah ini tidak bisa dibalik tanpa usaha — dan inilah yang nantinya akan menjadi dasar Hukum II Termodinamika.
+      </div>
+    `,
+    reflection: "Kalor mengalir seperti air sungai — dari tempat tinggi ke tempat rendah. Mengalir ke arah sebaliknya membutuhkan kerja ekstra.",
+    quiz: [
+      {
+        q: "Apa perbedaan utama antara konduksi dan konveksi?",
+        opts: [
+          "Konduksi memerlukan medium, konveksi tidak",
+          "Konduksi melalui kontak langsung tanpa perpindahan materi, konveksi melalui aliran fluida",
+          "Konduksi hanya terjadi pada gas",
+          "Konveksi hanya terjadi pada logam"
+        ],
+        ans: 1,
+        exp: "Konduksi adalah perpindahan kalor melalui kontak langsung tanpa materi berpindah tempat. Konveksi melibatkan aliran fluida yang membawa kalor bersamanya."
+      },
+      {
+        q: "Mengapa kalor dari Matahari bisa sampai ke Bumi meskipun ada ruang hampa di antaranya?",
+        opts: [
+          "Karena ada udara di ruang angkasa",
+          "Melalui radiasi elektromagnetik, yang tidak memerlukan medium",
+          "Melalui konduksi di ruang hampa",
+          "Melalui konveksi angin matahari"
+        ],
+        ans: 1,
+        exp: "Radiasi adalah satu-satunya mekanisme perpindahan kalor yang tidak memerlukan medium. Radiasi elektromagnetik dari Matahari bisa melewati ruang hampa dan sampai ke Bumi."
+      }
+    ]
+  },
+  {
+    day: 6, level: "Pemula", levelClass: "lv-pemula",
+    title: "Gas Ideal dan Tekanannya",
+    subtitle: "Ketika miliaran molekul menabrak dinding",
+    body: `
+      <p class="drop-cap">Bayangkan sebuah balon. Udara di dalamnya terdiri dari miliaran molekul yang bergerak cepat ke segala arah. Setiap kali sebuah molekul menabrak dinding balon, ia memberikan dorongan kecil. Miliaran dorongan kecil ini, digabungkan, menjadi <strong>tekanan</strong> yang membuat balon mengembang.</p>
+      <p>Tekanan adalah gaya per satuan luas. Satuannya adalah Pascal (Pa), yang setara dengan 1 Newton per meter persegi. Dalam kehidupan sehari-hari, kita juga menggunakan atmosfer (atm) atau bar. 1 atm ≈ 101.325 Pa.</p>
+      <p>Untuk memahami gas, fisikawan menggunakan model yang disebut <strong>gas ideal</strong>. Dalam model ini, kita menganggap bahwa:</p>
+      <p>1. Molekul gas sangat kecil dibandingkan jarak antar mereka.<br>
+      2. Molekul gas bergerak secara acak tanpa henti.<br>
+      3. Tumbukan antar molekul (dan dengan dinding) bersifat elastis sempurna.<br>
+      4. Tidak ada gaya tarik-menarik antar molekul.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan ruang berisi bola-bola pingpong yang terus memantul. Meskipun tidak ada yang menekan dari luar, dinding ruangan akan terasa "ditekan" oleh bola-bola yang menabraknya. Itulah yang terjadi pada gas di dalam balon.</p>
+      </div>
+      <p>Gas ideal sebenarnya tidak ada di dunia nyata — ini adalah model matematika. Tetapi untuk banyak gas nyata (terutama pada suhu dan tekanan sedang), model ini sangat akurat.</p>
+      <p>Tekanan gas bergantung pada tiga hal:</p>
+      <p><strong>Jumlah molekul (n)</strong> — semakin banyak molekul, semakin banyak tumbukan, semakin tinggi tekanan.</p>
+      <p><strong>Suhu (T)</strong> — semakin tinggi suhu, semakin cepat molekul bergerak, semakin keras tumbukan, semakin tinggi tekanan.</p>
+      <p><strong>Volume (V)</strong> — semakin kecil volume, semakin sering molekul menabrak dinding, semakin tinggi tekanan.</p>
+      <p>Hubungan antara keempat besaran ini dinyatakan dalam <strong>Hukum Gas Ideal</strong>:</p>
+      <div class="formula-soft">P · V = n · R · T</div>
+      <p>Di sini P adalah tekanan (Pa), V adalah volume (m³), n adalah jumlah mol, R adalah konstanta gas ideal (8,314 J/mol·K), dan T adalah suhu dalam Kelvin.</p>
+      <p>Hukum Gas Ideal adalah salah satu persamaan paling penting dalam termodinamika. Dari sini kita bisa menurunkan Hukum Boyle, Hukum Charles, dan Hukum Gay-Lussac sebagai kasus-kasus khusus. Kita akan mempelajarinya satu per satu dalam hari-hari berikutnya.</p>
+    `,
+    reflection: "Tekanan yang kita rasakan adalah hasil dari miliaran tumbukan yang tidak terlihat. Dunia yang tampak tenang sebenarnya penuh dengan gerakan.",
+    quiz: [
+      {
+        q: "Menurut model gas ideal, tekanan dihasilkan oleh...",
+        opts: [
+          "Gaya tarik-menarik antar molekul",
+          "Tumbukan molekul-molekul gas dengan dinding wadah",
+          "Gravitasi molekul",
+          "Reaksi kimia antar molekul"
+        ],
+        ans: 1,
+        exp: "Dalam model gas ideal, tekanan dihasilkan oleh tumbukan molekul gas dengan dinding wadah. Semakin banyak dan semakin cepat tumbukan, semakin tinggi tekanan."
+      },
+      {
+        q: "Jika suhu gas dinaikkan sementara volume dijaga tetap, apa yang terjadi pada tekanan?",
+        opts: [
+          "Tekanan tetap sama",
+          "Tekanan menurun",
+          "Tekanan meningkat karena molekul bergerak lebih cepat dan menabrak dinding lebih keras",
+          "Tekanan menjadi nol"
+        ],
+        ans: 2,
+        exp: "Menurut Hukum Gas Ideal, pada volume tetap, tekanan berbanding lurus dengan suhu. Suhu naik → molekul bergerak lebih cepat → tumbukan lebih keras → tekanan naik."
+      }
+    ]
+  },
+  {
+    day: 7, level: "Pemula", levelClass: "lv-pemula",
+    title: "Hukum Boyle: Ketika Volume Ditekan",
+    subtitle: "Mengapa pompa sepeda menjadi panas saat dipakai",
+    body: `
+      <p class="drop-cap">Anda memompa ban sepeda. Setelah beberapa kali, pompa terasa panas. Mengapa? Padahal Anda hanya memampatkan udara. Jawabannya ada pada Hukum Boyle — dan pada fakta bahwa gas memanas ketika dimampatkan.</p>
+      <p><strong>Hukum Boyle</strong>, ditemukan oleh Robert Boyle pada tahun 1662, menyatakan bahwa pada suhu tetap, tekanan gas berbanding terbalik dengan volumenya.</p>
+      <div class="formula-soft">P₁ · V₁ = P₂ · V₂ &nbsp; (suhu tetap)</div>
+      <p>Artinya, jika Anda memperkecil volume gas menjadi setengahnya, tekanannya menjadi dua kali lipat. Jika Anda memperbesar volume menjadi dua kali, tekanannya menjadi setengah.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan sekelompok orang di dalam lift. Kalau liftnya besar (volume besar), mereka bisa bergerak bebas dan tidak sering bertabrakan. Kalau liftnya kecil (volume kecil), mereka berdesakan — sering bertabrakan satu sama lain dan dengan dinding. Itulah yang terjadi pada molekul gas.</p>
+      </div>
+      <p>Hukum Boyle punya banyak aplikasi praktis. Ketika Anda memampatkan udara di pompa sepeda, Anda mengurangi volumenya. Menurut Hukum Boyle, tekanan naik — dan udara bertekanan tinggi inilah yang mendorong udara masuk ke dalam ban.</p>
+      <p>Ketika Anda bernapas, diafragma Anda bergerak ke bawah, memperbesar volume rongga dada. Tekanan di dalam paru-paru turun di bawah tekanan atmosfer, sehingga udara masuk. Ketika diafragma naik, volume mengecil, tekanan naik di atas tekanan atmosfer, dan udara keluar.</p>
+      <p>Tetapi ada satu hal yang perlu diperhatikan. Hukum Boyle hanya berlaku jika suhunya tetap. Dalam kenyataannya, ketika Anda memampatkan gas dengan cepat, suhunya naik — dan ini bukan efek samping kecil, tetapi konsekuensi mendasar dari termodinamika.</p>
+      <p>Ketika Anda memampatkan gas, Anda melakukan kerja pada gas. Energi ini tidak hilang — ia menjadi energi kinetik molekul, yang artinya suhu naik. Inilah sebabnya pompa sepeda menjadi panas. Ini juga prinsip dasar di balik mesin diesel: udara dimampatkan dengan cepat hingga suhunya cukup tinggi untuk menyalakan bahan bakar tanpa perlu busi.</p>
+      <p>Kebalikannya juga berlaku: ketika gas mengembang dengan cepat, ia mendingin. Ini adalah prinsip di balik kulkas dan AC — gas dimampatkan (menjadi panas), lalu dibiarkan mengembang di tempat lain (menjadi dingin).</p>
+    `,
+    reflection: "Alam semesta tidak pernah kehilangan energi. Yang tampak sebagai 'panas' pada pompa sepeda sebenarnya adalah kerja yang Anda lakukan.",
+    quiz: [
+      {
+        q: "Menurut Hukum Boyle, jika volume gas diperkecil menjadi seperempat pada suhu tetap, tekanannya menjadi...",
+        opts: ["Seperempat", "Setengah", "Dua kali", "Empat kali"],
+        ans: 3,
+        exp: "Hukum Boyle: P₁V₁ = P₂V₂. Jika V₂ = V₁/4, maka P₂ = 4P₁. Tekanan menjadi empat kali lipat."
+      },
+      {
+        q: "Mengapa pompa sepeda menjadi panas saat digunakan?",
+        opts: [
+          "Karena gesekan pada piston",
+          "Karena udara yang dimampatkan memanas akibat kerja yang dilakukan pada gas",
+          "Karena listrik statis",
+          "Karena udara keluar dari pompa"
+        ],
+        ans: 1,
+        exp: "Ketika gas dimampatkan, kerja yang dilakukan pada gas diubah menjadi energi kinetik molekul, sehingga suhu naik. Inilah sebabnya pompa sepeda terasa hangat."
+      }
+    ]
+  },
+  {
+    day: 8, level: "Pemula", levelClass: "lv-pemula",
+    title: "Hukum Charles: Ketika Gas Mengembang",
+    subtitle: "Mengapa balon mengembang saat dipanaskan",
+    body: `
+      <p class="drop-cap">Anda meletakkan balon berisi udara di bawah sinar Matahari. Setelah beberapa saat, balon tampak lebih besar. Anda tidak menambahkan udara ke dalamnya, tetapi balon tetap mengembang. Fenomena ini dijelaskan oleh <strong>Hukum Charles</strong>.</p>
+      <p>Jacques Charles (1746–1823) adalah seorang ilmuwan Prancis yang tertarik pada penerbangan balon. Pada tahun 1787, ia menemukan bahwa pada tekanan tetap, volume gas berbanding lurus dengan suhunya.</p>
+      <div class="formula-soft">V₁ / T₁ = V₂ / T₂ &nbsp; (tekanan tetap)</div>
+      <p>Dalam persamaan ini, suhu harus dalam Kelvin, bukan Celsius. Jika suhu dalam Celsius, hubungannya tidak akan lurus — inilah salah satu alasan mengapa Kelvin sangat penting dalam termodinamika.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan Anda menari di ruangan yang bisa diperbesar atau diperkecil. Jika ruangan diperbesar, Anda bisa menari lebih lebar tanpa keluar. Demikian pula, ketika gas dipanaskan, molekul bergerak lebih cepat dan membutuhkan lebih banyak ruang.</p>
+      </div>
+      <p>Hukum Charles punya banyak aplikasi praktis. Balon udara panas adalah contoh klasik: udara di dalam balon dipanaskan dengan pembakar. Udara panas lebih ringan (kurang padat) daripada udara dingin di sekitarnya, sehingga balon naik.</p>
+      <p>Ketika Anda meninggalkan botol tertutup di mobil yang panas, tekanan di dalamnya naik karena gas memuai. Ini bisa membuat botol meledak jika cukup panas. Ini juga alasan mengapa Anda tidak boleh meninggalkan tabung gas atau kaleng aerosol di mobil yang panas.</p>
+      <p>Hukum Charles juga menjelaskan mengapa ban menjadi kurang kempes di musim dingin. Pada suhu rendah, udara di dalam ban mengerut, sehingga tekanannya turun. Itulah sebabnya di negara-negara dingin, orang perlu memeriksa tekanan ban lebih sering di musim dingin.</p>
+      <p>Jika kita menggabungkan Hukum Boyle, Hukum Charles, dan Hukum Gay-Lussac (yang akan kita pelajari besok), kita akan mendapatkan Hukum Gas Ideal secara lengkap: PV = nRT. Setiap hukum adalah kasus khusus dari hukum yang lebih umum.</p>
+      <p>Fisika bekerja seperti ini: fenomena yang tampak berbeda sering kali merupakan manifestasi dari prinsip yang sama. Menemukan kesatuan di balik keragaman adalah salah satu kegembiraan terbesar dalam sains.</p>
+    `,
+    reflection: "Balon yang mengembang dan ban yang mengempis di musim dingin — keduanya adalah cerita yang sama dengan kata yang berbeda.",
+    quiz: [
+      {
+        q: "Menurut Hukum Charles, jika suhu gas dinaikkan menjadi dua kali lipat (pada tekanan tetap), volumenya menjadi...",
+        opts: ["Setengah", "Tetap sama", "Dua kali", "Empat kali"],
+        ans: 2,
+        exp: "Hukum Charles: V₁/T₁ = V₂/T₂. Jika T₂ = 2T₁, maka V₂ = 2V₁. Volume menjadi dua kali lipat."
+      },
+      {
+        q: "Mengapa balon udara panas bisa terbang?",
+        opts: [
+          "Karena balon lebih ringan dari udara",
+          "Karena udara di dalam balon dipanaskan, memuai, dan menjadi kurang padat sehingga naik",
+          "Karena ada mesin di dalam balon",
+          "Karena angin meniup balon ke atas"
+        ],
+        ans: 1,
+        exp: "Ketika udara dipanaskan, ia memuai (Hukum Charles) dan menjadi kurang padat. Udara yang kurang padat akan naik, seperti gelembung di air."
+      }
+    ]
+  },
+  {
+    day: 9, level: "Pemula", levelClass: "lv-pemula",
+    title: "Hukum Gay-Lussac: Ketika Tekanan Naik",
+    subtitle: "Mengapa kaleng aerosol meledak saat dibakar",
+    body: `
+      <p class="drop-cap">Kaleng aerosol memiliki peringatan: "Jangan dibuang ke dalam api." Peringatan ini bukan tanpa alasan. Jika kaleng aerosol dibakar, tekanan di dalamnya bisa naik hingga meledak — dan ini adalah demonstrasi dramatis dari <strong>Hukum Gay-Lussac</strong>.</p>
+      <p>Joseph Louis Gay-Lussac (1778–1850) adalah seorang kimiawan dan fisikawan Prancis. Pada tahun 1808, ia menemukan bahwa pada volume tetap, tekanan gas berbanding lurus dengan suhunya.</p>
+      <div class="formula-soft">P₁ / T₁ = P₂ / T₂ &nbsp; (volume tetap)</div>
+      <p>Jika suhu gas dinaikkan menjadi dua kali lipat (dalam Kelvin), tekanannya juga menjadi dua kali lipat. Jika suhunya naik tiga kali, tekanannya naik tiga kali. Dan seterusnya.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan sekelompok orang di dalam ruangan tertutup. Ketika mereka mulai berolahraga, mereka bergerak lebih cepat dan menabrak dinding lebih sering dan lebih keras. Inilah yang terjadi pada molekul gas saat suhu naik.</p>
+      </div>
+      <p>Hukum Gay-Lussac menjelaskan banyak fenomena sehari-hari. Ban mobil yang dipompa di musim panas bisa meletus karena tekanan udara di dalamnya naik seiring kenaikan suhu. Kaleng aerosol yang dibuang ke api bisa meledak karena tekanan gas di dalamnya naik drastis.</p>
+      <p>Sebaliknya, tekanan ban turun di musim dingin. Pada suhu rendah, molekul gas bergerak lebih lambat, sehingga tekanan turun. Ini sebabnya pengemudi di negara dingin perlu memeriksa tekanan ban lebih sering di musim dingin.</p>
+      <p>Hukum Gay-Lussac juga digunakan dalam teknologi memasak: pressure cooker (panci presto). Dengan menutup panci rapat-rapat, tekanan di dalamnya bisa naik melebihi tekanan atmosfer. Air di dalamnya bisa mendidih pada suhu di atas 100°C, sehingga makanan matang lebih cepat.</p>
+      <p>Ketiga hukum — Boyle, Charles, dan Gay-Lussac — bekerja sama dalam Hukum Gas Ideal: PV = nRT. Setiap hukum adalah kasus khusus:</p>
+      <p><strong>Boyle:</strong> T tetap → PV = konstan<br>
+      <strong>Charles:</strong> P tetap → V/T = konstan<br>
+      <strong>Gay-Lussac:</strong> V tetap → P/T = konstan</p>
+      <p>Dengan memahami ketiga hukum ini, Anda sudah memiliki alat untuk memecahkan banyak masalah gas. Besok, kita akan melihat bagaimana gas ideal bekerja pada tingkat mikroskopis — dengan teori kinetik.</p>
+    `,
+    reflection: "Tiga hukum sederhana mengatur perilaku miliaran molekul. Inilah keindahan fisika: menemukan kesederhanaan di balik kompleksitas.",
+    quiz: [
+      {
+        q: "Menurut Hukum Gay-Lussac, jika suhu gas dinaikkan menjadi tiga kali lipat (pada volume tetap), tekanannya menjadi...",
+        opts: ["Sepertiga", "Tetap sama", "Tiga kali", "Sembilan kali"],
+        ans: 2,
+        exp: "Hukum Gay-Lussac: P₁/T₁ = P₂/T₂. Jika T₂ = 3T₁, maka P₂ = 3P₁."
+      },
+      {
+        q: "Mengapa kaleng aerosol bisa meledak jika dibuang ke dalam api?",
+        opts: [
+          "Karena api membakar aluminium",
+          "Karena tekanan gas di dalam kaleng naik drastis seiring kenaikan suhu (volume tetap)",
+          "Karena bahan kimia bereaksi dengan api",
+          "Karena kaleng menjadi lebih ringan"
+        ],
+        ans: 1,
+        exp: "Kaleng aerosol memiliki volume yang tetap. Menurut Hukum Gay-Lussac, jika suhunya naik (karena dibakar), tekanan gas di dalamnya juga naik. Jika tekanan melebihi kekuatan kaleng, kaleng akan meledak."
+      }
+    ]
+  },
+  {
+    day: 10, level: "Pemula", levelClass: "lv-pemula",
+    title: "Teori Kinetik Gas",
+    subtitle: "Ketika tekanan adalah tumbukan molekul",
+    body: `
+      <p class="drop-cap">Sampai di sini kita sudah membahas gas secara makroskopis — tekanan, volume, dan suhu yang bisa diukur. Sekarang saatnya melihat gas dari sudut pandang mikroskopis: dari sudut pandang molekul-molekul yang tak terlihat.</p>
+      <p>Teori kinetik gas adalah jembatan antara dunia makroskopis dan mikroskopis. Ia menjelaskan mengapa gas memiliki sifat-sifat seperti yang kita ukur, dengan menganggap bahwa gas tersusun dari miliaran molekul kecil yang bergerak terus-menerus.</p>
+      <p>Tekanan yang kita ukur sebenarnya adalah hasil tumbukan molekul-molekul dengan dinding wadah. Semakin banyak molekul, semakin sering tumbukan, semakin tinggi tekanan. Semakin cepat molekul bergerak (semakin tinggi suhu), semakin keras tumbukan, semakin tinggi tekanan.</p>
+      <p>Dari model ini, kita bisa menurunkan hubungan yang sangat penting:</p>
+      <div class="formula-soft">PV = (1/3) N m v̄²</div>
+      <p>Di sini N adalah jumlah molekul, m adalah massa satu molekul, dan v̄² adalah rata-rata kuadrat kecepatan molekul. Dari sini, dengan menggabungkan PV = nRT, kita mendapatkan:</p>
+      <div class="formula-soft">KE_rata-rata = (3/2) k_B T</div>
+      <p>Ini adalah salah satu persamaan paling penting dalam termodinamika. Energi kinetik rata-rata molekul gas hanya bergantung pada suhu — bukan pada tekanan atau volume. Setiap kali suhu naik, molekul bergerak lebih cepat.</p>
+      <p>Konstanta k_B disebut konstanta Boltzmann, sekitar 1,38 × 10⁻²³ J/K. Konstanta ini adalah jembatan antara energi mikroskopis dan suhu makroskopis.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan sekotak bola yang terus memantul. Jika kotaknya Anda panaskan, bola memantul lebih cepat. Setiap bola menyimpan energi kinetik — dan energi kinetik rata-rata ini adalah apa yang kita rasakan sebagai suhu.</p>
+      </div>
+      <p>Dari persamaan ini, kita bisa menghitung <strong>v_rms</strong> (root mean square speed) — ukuran kecepatan rata-rata molekul:</p>
+      <div class="formula-soft">v_rms = √(3 k_B T / m) = √(3 R T / M)</div>
+      <p>Di sini M adalah massa molar (kg/mol). Perhatikan bahwa molekul yang lebih ringan bergerak lebih cepat pada suhu yang sama. Inilah sebabnya mengapa hidrogen (massa molar 2 g/mol) bergerak jauh lebih cepat daripada oksigen (32 g/mol) pada suhu yang sama.</p>
+      <p>Pada suhu kamar (300 K), molekul oksigen memiliki v_rms sekitar 480 m/s — lebih cepat dari kecepatan suara! Ini terdengar luar biasa, tetapi tidak berarti oksigen akan menyebar secepat itu. Molekul bertumbukan satu sama lain sangat sering, sehingga perpindahannya bersih jauh lebih lambat.</p>
+      <p>Teori kinetik gas menjelaskan banyak fenomena: mengapa gas memuai saat dipanaskan, mengapa tekanan meningkat saat dimampatkan, dan mengapa suhu gas berkaitan langsung dengan gerakan molekulnya. Ini adalah salah satu keberhasilan terbesar fisika abad ke-19.</p>
+    `,
+    reflection: "Suhu bukanlah sebuah 'zat' yang mengalir. Suhu adalah ukuran gerakan. Ketika kita menyentuh benda panas, kita sebenarnya sedang merasakan getaran miliaran molekul.",
+    quiz: [
+      {
+        q: "Menurut teori kinetik gas, energi kinetik rata-rata molekul gas bergantung pada...",
+        opts: [
+          "Tekanan gas",
+          "Volume gas",
+          "Suhu gas saja",
+          "Jenis gas"
+        ],
+        ans: 2,
+        exp: "Energi kinetik rata-rata molekul gas hanya bergantung pada suhu: KE = (3/2)k_BT. Ini berlaku untuk semua jenis gas ideal."
+      },
+      {
+        q: "Mengapa molekul hidrogen (H₂) bergerak lebih cepat daripada molekul oksigen (O₂) pada suhu yang sama?",
+        opts: [
+          "Karena hidrogen lebih besar",
+          "Karena hidrogen memiliki massa molar yang lebih kecil, sehingga kecepatannya lebih tinggi pada suhu yang sama",
+          "Karena hidrogen lebih dingin",
+          "Karena hidrogen berbentuk gas"
+        ],
+        ans: 1,
+        exp: "Menurut v_rms = √(3RT/M), molekul dengan massa molar (M) lebih kecil memiliki kecepatan lebih tinggi. Hidrogen (M = 2 g/mol) bergerak sekitar 4 kali lebih cepat dari oksigen (M = 32 g/mol)."
+      }
+    ]
+  },
+  {
+    day: 11, level: "Pemula", levelClass: "lv-pemula",
+    title: "Energi Dalam: Harta yang Tersimpan",
+    subtitle: "Berapa banyak energi yang tersembunyi dalam segelas air?",
+    body: `
+      <p class="drop-cap">Segelas air pada suhu kamar tampak tenang. Tetapi jika Anda bisa melihat ke tingkat molekuler, Anda akan melihat kekacauan yang luar biasa — miliaran molekul air bergerak ke segala arah, berputar, dan bergetar. Semua gerakan ini menyimpan energi, dan kita menyebut totalnya sebagai <strong>energi dalam</strong>.</p>
+      <p>Energi dalam (U) adalah jumlah total energi kinetik dan potensial semua partikel dalam suatu sistem. Ia mencakup energi gerak translasi molekul, energi rotasi, energi vibrasi, dan energi potensial dari interaksi antar molekul.</p>
+      <p>Untuk gas ideal monoatomik (seperti helium atau argon), energi dalam hanya berasal dari gerak translasi molekul:</p>
+      <div class="formula-soft">U = (3/2) n R T</div>
+      <p>Untuk gas diatomik (seperti O₂ atau N₂), molekul juga bisa berputar, sehingga energi dalam lebih besar:</p>
+      <div class="formula-soft">U = (5/2) n R T</div>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan kelereng di dalam kotak yang dikocok. Kelereng tidak hanya bergerak maju-mundur, tetapi juga berputar dan bertabrakan. Total energi gerakan mereka adalah energi dalam. Semakin banyak kelereng atau semakin cepat gerakannya, semakin besar energi dalam.</p>
+      </div>
+      <p>Energi dalam adalah fungsi dari suhu saja untuk gas ideal. Jika suhu tetap, energi dalam tetap — tidak peduli berapa volume atau tekanannya. Ini adalah salah satu sifat paling penting dari gas ideal.</p>
+      <p>Energi dalam adalah "fungsi keadaan" — artinya, ia hanya bergantung pada keadaan sistem saat ini (suhu, tekanan, volume), bukan pada bagaimana sistem mencapai keadaan itu. Ini berbeda dengan <strong>kalor</strong> dan <strong>kerja</strong>, yang bukan fungsi keadaan — mereka bergantung pada jalur (proses) yang ditempuh.</p>
+      <p>Perbedaan ini akan menjadi kunci dalam memahami Hukum I Termodinamika, yang akan kita pelajari besok. Hukum ini menyatakan bahwa perubahan energi dalam sama dengan kalor yang masuk dikurangi kerja yang dilakukan oleh sistem.</p>
+      <p>Energi dalam adalah konsep abstrak, tetapi ia sangat berguna. Misalnya, ketika kita menghitung berapa kalor yang dibutuhkan untuk memanaskan gas pada volume tetap, kita sebenarnya menghitung perubahan energi dalamnya. Ketika kita menghitung berapa kerja yang dilakukan gas saat memuai, kita juga berurusan dengan perubahan energi dalam.</p>
+      <p>Di tingkat yang lebih dalam, energi dalam mengungkapkan sesuatu yang indah: bahwa alam semesta menyimpan energi bahkan dalam benda yang tampak paling tenang. Segelas air di meja Anda mengandung energi yang cukup untuk... jika bisa dilepaskan sekaligus, akan menghancurkan seluruh kota.</p>
+    `,
+    reflection: "Ketika kita menyentuh segelas air, kita sedang menyentuh kekacauan yang tertata. Energi dalam adalah bukti bahwa bahkan ketenangan pun menyimpan gerakan.",
+    quiz: [
+      {
+        q: "Apa itu energi dalam (U) suatu sistem?",
+        opts: [
+          "Energi yang tersimpan di permukaan",
+          "Total energi kinetik dan potensial semua partikel dalam sistem",
+          "Energi yang dipancarkan keluar",
+          "Energi listrik di dalam atom"
+        ],
+        ans: 1,
+        exp: "Energi dalam adalah total energi kinetik dan potensial dari semua partikel dalam sistem. Untuk gas ideal, energi dalam hanya bergantung pada suhu."
+      },
+      {
+        q: "Untuk gas ideal, energi dalam bergantung pada...",
+        opts: [
+          "Tekanan saja",
+          "Volume saja",
+          "Suhu saja",
+          "Tekanan dan volume"
+        ],
+        ans: 2,
+        exp: "Untuk gas ideal, energi dalam hanya bergantung pada suhu. Ini karena energi kinetik rata-rata molekul hanya bergantung pada suhu, dan tidak ada energi potensial antar molekul (asumsi gas ideal)."
+      }
+    ]
+  },
+  {
+    day: 12, level: "Pemula", levelClass: "lv-pemula",
+    title: "Hukum I Termodinamika",
+    subtitle: "Kekekalan energi di dunia termal",
+    body: `
+      <p class="drop-cap">Ini adalah hari yang penting. Hukum I Termodinamika adalah salah satu dari empat hukum paling fundamental dalam fisika — dan versi termal dari hukum kekekalan energi.</p>
+      <p>Hukum kekekalan energi menyatakan bahwa energi tidak bisa diciptakan atau dimusnahkan, hanya bisa diubah bentuknya. Dalam termodinamika, prinsip ini dinyatakan dengan cara yang lebih spesifik:</p>
+      <div class="formula-soft">ΔU = Q − W</div>
+      <p>Perubahan energi dalam suatu sistem (ΔU) sama dengan kalor yang masuk ke sistem (Q) dikurangi kerja yang dilakukan oleh sistem (W).</p>
+      <p>Mari kita bedah satu per satu:</p>
+      <div class="term-card">
+        <div class="term-name">ΔU — Perubahan energi dalam</div>
+        <div class="term-desc">Selisih antara energi dalam akhir dan awal. Bernilai positif jika energi dalam bertambah, negatif jika berkurang.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">Q — Kalor</div>
+        <div class="term-desc">Kalor yang masuk ke sistem. Bernilai positif jika kalor masuk (memanaskan sistem), negatif jika kalor keluar (mendinginkan sistem).</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">W — Kerja</div>
+        <div class="term-desc">Kerja yang dilakukan oleh sistem terhadap lingkungan. Bernilai positif jika sistem mengembang (mendorong keluar), negatif jika sistem dimampatkan.</div>
+      </div>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan rekening bank Anda. Perubahan saldo (ΔU) sama dengan uang yang masuk (Q) dikurangi uang yang keluar (W). Jika Anda menerima lebih banyak daripada yang Anda belanjakan, saldo Anda naik. Jika sebaliknya, saldo Anda turun.</p>
+      </div>
+      <p>Hukum I Termodinamika memiliki beberapa konsekuensi penting:</p>
+      <p><strong>1. Energi tidak bisa diciptakan.</strong> Jika Anda ingin menambah energi dalam sistem, Anda harus menambahkan kalor atau melakukan kerja pada sistem. Tidak ada cara lain.</p>
+      <p><strong>2. Jika kalor masuk sama dengan kerja yang dilakukan, energi dalam tetap.</strong> Ini terjadi pada proses isotermal (suhu konstan) untuk gas ideal.</p>
+      <p><strong>3. Jika tidak ada kalor yang masuk atau keluar (Q = 0), maka ΔU = −W.</strong> Jika sistem melakukan kerja, energi dalamnya berkurang (suhu turun). Jika sistem dikenai kerja, energi dalamnya bertambah (suhu naik). Ini disebut proses adiabatik.</p>
+      <p>Dalam bentuk diferensial, Hukum I Termodinamika ditulis:</p>
+      <div class="formula-soft">dU = δQ − δW</div>
+      <p>Notasi δ digunakan untuk menunjukkan bahwa Q dan W bukan fungsi keadaan — mereka bergantung pada jalur. Sedangkan dU adalah diferensial eksak karena U adalah fungsi keadaan.</p>
+      <p>Hukum I Termodinamika memberi tahu kita sesuatu yang mendalam: alam semesta adalah sistem tertutup dalam hal energi. Tidak ada energi yang hilang tanpa jejak, dan tidak ada yang muncul dari ketiadaan. Energi hanya berpindah dan berubah bentuk.</p>
+    `,
+    reflection: "Energi tidak pernah hilang — ia hanya berubah wajah. Ini adalah hukum yang mengatur seluruh alam semesta.",
+    quiz: [
+      {
+        q: "Menurut Hukum I Termodinamika, jika sistem menerima 500 J kalor dan melakukan 300 J kerja, berapa perubahan energi dalamnya?",
+        opts: ["−200 J", "200 J", "500 J", "800 J"],
+        ans: 1,
+        exp: "ΔU = Q − W = 500 − 300 = 200 J. Energi dalam bertambah 200 J."
+      },
+      {
+        q: "Dalam proses adiabatik (Q = 0), jika sistem melakukan kerja, apa yang terjadi pada suhunya?",
+        opts: [
+          "Suhu naik",
+          "Suhu turun karena energi dalam berkurang",
+          "Suhu tetap",
+          "Tidak bisa ditentukan"
+        ],
+        ans: 1,
+        exp: "Pada proses adiabatik, Q = 0, sehingga ΔU = −W. Jika sistem melakukan kerja (W > 0), maka ΔU < 0. Karena energi dalam untuk gas ideal bergantung pada suhu, suhu akan turun."
+      }
+    ]
+  },
+  {
+    day: 13, level: "Pemula", levelClass: "lv-pemula",
+    title: "Kerja dalam Termodinamika",
+    subtitle: "Ketika gas mendorong dinding",
+    body: `
+      <p class="drop-cap">Ketika gas mengembang di dalam silinder, ia mendorong piston ke luar. Dorongan ini adalah <strong>kerja</strong>, dan besarnya bisa dihitung dengan mengukur tekanan dan perubahan volume gas.</p>
+      <p>Dalam mekanika, kerja didefinisikan sebagai gaya dikali perpindahan. Dalam termodinamika, gaya berasal dari tekanan gas yang bekerja pada luas permukaan piston:</p>
+      <div class="formula-soft">W = P · ΔV</div>
+      <p>Di sini W adalah kerja (Joule), P adalah tekanan (Pa), dan ΔV adalah perubahan volume (m³).</p>
+      <p>Perhatikan: jika gas mengembang (ΔV positif), kerja bernilai positif — gas melakukan kerja pada lingkungan. Jika gas dimampatkan (ΔV negatif), kerja bernilai negatif — lingkungan melakukan kerja pada gas.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan Anda mendorong pintu. Semakin besar gaya yang Anda berikan (tekanan) dan semakin jauh pintu terbuka (perubahan volume), semakin besar kerja yang Anda lakukan.</p>
+      </div>
+      <p>Jika tekanan berubah selama proses, kita perlu menggunakan bentuk integral:</p>
+      <div class="formula-soft">W = ∫ P dV</div>
+      <p>Ini adalah luas area di bawah kurva pada diagram P-V. Diagram P-V adalah alat visual yang sangat berguna dalam termodinamika — kita akan sering menggunakannya mulai hari ini.</p>
+      <p>Dalam diagram P-V, tekanan digambarkan pada sumbu vertikal dan volume pada sumbu horizontal. Setiap titik dalam diagram mewakili satu keadaan sistem (satu nilai P dan satu nilai V). Sebuah proses digambarkan sebagai kurva yang menghubungkan keadaan awal dan akhir.</p>
+      <p>Kerja yang dilakukan sepanjang proses sama dengan luas area di bawah kurva. Jika kurva bergerak ke kanan (volume bertambah), kerja positif. Jika ke kiri (volume berkurang), kerja negatif.</p>
+      <p>Ada satu hal penting yang perlu Anda ingat: kerja bergantung pada jalur. Proses yang berbeda antara keadaan awal dan akhir yang sama bisa menghasilkan jumlah kerja yang berbeda. Ini berbeda dengan energi dalam yang hanya bergantung pada keadaan awal dan akhir.</p>
+      <p>Contoh konkret: gas dengan P₁V₁ bisa mencapai P₂V₂ melalui proses isotermal (kurva melengkung), melalui proses isobarik lalu isokhorik (dua garis lurus), atau melalui jalur lain. Meskipun keadaan akhir sama, luas area di bawah kurva — dan karenanya kerja yang dilakukan — berbeda-beda.</p>
+    `,
+    reflection: "Kerja adalah cara alam semesta mengubah energi menjadi gerakan. Setiap dorongan meninggalkan jejak dalam bentuk energi yang berpindah.",
+    quiz: [
+      {
+        q: "Gas dengan tekanan 200.000 Pa memuai dari 0,01 m³ menjadi 0,03 m³ pada tekanan tetap. Berapa kerja yang dilakukan gas?",
+        opts: ["2.000 J", "4.000 J", "6.000 J", "8.000 J"],
+        ans: 1,
+        exp: "W = P · ΔV = 200.000 × (0,03 − 0,01) = 200.000 × 0,02 = 4.000 J."
+      },
+      {
+        q: "Dalam diagram P-V, kerja yang dilakukan gas sama dengan...",
+        opts: [
+          "Kemiringan kurva",
+          "Luas area di bawah kurva",
+          "Tinggi kurva saja",
+          "Panjang kurva"
+        ],
+        ans: 1,
+        exp: "Kerja sama dengan integral P dV, yang secara geometris adalah luas area di bawah kurva pada diagram P-V."
+      }
+    ]
+  },
+  {
+    day: 14, level: "Pemula", levelClass: "lv-pemula",
+    title: "Proses Isotermal dan Adiabatik",
+    subtitle: "Dua jalur yang sangat berbeda",
+    body: `
+      <p class="drop-cap">Ketika gas berubah dari satu keadaan ke keadaan lain, ada banyak jalur yang bisa ditempuh. Dua jalur yang paling penting dalam termodinamika adalah <strong>isotermal</strong> (suhu tetap) dan <strong>adiabatik</strong> (tidak ada pertukaran kalor).</p>
+      <p>Memahami dua jalur ini sangat penting karena banyak proses di alam dan teknologi mengikuti salah satu dari keduanya. Kulkas, mesin diesel, dan atmosfer Bumi semuanya melibatkan proses-proses ini.</p>
+      <h3>Proses Isotermal (T tetap)</h3>
+      <p>Dalam proses isotermal, suhu gas dijaga tetap. Ini berarti gas harus berada dalam kontak termal dengan reservoir (penampung) suhu yang sangat besar, sehingga setiap kalor yang masuk atau keluar tidak mengubah suhunya.</p>
+      <p>Karena T tetap, energi dalam gas ideal juga tetap (ΔU = 0). Menurut Hukum I Termodinamika, ΔU = Q − W = 0, sehingga Q = W. Semua kalor yang masuk ke gas langsung diubah menjadi kerja.</p>
+      <p>Hubungan antara P dan V selama proses isotermal mengikuti Hukum Boyle:</p>
+      <div class="formula-soft">P · V = konstan</div>
+      <p>Pada diagram P-V, kurva isotermal berbentuk hiperbola — melengkung tetapi tidak pernah menyentuh sumbu.</p>
+      <h3>Proses Adiabatik (Q = 0)</h3>
+      <p>Dalam proses adiabatik, tidak ada kalor yang masuk atau keluar dari sistem. Ini terjadi ketika sistem terisolasi dengan baik, atau ketika prosesnya berlangsung sangat cepat sehingga kalor tidak punya waktu untuk mengalir.</p>
+      <p>Menurut Hukum I Termodinamika, ΔU = −W. Jika gas melakukan kerja, energi dalamnya berkurang (dan suhunya turun). Jika gas dikenai kerja (dimampatkan), energi dalamnya bertambah (dan suhunya naik).</p>
+      <p>Hubungan antara P dan V selama proses adiabatik:</p>
+      <div class="formula-soft">P · V^γ = konstan</div>
+      <p>Di sini γ (gamma) adalah rasio kalor jenis, sekitar 1,4 untuk gas diatomik seperti udara. Kurva adiabatik pada diagram P-V lebih curam daripada kurva isotermal.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan Anda memompa ban sepeda dengan cepat. Udara di dalam pompa dimampatkan dengan cepat — begitu cepat sehingga kalor tidak punya waktu untuk keluar. Inilah proses adiabatik. Udara menjadi panas karena kerja yang Anda lakukan tetap berada di dalam gas.</p>
+      </div>
+      <p>Perbedaan antara isotermal dan adiabatik bisa dilihat dengan jelas pada diagram P-V:</p>
+      <p>• Kurva isotermal: P·V = konstan → lebih landai<br>
+      • Kurva adiabatik: P·V^γ = konstan → lebih curam</p>
+      <p>Jika gas dimampatkan dari volume yang sama, pada proses adiabatik tekanan akhir lebih tinggi daripada isotermal, dan suhunya juga naik.</p>
+      <p>Contoh penting: mesin diesel menggunakan kompresi adiabatik. Udara di dalam silinder dimampatkan dengan rasio kompresi yang sangat tinggi (sekitar 20:1). Proses ini sangat cepat sehingga adiabatik — suhunya naik hingga 700–900°C, cukup untuk menyalakan solar tanpa perlu busi.</p>
+    `,
+    reflection: "Proses yang sama bisa menghasilkan hasil yang sangat berbeda, tergantung pada jalurnya. Inilah mengapa dalam termodinamika, jalan sama pentingnya dengan tujuan.",
+    quiz: [
+      {
+        q: "Dalam proses isotermal untuk gas ideal, apa yang terjadi pada energi dalam?",
+        opts: [
+          "Energi dalam naik",
+          "Energi dalam turun",
+          "Energi dalam tetap (ΔU = 0) karena suhu tetap",
+          "Energi dalam menjadi nol"
+        ],
+        ans: 2,
+        exp: "Untuk gas ideal, energi dalam hanya bergantung pada suhu. Karena T tetap pada proses isotermal, energi dalam juga tetap. Semua kalor yang masuk diubah menjadi kerja."
+      },
+      {
+        q: "Mengapa kurva adiabatik lebih curam daripada kurva isotermal pada diagram P-V?",
+        opts: [
+          "Karena suhunya lebih tinggi",
+          "Karena pada adiabatik, suhu naik saat dimampatkan (tidak ada kalor yang keluar), sehingga tekanan akhir lebih tinggi",
+          "Karena volumenya lebih kecil",
+          "Karena tekanannya lebih rendah"
+        ],
+        ans: 1,
+        exp: "Pada proses adiabatik, semua kerja yang dilakukan pada gas disimpan sebagai energi dalam (suhu naik). Pada proses isotermal, kalor keluar untuk menjaga suhu tetap. Akibatnya, tekanan akhir pada adiabatik lebih tinggi pada volume yang sama, sehingga kurvanya lebih curam."
+      }
+    ]
+  },
+  {
+    day: 15, level: "Pemula", levelClass: "lv-pemula",
+    title: "Proses Isobarik dan Isokhorik",
+    subtitle: "Dua jalur yang lebih sederhana",
+    body: `
+      <p class="drop-cap">Setelah mempelajari proses isotermal dan adiabatik, mari kita lihat dua proses yang lebih sederhana tetapi tidak kalah penting: <strong>isobarik</strong> (tekanan tetap) dan <strong>isokhorik</strong> (volume tetap).</p>
+      <p>Kedua proses ini sangat umum dalam kehidupan sehari-hari. Ketika Anda memanaskan air di panci terbuka, tekanannya tetap (tekanan atmosfer) — itu isobarik. Ketika Anda memanaskan gas di dalam kaleng tertutup, volumenya tetap — itu isokhorik.</p>
+      <h3>Proses Isobarik (P tetap)</h3>
+      <p>Dalam proses isobarik, tekanan gas dijaga tetap. Ini terjadi ketika gas berada dalam wadah yang bisa memuai, seperti piston yang bergerak bebas, atau ketika gas terhubung dengan atmosfer terbuka.</p>
+      <p>Karena tekanan tetap, kerja yang dilakukan gas adalah:</p>
+      <div class="formula-soft">W = P · ΔV</div>
+      <p>Pada diagram P-V, proses isobarik adalah garis horizontal. Area di bawah garis ini adalah kerja yang dilakukan.</p>
+      <p>Suhu dan volume gas selama proses isobarik mengikuti Hukum Charles:</p>
+      <div class="formula-soft">V / T = konstan</div>
+      <p>Ini artinya, ketika gas dipanaskan pada tekanan tetap, volumenya bertambah secara proporsional dengan suhu absolutnya.</p>
+      <p>Perubahan energi dalam untuk gas ideal (monoatomik) selama proses isobarik:</p>
+      <div class="formula-soft">ΔU = (3/2) n R ΔT</div>
+      <p>Kalor yang dibutuhkan selama proses isobarik:</p>
+      <div class="formula-soft">Q = n · C_p · ΔT</div>
+      <p>Di sini C_p adalah kalor jenis molar pada tekanan tetap, sekitar (5/2)R untuk gas diatomik.</p>
+      <h3>Proses Isokhorik (V tetap)</h3>
+      <p>Dalam proses isokhorik, volume gas dijaga tetap. Ini terjadi ketika gas berada di dalam wadah kaku yang tidak bisa memuai, seperti tabung gas tertutup.</p>
+      <p>Karena tidak ada perubahan volume (ΔV = 0), kerja yang dilakukan gas adalah nol:</p>
+      <div class="formula-soft">W = 0</div>
+      <p>Menurut Hukum I Termodinamika:</p>
+      <div class="formula-soft">ΔU = Q</div>
+      <p>Semua kalor yang masuk ke gas langsung menjadi kenaikan energi dalam (dan kenaikan suhu). Tidak ada yang terbuang sebagai kerja.</p>
+      <p>Suhu dan tekanan gas selama proses isokhorik mengikuti Hukum Gay-Lussac:</p>
+      <div class="formula-soft">P / T = konstan</div>
+      <p>Pada diagram P-V, proses isokhorik adalah garis vertikal.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan dua panci. Satu tanpa tutup (isobarik) — ketika dipanaskan, uap bisa keluar dengan bebas. Satu dengan tutup rapat (isokhorik) — ketika dipanaskan, tekanan di dalamnya naik karena uap tidak bisa keluar.</p>
+      </div>
+      <p>Pada proses isokhorik, kalor jenis molar adalah C_v (kalor jenis molar pada volume tetap), sekitar (3/2)R untuk gas monoatomik dan (5/2)R untuk gas diatomik.</p>
+      <p>Perhatikan bahwa C_p > C_v selalu. Ini karena pada tekanan tetap, sebagian kalor yang masuk dipakai untuk melakukan kerja (memuai), sehingga lebih banyak kalor dibutuhkan untuk mencapai kenaikan suhu yang sama.</p>
+      <p>Hubungan antara C_p dan C_v adalah:</p>
+      <div class="formula-soft">C_p − C_v = R</div>
+      <p>Ini adalah salah satu hasil paling indah dalam termodinamika, dan kita akan sering menggunakannya. Rasio C_p / C_v disebut γ (gamma), yang muncul dalam rumus adiabatik.</p>
+    `,
+    reflection: "Proses isobarik dan isokhorik mengajarkan kita bahwa bagaimana energi berubah bentuk bergantung pada apa yang dibiarkan berubah.",
+    quiz: [
+      {
+        q: "Dalam proses isokhorik, mengapa kerja yang dilakukan gas sama dengan nol?",
+        opts: [
+          "Karena tekanannya tetap",
+          "Karena tidak ada perubahan volume (ΔV = 0), sehingga W = P · ΔV = 0",
+          "Karena suhunya tetap",
+          "Karena tidak ada kalor yang masuk"
+        ],
+        ans: 1,
+        exp: "Kerja didefinisikan sebagai W = P · ΔV. Dalam proses isokhorik, volume tetap, sehingga ΔV = 0 dan W = 0."
+      },
+      {
+        q: "Mengapa C_p selalu lebih besar daripada C_v?",
+        opts: [
+          "Karena pada tekanan tetap, sebagian kalor dipakai untuk melakukan kerja (memuai), sehingga butuh kalor lebih banyak untuk kenaikan suhu yang sama",
+          "Karena C_p selalu dua kali C_v",
+          "Karena gas pada tekanan tetap lebih panas",
+          "Karena C_p diukur dalam Kelvin"
+        ],
+        ans: 0,
+        exp: "Pada tekanan tetap, gas memuai dan melakukan kerja. Sebagian kalor yang masuk dipakai untuk kerja ini, sehingga untuk kenaikan suhu yang sama, butuh kalor lebih banyak dibandingkan volume tetap. Itulah sebabnya C_p > C_v."
+      }
+    ]
+  },
+  {
+    day: 16, level: "Pemula", levelClass: "lv-pemula",
+    title: "Mesin Kalor: Mengubah Panas Menjadi Gerak",
+    subtitle: "Bagaimana mesin uap mengubah sejarah dunia",
+    body: `
+      <p class="drop-cap">Tahun 1712, Thomas Newcomen membangun mesin uap pertama yang praktis. Mesin ini mengubah air menjadi uap, mendorong piston, dan memompa air keluar dari tambang. Dalam beberapa dekade, mesin uap mengubah wajah dunia — membawa revolusi industri yang mengubah cara manusia hidup.</p>
+      <p>Mesin uap adalah contoh <strong>mesin kalor</strong>: alat yang mengubah energi termal (kalor) menjadi energi mekanik (kerja). Mesin kalor modern — mesin mobil, turbin pembangkit listrik, mesin jet — semuanya bekerja dengan prinsip yang sama.</p>
+      <p>Mesin kalor bekerja dengan cara berikut:</p>
+      <p><strong>1.</strong> Menerima kalor Q_h dari reservoir panas (bahan bakar, reaktor nuklir, Matahari).<br>
+      <strong>2.</strong> Mengubah sebagian kalor menjadi kerja W (menggerakkan piston, memutar turbin).<br>
+      <strong>3.</strong> Membuang sisa kalor Q_c ke reservoir dingin (lingkungan, sungai, atmosfer).</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan air terjun. Air di ketinggian memiliki energi potensial. Ketika jatuh, sebagian energinya bisa diubah menjadi listrik (kerja). Tetapi air yang mencapai dasar masih memiliki energi — ia tidak bisa "habis" seluruhnya. Demikian pula, kalor dari reservoir panas tidak bisa seluruhnya diubah menjadi kerja.</p>
+      </div>
+      <p>Efisiensi mesin kalor didefinisikan sebagai rasio kerja yang dihasilkan terhadap kalor yang masuk:</p>
+      <div class="formula-soft">η = W / Q_h = (Q_h − Q_c) / Q_h = 1 − Q_c / Q_h</div>
+      <p>Efisiensi biasanya dinyatakan dalam persen. Mesin bensin modern memiliki efisiensi sekitar 25–30%. Mesin diesel sekitar 35–40%. Turbin uap di pembangkit listrik sekitar 40–45%. Sebagian besar energi terbuang sebagai kalor.</p>
+      <p>Mengapa efisiensi tidak bisa 100%? Pertanyaan ini adalah inti dari Hukum II Termodinamika, yang akan kita pelajari besok. Untuk saat ini, cukup ketahui bahwa ada batas fundamental untuk efisiensi mesin kalor — dan batas itu ditentukan oleh suhu reservoir panas dan dingin.</p>
+      <p>Kita bisa mengukur efisiensi mesin uap sederhana dengan percobaan sederhana: panaskan air dalam wadah tertutup dengan katup, biarkan uap keluar untuk memutar turbin kecil, dan ukur berapa banyak energi listrik yang dihasilkan. Bandingkan dengan energi bahan bakar yang digunakan. Anda akan menemukan bahwa sebagian besar energi hilang sebagai kalor.</p>
+      <p>Mesin kalor telah mengubah dunia lebih dari teknologi lain mana pun dalam sejarah. Tetapi pemahaman modern tentang keterbatasan mereka — dan alasan di baliknya — adalah salah satu pencapaian terbesar fisika abad ke-19.</p>
+    `,
+    reflection: "Setiap mesin adalah mediasi antara kekacauan (kalor) dan keteraturan (kerja). Alam semesta membebankan pajak untuk setiap konversi.",
+    quiz: [
+      {
+        q: "Sebuah mesin kalor menerima 1000 J kalor dari reservoir panas dan membuang 600 J ke reservoir dingin. Berapa efisiensinya?",
+        opts: ["40%", "60%", "100%", "600%"],
+        ans: 0,
+        exp: "η = (Q_h − Q_c) / Q_h = (1000 − 600) / 1000 = 400/1000 = 40%."
+      },
+      {
+        q: "Mengapa efisiensi mesin kalor tidak bisa mencapai 100%?",
+        opts: [
+          "Karena mesinnya tidak sempurna",
+          "Karena selalu ada kalor yang harus dibuang ke reservoir dingin — ini adalah konsekuensi Hukum II Termodinamika",
+          "Karena bahan bakarnya tidak cukup",
+          "Karena gesekan"
+        ],
+        ans: 1,
+        exp: "Hukum II Termodinamika menyatakan bahwa tidak mungkin mengubah seluruh kalor menjadi kerja dalam siklus. Selalu ada sebagian kalor yang harus dibuang ke reservoir dingin. Ini adalah keterbatasan fundamental, bukan keterbatasan teknis."
+      }
+    ]
+  },
+  {
+    day: 17, level: "Pemula", levelClass: "lv-pemula",
+    title: "Hukum II Termodinamika",
+    subtitle: "Mengapa waktu hanya berjalan satu arah",
+    body: `
+      <p class="drop-cap">Ada sebuah fenomena sederhana yang mungkin membuat Anda heran jika dipikirkan dengan serius: segelas air panas di atas meja akan menjadi dingin. Tetapi segelas air dingin di atas meja <em>tidak akan pernah menjadi panas</em> dengan sendirinya. Mengapa? Hukum I Termodinamika tidak melarangnya — energi kekal dalam kedua kasus. Yang melarangnya adalah <strong>Hukum II Termodinamika</strong>.</p>
+      <p>Hukum I memberi tahu kita bahwa energi kekal. Hukum II memberi tahu kita ke arah mana proses bisa terjadi secara spontan. Ini adalah hukum yang memberikan "arah panah" pada waktu.</p>
+      <p>Ada beberapa cara untuk menyatakan Hukum II Termodinamika, tetapi semuanya setara:</p>
+      <p><strong>Pernyataan Clausius:</strong> Kalor tidak bisa mengalir secara spontan dari benda bersuhu rendah ke benda bersuhu tinggi. Untuk memindahkan kalor ke arah itu, dibutuhkan kerja (seperti pada kulkas dan AC).</p>
+      <p><strong>Pernyataan Kelvin-Planck:</strong> Tidak mungkin membuat mesin yang, dalam satu siklus, mengubah seluruh kalor menjadi kerja. Selalu ada sebagian kalor yang harus dibuang.</p>
+      <p><strong>Pernyataan Entropi:</strong> Dalam sistem terisolasi, entropi total tidak pernah berkurang — ia bisa tetap atau bertambah. Kita akan membahas entropi besok.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan Anda menjatuhkan tumpukan kelereng. Setelah jatuh, mereka tersebar secara acak. Jika Anda merekam video dan memutarnya mundur, Anda akan melihat kelereng berkumpul kembali membentuk tumpukan — dan Anda langsung tahu itu mundur, karena tidak alami. Hukum II menjelaskan mengapa.</p>
+      </div>
+      <p>Ada banyak contoh sehari-hari dari Hukum II Termodinamika:</p>
+      <p><strong>1. Kopi menjadi dingin</strong> — kalor mengalir dari kopi panas ke lingkungan yang lebih dingin. Tidak akan pernah sebaliknya dengan sendirinya.</p>
+      <p><strong>2. Es meleleh</strong> — kalor dari lingkungan masuk ke es, mencairkannya. Tidak akan pernah air membeku sendiri di suhu ruangan.</p>
+      <p><strong>3. Gas memuai</strong> — gas yang terkurung di satu sisi ruangan akan menyebar memenuhi seluruh ruangan jika dibuka sekatnya. Tidak akan pernah kembali dengan sendirinya.</p>
+      <p><strong>4. Benda pecah</strong> — gelas yang pecah tidak akan menyusun dirinya kembali.</p>
+      <p>Semua proses ini memiliki arah yang jelas — dari keteraturan menuju kekacauan. Hukum II Termodinamika mengungkapkan sesuatu yang mendalam tentang alam semesta: proses alam cenderung mengarah pada keadaan yang lebih acak, lebih tersebar, dan lebih seragam.</p>
+      <p>Ada cara untuk "membalikkan" proses ini — tetapi selalu dengan biaya. Kulkas bisa memindahkan kalor dari dalam (dingin) ke luar (panas), tetapi memerlukan kerja listrik. Membersihkan kamar bisa mengembalikan keteraturan, tetapi memerlukan usaha. Alam semesta selalu meminta "pajak" untuk setiap pembalikan arah.</p>
+      <p>Inilah mengapa waktu memiliki arah. Di tingkat atom, hukum fisika bersifat reversibel — mereka bekerja sama baiknya maju maupun mundur. Tetapi di tingkat makroskopis, Hukum II memilih arah: dari keteraturan menuju kekacauan, dari panas menuju dingin, dari teratur menuju acak.</p>
+      <p>Hukum II Termodinamika adalah salah satu hukum paling mendalam dalam fisika. Ia menjelaskan mengapa kita bisa membedakan masa lalu dari masa depan, mengapa kita menua, dan mengapa alam semesta memiliki sejarah yang tidak bisa diulang.</p>
+    `,
+    reflection: "Waktu mengalir ke satu arah karena alam semesta cenderung menuju kekacauan. Inilah panah waktu yang paling dalam.",
+    quiz: [
+      {
+        q: "Mengapa segelas air panas akan menjadi dingin tetapi tidak akan menjadi panas dengan sendirinya?",
+        opts: [
+          "Karena Hukum I Termodinamika melarangnya",
+          "Karena Hukum II Termodinamika: kalor mengalir spontan dari panas ke dingin, bukan sebaliknya",
+          "Karena air tidak bisa menyerap kalor",
+          "Karena gelas bukan isolator"
+        ],
+        ans: 1,
+        exp: "Hukum II Termodinamika menyatakan bahwa kalor mengalir secara spontan dari benda bersuhu tinggi ke benda bersuhu rendah, bukan sebaliknya. Untuk memindahkan kalor ke arah sebaliknya, dibutuhkan kerja (seperti pada kulkas)."
+      },
+      {
+        q: "Manakah pernyataan yang setara dengan Hukum II Termodinamika?",
+        opts: [
+          "Energi tidak bisa diciptakan atau dimusnahkan",
+          "Tidak mungkin membuat mesin yang mengubah seluruh kalor menjadi kerja dalam satu siklus",
+          "PV = nRT",
+          "Gaya = massa × percepatan"
+        ],
+        ans: 1,
+        exp: "Salah satu pernyataan Hukum II Termodinamika adalah pernyataan Kelvin-Planck: tidak mungkin membuat mesin yang, dalam satu siklus, mengubah seluruh kalor menjadi kerja. Selalu ada sebagian kalor yang harus dibuang."
+      }
+    ]
+  },
+  {
+    day: 18, level: "Pemula", levelClass: "lv-pemula",
+    title: "Entropi: Ukuran Kekacauan",
+    subtitle: "Konsep yang mungkin paling dalam dalam fisika",
+    body: `
+      <p class="drop-cap">Ada satu konsep dalam termodinamika yang sering dianggap paling sulit dipahami — tetapi juga paling mendalam. Konsep itu adalah <strong>entropi</strong>. Ia mengukur seberapa banyak "kekacauan" atau "ketidakteraturan" dalam suatu sistem.</p>
+      <p>Entropi diperkenalkan oleh Rudolf Clausius pada tahun 1865, tetapi baru dijelaskan secara mikroskopis oleh Ludwig Boltzmann beberapa dekade kemudian. Boltzmann mengungkapkan entropi dalam bentuk yang indah:</p>
+      <div class="formula-soft">S = k_B · ln(Ω)</div>
+      <p>Di sini S adalah entropi, k_B adalah konstanta Boltzmann, dan Ω (omega) adalah jumlah cara mikroskopis untuk mencapai keadaan makroskopis tertentu.</p>
+      <p>Mari kita pahami ini dengan contoh sederhana. Bayangkan dua kotak dan empat bola. Ada beberapa cara untuk mengatur bola-bola ini:</p>
+      <p>• Semua 4 bola di kiri: <strong>1 cara</strong><br>
+      • 3 bola di kiri, 1 di kanan: <strong>4 cara</strong><br>
+      • 2 bola di kiri, 2 di kanan: <strong>6 cara</strong><br>
+      • 1 bola di kiri, 3 di kanan: <strong>4 cara</strong><br>
+      • Semua 4 bola di kanan: <strong>1 cara</strong></p>
+      <p>Keadaan dengan 2 bola di kiri dan 2 di kanan memiliki jumlah cara terbanyak (6). Jadi keadaan ini memiliki entropi tertinggi, karena ada lebih banyak cara mikroskopis untuk mencapai keadaan makroskopis ini.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan melempar 100 koin. Ada 2¹⁰⁰ cara mereka bisa mendarat. Hampir semua cara menghasilkan sekitar 50 gambar dan 50 angka. Hanya 1 cara yang menghasilkan semua gambar. Jadi "50-50" adalah keadaan dengan entropi tertinggi, dan "semua gambar" adalah entropi terendah.</p>
+      </div>
+      <p>Hukum II Termodinamika dalam bentuk entropi menyatakan: <strong>Dalam sistem terisolasi, entropi total tidak pernah berkurang.</strong> Ia bisa tetap (pada proses reversibel) atau bertambah (pada proses ireversibel).</p>
+      <p>Inilah mengapa kopi menjadi dingin, mengapa kamar menjadi berantakan, dan mengapa gelas pecah tidak menyusun diri kembali. Semua proses ini meningkatkan entropi total alam semesta.</p>
+      <p>Perubahan entropi untuk proses dengan suhu tetap:</p>
+      <div class="formula-soft">ΔS = Q / T</div>
+      <p>Di sini Q adalah kalor yang dipindahkan (Joule) dan T adalah suhu (Kelvin). Satuan entropi adalah J/K.</p>
+      <p>Ada satu fakta menakjubkan tentang entropi: pada tingkat mikroskopis, semua proses fisika bersifat reversibel. Jika Anda merekam tumbukan dua molekul dan memutar videonya mundur, Anda tidak akan melihat pelanggaran hukum fisika apa pun. Tetapi pada tingkat makroskopis, proses selalu memiliki arah — karena entropi bertambah.</p>
+      <p>Inilah yang membuat entropi menjadi salah satu konsep paling dalam dalam fisika. Ia menghubungkan dunia mikroskopis yang reversibel dengan dunia makroskopis yang irreversibel. Ia menjelaskan mengapa waktu memiliki arah, mengapa kita menua, dan mengapa alam semesta memiliki sejarah.</p>
+      <p>Beberapa fisikawan menganggap entropi sebagai konsep paling penting dalam seluruh fisika — bahkan lebih penting dari energi. Karena energi menjelaskan apa yang mungkin, tetapi entropi menjelaskan apa yang akan terjadi.</p>
+    `,
+    reflection: "Entropi adalah panah waktu alam semesta. Ia memberi tahu kita bahwa tidak ada yang bisa kembali seperti semula.",
+    quiz: [
+      {
+        q: "Apa yang diukur oleh entropi?",
+        opts: [
+          "Jumlah energi dalam sistem",
+          "Ukuran kekacauan atau jumlah cara mikroskopis untuk mencapai keadaan makroskopis",
+          "Suhu sistem",
+          "Volume sistem"
+        ],
+        ans: 1,
+        exp: "Entropi mengukur kekacauan sistem — secara lebih tepat, jumlah cara mikroskopis untuk mencapai keadaan makroskopis tertentu. S = k_B · ln(Ω)."
+      },
+      {
+        q: "Menurut Hukum II Termodinamika, dalam sistem terisolasi, entropi total...",
+        opts: [
+          "Selalu berkurang",
+          "Selalu tetap",
+          "Tidak pernah berkurang (bisa tetap atau bertambah)",
+          "Bisa bernilai negatif"
+        ],
+        ans: 2,
+        exp: "Hukum II Termodinamika: dalam sistem terisolasi, entropi total tidak pernah berkurang. Ia bisa tetap (proses reversibel) atau bertambah (proses ireversibel)."
+      }
+    ]
+  },
+  {
+    day: 19, level: "Pemula", levelClass: "lv-pemula",
+    title: "Mesin Carnot: Batas Ideal",
+    subtitle: "Siklus yang paling efisien secara teori",
+    body: `
+      <p class="drop-cap">Pada tahun 1824, seorang insinyur muda Prancis bernama Sadi Carnot menerbitkan sebuah buku tipis berjudul "Reflections on the Motive Power of Fire". Buku ini menjelaskan siklus mesin kalor yang paling efisien secara teori — dan meletakkan dasar bagi seluruh termodinamika modern. Carnot saat itu baru berusia 28 tahun, dan ia meninggal tiga tahun kemudian karena kolera.</p>
+      <p>Siklus Carnot terdiri dari empat langkah reversibel yang membentuk satu siklus lengkap:</p>
+      <p><strong>1. Ekspansi isotermal</strong> — gas bersentuhan dengan reservoir panas (T_h), menyerap kalor Q_h, dan mengembang pada suhu tetap.</p>
+      <p><strong>2. Ekspansi adiabatik</strong> — gas mengembang lebih lanjut tanpa pertukaran kalor. Suhu turun dari T_h ke T_c.</p>
+      <p><strong>3. Kompresi isotermal</strong> — gas bersentuhan dengan reservoir dingin (T_c), membuang kalor Q_c, dan dimampatkan pada suhu tetap.</p>
+      <p><strong>4. Kompresi adiabatik</strong> — gas dimampatkan lebih lanjut tanpa pertukaran kalor. Suhu naik dari T_c kembali ke T_h.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan Anda mengangkat beban ke atas, memindahkannya ke samping, menurunkannya, dan memindahkannya kembali ke posisi semula. Empat langkah ini membentuk satu siklus. Efisiensi Anda ditentukan oleh seberapa tinggi Anda mengangkat dan seberapa rendah Anda menurunkan.</p>
+      </div>
+      <p>Efisiensi siklus Carnot hanya bergantung pada suhu kedua reservoir:</p>
+      <div class="formula-soft">η_Carnot = 1 − T_c / T_h</div>
+      <p>Di sini T_c dan T_h adalah suhu reservoir dingin dan panas dalam Kelvin. Perhatikan bahwa efisiensi hanya bergantung pada suhu, bukan pada jenis gas atau ukuran mesin.</p>
+      <p>Ini adalah salah satu hasil paling penting dalam termodinamika. Tidak ada mesin kalor yang bisa beroperasi antara dua reservoir suhu dengan efisiensi lebih tinggi dari efisiensi Carnot. Ini adalah batas fundamental yang tidak bisa dilampaui oleh teknologi apa pun.</p>
+      <p>Contoh konkret: jika reservoir panas berada pada 500 K dan reservoir dingin pada 300 K, efisiensi Carnot adalah 1 − 300/500 = 40%. Mesin nyata akan memiliki efisiensi lebih rendah dari ini, karena gesekan dan proses ireversibel.</p>
+      <p>Perhatikan bahwa efisiensi bisa ditingkatkan dengan dua cara: menaikkan suhu reservoir panas, atau menurunkan suhu reservoir dingin. Inilah sebabnya pembangkit listrik modern beroperasi pada suhu sangat tinggi (menggunakan uap super panas), dan membuang kalor ke sungai atau menara pendingin yang dingin.</p>
+      <p>Menariknya, siklus Carnot juga bisa dijalankan secara terbalik. Jika Anda memberikan kerja ke mesin, ia akan memindahkan kalor dari reservoir dingin ke reservoir panas. Ini adalah prinsip kerja kulkas dan AC. Efisiensi terbalik ini disebut <strong>koefisien kinerja (COP)</strong>:</p>
+      <div class="formula-soft">COP = T_c / (T_h − T_c)</div>
+      <p>Kulkas yang baik memiliki COP sekitar 3–5. Artinya, untuk setiap Joule kerja listrik yang dimasukkan, ia memindahkan 3–5 Joule kalor dari dalam ke luar.</p>
+      <p>Siklus Carnot mengajarkan kita sesuatu yang mendalam: batas efisiensi bukanlah keterbatasan teknologi, melainkan hukum alam. Bahkan dengan mesin yang sempurna secara teoritis, efisiensi tetap tidak bisa mencapai 100% selama suhu reservoir dingin di atas nol absolut.</p>
+    `,
+    reflection: "Bahkan mesin yang sempurna pun memiliki batas. Alam semesta tidak mengizinkan kita mengubah semua panas menjadi kerja.",
+    quiz: [
+      {
+        q: "Sebuah mesin Carnot beroperasi antara suhu 600 K dan 300 K. Berapa efisiensinya?",
+        opts: ["25%", "33%", "50%", "75%"],
+        ans: 2,
+        exp: "η_Carnot = 1 − T_c / T_h = 1 − 300/600 = 1 − 0.5 = 0.5 = 50%."
+      },
+      {
+        q: "Mengapa efisiensi mesin Carnot tidak bisa mencapai 100%?",
+        opts: [
+          "Karena gesekan pada mesin",
+          "Karena selalu ada kalor yang harus dibuang ke reservoir dingin, dan reservoir dingin tidak bisa berada pada 0 K",
+          "Karena bahan bakarnya terbatas",
+          "Karena mesinnya tidak dirancang dengan baik"
+        ],
+        ans: 1,
+        exp: "Efisiensi Carnot = 1 − T_c / T_h. Agar efisiensi 100%, T_c harus 0 K (nol absolut), yang tidak bisa dicapai. Jadi selalu ada kalor yang harus dibuang ke reservoir dingin."
+      }
+    ]
+  },
+  {
+    day: 20, level: "Pemula", levelClass: "lv-pemula",
+    title: "Kulkas dan Pompa Kalor",
+    subtitle: "Mesin Carnot yang dijalankan terbalik",
+    body: `
+      <p class="drop-cap">Salah satu aplikasi paling cerdas dari termodinamika adalah kulkas. Kulkas memindahkan kalor dari dalam (dingin) ke luar (panas) — arah yang berlawanan dengan aliran kalor spontan. Untuk melakukannya, ia memerlukan kerja. Ini adalah mesin Carnot yang dijalankan terbalik.</p>
+      <p>Kulkas bekerja dengan siklus yang terdiri dari empat komponen utama:</p>
+      <p><strong>1. Kompresor</strong> — memampatkan refrigeran (cairan pendingin), meningkatkan suhunya.<br>
+      <strong>2. Kondensor</strong> (di luar) — refrigeran panas melepaskan kalor ke lingkungan, mengembun menjadi cair.<br>
+      <strong>3. Katup ekspansi</strong> — refrigeran cair mengalami penurunan tekanan tiba-tiba, menguap, dan suhunya turun drastis.<br>
+      <strong>4. Evaporator</strong> (di dalam) — refrigeran dingin menyerap kalor dari dalam kulkas, menguap kembali.</p>
+      <p>Siklus ini berulang terus-menerus, terus memindahkan kalor dari dalam ke luar. Kulkas tidak "menciptakan dingin" — ia hanya memindahkan kalor.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan Anda memindahkan air dari kolam rendah ke kolam tinggi. Air tidak akan mengalir ke atas dengan sendirinya — Anda perlu memompa. Kulkas bekerja seperti pompa, tetapi untuk kalor: memindahkan kalor dari tempat dingin ke tempat panas.</p>
+      </div>
+      <p>Efisiensi kulkas diukur dengan <strong>koefisien kinerja (COP)</strong>:</p>
+      <div class="formula-soft">COP = Q_c / W = T_c / (T_h − T_c)</div>
+      <p>Di sini Q_c adalah kalor yang dipindahkan dari dalam, W adalah kerja yang diperlukan, dan T_c, T_h adalah suhu dalam Kelvin.</p>
+      <p>Perhatikan bahwa COP bisa lebih besar dari 1 — bahkan jauh lebih besar. Ini tidak melanggar hukum kekekalan energi, karena kerja yang dimasukkan bukan satu-satunya sumber kalor. Kalor yang dipindahkan berasal dari reservoir dingin.</p>
+      <p>Contoh: kulkas dengan T_c = 273 K (0°C) dan T_h = 300 K (27°C) memiliki COP ideal = 273/(300−273) = 273/27 ≈ 10,1. Artinya, untuk setiap Joule listrik, ia bisa memindahkan 10 Joule kalor dari dalam kulkas ke luar. Dalam praktik, kulkas nyata memiliki COP sekitar 3–5 karena proses ireversibel.</p>
+      <p><strong>Pompa kalor</strong> bekerja dengan prinsip yang sama, tetapi tujuannya berbeda. Kulkas memindahkan kalor keluar dari dalam (tujuan: membuat bagian dalam dingin). Pompa kalor memindahkan kalor dari luar ke dalam (tujuan: memanaskan ruangan). Secara teknis, keduanya adalah mesin yang sama — hanya berbeda dalam tujuan penggunaannya.</p>
+      <p>Menariknya, pompa kalor jauh lebih efisien untuk memanaskan ruangan daripada pemanas listrik biasa. Pemanas listrik mengubah listrik menjadi kalor dengan efisiensi 100% (setiap Joule listrik = 1 Joule kalor). Pompa kalor bisa menghasilkan 3–5 Joule kalor untuk setiap Joule listrik, karena ia memindahkan kalor dari luar, bukan menciptakannya.</p>
+      <p>Inilah salah satu contoh indah bagaimana pemahaman termodinamika bisa menghasilkan teknologi yang jauh lebih efisien — bukan dengan melanggar hukum alam, tetapi dengan memanfaatkannya dengan cerdas.</p>
+    `,
+    reflection: "Kulkas mengajarkan kita bahwa arah alami alam semesta bisa dibalik — tetapi selalu dengan biaya.",
+    quiz: [
+      {
+        q: "Apa fungsi kompresor dalam kulkas?",
+        opts: [
+          "Mendinginkan refrigeran",
+          "Memampatkan refrigeran sehingga suhunya naik dan bisa melepaskan kalor ke lingkungan",
+          "Menyaring udara",
+          "Memutar kipas"
+        ],
+        ans: 1,
+        exp: "Kompresor memampatkan refrigeran, meningkatkan suhu dan tekanannya. Refrigeran panas ini kemudian melepaskan kalor ke lingkungan melalui kondensor."
+      },
+      {
+        q: "Sebuah kulkas ideal memiliki T_c = 250 K dan T_h = 300 K. Berapa COP-nya?",
+        opts: ["1", "5", "10", "50"],
+        ans: 1,
+        exp: "COP = T_c / (T_h − T_c) = 250 / (300 − 250) = 250/50 = 5."
+      }
+    ]
+  },
+  {
+    day: 21, level: "Pemula", levelClass: "lv-pemula",
+    title: "Entropi dan Arah Waktu",
+    subtitle: "Mengapa kita hanya bisa mengingat masa lalu",
+    body: `
+      <p class="drop-cap">Ada sebuah misteri yang telah lama membingungkan fisikawan: mengapa waktu hanya bergerak ke satu arah? Hukum-hukum fisika dasar — mekanika Newton, elektromagnetisme, relativitas, mekanika kuantum — semuanya bersifat reversibel. Jika Anda merekam tumbukan dua bola biliar dan memutar videonya mundur, Anda tidak akan bisa membedakan mana yang asli, karena keduanya mematuhi hukum fisika yang sama. Tetapi dunia nyata tidak reversibel: kita bisa mengingat masa lalu, tetapi tidak masa depan. Kita menua, tetapi tidak muda kembali. Ini adalah paradoks yang jawabannya terletak pada entropi.</p>
+      <p>Untuk memahami ini, kita perlu kembali ke konsep entropi yang kita pelajari beberapa hari lalu. Entropi adalah ukuran jumlah cara mikroskopis untuk mencapai keadaan makroskopis tertentu. Semakin banyak cara, semakin tinggi entropi.</p>
+      <p>Hukum II Termodinamika menyatakan bahwa dalam sistem terisolasi, entropi total tidak pernah berkurang — ia cenderung bertambah. Inilah satu-satunya hukum fisika yang memberikan "arah" pada proses. Semua hukum lain bisa berjalan maju maupun mundur, tetapi Hukum II memilih arah: dari entropi rendah ke entropi tinggi.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan Anda menjatuhkan gelas. Gelas pecah menjadi banyak kepingan. Ada sangat banyak cara kepingan ini bisa tersebar (entropi tinggi), dan hanya satu cara mereka bisa tersusun kembali menjadi gelas utuh (entropi rendah). Karena itu, gelas pecah — tetapi tidak akan pernah menyusun diri kembali.</p>
+      </div>
+      <p>Inilah mengapa waktu memiliki arah. Setiap kali Anda melihat suatu proses berlangsung, Anda sedang melihat entropi meningkat. Es meleleh, kopi mendingin, kamar berantakan, tubuh menua — semuanya adalah contoh entropi yang meningkat.</p>
+      <p>Menariknya, ingatan juga terkait dengan entropi. Otak kita menyimpan ingatan dengan cara yang meningkatkan entropi lingkungan (misalnya, melalui metabolisme yang menghasilkan panas). Jika entropi bisa berkurang, otak kita mungkin bisa "mengingat" masa depan — tetapi ini tidak terjadi.</p>
+      <p>Begitu pula dengan kesadaran kita tentang waktu. Kita mengalami waktu sebagai sesuatu yang mengalir dari masa lalu ke masa depan karena otak kita sendiri adalah sistem termodinamika yang entropinya bertambah.</p>
+      <p>Fisikawan Inggris Arthur Eddington, yang pertama kali memperkenalkan konsep "panah waktu" pada tahun 1927, menyatakan bahwa entropi adalah satu-satunya hal dalam fisika yang membedakan masa lalu dan masa depan. Semua fenomena lain — gerak planet, getaran atom, reaksi nuklir — tidak memiliki arah waktu yang inheren. Hanya entropi yang memilikinya.</p>
+      <p>Ada satu pertanyaan filosofis yang dalam di sini: mengapa alam semesta dimulai dengan entropi rendah? Jika alam semesta dimulai dalam keadaan entropi tinggi (kekacauan maksimum), tidak akan ada arah waktu — semuanya akan berada dalam kesetimbangan. Fakta bahwa kita mengalami waktu sebagai sesuatu yang mengalir menunjukkan bahwa alam semesta dimulai dalam keadaan entropi rendah — dan Big Bang adalah momen entropi terendah itu.</p>
+      <p>Ini adalah salah satu misteri terbesar dalam fisika modern. Mengapa alam semesta dimulai dengan entropi rendah? Kita belum tahu jawabannya. Tetapi satu hal yang pasti: jika entropi awal tidak rendah, kita tidak akan ada di sini untuk bertanya.</p>
+    `,
+    reflection: "Waktu adalah panah yang ditembakkan oleh entropi. Kita merasakannya mengalir karena otak kita sendiri adalah bagian dari aliran itu.",
+    quiz: [
+      {
+        q: "Mengapa waktu memiliki arah yang jelas (masa lalu ke masa depan)?",
+        opts: [
+          "Karena hukum fisika dasar bersifat ireversibel",
+          "Karena entropi total alam semesta cenderung bertambah, memberikan arah pada proses",
+          "Karena gravitasi menarik kita ke depan",
+          "Karena otak kita dirancang untuk itu"
+        ],
+        ans: 1,
+        exp: "Hukum fisika dasar bersifat reversibel. Satu-satunya hukum yang memberikan arah pada waktu adalah Hukum II Termodinamika, yang menyatakan bahwa entropi total cenderung bertambah."
+      },
+      {
+        q: "Apa yang menunjukkan bahwa alam semesta dimulai dengan entropi rendah?",
+        opts: [
+          "Adanya bintang-bintang",
+          "Fakta bahwa kita mengalami waktu sebagai sesuatu yang mengalir dan ada proses yang tidak bisa dibalik",
+          "Adanya gravitasi",
+          "Adanya cahaya"
+        ],
+        ans: 1,
+        exp: "Jika alam semesta dimulai dengan entropi tinggi (kesetimbangan maksimum), tidak akan ada arah waktu — semuanya akan tetap pada keadaan yang sama. Fakta bahwa kita mengalami waktu menunjukkan entropi awal yang rendah, yang terkait dengan Big Bang."
+      }
+    ]
+  },
+  {
+    day: 22, level: "Pemula", levelClass: "lv-pemula",
+    title: "Entalpi dan Kalor Reaksi",
+    subtitle: "Ketika reaksi kimia melepaskan atau menyerap kalor",
+    body: `
+      <p class="drop-cap">Ketika Anda membakar kayu, ia melepaskan kalor. Ketika Anda melarutkan garam dalam air, suhunya turun sedikit. Kedua fenomena ini melibatkan <strong>entalpi</strong> — konsep termodinamika yang sangat penting dalam kimia.</p>
+      <p>Entalpi (H) didefinisikan sebagai:</p>
+      <div class="formula-soft">H = U + P · V</div>
+      <p>Di sini U adalah energi dalam, P adalah tekanan, dan V adalah volume. Entalpi adalah "energi total" sistem dalam kondisi tekanan tetap — yang merupakan kondisi sebagian besar reaksi kimia di laboratorium dan di alam.</p>
+      <p>Mengapa entalpi berguna? Karena sebagian besar reaksi kimia berlangsung pada tekanan atmosfer tetap (tekanan terbuka). Dalam kondisi ini, kalor yang diserap atau dilepaskan oleh reaksi sama dengan perubahan entalpi:</p>
+      <div class="formula-soft">ΔH = Q_p &nbsp; (pada tekanan tetap)</div>
+      <p>Ini membuat entalpi menjadi cara mudah untuk mengukur kalor reaksi.</p>
+      <p>Ada dua jenis reaksi berdasarkan perubahan entalpi:</p>
+      <div class="term-card">
+        <div class="term-name">🔥 Reaksi Eksotermik (ΔH < 0)</div>
+        <div class="term-desc">Melepaskan kalor ke lingkungan. Suhu lingkungan naik. Contoh: pembakaran kayu, pembakaran bensin, reaksi antara asam dan basa.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">❄️ Reaksi Endotermik (ΔH > 0)</div>
+        <div class="term-desc">Menyerap kalor dari lingkungan. Suhu lingkungan turun. Contoh: fotosintesis, pelarutan garam amonium nitrat (yang digunakan dalam kompres dingin instan).</div>
+      </div>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan entalpi seperti ketinggian air di kolam. Jika reaksi kimia mengalirkan air dari kolam tinggi ke kolam rendah, ia melepaskan energi (eksotermik). Jika memompa air ke atas, ia menyerap energi (endotermik).</p>
+      </div>
+      <p>Ada hukum penting dalam termokimia yang disebut <strong>Hukum Hess</strong>: perubahan entalpi total suatu reaksi tidak bergantung pada jalur reaksi, tetapi hanya pada keadaan awal dan akhir. Ini adalah konsekuensi dari fakta bahwa entalpi adalah fungsi keadaan.</p>
+      <p>Contoh: pembakaran karbon menjadi CO₂ bisa berlangsung melalui dua jalur:</p>
+      <p>Jalur 1: C + O₂ → CO₂ (ΔH = −393,5 kJ/mol)<br>
+      Jalur 2: C + ½O₂ → CO (ΔH = −110,5 kJ/mol), lalu CO + ½O₂ → CO₂ (ΔH = −283,0 kJ/mol)</p>
+      <p>Jika kita jumlahkan jalur 2: −110,5 + (−283,0) = −393,5 kJ/mol. Sama dengan jalur 1.</p>
+      <p>Hukum Hess sangat berguna karena memungkinkan kita menghitung kalor reaksi yang sulit diukur langsung, dengan menggabungkan reaksi-reaksi yang lebih mudah diukur.</p>
+      <p>Entalpi juga terkait dengan ikatan kimia. Ketika ikatan terbentuk, energi dilepaskan (eksotermik). Ketika ikatan terputus, energi diserap (endotermik). Perubahan entalpi total reaksi adalah selisih antara energi ikatan yang terputus dan yang terbentuk.</p>
+      <p>Jika energi ikatan yang terbentuk lebih besar dari yang terputus, reaksi bersifat eksotermik (melepaskan kalor). Jika sebaliknya, reaksi bersifat endotermik (menyerap kalor).</p>
+      <p>Konsep entalpi adalah salah satu konsep yang paling berguna dalam kimia dan termodinamika terapan. Ia memungkinkan kita memahami mengapa beberapa reaksi "panas" dan yang lain "dingin", mengapa beberapa bahan bakar lebih efektif dari yang lain, dan bagaimana merancang proses industri yang efisien.</p>
+    `,
+    reflection: "Energi yang tersimpan dalam ikatan kimia adalah energi yang membentuk dan menghancurkan. Setiap reaksi adalah cerita tentang energi yang berpindah.",
+    quiz: [
+      {
+        q: "Apa perbedaan antara reaksi eksotermik dan endotermik?",
+        opts: [
+          "Eksotermik menyerap kalor, endotermik melepaskan kalor",
+          "Eksotermik melepaskan kalor (ΔH < 0), endotermik menyerap kalor (ΔH > 0)",
+          "Keduanya melepaskan kalor",
+          "Keduanya menyerap kalor"
+        ],
+        ans: 1,
+        exp: "Reaksi eksotermik melepaskan kalor ke lingkungan (ΔH negatif). Reaksi endotermik menyerap kalor dari lingkungan (ΔH positif)."
+      },
+      {
+        q: "Menurut Hukum Hess, perubahan entalpi total suatu reaksi...",
+        opts: [
+          "Bergantung pada jalur reaksi",
+          "Hanya bergantung pada keadaan awal dan akhir, bukan pada jalur",
+          "Selalu positif",
+          "Selalu negatif"
+        ],
+        ans: 1,
+        exp: "Hukum Hess: entalpi adalah fungsi keadaan, sehingga perubahan entalpi hanya bergantung pada keadaan awal dan akhir, bukan pada jalur reaksi."
+      }
+    ]
+  },
+  {
+    day: 23, level: "Pemula", levelClass: "lv-pemula",
+    title: "Kalor Laten dan Perubahan Fasa",
+    subtitle: "Mengapa es membutuhkan waktu lama untuk meleleh",
+    body: `
+      <p class="drop-cap">Anda meletakkan es batu di atas meja. Meskipun ruangan hangat, es itu membutuhkan waktu yang cukup lama untuk meleleh seluruhnya. Mengapa? Selama proses pelelehan, suhunya tetap 0°C — tidak naik — meskipun kalor terus masuk dari lingkungan. Energi itu dipakai untuk sesuatu yang lain: memutuskan ikatan antar molekul air dalam bentuk padat. Inilah <strong>kalor laten</strong>.</p>
+      <p>Kalor laten adalah kalor yang dibutuhkan untuk mengubah fasa suatu zat (padat → cair, cair → gas, atau sebaliknya) tanpa mengubah suhunya.</p>
+      <div class="formula-soft">Q = m · L</div>
+      <p>Di sini Q adalah kalor (Joule), m adalah massa (kg), dan L adalah kalor laten spesifik (J/kg).</p>
+      <p>Ada dua jenis kalor laten yang penting:</p>
+      <div class="term-card">
+        <div class="term-name">💧 Kalor Lebur (L_f)</div>
+        <div class="term-desc">Kalor yang dibutuhkan untuk melelehkan 1 kg zat padat menjadi cair pada titik leburnya. Untuk air: L_f = 334.000 J/kg.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">💨 Kalor Uap (L_v)</div>
+        <div class="term-desc">Kalor yang dibutuhkan untuk menguapkan 1 kg zat cair menjadi gas pada titik didihnya. Untuk air: L_v = 2.260.000 J/kg.</div>
+      </div>
+      <p>Perhatikan bahwa kalor uap air jauh lebih besar daripada kalor leburnya — sekitar 6,8 kali lebih besar. Ini karena menguapkan air membutuhkan pemutusan ikatan antar molekul yang jauh lebih banyak daripada melelehkan es. Ketika air mendidih, molekul-molekul harus benar-benar terlepas satu sama lain dan bergerak bebas sebagai gas.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan Anda memisahkan sekelompok orang yang berpegangan tangan. Untuk melelehkan es, cukup membuat mereka melepaskan pegangan tangan (masih berdekatan). Untuk menguapkan air, Anda harus membuat mereka benar-benar tersebar ke seluruh ruangan. Yang kedua butuh lebih banyak usaha.</p>
+      </div>
+      <p>Kalor laten menjelaskan banyak fenomena sehari-hari. Ketika Anda berkeringat, keringat menguap dan menyerap kalor dari kulit Anda — membuat Anda merasa lebih sejuk. Ini adalah mekanisme pendinginan alami tubuh.</p>
+      <p>Ketika Anda menaruh es di minuman, es menyerap kalor dari minuman saat meleleh, sehingga minuman tetap dingin lebih lama. Kalor laten yang tinggi membuat es sangat efektif sebagai pendingin.</p>
+      <p>Ketika Anda memasak dengan panci presto, air mendidih pada suhu di atas 100°C karena tekanan tinggi. Ini berarti makanan dimasak lebih cepat, tetapi juga membutuhkan lebih banyak energi karena kalor laten.</p>
+      <p>Di atmosfer, kalor laten memainkan peran besar dalam cuaca. Ketika air menguap dari laut, ia menyerap kalor. Ketika uap air mengembun menjadi awan, ia melepaskan kalor. Proses ini mendorong pembentukan badai tropis dan siklon — sistem cuaca paling kuat di Bumi.</p>
+      <p>Di industri, kalor laten digunakan dalam sistem pendingin, desalinasi air, dan banyak proses kimia. Memahami kalor laten adalah kunci untuk merancang sistem termal yang efisien.</p>
+    `,
+    reflection: "Kalor laten mengajarkan kita bahwa perubahan tidak selalu berarti kenaikan suhu. Kadang perubahan terjadi dalam bentuk yang tidak terlihat.",
+    quiz: [
+      {
+        q: "Mengapa suhu es tetap 0°C saat meleleh meskipun kalor terus ditambahkan?",
+        opts: [
+          "Karena es tidak bisa menyerap kalor",
+          "Karena kalor yang masuk dipakai untuk memutuskan ikatan antar molekul (kalor laten), bukan untuk menaikkan suhu",
+          "Karena es adalah isolator",
+          "Karena suhu es selalu 0°C"
+        ],
+        ans: 1,
+        exp: "Selama perubahan fasa, kalor yang masuk dipakai untuk mengubah struktur molekul (memutuskan ikatan antar molekul), bukan untuk menaikkan suhu. Itulah sebabnya suhu tetap konstan selama perubahan fasa."
+      },
+      {
+        q: "Berapa kalor yang dibutuhkan untuk melelehkan 2 kg es pada 0°C? (L_f = 334.000 J/kg)",
+        opts: ["167.000 J", "334.000 J", "668.000 J", "1.000.000 J"],
+        ans: 2,
+        exp: "Q = m · L = 2 × 334.000 = 668.000 J = 668 kJ."
+      }
+    ]
+  },
+  {
+    day: 24, level: "Pemula", levelClass: "lv-pemula",
+    title: "Radiasi Benda Hitam",
+    subtitle: "Bagaimana benda memancarkan cahaya karena suhunya",
+    body: `
+      <p class="drop-cap">Setiap benda di alam semesta memancarkan radiasi elektromagnetik karena suhunya. Anda, kursi yang Anda duduki, dan udara di sekitar Anda semuanya memancarkan radiasi — meskipun mata Anda tidak bisa melihatnya. Fenomena ini disebut <strong>radiasi benda hitam</strong>, dan ini adalah salah satu konsep paling penting dalam fisika modern.</p>
+      <p>Benda hitam adalah objek ideal yang menyerap semua radiasi yang jatuh padanya dan memancarkan radiasi berdasarkan suhunya saja. Meskipun tidak ada benda hitam sempurna di alam, banyak objek — termasuk bintang, tubuh manusia, dan bola api — berperilaku sangat mirip dengan benda hitam.</p>
+      <p>Dua hukum mengatur radiasi benda hitam:</p>
+      <h3>1. Hukum Stefan-Boltzmann</h3>
+      <p>Daya total yang dipancarkan per satuan luas permukaan benda hitam sebanding dengan pangkat empat suhu absolutnya:</p>
+      <div class="formula-soft">P/A = σ · T⁴</div>
+      <p>Di sini σ adalah konstanta Stefan-Boltzmann (5,67 × 10⁻⁸ W/m²K⁴). Jika suhu benda naik dua kali lipat, energi yang dipancarkan naik 16 kali lipat (2⁴ = 16).</p>
+      <h3>2. Hukum Wien</h3>
+      <p>Panjang gelombang puncak emisi berbanding terbalik dengan suhu:</p>
+      <div class="formula-soft">λ_max · T = 2,898 × 10⁻³ m·K</div>
+      <p>Semakin panas benda, semakin pendek panjang gelombang puncak emisinya. Benda pada suhu kamar memancarkan puncak di inframerah. Benda pada 5000 K memancarkan puncak di cahaya tampak (kuning). Benda pada 30.000 K memancarkan puncak di ultraviolet.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan besi yang dipanaskan. Awalnya tidak terlihat, tetapi memancarkan inframerah. Semakin panas, ia mulai berwarna merah gelap, lalu merah terang, oranye, kuning, dan akhirnya putih-biru. Setiap warna menunjukkan suhu yang berbeda.</p>
+      </div>
+      <p>Radiasi benda hitam memiliki banyak aplikasi penting. Dalam astronomi, kita menggunakan radiasi benda hitam untuk menentukan suhu bintang dari warnanya. Matahari memiliki suhu permukaan sekitar 5800 K, sehingga memancarkan puncak di cahaya kuning-hijau. Bintang biru memiliki suhu di atas 10.000 K, dan bintang merah di bawah 3500 K.</p>
+      <p>Dalam teknologi, radiasi benda hitam digunakan dalam pirometer — alat untuk mengukur suhu benda yang sangat panas tanpa menyentuhnya, seperti logam cair di pabrik baja. Prinsip ini juga digunakan dalam deteksi inframerah untuk penglihatan malam dan sensor panas.</p>
+      <p>Radiasi benda hitam juga menjelaskan mengapa Bumi tetap hangat. Matahari memancarkan radiasi pada panjang gelombang pendek (cahaya tampak dan ultraviolet). Bumi menyerap radiasi ini dan memanas. Sebagai benda dengan suhu sekitar 288 K, Bumi memancarkan radiasi pada panjang gelombang panjang (inframerah). Gas rumah kaca di atmosfer menyerap sebagian radiasi inframerah ini dan memancarkannya kembali ke Bumi, sehingga Bumi menjadi lebih hangat daripada jika tidak ada atmosfer.</p>
+      <p>Inilah dasar dari efek rumah kaca — fenomena yang menjaga Bumi tetap hangat, tetapi juga menjadi masalah ketika kadar gas rumah kaca meningkat akibat aktivitas manusia.</p>
+    `,
+    reflection: "Setiap benda adalah pemancar cahaya, meskipun tidak terlihat. Suhu adalah cara alam semesta berbicara melalui radiasi.",
+    quiz: [
+      {
+        q: "Menurut Hukum Wien, jika suhu sebuah benda dinaikkan menjadi dua kali lipat, panjang gelombang puncak emisinya menjadi...",
+        opts: ["Dua kali", "Setengah", "Empat kali", "Tetap sama"],
+        ans: 1,
+        exp: "Hukum Wien: λ_max · T = konstan. Jika T menjadi 2 kali, λ_max menjadi setengahnya."
+      },
+      {
+        q: "Mengapa Bumi tetap hangat meskipun berada di ruang angkasa yang dingin?",
+        opts: [
+          "Karena Bumi memancarkan radiasi sendiri",
+          "Karena Bumi menyerap radiasi Matahari dan atmosfer menahan sebagian radiasi inframerah yang dipancarkan Bumi (efek rumah kaca)",
+          "Karena Bumi memiliki medan magnet",
+          "Karena Bumi berputar"
+        ],
+        ans: 1,
+        exp: "Bumi menyerap radiasi Matahari dan memanas. Sebagai benda hangat, Bumi memancarkan radiasi inframerah. Gas rumah kaca di atmosfer menyerap sebagian radiasi ini dan memancarkannya kembali ke Bumi, sehingga Bumi tetap hangat."
+      }
+    ]
+  },
+  {
+    day: 25, level: "Pemula", levelClass: "lv-pemula",
+    title: "Konduksi Panas",
+    subtitle: "Mengapa logam terasa lebih dingin dari kayu",
+    body: `
+      <p class="drop-cap">Sentuh gagang sendok logam dan gagang sendok kayu di meja Anda. Keduanya berada pada suhu ruangan yang sama. Tetapi logam terasa lebih dingin. Mengapa? Jawabannya adalah <strong>konduktivitas termal</strong> — kemampuan suatu bahan untuk menghantarkan panas.</p>
+      <p>Konduksi panas adalah perpindahan kalor melalui materi tanpa perpindahan materi itu sendiri. Partikel di ujung panas bergetar lebih cepat, menabrak partikel tetangga, dan mentransfer energi kinetik. Ini berlangsung terus sampai seluruh benda mencapai suhu yang sama.</p>
+      <p>Laju konduksi panas dijelaskan oleh Hukum Fourier:</p>
+      <div class="formula-soft">Q/t = k · A · ΔT / L</div>
+      <p>Di sini Q/t adalah laju aliran kalor (Watt), k adalah konduktivitas termal (W/m·K), A adalah luas penampang, ΔT adalah perbedaan suhu, dan L adalah panjang bahan.</p>
+      <p>Bahan dengan k yang tinggi menghantarkan panas dengan cepat. Bahan dengan k yang rendah menghantarkan panas dengan lambat.</p>
+      <div class="term-card">
+        <div class="term-name">🥇 Konduktor Baik (k tinggi)</div>
+        <div class="term-desc">Logam seperti tembaga (k = 401), perak (k = 429), aluminium (k = 237), dan besi (k = 80). Logam memiliki elektron bebas yang mudah bergerak dan mentransfer energi.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">🛡️ Isolator Baik (k rendah)</div>
+        <div class="term-desc">Kayu (k = 0,12), kaca (k = 1,0), plastik (k = 0,2), udara (k = 0,026), dan busa (k = 0,03). Bahan-bahan ini tidak memiliki elektron bebas, sehingga konduksinya lambat.</div>
+      </div>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan pipa air. Pipa besar (konduktivitas tinggi) mengalirkan air dengan cepat. Pipa kecil atau tersumbat (konduktivitas rendah) mengalirkan air dengan lambat. Demikian pula, konduktor termal mengalirkan kalor dengan cepat, isolator dengan lambat.</p>
+      </div>
+      <p>Kembali ke pertanyaan awal: mengapa logam terasa lebih dingin dari kayu? Karena logam menghantarkan kalor dari tangan Anda jauh lebih cepat daripada kayu. Suhu logam dan kayu sama (suhu ruangan), tetapi logam menyerap kalor dari tangan Anda lebih cepat, sehingga kulit Anda di titik kontak menjadi lebih dingin — dan Anda merasakannya sebagai "dingin".</p>
+      <p>Sebaliknya, di musim panas, logam terasa lebih panas daripada kayu. Logam menghantarkan kalor dari lingkungan ke tangan Anda lebih cepat, sehingga tangan Anda terasa lebih panas.</p>
+      <p>Konduktivitas termal memiliki banyak aplikasi dalam teknologi:</p>
+      <p><strong>Panas yang baik:</strong> Panci logam untuk memasak, radiator untuk memanaskan ruangan, heat sink untuk mendinginkan elektronik.</p>
+      <p><strong>Isolator yang baik:</strong> Gagang panci dari kayu atau plastik, jaket musim dingin, rumah dengan isolasi, termos untuk menyimpan minuman panas atau dingin.</p>
+      <p>Termos (vacuum flask) adalah contoh cerdas dari pemanfaatan prinsip ini. Ia memiliki dinding ganda dengan ruang hampa di antaranya. Karena ruang hampa tidak memiliki materi, tidak ada konduksi atau konveksi yang bisa terjadi. Radiasi diatasi dengan lapisan reflektif. Hasilnya: termos bisa menjaga suhu minuman selama berjam-jam.</p>
+      <p>Bumi juga memiliki konduktivitas termal yang penting. Tanah dan batuan adalah konduktor yang cukup baik, sehingga panas dari inti Bumi bisa mengalir ke permukaan. Di beberapa tempat, panas ini bisa dimanfaatkan sebagai energi geotermal — sumber energi terbarukan yang bersih dan berkelanjutan.</p>
+    `,
+    reflection: "Bahan yang sama bisa terasa berbeda karena laju kalor yang dihantarkan. Persepsi kita tentang suhu bergantung pada seberapa cepat kalor mengalir dari atau ke kulit kita.",
+    quiz: [
+      {
+        q: "Mengapa logam terasa lebih dingin daripada kayu pada suhu ruangan yang sama?",
+        opts: [
+          "Karena logam lebih dingin dari kayu",
+          "Karena logam menghantarkan kalor dari tangan lebih cepat, sehingga kulit menjadi lebih dingin",
+          "Karena kayu menyerap kalor",
+          "Karena logam lebih berat"
+        ],
+        ans: 1,
+        exp: "Logam dan kayu berada pada suhu yang sama. Tetapi logam memiliki konduktivitas termal yang jauh lebih tinggi, sehingga menghantarkan kalor dari tangan Anda lebih cepat. Ini membuat kulit Anda di titik kontak menjadi lebih dingin, dan Anda merasakannya sebagai 'dingin'."
+      },
+      {
+        q: "Menurut Hukum Fourier, laju konduksi kalor bergantung pada...",
+        opts: [
+          "Hanya perbedaan suhu",
+          "Konduktivitas termal, luas penampang, perbedaan suhu, dan panjang bahan",
+          "Hanya jenis bahan",
+          "Hanya panjang bahan"
+        ],
+        ans: 1,
+        exp: "Hukum Fourier: Q/t = k · A · ΔT / L. Laju konduksi bergantung pada konduktivitas termal (k), luas penampang (A), perbedaan suhu (ΔT), dan panjang bahan (L)."
+      }
+    ]
+  },
+  {
+    day: 26, level: "Pemula", levelClass: "lv-pemula",
+    title: "Konveksi dan Arus Panas",
+    subtitle: "Bagaimana angin dan arus laut terbentuk",
+    body: `
+      <p class="drop-cap">Ketika Anda merebus air di panci, Anda bisa melihat gelembung-gelembung naik dari bawah. Air di bagian bawah panci memanas lebih dulu, memuai, menjadi kurang padat, dan naik ke atas. Air yang lebih dingin di permukaan turun ke bawah untuk dipanaskan. Sirkulasi ini disebut <strong>arus konveksi</strong> — dan ini adalah mekanisme yang menggerakkan banyak fenomena di alam semesta.</p>
+      <p>Konveksi adalah perpindahan kalor melalui aliran fluida (cairan atau gas). Berbeda dengan konduksi, di mana kalor berpindah tanpa perpindahan materi, konveksi melibatkan perpindahan materi itu sendiri.</p>
+      <p>Konveksi terjadi karena perbedaan kepadatan. Ketika fluida dipanaskan, ia memuai, sehingga volumenya bertambah dan kepadatannya berkurang. Fluida yang kurang padat akan naik karena gaya apung (Archimedes). Sebaliknya, fluida yang lebih dingin (lebih padat) akan turun.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan gelembung udara di dalam air. Udara lebih ringan dari air, sehingga naik ke permukaan. Demikian pula, air panas lebih ringan dari air dingin, sehingga naik. Ketika air panas naik dan air dingin turun, terbentuklah arus konveksi.</p>
+      </div>
+      <p>Konveksi bisa terjadi secara alami atau dipaksa:</p>
+      <div class="term-card">
+        <div class="term-name">🌊 Konveksi Alami</div>
+        <div class="term-desc">Terjadi karena perbedaan kepadatan yang muncul dari perbedaan suhu. Contoh: air mendidih, angin laut, dan arus laut.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">💨 Konveksi Paksa</div>
+        <div class="term-desc">Terjadi karena ada alat yang memaksa aliran fluida. Contoh: kipas angin, pompa air, dan sistem pendingin mobil.</div>
+      </div>
+      <p>Konveksi adalah mekanisme utama yang menggerakkan atmosfer dan lautan Bumi. Matahari memanaskan udara di ekuator lebih banyak daripada di kutub. Udara panas di ekuator naik, dan udara dingin dari kutub mengalir untuk menggantikannya. Sirkulasi ini membentuk pola angin global — seperti angin pasat, angin barat, dan angin timur.</p>
+      <p>Di lautan, konveksi juga berperan penting. Air laut di sekitar ekuator menghangat dan naik, sementara air dingin dari kutub tenggelam dan mengalir di bawah permukaan. Sirkulasi ini disebut <strong>termohalin</strong> ("thermo" = panas, "haline" = garam), karena dipengaruhi oleh suhu dan salinitas (kadar garam).</p>
+      <p>Sirkulasi termohalin adalah salah satu sistem yang paling penting bagi iklim Bumi. Ia mengangkut panas dari ekuator ke kutub, memoderasi iklim global, dan mengangkut nutrisi ke seluruh lautan. Perubahan iklim dapat mengganggu sirkulasi ini, dengan konsekuensi yang belum sepenuhnya dipahami.</p>
+      <p>Matahari juga mengalami konveksi. Zona konveksi di dalam Matahari adalah wilayah di mana plasma panas naik ke permukaan, mendingin, dan turun kembali. Konveksi ini menyebabkan butiran-butiran di permukaan Matahari (granulasi) yang bisa diamati dengan teleskop surya.</p>
+      <p>Bahkan inti Bumi mengalami konveksi. Logam cair di inti luar Bumi bergerak karena perbedaan suhu dan rotasi Bumi. Gerakan ini menghasilkan medan magnet Bumi — pelindung yang menjaga kita dari radiasi Matahari dan angin Matahari.</p>
+      <p>Konveksi adalah pengingat bahwa alam semesta adalah sistem yang dinamis. Tidak ada yang benar-benar diam — bahkan di dalam benda yang tampak paling padat, fluida terus bergerak, membawa kalor dari satu tempat ke tempat lain.</p>
+    `,
+    reflection: "Konveksi adalah cara alam semesta mengalirkan kalor tanpa perlu konduksi langsung. Gerakan materi menjadi sarana perpindahan energi.",
+    quiz: [
+      {
+        q: "Apa yang menyebabkan terjadinya konveksi alami?",
+        opts: [
+          "Gaya gravitasi",
+          "Perbedaan kepadatan fluida akibat perbedaan suhu",
+          "Tekanan udara",
+          "Medan magnet"
+        ],
+        ans: 1,
+        exp: "Konveksi alami terjadi karena perbedaan kepadatan fluida akibat perbedaan suhu. Fluida panas memuai, menjadi kurang padat, dan naik. Fluida dingin lebih padat dan turun."
+      },
+      {
+        q: "Apa peran konveksi dalam atmosfer Bumi?",
+        opts: [
+          "Mendinginkan Bumi secara merata",
+          "Menggerakkan udara dan membentuk pola angin global dengan mengangkut panas dari ekuator ke kutub",
+          "Menghasilkan medan magnet Bumi",
+          "Menyerap radiasi Matahari"
+        ],
+        ans: 1,
+        exp: "Konveksi di atmosfer menggerakkan udara: udara panas di ekuator naik, udara dingin dari kutub mengalir untuk menggantikannya. Ini membentuk pola angin global yang penting bagi iklim Bumi."
+      }
+    ]
+  },
+  {
+    day: 27, level: "Pemula", levelClass: "lv-pemula",
+    title: "Radiasi Termal dan Spektrum Elektromagnetik",
+    subtitle: "Bagaimana benda memancarkan energi melalui ruang",
+    body: `
+      <p class="drop-cap">Matahari berjarak 150 juta kilometer dari Bumi. Di antara kita dan Matahari ada ruang hampa yang luas. Bagaimana mungkin energi Matahari sampai ke Bumi? Jawabannya adalah <strong>radiasi elektromagnetik</strong> — satu-satunya cara kalor bisa berpindah melalui ruang hampa.</p>
+      <p>Radiasi elektromagnetik mencakup seluruh spektrum dari gelombang radio hingga sinar gamma. Semua gelombang ini bergerak dengan kecepatan cahaya (3 × 10⁸ m/s) dan tidak memerlukan medium untuk merambat. Inilah sebabnya cahaya Matahari bisa melewati ruang angkasa yang hampa.</p>
+      <p>Spektrum elektromagnetik terdiri dari:</p>
+      <div class="term-card">
+        <div class="term-name">📻 Gelombang Radio</div>
+        <div class="term-desc">Panjang gelombang paling panjang (dari beberapa milimeter hingga kilometer). Tidak berbahaya bagi manusia. Digunakan untuk komunikasi, siaran TV, dan astronomi radio.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">📡 Gelombang Mikro</div>
+        <div class="term-desc">Panjang gelombang dari 1 mm hingga 30 cm. Digunakan dalam oven microwave dan radar. Radiasi latar belakang kosmik (CMB) berada dalam spektrum ini.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">🔥 Inframerah</div>
+        <div class="term-desc">Panjang gelombang dari 700 nm hingga 1 mm. Dirasakan sebagai panas. Digunakan dalam penglihatan malam dan sensor termal.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">👁️ Cahaya Tampak</div>
+        <div class="term-desc">Panjang gelombang dari 400 nm (ungu) hingga 700 nm (merah). Satu-satunya bagian spektrum yang bisa dilihat mata manusia.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">☀️ Ultraviolet</div>
+        <div class="term-desc">Panjang gelombang dari 10 nm hingga 400 nm. Berbahaya bagi kulit, tetapi penting untuk produksi vitamin D. Sebagian besar diserap atmosfer.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">🩻 Sinar-X dan Sinar Gamma</div>
+        <div class="term-desc">Panjang gelombang sangat pendek (di bawah 10 nm). Energi sangat tinggi. Digunakan dalam medis (sinar-X) dan berasal dari fenomena ekstrem seperti supernova dan lubang hitam (sinar gamma).</div>
+      </div>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan spektrum elektromagnetik seperti piano dengan 88 tuts. Setiap tuts mewakili panjang gelombang yang berbeda. Mata manusia hanya bisa "mendengar" beberapa tuts di tengah — sisanya tidak terlihat, tetapi tetap ada.</p>
+      </div>
+      <p>Setiap benda memancarkan radiasi elektromagnetik berdasarkan suhunya. Semakin panas benda, semakin pendek panjang gelombang puncak emisinya (Hukum Wien). Benda pada suhu kamar memancarkan sebagian besar energi di inframerah. Benda pada suhu 1000 K memancarkan sebagian di cahaya tampak merah. Benda pada suhu 6000 K memancarkan sebagian besar di cahaya tampak.</p>
+      <p>Radiasi elektromagnetik memiliki banyak aplikasi dalam kehidupan sehari-hari. Oven microwave menggunakan gelombang mikro untuk memanaskan makanan. Remote control TV menggunakan inframerah. Lampu pijar menghasilkan cahaya dengan memanaskan filamen hingga suhu tinggi. Panel surya mengubah cahaya Matahari menjadi listrik.</p>
+      <p>Dalam astronomi, seluruh spektrum elektromagnetik digunakan untuk mengamati alam semesta. Teleskop radio mendeteksi gelombang radio dari galaksi jauh. Teleskop inframerah melihat melalui awan debu. Teleskop X-ray mengamati lubang hitam dan bintang neutron. Teleskop sinar gamma mempelajari ledakan paling energetik di alam semesta.</p>
+      <p>Radiasi elektromagnetik adalah jendela alam semesta. Dengan mempelajarinya, kita bisa memahami bintang, galaksi, dan bahkan awal alam semesta itu sendiri.</p>
+    `,
+    reflection: "Cahaya adalah utusan dari bintang-bintang. Dengan mempelajari spektrumnya, kita bisa membaca pesan yang sudah berjalan miliaran tahun.",
+    quiz: [
+      {
+        q: "Bagaimana energi Matahari bisa sampai ke Bumi meskipun ada ruang hampa di antaranya?",
+        opts: [
+          "Melalui konduksi",
+          "Melalui konveksi",
+          "Melalui radiasi elektromagnetik, yang tidak memerlukan medium",
+          "Melalui angin matahari"
+        ],
+        ans: 2,
+        exp: "Radiasi elektromagnetik adalah satu-satunya mekanisme perpindahan kalor yang tidak memerlukan medium. Radiasi Matahari bisa melewati ruang hampa dan sampai ke Bumi."
+      },
+      {
+        q: "Menurut Hukum Wien, benda dengan suhu lebih tinggi memancarkan radiasi dengan...",
+        opts: [
+          "Panjang gelombang puncak yang lebih panjang",
+          "Panjang gelombang puncak yang lebih pendek",
+          "Intensitas yang lebih rendah",
+          "Tidak memancarkan radiasi"
+        ],
+        ans: 1,
+        exp: "Hukum Wien: λ_max · T = konstan. Semakin tinggi suhu (T), semakin pendek panjang gelombang puncak emisinya. Bintang panas memancarkan puncak di biru/UV, bintang dingin di merah/inframerah."
+      }
+    ]
+  },
+  {
+    day: 28, level: "Pemula", levelClass: "lv-pemula",
+    title: "Efek Rumah Kaca",
+    subtitle: "Mengapa Bumi tetap hangat — dan mengapa ia memanas",
+    body: `
+      <p class="drop-cap">Bumi menerima energi dari Matahari setiap hari. Tetapi jika Bumi tidak memiliki atmosfer, suhu rata-rata permukaannya akan sekitar −18°C. Air akan membeku di sebagian besar planet. Kehidupan seperti yang kita kenal tidak akan mungkin. Namun suhu rata-rata Bumi saat ini adalah +15°C. Selisih 33°C ini disebabkan oleh <strong>efek rumah kaca</strong>.</p>
+      <p>Efek rumah kaca bukanlah hal yang buruk — ia justru yang membuat Bumi layak huni. Masalahnya muncul ketika aktivitas manusia meningkatkan konsentrasi gas rumah kaca, sehingga efek ini menjadi terlalu kuat.</p>
+      <p>Bagaimana efek rumah kaca bekerja?</p>
+      <p><strong>1.</strong> Matahari memancarkan radiasi pada panjang gelombang pendek (cahaya tampak dan ultraviolet) karena suhunya sangat tinggi (5800 K).</p>
+      <p><strong>2.</strong> Sebagian radiasi ini diserap oleh permukaan Bumi dan menghangatkannya.</p>
+      <p><strong>3.</strong> Bumi, sebagai benda dengan suhu sekitar 288 K, memancarkan radiasi pada panjang gelombang panjang (inframerah) — bukan cahaya tampak.</p>
+      <p><strong>4.</strong> Gas-gas tertentu di atmosfer — terutama uap air (H₂O), karbon dioksida (CO₂), metana (CH₄), dan nitro oksida (N₂O) — menyerap sebagian radiasi inframerah ini.</p>
+      <p><strong>5.</strong> Gas-gas ini memancarkan kembali sebagian radiasi ke Bumi, sehingga Bumi tetap hangat.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Bayangkan efek rumah kaca seperti selimut. Selimut tidak menghasilkan panas — ia hanya menahan panas tubuh Anda agar tidak cepat keluar. Demikian pula, gas rumah kaca tidak menghasilkan panas, tetapi menahan sebagian panas Bumi agar tidak langsung lepas ke angkasa.</p>
+      </div>
+      <p>Tanpa efek rumah kaca, Bumi akan menjadi planet beku. Dengan efek rumah kaca alami, Bumi menjadi planet yang nyaman untuk kehidupan. Tetapi jika efek rumah kaca terlalu kuat — seperti di Venus — suhu permukaan bisa mencapai ratusan derajat Celsius.</p>
+      <p>Venus adalah contoh ekstrem. Atmosfernya yang tebal (96% CO₂) menciptakan efek rumah kaca yang sangat kuat, sehingga suhu permukaannya mencapai 465°C — lebih panas dari Merkurius, meskipun Venus lebih jauh dari Matahari.</p>
+      <p>Sejak Revolusi Industri (sekitar 1750), konsentrasi CO₂ di atmosfer telah meningkat dari 280 ppm menjadi lebih dari 420 ppm. Peningkatan ini disebabkan oleh pembakaran bahan bakar fosil (batu bara, minyak, gas), deforestasi, dan aktivitas industri lainnya.</p>
+      <p>Akibatnya, suhu rata-rata global telah meningkat sekitar 1,1°C sejak masa pra-industri. Kenaikan ini tampak kecil, tetapi berdampak besar: es di kutub mencair, permukaan laut naik, cuaca ekstrem menjadi lebih sering, dan ekosistem berubah.</p>
+      <p>Memahami efek rumah kaca adalah kunci untuk memahami perubahan iklim. Dengan mengurangi emisi gas rumah kaca, kita bisa menjaga Bumi tetap layak huni untuk generasi mendatang. Ini adalah tantangan terbesar umat manusia di abad ke-21 — dan akar ilmiahnya terletak pada termodinamika.</p>
+    `,
+    reflection: "Efek rumah kaca adalah contoh sempurna dari keseimbangan termodinamika. Terlalu sedikit, planet menjadi beku. Terlalu banyak, planet menjadi neraka.",
+    quiz: [
+      {
+        q: "Mengapa Bumi memancarkan radiasi pada panjang gelombang yang lebih panjang daripada Matahari?",
+        opts: [
+          "Karena Bumi lebih kecil dari Matahari",
+          "Karena Bumi memiliki suhu yang lebih rendah dari Matahari",
+          "Karena Bumi memiliki atmosfer",
+          "Karena Bumi berputar"
+        ],
+        ans: 1,
+        exp: "Menurut Hukum Wien (λ_max · T = konstan), benda dengan suhu lebih rendah memancarkan puncak pada panjang gelombang yang lebih panjang. Matahari (5800 K) memancarkan cahaya tampak, Bumi (288 K) memancarkan inframerah."
+      },
+      {
+        q: "Apa yang terjadi jika efek rumah kaca terlalu kuat?",
+        opts: [
+          "Bumi menjadi lebih dingin",
+          "Bumi menjadi lebih hangat, seperti yang terjadi di Venus",
+          "Bumi kehilangan atmosfer",
+          "Bumi berhenti berputar"
+        ],
+        ans: 1,
+        exp: "Jika efek rumah kaca terlalu kuat, suhu permukaan Bumi akan meningkat drastis. Venus adalah contoh ekstrem: dengan atmosfer 96% CO₂, suhu permukaannya mencapai 465°C."
+      }
+    ]
+  },
+  {
+    day: 29, level: "Pemula", levelClass: "lv-pemula",
+    title: "Termodinamika di Kehidupan Sehari-hari",
+    subtitle: "Dari kulkas hingga mesin mobil",
+    body: `
+      <p class="drop-cap">Setelah 28 hari belajar, mungkin Anda bertanya: di mana termodinamika diterapkan dalam kehidupan sehari-hari? Jawabannya: di mana-mana. Dari pagi hingga malam, kita dikelilingi oleh perangkat yang bekerja berdasarkan prinsip termodinamika.</p>
+      <p>Mari kita jelajahi beberapa aplikasi paling penting:</p>
+      <h3>🏠 Kulkas dan AC</h3>
+      <p>Kulkas memindahkan kalor dari dalam (dingin) ke luar (panas) menggunakan kerja kompresor. Ini adalah mesin Carnot yang dijalankan terbalik. AC bekerja dengan prinsip yang sama, memindahkan kalor dari dalam ruangan ke luar.</p>
+      <h3>🚗 Mesin Mobil</h3>
+      <p>Mesin bensin dan diesel adalah mesin kalor. Bahan bakar dibakar untuk menghasilkan gas panas yang mendorong piston. Energi termal diubah menjadi energi mekanik untuk menggerakkan mobil. Efisiensi mesin bensin hanya sekitar 25–30% — sebagian besar energi terbuang sebagai panas melalui radiator dan gas buang.</p>
+      <h3>🔌 Pembangkit Listrik</h3>
+      <p>Pembangkit listrik tenaga batu bara, gas, dan nuklir semuanya adalah mesin kalor. Bahan bakar (atau reaksi nuklir) memanaskan air menjadi uap. Uap memutar turbin yang menghasilkan listrik. Efisiensi sekitar 33–45%, tergantung pada suhu operasi.</p>
+      <h3>🍳 Memasak</h3>
+      <p>Saat memasak, kita memindahkan kalor ke makanan melalui konduksi (di wajan), konveksi (di air mendidih), atau radiasi (di oven/microwave). Kalor laten air sangat penting dalam merebus dan mengukus.</p>
+      <h3>🏠 Isolasi Rumah</h3>
+      <p>Rumah di daerah dingin dilengkapi dengan isolasi (bahan dengan konduktivitas termal rendah) untuk mengurangi aliran kalor keluar. Jendela kaca ganda menggunakan lapisan udara di antara kaca untuk isolasi tambahan.</p>
+      <h3>🚀 Roket dan Mesin Jet</h3>
+      <p>Mesin jet dan roket juga merupakan mesin kalor. Udara (atau oksigen) dicampur dengan bahan bakar dan dibakar untuk menghasilkan gas panas yang mendorong kendaraan. Efisiensi mesin jet lebih tinggi dari mesin bensin karena beroperasi pada suhu yang lebih tinggi.</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Termodinamika adalah "fisika dari kehidupan sehari-hari". Setiap kali Anda menyalakan kompor, menyalakan AC, atau mengemudikan mobil, Anda sedang berinteraksi dengan prinsip-prinsip yang kita pelajari selama 30 hari ini.</p>
+      </div>
+      <p>Yang menarik, semua aplikasi ini bekerja dalam kerangka yang sama: Hukum I (kekekalan energi), Hukum II (arah proses), dan konsep-konsep seperti entropi, kerja, dan efisiensi. Termodinamika bukan hanya teori abstrak — ia adalah fondasi dari peradaban modern kita.</p>
+      <p>Setiap kali Anda menggunakan perangkat yang mengubah energi, Anda sedang berinteraksi dengan warisan ilmiah dari Carnot, Clausius, Kelvin, Boltzmann, dan banyak fisikawan lain yang telah membangun bidang ini. Pemahaman mereka tentang kalor dan energi telah mengubah dunia lebih dari revolusi mana pun dalam sejarah manusia.</p>
+    `,
+    reflection: "Termodinamika adalah fisika yang hidup. Ia bekerja di setiap perangkat, setiap makhluk hidup, dan setiap bintang di alam semesta.",
+    quiz: [
+      {
+        q: "Mengapa mesin bensin memiliki efisiensi hanya sekitar 25-30%?",
+        opts: [
+          "Karena mesinnya rusak",
+          "Karena sebagian besar energi bahan bakar terbuang sebagai panas, sesuai dengan batas efisiensi Carnot",
+          "Karena bahan bakarnya tidak bagus",
+          "Karena mesinnya terlalu kecil"
+        ],
+        ans: 1,
+        exp: "Mesin bensin adalah mesin kalor, dan efisiensinya dibatasi oleh efisiensi Carnot. Sebagian besar energi bahan bakar terbuang sebagai panas melalui radiator dan gas buang. Ini adalah keterbatasan fundamental, bukan keterbatasan teknis."
+      },
+      {
+        q: "Apa prinsip dasar di balik kulkas?",
+        opts: [
+          "Menciptakan dingin dari listrik",
+          "Memindahkan kalor dari dalam (dingin) ke luar (panas) dengan menggunakan kerja, seperti mesin Carnot yang dijalankan terbalik",
+          "Menyerap kalor dengan bahan kimia",
+          "Menggunakan medan magnet"
+        ],
+        ans: 1,
+        exp: "Kulkas memindahkan kalor dari dalam (dingin) ke luar (panas) dengan menggunakan kerja. Ini adalah siklus Carnot yang dijalankan terbalik — mesin kalor yang beroperasi sebagai pompa kalor."
+      }
+    ]
+  },
+  {
+    day: 30, level: "Pemula", levelClass: "lv-pemula",
+    title: "Refleksi Bulan Pertama Termodinamika",
+    subtitle: "Apa yang sudah kita pelajari, dan apa yang akan datang",
+    body: `
+      <p class="drop-cap">Selamat! Anda telah menyelesaikan 30 hari pertama dalam perjalanan belajar termodinamika. Ini adalah pencapaian yang patut dirayakan. Anda telah menjelajahi salah satu bidang fisika yang paling mendalam dan paling bermanfaat.</p>
+      <p>Dalam 30 hari, Anda telah mempelajari:</p>
+      <p><strong>Minggu 1:</strong> Suhu, kalor, skala termometer, pemuaian, kalor jenis, dan tiga mekanisme perpindahan kalor (konduksi, konveksi, radiasi).</p>
+      <p><strong>Minggu 2:</strong> Gas ideal, Hukum Boyle, Hukum Charles, Hukum Gay-Lussac, teori kinetik gas, dan energi dalam.</p>
+      <p><strong>Minggu 3:</strong> Hukum I Termodinamika, kerja, proses isotermal, adiabatik, isobarik, isokhorik, dan mesin kalor.</p>
+      <p><strong>Minggu 4:</strong> Hukum II Termodinamika, entropi, siklus Carnot, kulkas, arah waktu, entalpi, kalor laten, radiasi benda hitam, dan efek rumah kaca.</p>
+      <p>Ini adalah fondasi yang sangat kuat. Dengan pemahaman ini, Anda sudah bisa:</p>
+      <p>• Menjelaskan mengapa kopi menjadi dingin<br>
+      • Menghitung berapa kalor yang dibutuhkan untuk memanaskan air<br>
+      • Memahami mengapa mesin mobil tidak bisa 100% efisien<br>
+      • Menjelaskan mengapa waktu hanya berjalan satu arah<br>
+      • Memahami fisika di balik perubahan iklim</p>
+      <div class="analogy-box">
+        <span class="label">Analogi</span>
+        <p class="mb-0">Anda seperti seseorang yang baru menyelesaikan kursus dasar memasak. Anda sudah tahu bahan-bahannya, alat-alatnya, dan teknik-teknik dasarnya. Sekarang Anda siap untuk memasak hidangan yang lebih kompleks — dan bahkan menciptakan resep sendiri.</p>
+      </div>
+      <p>Jika Anda ingin melanjutkan, ada lima tahap lagi dalam program ini:</p>
+      <p><strong>Tahap II — Gas & Kinetik:</strong> Teori kinetik gas yang lebih mendalam, distribusi Maxwell-Boltzmann, dan fenomena transportasi.</p>
+      <p><strong>Tahap III — Potensial & Fasa:</strong> Potensial termodinamika (entalpi, energi bebas Helmholtz, energi bebas Gibbs), transisi fasa, dan diagram fasa.</p>
+      <p><strong>Tahap IV — Statistik Termal:</strong> Mekanika statistik, fungsi partisi, statistik Bose-Einstein dan Fermi-Dirac.</p>
+      <p><strong>Tahap V — Aplikasi Teknik:</strong> Siklus Rankine, siklus Otto, siklus Diesel, refrigerasi, dan pembangkit listrik.</p>
+      <p><strong>Tahap VI — Olimpiade & Lanjutan:</strong> Soal-soal olimpiade, termodinamika kuantum, dan topik-topik lanjutan.</p>
+      <p>Termodinamika adalah bidang yang sangat luas dan mendalam. Setiap tahap akan membawa Anda lebih dalam ke dalam keindahan dan kompleksitasnya. Yang paling penting adalah terus belajar dengan sabar — lima menit sehari, satu cerita demi satu cerita.</p>
+      <p>Terima kasih telah menempuh perjalanan ini. Semoga termodinamika menjadi teman Anda dalam memahami alam semesta — dari segelas air panas hingga bintang-bintang di langit.</p>
+    `,
+    reflection: "Setiap akhir adalah awal dari sesuatu yang baru. Anda telah menyelesaikan 30 hari — sekarang, lihatlah apa yang ada di depan.",
+    quiz: [
+      {
+        q: "Apa yang sudah Anda pelajari dalam 30 hari pertama termodinamika?",
+        opts: [
+          "Hanya tentang suhu",
+          "Dasar-dasar termodinamika: suhu, kalor, gas, hukum I & II, entropi, dan mesin kalor",
+          "Hanya tentang mesin",
+          "Hanya tentang entropi"
+        ],
+        ans: 1,
+        exp: "Dalam 30 hari, Anda telah mempelajari dasar-dasar termodinamika yang mencakup suhu, kalor, gas ideal, Hukum I & II, entropi, dan mesin kalor."
+      },
+      {
+        q: "Apa yang sebaiknya dilakukan setelah menyelesaikan 30 hari pertama?",
+        opts: [
+          "Berhenti belajar termodinamika",
+          "Melanjutkan ke tahap berikutnya atau mengulang jika belum siap",
+          "Langsung menjadi profesor",
+          "Membaca buku tanpa praktik"
+        ],
+        ans: 1,
+        exp: "Setelah 30 hari pertama, Anda bisa melanjutkan ke tahap berikutnya (Tahap II — Gas & Kinetik), atau mengulang jika belum sepenuhnya nyaman."
+      }
+    ]
+  }
+];
+
+/* =========================================================
+   STATE & LOCALSTORAGE
+   ========================================================= */
+let state = { completed: [], quiz: {}, currentDay: 1 };
+const TOTAL_DAYS = 30;
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('termodinamika_tahap1');
+    if (s) state = JSON.parse(s);
+  } catch(e) {}
+  if (!state.completed) state.completed = [];
+  if (!state.quiz) state.quiz = {};
+  if (!state.currentDay) state.currentDay = 1;
+}
+function saveState() {
+  localStorage.setItem('termodinamika_tahap1', JSON.stringify(state));
+}
+
+function switchTab(name, btn) {
+  ['cerita','gas','carnot','peta'].forEach(t => {
+    document.getElementById('view-' + t).classList.toggle('hidden', t !== name);
+  });
+  document.querySelectorAll('.main-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (name === 'gas') updateGasSim();
+  if (name === 'carnot') updateCarnotSim();
+  if (name === 'peta') renderProgressGrid();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderDay(dayNum) {
+  if (dayNum < 1 || dayNum > TOTAL_DAYS) return;
+  state.currentDay = dayNum;
+  saveState();
+
+  const s = stories[dayNum - 1];
+
+  const chip = document.getElementById('levelChip');
+  chip.className = 'level-chip ' + s.levelClass;
+  chip.textContent = s.level;
+
+  document.getElementById('storyTitle').textContent = `Hari ${dayNum}: ${s.title}`;
+  document.getElementById('storySubtitle').textContent = s.subtitle;
+  document.getElementById('storyBody').innerHTML = s.body;
+  document.getElementById('reflectionText').textContent = s.reflection;
+
+  renderQuiz(s.quiz, dayNum);
+  updateDayStatus(dayNum);
+
+  document.getElementById('btnPrev').disabled = dayNum === 1;
+  document.getElementById('btnNext').disabled = dayNum === TOTAL_DAYS;
+  document.getElementById('counterText').textContent = `${dayNum} / ${TOTAL_DAYS}`;
+
+  const pct = Math.round((dayNum / TOTAL_DAYS) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `Hari ${dayNum} dari ${TOTAL_DAYS}`;
+  document.getElementById('progressPercent').textContent = pct + '%';
+
+  renderDayPills();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderQuiz(quiz, dayNum) {
+  const c = document.getElementById('quizContainer');
+  c.innerHTML = '';
+  quiz.forEach((q, qi) => {
+    const box = document.createElement('div');
+    box.className = 'mb-6';
+    box.innerHTML = `<p class="font-semibold text-sm text-slate-200 mb-3">${qi + 1}. ${q.q}</p>`;
+    const wrap = document.createElement('div');
+    q.opts.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = String.fromCharCode(65 + oi) + '. ' + opt;
+      btn.onclick = () => {
+        wrap.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+        if (oi === q.ans) btn.classList.add('correct');
+        else {
+          btn.classList.add('wrong');
+          wrap.querySelectorAll('.quiz-opt')[q.ans].classList.add('correct');
+        }
+        const fb = document.createElement('div');
+        fb.className = 'feedback show ' + (oi === q.ans ? 'ok' : 'no');
+        fb.innerHTML = (oi === q.ans ? '✓ Tepat. ' : '✗ Belum tepat. ') + q.exp;
+        box.appendChild(fb);
+        if (!state.quiz[dayNum]) state.quiz[dayNum] = {};
+        state.quiz[dayNum][qi] = (oi === q.ans ? 1 : 0);
+        saveState();
+      };
+      wrap.appendChild(btn);
+    });
+    box.appendChild(wrap);
+    c.appendChild(box);
+  });
+}
+
+function updateDayStatus(day) {
+  const isDone = state.completed.includes(day);
+  const statusEl = document.getElementById('dayStatus');
+  const btn = document.getElementById('btnComplete');
+  if (isDone) {
+    statusEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i><span class="text-emerald-300 text-sm">Hari ini sudah selesai</span>`;
+    btn.innerHTML = `<i class="fa-solid fa-check"></i> Selesai`;
+    btn.className = 'px-5 py-2.5 rounded-xl bg-slate-700 text-slate-300 font-semibold text-sm flex items-center gap-2 cursor-default';
+    btn.onclick = null;
+  } else {
+    statusEl.innerHTML = `<i class="fa-regular fa-circle text-slate-500"></i><span class="text-slate-400 text-sm">Belum ditandai selesai</span>`;
+    btn.innerHTML = `<i class="fa-solid fa-check-circle"></i> Tandai Selesai`;
+    btn.className = 'px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-sm shadow-lg transition flex items-center gap-2';
+    btn.onclick = markComplete;
+  }
+}
+
+function markComplete() {
+  const day = state.currentDay;
+  if (!state.completed.includes(day)) {
+    state.completed.push(day);
+    saveState();
+    updateDayStatus(day);
+    renderDayPills();
+    if (day < TOTAL_DAYS) setTimeout(() => renderDay(day + 1), 500);
+  }
+}
+
+function changeDay(delta) {
+  const n = state.currentDay + delta;
+  if (n >= 1 && n <= TOTAL_DAYS) renderDay(n);
+}
+
+function renderDayPills() {
+  const el = document.getElementById('dayPills');
+  el.innerHTML = '';
+  stories.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'day-pill';
+    if (state.completed.includes(s.day)) btn.classList.add('done');
+    if (s.day === state.currentDay) btn.classList.add('active');
+    btn.textContent = s.day;
+    btn.title = s.title;
+    btn.onclick = () => renderDay(s.day);
+    el.appendChild(btn);
+  });
+}
+
+/* =========================================================
+   SIMULASI GAS IDEAL
+   ========================================================= */
+function updateGasSim() {
+  const n = parseFloat(document.getElementById('gasN').value);
+  const T = parseFloat(document.getElementById('gasT').value);
+  const V = parseFloat(document.getElementById('gasV').value);
+
+  document.getElementById('valGasT').textContent = T + ' K';
+  document.getElementById('valGasV').textContent = V.toFixed(1) + ' L';
+
+  // P = nRT/V ; R = 0.0821 L·atm/mol·K
+  const P = (n * 0.0821 * T) / V;
+  document.getElementById('outGasP').textContent = P.toFixed(2) + ' atm';
+
+  // Energi kinetik rata-rata: KE = 3/2 kT
+  const k = 1.38e-23;
+  const KE = 1.5 * k * T;
+  document.getElementById('outGasKE').textContent = KE.toExponential(2) + ' J';
+
+  // v_rms untuk molekul N2 (M = 0.028 kg/mol)
+  const R = 8.314;
+  const M = 0.028;
+  const vrms = Math.sqrt(3 * R * T / M);
+  document.getElementById('outGasVrms').textContent = vrms.toFixed(0) + ' m/s';
+
+  drawGasSim(n, T, V, P);
+}
+
+function drawGasSim(n, T, V, P) {
+  const c = document.getElementById('gasCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const w = c.width = c.clientWidth;
+  const h = c.height = c.clientHeight;
+
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = '#050714';
+  ctx.fillRect(0, 0, w, h);
+
+  // Gambar kotak gas (proporsional dengan V)
+  const boxScale = 0.6 + (V / 50) * 0.35;
+  const boxSize = Math.min(w, h) * boxScale;
+  const cx = w / 2, cy = h / 2;
+  const bx = cx - boxSize / 2;
+  const by = cy - boxSize / 2;
+
+  // Warna berdasarkan suhu
+  const hue = Math.max(0, Math.min(240, 240 - (T - 100) * 0.35));
+  const boxColor = `hsla(${hue}, 80%, 60%, 0.15)`;
+  const borderColor = `hsla(${hue}, 80%, 60%, 0.7)`;
+
+  ctx.fillStyle = boxColor;
+  ctx.fillRect(bx, by, boxSize, boxSize);
+  ctx.strokeStyle = borderColor;
+  ctx.lineWidth = 2;
+  ctx.strokeRect(bx, by, boxSize, boxSize);
+
+  // Gambar partikel
+  const nPart = Math.floor(n * 30 + 20);
+  const speed = 0.5 + (T / 1000) * 3;
+
+  // Simpan posisi partikel jika belum ada
+  if (!window.gasParticles || window.gasParticles.length !== nPart) {
+    window.gasParticles = Array.from({length: nPart}, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      vx: (Math.random() - 0.5),
+      vy: (Math.random() - 0.5)
+    }));
+  }
+
+  const particles = window.gasParticles;
+  particles.forEach(p => {
+    p.x += p.vx * 0.005 * speed;
+    p.y += p.vy * 0.005 * speed;
+    if (p.x < 0.02 || p.x > 0.98) p.vx *= -1;
+    if (p.y < 0.02 || p.y > 0.98) p.vy *= -1;
+    p.x = Math.max(0.02, Math.min(0.98, p.x));
+    p.y = Math.max(0.02, Math.min(0.98, p.y));
+
+    const px = bx + p.x * boxSize;
+    const py = by + p.y * boxSize;
+
+    ctx.beginPath();
+    ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${hue}, 90%, 70%, 0.9)`;
+    ctx.fill();
+  });
+
+  // Label
+  ctx.fillStyle = '#fca5a5';
+  ctx.font = 'bold 12px Inter';
+  ctx.fillText(`T = ${T} K`, 15, 25);
+  ctx.fillText(`V = ${V.toFixed(1)} L`, 15, 45);
+  ctx.fillStyle = '#fdba74';
+  ctx.fillText(`P = ${P.toFixed(2)} atm`, 15, 65);
+
+  // Terus animasikan
+  requestAnimationFrame(() => {
+    if (!document.getElementById('view-gas').classList.contains('hidden')) {
+      drawGasSim(n, T, V, P);
+    }
+  });
+}
+
+/* =========================================================
+   SIMULASI SIKLUS CARNOT
+   ========================================================= */
+function updateCarnotSim() {
+  const Th = parseFloat(document.getElementById('carnotTHot').value);
+  const Tc = parseFloat(document.getElementById('carnotTCold').value);
+
+  if (Tc >= Th) {
+    document.getElementById('outCarnotEff').textContent = 'Error';
+    document.getElementById('outCarnotW').textContent = '—';
+    document.getElementById('outCarnotRatio').textContent = 'T_cold harus lebih kecil dari T_hot';
+    drawCarnotSim(Th, Tc);
+    return;
+  }
+
+  const eff = 1 - Tc / Th;
+  const W = 1000 * eff; // Qh = 1000 J
+  const Qc = 1000 - W;
+
+  document.getElementById('outCarnotEff').textContent = (eff * 100).toFixed(1) + '%';
+  document.getElementById('outCarnotW').textContent = W.toFixed(0) + ' J';
+  document.getElementById('outCarnotRatio').textContent = `1000 : ${Qc.toFixed(0)} : ${W.toFixed(0)}`;
+
+  drawCarnotSim(Th, Tc);
+}
+
+function drawCarnotSim(Th, Tc) {
+  const c = document.getElementById('carnotCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const w = c.width = c.clientWidth;
+  const h = c.height = c.clientHeight;
+
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = '#050714';
+  ctx.fillRect(0, 0, w, h);
+
+  // Sumbu
+  const padding = 40;
+  const plotW = w - padding * 2;
+  const plotH = h - padding * 2;
+
+  ctx.strokeStyle = '#334155';
+  ctx.lineWidth = 1;
+  // Sumbu V (horizontal)
+  ctx.beginPath();
+  ctx.moveTo(padding, h - padding);
+  ctx.lineTo(w - padding, h - padding);
+  ctx.stroke();
+  // Sumbu P (vertikal)
+  ctx.beginPath();
+  ctx.moveTo(padding, padding);
+  ctx.lineTo(padding, h - padding);
+  ctx.stroke();
+
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '11px Inter';
+  ctx.fillText('V →', w - padding - 20, h - padding + 18);
+  ctx.fillText('P ↑', padding - 25, padding + 10);
+
+  // Gambar siklus Carnot ideal
+  // 4 titik: A (V1, P1) isotermal atas, B (V2, P2), C (V3, P3) isotermal bawah, D (V4, P4)
+  // Skala: 
+  const Vmin = 1, Vmax = 8;
+  const Pmin = 0.2, Pmax = 5;
+
+  // Helper
+  function toX(V) { return padding + ((V - Vmin) / (Vmax - Vmin)) * plotW; }
+  function toY(P) { return h - padding - ((P - Pmin) / (Pmax - Pmin)) * plotH; }
+
+  // Titik-titik siklus (nilai kira-kira)
+  const ratio = Tc / Th;
+  const A = { V: 1.5, P: 4.5 };
+  const B = { V: 4.0, P: 1.7 };
+  // C dan D pada isotermal rendah, dengan rasio yang sama
+  const C = { V: 5.2, P: 0.9 };
+  const D = { V: 2.0, P: 2.3 };
+
+  // Warna berdasarkan suhu
+  const hueTh = 0; // merah untuk panas
+  const hueTc = 220; // biru untuk dingin
+
+  // 1. A→B isotermal panas
+  ctx.beginPath();
+  ctx.strokeStyle = `hsl(${hueTh}, 80%, 60%)`;
+  ctx.lineWidth = 3;
+  for (let t = 0; t <= 1; t += 0.01) {
+    const V = A.V * Math.pow(B.V / A.V, t);
+    const P = A.P * (A.V / V); // PV = konstan
+    if (t === 0) ctx.moveTo(toX(V), toY(P));
+    else ctx.lineTo(toX(V), toY(P));
+  }
+  ctx.stroke();
+
+  // 2. B→C adiabatik
+  ctx.beginPath();
+  ctx.strokeStyle = `hsl(30, 80%, 60%)`;
+  for (let t = 0; t <= 1; t += 0.01) {
+    const V = B.V + (C.V - B.V) * t;
+    const P = B.P * Math.pow(B.V / V, 1.4);
+    if (t === 0) ctx.moveTo(toX(V), toY(P));
+    else ctx.lineTo(toX(V), toY(P));
+  }
+  ctx.stroke();
+
+  // 3. C→D isotermal dingin
+  ctx.beginPath();
+  ctx.strokeStyle = `hsl(${hueTc}, 80%, 60%)`;
+  for (let t = 0; t <= 1; t += 0.01) {
+    const V = C.V * Math.pow(D.V / C.V, t);
+    const P = C.P * (C.V / V);
+    if (t === 0) ctx.moveTo(toX(V), toY(P));
+    else ctx.lineTo(toX(V), toY(P));
+  }
+  ctx.stroke();
+
+  // 4. D→A adiabatik
+  ctx.beginPath();
+  ctx.strokeStyle = `hsl(30, 80%, 60%)`;
+  for (let t = 0; t <= 1; t += 0.01) {
+    const V = D.V + (A.V - D.V) * t;
+    const P = D.P * Math.pow(D.V / V, 1.4);
+    if (t === 0) ctx.moveTo(toX(V), toY(P));
+    else ctx.lineTo(toX(V), toY(P));
+  }
+  ctx.stroke();
+
+  // Titik-titik
+  [[A, '#ef4444', 'A'], [B, '#ef4444', 'B'], [C, '#3b82f6', 'C'], [D, '#3b82f6', 'D']].forEach(([pt, color, label]) => {
+    ctx.beginPath();
+    ctx.arc(toX(pt.V), toY(pt.P), 5, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 11px Inter';
+    ctx.fillText(label, toX(pt.V) + 8, toY(pt.P) - 8);
+  });
+
+  // Label proses
+  ctx.font = '10px Inter';
+  ctx.fillStyle = '#ef4444';
+  ctx.fillText('Ekspansi isotermal (T_h)', w - 180, 25);
+  ctx.fillStyle = '#3b82f6';
+  ctx.fillText('Kompresi isotermal (T_c)', w - 180, 45);
+  ctx.fillStyle = '#fb923c';
+  ctx.fillText('Adiabatik', w - 180, 65);
+
+  // Tampilkan suhu
+  ctx.fillStyle = '#fca5a5';
+  ctx.font = 'bold 12px Inter';
+  ctx.fillText(`T_hot = ${Th} K`, 15, 25);
+  ctx.fillStyle = '#93c5fd';
+  ctx.fillText(`T_cold = ${Tc} K`, 15, 45);
+  ctx.fillStyle = '#fbbf24';
+  ctx.fillText(`η = ${((1 - Tc/Th) * 100).toFixed(1)}%`, 15, 65);
+}
+
+/* =========================================================
+   PETA PROGRES
+   ========================================================= */
+function renderProgressGrid() {
+  const grid = document.getElementById('progressGrid');
+  grid.innerHTML = '';
+  const block = document.createElement('div');
+  block.className = 'flex flex-wrap gap-2';
+  stories.forEach(s => {
+    const done = state.completed.includes(s.day);
+    const btn = document.createElement('button');
+    btn.className = 'day-pill' + (done ? ' done' : '');
+    btn.textContent = s.day;
+    btn.title = s.title;
+    btn.onclick = () => { switchTab('cerita', document.querySelector('.main-tab')); renderDay(s.day); };
+    block.appendChild(btn);
+  });
+  grid.appendChild(block);
+
+  const done = state.completed.length;
+  const pct = Math.round((done/TOTAL_DAYS)*100);
+  let tQ = 0, cQ = 0;
+  Object.keys(state.quiz).forEach(d => {
+    Object.keys(state.quiz[d]).forEach(q => {
+      tQ++;
+      if (state.quiz[d][q] === 1) cQ++;
+    });
+  });
+  const acc = tQ > 0 ? Math.round((cQ/tQ)*100) : 0;
+  document.getElementById('statDone').textContent = done;
+  document.getElementById('statScore').textContent = acc + '%';
+  document.getElementById('statPercent').textContent = pct + '%';
+}
+
+function resetProgress() {
+  if (!confirm('Yakin ingin mengulang dari awal?')) return;
+  state = { completed: [], quiz: {}, currentDay: 1 };
+  saveState();
+  renderDay(1);
+  renderProgressGrid();
+}
+
+/* =========================================================
+   BACKGROUND BINTANG
+   ========================================================= */
+function renderStars() {
+  const c = document.getElementById('starfield');
+  const ctx = c.getContext('2d');
+  let w = c.width = window.innerWidth;
+  let h = c.height = window.innerHeight;
+  window.addEventListener('resize', () => {
+    w = c.width = window.innerWidth;
+    h = c.height = window.innerHeight;
+  });
+  const stars = Array.from({length: 120}, () => ({
+    x: Math.random()*w, y: Math.random()*h,
+    r: Math.random()*1.4 + 0.2,
+    a: Math.random(), s: Math.random()*0.008 + 0.002,
+    d: Math.random() > 0.5 ? 1 : -1,
+    hue: Math.random() * 60 + 10
+  }));
+  function anim() {
+    ctx.clearRect(0,0,w,h);
+    stars.forEach(s => {
+      s.a += s.s * s.d;
+      if (s.a > 0.9) { s.a = 0.9; s.d = -1; }
+      if (s.a < 0.1) { s.a = 0.1; s.d = 1; }
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `hsla(${s.hue}, 90%, 70%, ${s.a * 0.7})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(anim);
+  }
+  anim();
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+function init() {
+  loadState();
+  renderStars();
+  renderDayPills();
+  renderDay(state.currentDay || 1);
+  updateGasSim();
+  updateCarnotSim();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+  if (e.key === 'ArrowLeft') changeDay(-1);
+  if (e.key === 'ArrowRight') changeDay(1);
+});
+
+init();
+</script>
+
+</body>
+</html>
