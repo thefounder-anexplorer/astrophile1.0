@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>30-Day English Speaking Practice</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --ink:#1c2333;
+    --muted:#5c6780;
+    --line:#e3e7f0;
+    --accent:#3b5bfd;
+    --accent-soft:#eaefff;
+    --good:#12a150;
+    --radius:16px;
+    --shadow:0 1px 2px rgba(20,30,60,.06), 0 8px 24px rgba(20,30,60,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:28px 18px 80px}
+
+  header.hero{
+    background:linear-gradient(135deg,#3b5bfd,#7a4bff);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:34px 28px;
+    box-shadow:var(--shadow);
+    margin-bottom:26px;
+  }
+  header.hero h1{margin:0 0 8px;font-size:clamp(22px,4vw,32px);letter-spacing:-.02em}
+  header.hero p{margin:0;opacity:.94;font-size:15px;max-width:62ch}
+  .pill{
+    display:inline-block;background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.32);
+    padding:4px 12px;border-radius:999px;font-size:12.5px;
+    margin-top:14px;letter-spacing:.02em;
+  }
+
+  .timerbar{
+    position:sticky;top:0;z-index:20;
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:10px 14px;margin-bottom:26px;box-shadow:var(--shadow);
+  }
+  .timerbar .clock{
+    font-variant-numeric:tabular-nums;font-weight:800;font-size:20px;
+    min-width:76px;text-align:center;color:var(--accent);
+  }
+  .timerbar .label{font-size:13px;color:var(--muted);flex:1;min-width:140px}
+  .btn{
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:600;
+    cursor:pointer;transition:.15s;
+  }
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.primary:hover{background:#2c4ae0;color:#fff}
+
+  section{margin-bottom:36px}
+  h2{
+    font-size:19px;margin:0 0 4px;letter-spacing:-.01em;
+    display:flex;align-items:center;gap:9px;
+  }
+  h2 .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:8px;background:var(--accent-soft);
+    color:var(--accent);font-size:13px;font-weight:800;flex:none;
+  }
+  .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+
+  .grid{display:grid;gap:14px}
+  .grid.two{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;box-shadow:var(--shadow);
+  }
+  .card h3{margin:0 0 6px;font-size:15.5px}
+  .card p{margin:0;font-size:14px;color:var(--muted)}
+  .card ul{margin:8px 0 0;padding-left:18px;font-size:13.8px;color:var(--muted)}
+  .card li{margin:3px 0}
+  .card .time{
+    display:inline-block;font-size:12px;font-weight:800;letter-spacing:.04em;
+    color:var(--accent);background:var(--accent-soft);border-radius:999px;
+    padding:2px 10px;margin-bottom:9px;text-transform:uppercase;
+  }
+
+  .start,.copybtn{
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    border-radius:999px;padding:6px 13px;font-size:12.8px;font-weight:700;
+    cursor:pointer;transition:.15s;margin:10px 6px 0 0;
+  }
+  .start:hover,.copybtn:hover{border-color:var(--accent);color:var(--accent)}
+
+  .progresswrap{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:10px 14px;margin-bottom:16px;box-shadow:var(--shadow);
+  }
+  .progressbar{
+    flex:1;min-width:180px;height:10px;background:#eef1f8;border-radius:999px;overflow:hidden;
+  }
+  #progressFill{
+    height:100%;width:0%;background:linear-gradient(90deg,#3b5bfd,#7a4bff);
+    border-radius:999px;transition:width .25s;
+  }
+  #progressText{font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap}
+
+  .daycard{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:17px;box-shadow:var(--shadow);transition:.2s;
+  }
+  .daycard.complete{
+    border-color:var(--good);
+    background:linear-gradient(180deg,#f6fff9,#ffffff);
+  }
+  .dayhead{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:7px}
+  .daynum{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-width:52px;height:28px;border-radius:9px;background:var(--accent);
+    color:#fff;font-size:12.5px;font-weight:800;letter-spacing:.02em;
+  }
+  .dayhead h3{margin:0;font-size:15.5px}
+  .badge{
+    font-size:11.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--accent);background:var(--accent-soft);border-radius:999px;
+    padding:3px 9px;
+  }
+  .prompt{font-size:14px;margin:8px 0 0}
+  .phrases{
+    margin:10px 0 0;padding:10px 12px;background:#f9fafd;border:1px solid var(--line);
+    border-radius:12px;font-size:13.5px;color:#37405a;
+  }
+  .phrases strong{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:4px}
+  .phrases ul{margin:0;padding-left:17px}
+  .phrases li{margin:2px 0}
+  .task{font-size:13.5px;color:var(--muted);margin:10px 0 0}
+  .task strong{color:var(--ink)}
+
+  .dialogue{
+    background:#f9fafd;border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;font-size:14px;line-height:1.8;white-space:pre-wrap;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    margin:10px 0 12px;
+  }
+  .remake{font-size:13.5px;color:var(--muted);margin:0}
+  .remake strong{color:var(--ink)}
+
+  .tablewrap{
+    overflow-x:auto;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);box-shadow:var(--shadow);
+  }
+  table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+  th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:#f9fafd;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  tr:last-child td{border-bottom:none}
+  td.center,th.center{text-align:center;color:var(--muted)}
+
+  .tracker30{display:grid;grid-template-columns:repeat(auto-fit,minmax(46px,1fr));gap:8px}
+  .tracker30 label{position:relative;display:block;aspect-ratio:1;cursor:pointer}
+  .tracker30 input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+  .tracker30 span{
+    display:flex;align-items:center;justify-content:center;height:100%;
+    border:1px solid var(--line);border-radius:9px;font-size:12px;color:var(--muted);
+    transition:.15s;user-select:none;background:#fff;
+  }
+  .tracker30 input:checked + span{
+    background:var(--good);border-color:var(--good);color:#fff;font-weight:800;
+  }
+  .tracker30 input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+
+  .callout{
+    background:var(--accent-soft);border:1px solid #d3ddfe;border-radius:var(--radius);
+    padding:16px 18px;font-size:14px;color:#233;
+  }
+  .callout strong{color:var(--accent)}
+
+  footer{
+    text-align:center;font-size:12.5px;color:var(--muted);
+    border-top:1px solid var(--line);padding-top:18px;
+  }
+
+  @media print{
+    body{background:#fff}
+    .wrap{max-width:none;padding:0}
+    .timerbar,.start,.copybtn,footer{display:none !important}
+    header.hero{background:#fff;color:#000;border:2px solid #000;box-shadow:none}
+    header.hero .pill{display:none}
+    .card,.daycard,.tablewrap,.callout{box-shadow:none;break-inside:avoid}
+    section{break-inside:avoid}
+  }
+  @media (max-width:620px){
+    header.hero{padding:26px 20px}
+    .tracker30{grid-template-columns:repeat(6,1fr)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>30-Day English Speaking Practice</h1>
+    <p>A complete daily speaking programme using <strong>active recall + feedback + spaced practice</strong>. Speak aloud every day. Record yourself. Re-say the same thing better.</p>
+    <span class="pill">25–30 min/day · 30 days · daily prompts + conversations + tracker</span>
+  </header>
+
+  <div class="timerbar">
+    <div class="clock" id="clock">00:00</div>
+    <div class="label" id="timerLabel">Pick a block or a day to start its timer.</div>
+    <button class="btn" id="pauseBtn">Pause</button>
+    <button class="btn" id="resetBtn">Reset</button>
+  </div>
+
+  <!-- 1. DAILY ROUTINE -->
+  <section>
+    <h2><span class="num">1</span>Daily 25-minute routine</h2>
+    <p class="sub">Use this every day. The 30-day cards tell you what to practise; this tells you how.</p>
+
+    <div class="grid two">
+      <div class="card">
+        <span class="time">5 min</span>
+        <h3>Warm-up: Shadowing</h3>
+        <p>Listen to 30–60 seconds of natural audio and repeat aloud, copying rhythm and intonation.</p>
+        <ul>
+          <li>Listen first, then repeat</li>
+          <li>Copy the melody, not just the words</li>
+          <li>Slow audio is fine at first</li>
+        </ul>
+        <button class="start" data-min="5" data-label="Warm-up: shadowing">Start 5-min timer</button>
+      </div>
+
+      <div class="card">
+        <span class="time">10 min</span>
+        <h3>Active recall speaking</h3>
+        <p>Use today’s prompt and answer aloud <strong>without reading notes</strong>.</p>
+        <ul>
+          <li>1–2 minute answers</li>
+          <li>Don’t stop to fix every mistake</li>
+          <li>Use the sentence frames when you get stuck</li>
+        </ul>
+        <button class="start" data-min="10" data-label="Active recall speaking">Start 10-min timer</button>
+      </div>
+
+      <div class="card">
+        <span class="time">5 min</span>
+        <h3>Record &amp; review</h3>
+        <p>Record 1–2 minutes and note exactly three things.</p>
+        <ul>
+          <li>One thing you did well</li>
+          <li>One grammar or vocabulary issue</li>
+          <li>One pronunciation issue</li>
+          <li>Write them in an error log</li>
+        </ul>
+        <button class="start" data-min="5" data-label="Record and review">Start 5-min timer</button>
+      </div>
+
+      <div class="card">
+        <span class="time">5 min</span>
+        <h3>Re-say &amp; spaced review</h3>
+        <p>Answer the same prompt again, better. Then read yesterday’s error log aloud.</p>
+        <ul>
+          <li>Same prompt, improved version</li>
+          <li>Re-say yesterday’s corrected sentences</li>
+          <li>Revisit errors from 3 and 7 days ago</li>
+        </ul>
+        <button class="start" data-min="5" data-label="Re-say and spaced review">Start 5-min timer</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 30-DAY PLAN -->
+  <section id="plan">
+    <h2><span class="num">2</span>30-day speaking plan</h2>
+    <p class="sub">Each day gives you a prompt, useful phrases, and a remake task. Tick the tracker below when you finish the full routine.</p>
+
+    <div class="progresswrap">
+      <div class="progressbar"><div id="progressFill"></div></div>
+      <span id="progressText">0 / 30 days complete</span>
+    </div>
+
+    <div id="dayGrid" class="grid two"></div>
+  </section>
+
+  <!-- 3. CONVERSATION LAB -->
+  <section id="conversation-lab">
+    <h2><span class="num">3</span>Conversation Lab</h2>
+    <p class="sub">Copy a dialogue, say both roles aloud, then remake it with your own details.</p>
+
+    <div class="grid two">
+      <div class="card">
+        <h3>At a café</h3>
+        <div class="dialogue" id="dlg1">A: Hi, can I get a flat white, please?
+B: Sure. Anything else?
+A: Actually, could I also have a croissant?
+B: Of course. For here or to go?
+A: To go, please. How much is that?
+B: That's eight fifty.
+A: Great, thanks.</div>
+        <button class="copybtn" data-copy-id="dlg1">Copy dialogue</button>
+        <p class="remake"><strong>Remake it:</strong> change the drink, the food, and the price. Say it again without reading.</p>
+      </div>
+
+      <div class="card">
+        <h3>Asking for directions</h3>
+        <div class="dialogue" id="dlg2">A: Excuse me, I'm looking for the train station. Is it far?
+B: Not really. Go straight, then turn left at the bank.
+A: Straight and then left at the bank?
+B: Exactly. It's about five minutes on foot.
+A: Thanks a lot. I appreciate it.</div>
+        <button class="copybtn" data-copy-id="dlg2">Copy dialogue</button>
+        <p class="remake"><strong>Remake it:</strong> use a real place near you. Change “train station” to “pharmacy”, “museum”, or “bus stop”.</p>
+      </div>
+
+      <div class="card">
+        <h3>Workplace small talk</h3>
+        <div class="dialogue" id="dlg3">A: How was your weekend?
+B: Pretty good, thanks. I finally tried that new café. How about you?
+A: Mine was quiet. I mostly caught up on sleep.
+B: That sounds nice too. Anyway, are you free for a quick call later?
+A: Sure, what time works for you?
+B: Let's say three.</div>
+        <button class="copybtn" data-copy-id="dlg3">Copy dialogue</button>
+        <p class="remake"><strong>Remake it:</strong> replace “new café” with a real weekend activity. Change the meeting time.</p>
+      </div>
+
+      <div class="card">
+        <h3>Sentence frames to copy</h3>
+        <div class="dialogue" id="frames">Opening: Hi, can I get…? / Excuse me, I'm looking for…
+Clarifying: Sorry, do you mean…? / Could you say that again?
+Buying time: Let me think… / What I mean is…
+Opinion: The reason is… / I'd say…
+Closing: Thanks a lot. I appreciate it. / Let's say…</div>
+        <button class="copybtn" data-copy-id="frames">Copy frames</button>
+        <p class="remake"><strong>Task:</strong> pick 3 frames and use each one in a 1-minute answer aloud.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. SCORING -->
+  <section>
+    <h2><span class="num">4</span>Weekly self-score</h2>
+    <p class="sub">Rate yourself 1–5 at the end of each week. Look for the trend, not the number.</p>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Criterion</th>
+            <th class="center">Days 1–7</th>
+            <th class="center">Days 8–14</th>
+            <th class="center">Days 15–21</th>
+            <th class="center">Days 22–30</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Fluency</strong> — few long pauses</td><td class="center">/5</td><td class="center">/5</td><td class="center">/5</td><td class="center">/5</td></tr>
+          <tr><td><strong>Accuracy</strong> — grammar &amp; vocabulary</td><td class="center">/5</td><td class="center">/5</td><td class="center">/5</td><td class="center">/5</td></tr>
+          <tr><td><strong>Pronunciation &amp; clarity</strong></td><td class="center">/5</td><td class="center">/5</td><td class="center">/5</td><td class="center">/5</td></tr>
+          <tr><td><strong>Range</strong> — varied words &amp; structures</td><td class="center">/5</td><td class="center">/5</td><td class="center">/5</td><td class="center">/5</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 5. TRACKER -->
+  <section>
+    <h2><span class="num">5</span>30-day tracker</h2>
+    <p class="sub">Tick a day when you complete the full routine. Saved automatically in this browser.</p>
+    <div class="tracker30" id="tracker30"></div>
+  </section>
+
+  <!-- 6. RULES -->
+  <section>
+    <h2><span class="num">6</span>Rules that make it work</h2>
+    <div class="callout">
+      <strong>Recall, not re-read.</strong> If you can see the answer, it is not retrieval practice.<br>
+      <strong>Feedback is required.</strong> Recall alone can cement mistakes — check your errors each session.<br>
+      <strong>Space it out.</strong> Revisit each prompt after 1 day, 1 week, and 3 weeks.<br>
+      <strong>Speak out loud.</strong> Silent rehearsal does not train the mouth.<br>
+      <strong>Consistency beats length.</strong> 15 focused minutes daily beats 2 hours on Sunday.
+    </div>
+  </section>
+
+  <footer>
+    30-Day English Speaking Practice · Active recall + feedback + spaced practice · Print this page for a paper version
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ================= 30-DAY DATA ================= */
+  var days = [
+    {day:1,theme:"Introducing yourself",focus:"Fluency & core chunks",prompt:"Talk for 60–90 seconds: who you are, what you do, where you live, and why you are learning English.",phrases:["I'm currently based in…","I work as / I study…","The reason I'm learning English is…","In my free time, I…"],task:"Record once. Then re-say it with three new details and fewer pauses."},
+    {day:2,theme:"Morning routine",focus:"Sequencing & time markers",prompt:"Describe your typical morning from waking up to starting work or study.",phrases:["First, I usually…","After that…","By the time I…","I try to…"],task:"Retell it from memory in 90 seconds without notes."},
+    {day:3,theme:"Your home",focus:"Description & opinion",prompt:"Describe the place you live in and your favourite room.",phrases:["It's a…","What I like most is…","It's within walking distance of…","The only downside is…"],task:"Draw a mental map and describe it aloud."},
+    {day:4,theme:"Food & café ordering",focus:"Role-play & polite requests",prompt:"Role-play ordering at a café. Then describe your favourite meal.",phrases:["Can I get…?","For here or to go?","Could I have…?","It comes with…"],task:"Change the drink, food, and price, then say it again."},
+    {day:5,theme:"Asking for directions",focus:"Clarifying & checking",prompt:"Ask for directions to a place and repeat the instructions back.",phrases:["Excuse me, I'm looking for…","Is it far?","Go straight and turn left at…","So that's…?"],task:"Use a real place near you and change the destination."},
+    {day:6,theme:"Last weekend",focus:"Past tense & fluency",prompt:"Talk about last weekend in 90 seconds.",phrases:["I ended up…","It was worth it because…","I mostly…","Next time I'd like to…"],task:"Retell it with clear past tense and time markers."},
+    {day:7,theme:"Work or school",focus:"Explaining clearly",prompt:"Explain what you do at work or school to someone outside your field.",phrases:["My role involves…","A typical day includes…","The most challenging part is…","What I enjoy most is…"],task:"Explain it to a child in simple words."},
+    {day:8,theme:"Hobbies",focus:"Reasons & persuasion",prompt:"Describe a hobby and why you enjoy it.",phrases:["I got into it when…","It helps me…","I'm not very good at it, but…","If I had more time, I'd…"],task:"Convince a friend to try it."},
+    {day:9,theme:"Opinion: technology",focus:"Balanced opinion",prompt:"Do smartphones make us more connected or more isolated? Give your opinion.",phrases:["In my view…","On the one hand…","On the other hand…","The reason I say that is…"],task:"Say the opposite opinion for 60 seconds."},
+    {day:10,theme:"Retell a short story",focus:"Retelling from memory",prompt:"Listen to or remember a 1-minute story. Retell it from memory.",phrases:["It starts when…","At first…","Then suddenly…","In the end…"],task:"Retell again with more detail and better linking words."},
+    {day:11,theme:"Problem solving",focus:"Structuring an explanation",prompt:"Describe a problem you solved recently and how you solved it.",phrases:["The issue was that…","I tried…","What worked in the end was…","Looking back…"],task:"Record, then retell with a clear beginning, middle, and end."},
+    {day:12,theme:"Travel plans",focus:"Future forms",prompt:"Explain a trip you are planning or would like to take.",phrases:["I'm planning to…","I've already booked…","I'm hoping to…","It depends on…"],task:"Change the destination and budget, then say it again."},
+    {day:13,theme:"Past experience",focus:"Past tenses",prompt:"Talk about a memorable experience from your past.",phrases:["I'll never forget…","It happened when…","I was surprised because…","Since then, I…"],task:"Use at least three past tenses."},
+    {day:14,theme:"Future goals",focus:"Goals & plans",prompt:"What are your goals for the next year, and how will you achieve them?",phrases:["By this time next year…","I'm aiming to…","My plan is to…","If everything goes well…"],task:"Re-say it with specific dates and numbers."},
+    {day:15,theme:"Compare two cities",focus:"Comparison",prompt:"Compare your city with another city you know.",phrases:["Compared with…","One big difference is…","While…","What they have in common is…"],task:"Give a 2-minute comparison with advantages and disadvantages."},
+    {day:16,theme:"Explain a process",focus:"Step-by-step instructions",prompt:"Explain how to do something step by step.",phrases:["First…","Once you've…","Make sure you…","Finally…"],task:"Teach it to someone and answer one question."},
+    {day:17,theme:"Phone call",focus:"Booking & confirming",prompt:"Role-play a phone call to book an appointment.",phrases:["I'd like to book…","Would tomorrow work?","Could you confirm…?","Sorry, I didn't catch that."],task:"Change the date and time, then repeat."},
+    {day:18,theme:"Making plans",focus:"Inviting & agreeing",prompt:"Invite a friend out and agree on a time and place.",phrases:["Are you free…?","How about…?","That works for me.","Let's say…"],task:"Role-play both sides and change the plan."},
+    {day:19,theme:"Small talk",focus:"Openings & closings",prompt:"Make small talk with a coworker for 90 seconds.",phrases:["How's your week going?","Have you got any plans for…?","That sounds…","Anyway, I should get back to…"],task:"Practise three openings and three closings."},
+    {day:20,theme:"Describe a photo",focus:"Detailed description",prompt:"Choose a photo on your phone and describe it in detail.",phrases:["In the foreground…","In the background…","It looks like…","What strikes me is…"],task:"Describe it again without looking at the photo."},
+    {day:21,theme:"Giving advice",focus:"Advice & suggestions",prompt:"A friend wants to improve their English. Give advice.",phrases:["If I were you, I'd…","Have you tried…?","It might help to…","The key is to…"],task:"Give advice to a different problem."},
+    {day:22,theme:"Complaining politely",focus:"Politeness & solutions",prompt:"Role-play a polite complaint about a late delivery or bad service.",phrases:["I'm afraid there's a problem with…","I'd appreciate it if…","Could you look into…?","I understand, but…"],task:"Stay polite and ask for a solution."},
+    {day:23,theme:"Job interview",focus:"Self-presentation",prompt:"Answer 'Tell me about yourself' and 'Why should we hire you?'",phrases:["I have experience in…","One example is…","I'm particularly good at…","I'd bring…"],task:"Record 2 minutes, then tighten it to 60 seconds."},
+    {day:24,theme:"Telling a story",focus:"Narrative structure",prompt:"Tell a 2-minute story with a clear beginning, problem, and ending.",phrases:["It all started when…","Just as I was…","To make matters worse…","In the end…"],task:"Tell it again with more emotion and pauses."},
+    {day:25,theme:"Debate: remote work",focus:"Arguing a position",prompt:"Is remote work better than office work? Argue one side.",phrases:["I'd argue that…","The main benefit is…","Critics say…","Overall, I think…"],task:"Switch sides and argue the opposite."},
+    {day:26,theme:"Negotiation",focus:"Firm but friendly",prompt:"Role-play asking for a deadline extension or a better price.",phrases:["Would it be possible to…?","What if we…?","I can offer…","That seems fair."],task:"Practise being firm but friendly."},
+    {day:27,theme:"Apologizing",focus:"Repairing a situation",prompt:"Role-play apologizing for being late or missing a meeting.",phrases:["I'm really sorry about…","It won't happen again.","Can I make it up to you?","Thanks for understanding."],task:"Apologize for a different situation."},
+    {day:28,theme:"Explaining data",focus:"Trends & comparison",prompt:"Describe a simple chart or trend you know: sales, weather, or study results.",phrases:["It went up steadily.","There was a sharp drop.","Compared with last year…","The overall trend is…"],task:"Explain it in 90 seconds without notes."},
+    {day:29,theme:"Doctor or pharmacy",focus:"Symptoms & instructions",prompt:"Role-play describing symptoms at a pharmacy or clinic.",phrases:["I've had a headache for…","It hurts when…","Do I need a prescription?","How often should I take it?"],task:"Change the symptoms and duration."},
+    {day:30,theme:"Final recording",focus:"Review & next steps",prompt:"Re-record your Day 1 introduction and add what you have improved.",phrases:["Since I started, I've…","I still need to work on…","My next step is…","I'm proud that…"],task:"Compare Day 1 and Day 30 recordings. Score yourself."}
+  ];
+
+  /* ================= RENDER DAY CARDS ================= */
+  var dayGrid = document.getElementById("dayGrid");
+  days.forEach(function (d) {
+    var card = document.createElement("div");
+    card.className = "daycard";
+    card.id = "day-" + d.day;
+    card.innerHTML =
+      '<div class="dayhead">' +
+        '<span class="daynum">Day ' + d.day + '</span>' +
+        '<h3>' + d.theme + '</h3>' +
+        '<span class="badge">' + d.focus + '</span>' +
+      '</div>' +
+      '<p class="prompt"><strong>Prompt:</strong> ' + d.prompt + '</p>' +
+      '<div class="phrases"><strong>Useful phrases</strong><ul>' +
+        d.phrases.map(function (p) { return "<li>" + p + "</li>"; }).join("") +
+      '</ul></div>' +
+      '<p class="task"><strong>Remake task:</strong> ' + d.task + '</p>' +
+      '<button class="copybtn" data-copy-day="' + d.day + '">Copy today’s practice</button>' +
+      '<button class="start" data-min="10" data-label="Day ' + d.day + ': ' + d.theme + '">Start 10-min recall timer</button>';
+    dayGrid.appendChild(card);
+  });
+
+  /* ================= TIMER ================= */
+  var clockEl = document.getElementById("clock");
+  var labelEl = document.getElementById("timerLabel");
+  var pauseBtn = document.getElementById("pauseBtn");
+  var resetBtn = document.getElementById("resetBtn");
+  var remaining = 0;
+  var tickId = null;
+
+  function fmt(sec) {
+    sec = Math.max(0, Math.round(sec));
+    var m = Math.floor(sec / 60);
+    var s = sec % 60;
+    return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+  }
+  function renderClock() { clockEl.textContent = fmt(remaining); }
+  function stopTick() {
+    if (tickId !== null) { clearInterval(tickId); tickId = null; }
+  }
+  function startTick() {
+    stopTick();
+    tickId = setInterval(function () {
+      remaining -= 1;
+      if (remaining <= 0) {
+        remaining = 0;
+        renderClock();
+        stopTick();
+        pauseBtn.textContent = "Pause";
+        labelEl.textContent = "Time's up — move to the next block.";
+        try {
+          var ctx = new (window.AudioContext || window.webkitAudioContext)();
+          var osc = ctx.createOscillator();
+          var gain = ctx.createGain();
+          osc.frequency.value = 880;
+          gain.gain.value = 0.06;
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(); osc.stop(ctx.currentTime + 0.25);
+        } catch (e) {}
+        return;
+      }
+      renderClock();
+    }, 1000);
+  }
+
+  document.addEventListener("click", function (e) {
+    var start = e.target.closest(".start");
+    if (start) {
+      var mins = parseInt(start.getAttribute("data-min"), 10) || 5;
+      remaining = mins * 60;
+      renderClock();
+      labelEl.textContent = "Running: " + (start.getAttribute("data-label") || mins + "-minute block");
+      pauseBtn.textContent = "Pause";
+      startTick();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+
+  pauseBtn.addEventListener("click", function () {
+    if (tickId === null) {
+      if (remaining > 0) {
+        startTick();
+        pauseBtn.textContent = "Pause";
+        labelEl.textContent = "Running…";
+      }
+    } else {
+      stopTick();
+      pauseBtn.textContent = "Resume";
+      labelEl.textContent = "Paused.";
+    }
+  });
+
+  resetBtn.addEventListener("click", function () {
+    stopTick();
+    remaining = 0;
+    renderClock();
+    pauseBtn.textContent = "Pause";
+    labelEl.textContent = "Pick a block or a day to start its timer.";
+  });
+  renderClock();
+
+  /* ================= COPY BUTTONS ================= */
+  function fallbackCopy(text, done) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".copybtn");
+    if (!btn) return;
+
+    var text = "";
+    var copyDay = btn.getAttribute("data-copy-day");
+    var copyId = btn.getAttribute("data-copy-id");
+
+    if (copyDay) {
+      var d = days.find(function (x) { return x.day === parseInt(copyDay, 10); });
+      if (d) {
+        text = "Day " + d.day + " — " + d.theme + "\n" +
+               "Focus: " + d.focus + "\n" +
+               "Prompt: " + d.prompt + "\n" +
+               "Phrases:\n" + d.phrases.map(function (p) { return "- " + p; }).join("\n") + "\n" +
+               "Remake task: " + d.task;
+      }
+    } else if (copyId) {
+      var el = document.getElementById(copyId);
+      if (el) text = el.textContent;
+    }
+
+    if (!text) return;
+
+    function done() {
+      var old = btn.textContent;
+      btn.textContent = "Copied!";
+      setTimeout(function () { btn.textContent = old; }, 1200);
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  });
+
+  /* ================= 30-DAY TRACKER ================= */
+  var tracker = document.getElementById("tracker30");
+  var progressFill = document.getElementById("progressFill");
+  var progressText = document.getElementById("progressText");
+  var KEY = "speaking-30-day-tracker-v1";
+  var saved = {};
+
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
+
+  function persist() {
+    try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+  }
+
+  function updateProgress() {
+    var checked = 0;
+    var inputs = tracker.querySelectorAll("input[type=checkbox]");
+    inputs.forEach(function (input) {
+      if (input.checked) checked++;
+    });
+    var pct = Math.round((checked / 30) * 100);
+    progressFill.style.width = pct + "%";
+    progressText.textContent = checked + " / 30 days complete";
+
+    document.querySelectorAll(".daycard").forEach(function (card) {
+      var id = parseInt(card.id.replace("day-", ""), 10);
+      if (saved[id]) card.classList.add("complete");
+      else card.classList.remove("complete");
+    });
+  }
+
+  for (var i = 1; i <= 30; i++) {
+    (function (dayNum) {
+      var label = document.createElement("label");
+      var input = document.createElement("input");
+      input.type = "checkbox";
+      input.setAttribute("data-day", dayNum);
+      input.checked = !!saved[dayNum];
+      input.setAttribute("aria-label", "Day " + dayNum + " complete");
+
+      var span = document.createElement("span");
+      span.textContent = dayNum;
+
+      input.addEventListener("change", function () {
+        if (input.checked) saved[dayNum] = true;
+        else delete saved[dayNum];
+        persist();
+        updateProgress();
+      });
+
+      label.appendChild(input);
+      label.appendChild(span);
+      tracker.appendChild(label);
+    })(i);
+  }
+
+  updateProgress();
+})();
+</script>
+</body>
+      </html>
