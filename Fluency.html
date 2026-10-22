@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30-Day English Fluency Plan — 10 Minutes a Day</title>
+<style>
+  :root {
+    --bg: #f7f8fb;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --accent: #2563eb;
+    --accent-soft: #dbeafe;
+    --success: #16a34a;
+    --border: #e5e7eb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  header h1 { margin: 0 0 .4rem; font-size: clamp(1.5rem, 4vw, 2.2rem); }
+  header p { margin: 0; opacity: .9; }
+  main { max-width: 1050px; margin: 0 auto; padding: 1.25rem; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin: 1rem 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,.03);
+  }
+  h2 { margin-top: 0; font-size: 1.25rem; }
+  h3 { margin: 1rem 0 .4rem; font-size: 1rem; }
+  .muted { color: var(--muted); }
+  .pill {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: #1e40af;
+    padding: .2rem .6rem;
+    border-radius: 999px;
+    font-size: .85rem;
+    font-weight: 600;
+  }
+  .routine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: .75rem;
+  }
+  .step {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: .75rem .9rem;
+    background: #fafafa;
+  }
+  .step strong { display: block; margin-bottom: .2rem; }
+  .timer-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .75rem;
+  }
+  .timer-display {
+    font-variant-numeric: tabular-nums;
+    font-size: 2rem;
+    font-weight: 700;
+    min-width: 6ch;
+    text-align: center;
+  }
+  button {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: .6rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: .95rem;
+  }
+  button:hover { filter: brightness(1.05); }
+  button.secondary { background: #e5e7eb; color: #111827; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .92rem;
+  }
+  th, td {
+    border-bottom: 1px solid var(--border);
+    padding: .6rem .5rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: #f3f4f6;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #374151;
+  }
+  tr.done td { background: #f0fdf4; }
+  tr.done td:last-child { color: var(--success); font-weight: 700; }
+  input[type="checkbox"] { width: 1.1rem; height: 1.1rem; cursor: pointer; }
+  .chunk-bank {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: .75rem;
+  }
+  .chunk-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: .8rem;
+    background: #fafafa;
+  }
+  .chunk-card h4 { margin: 0 0 .4rem; font-size: .95rem; }
+  .chunk-card ul { margin: 0; padding-left: 1.1rem; }
+  .chunk-card li { margin: .2rem 0; }
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-wrap: wrap;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+    min-width: 180px;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--success);
+    transition: width .3s ease;
+  }
+  @media print {
+    header { background: white; color: black; }
+    button, .timer-box { display: none; }
+    section { box-shadow: none; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>30-Day English Fluency Plan</h1>
+  <p>10 minutes a day • Speak in chunks, not word by word</p>
+</header>
+
+<main>
+  <section>
+    <h2>How this works</h2>
+    <p>
+      Fluency improves when you practice <strong>chunks</strong> — groups of 2–3 words said as one sound.
+      Each day, spend 10 minutes on <strong>drill practice</strong> (repeat, make a phrase, repeat, change something)
+      and <strong>real practice</strong> (combine chunks, make a mini story, record yourself).
+    </p>
+    <p class="muted">Tick the day when finished. Your progress is saved in this browser.</p>
+    <div class="progress-wrap">
+      <span class="pill" id="progressText">0 / 30 days</span>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <button class="secondary" onclick="resetProgress()">Reset progress</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Daily 10-minute routine</h2>
+    <div class="routine-grid">
+      <div class="step"><strong>1. Repeat the chunk</strong><span class="muted">Say it as one sound.</span></div>
+      <div class="step"><strong>2. Make a phrase</strong><span class="muted">Add 3–5 words.</span></div>
+      <div class="step"><strong>3. Repeat 3×</strong><span class="muted">Focus on rhythm.</span></div>
+      <div class="step"><strong>4. Change something</strong><span class="muted">Noun, verb, person, tense.</span></div>
+      <div class="step"><strong>5. Combine 2 chunks</strong><span class="muted">Make a meaningful sentence.</span></div>
+      <div class="step"><strong>6. Mini story</strong><span class="muted">3–5 sentences. It can be silly.</span></div>
+      <div class="step"><strong>7. Record & listen</strong><span class="muted">Optional but powerful.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>10-minute timer</h2>
+    <div class="timer-box">
+      <div class="timer-display" id="timerDisplay">10:00</div>
+      <button onclick="startTimer()">Start</button>
+      <button class="secondary" onclick="pauseTimer()">Pause</button>
+      <button class="secondary" onclick="resetTimer()">Reset</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>30-day plan</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Focus chunk(s)</th>
+          <th>Drill + real practice</th>
+          <th>Done</th>
+        </tr>
+      </thead>
+      <tbody id="planBody">
+        <!-- Rows generated by JavaScript -->
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Chunk bank from the video</h2>
+    <div class="chunk-bank">
+      <div class="chunk-card">
+        <h4>Grammar chunks</h4>
+        <ul>
+          <li>I’d like to</li>
+          <li>I’m looking forward to</li>
+          <li>I can’t help</li>
+          <li>You should have</li>
+          <li>I can’t wait to</li>
+          <li>I’ve been looking forward to</li>
+        </ul>
+      </div>
+      <div class="chunk-card">
+        <h4>Vocabulary chunks</h4>
+        <ul>
+          <li>go for a walk</li>
+          <li>have a shower</li>
+          <li>have a wash</li>
+        </ul>
+      </div>
+      <div class="chunk-card">
+        <h4>Frequency / adverb chunks</h4>
+        <ul>
+          <li>from time to time</li>
+          <li>without fail</li>
+          <li>now and then</li>
+          <li>every once in a while</li>
+          <li>by and large</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const days = [
+    { day: 1, focus: "I’d like to", task: "Phrase: “I’d like to learn Spanish.” Change the noun: Japanese, Arabic." },
+    { day: 2, focus: "I’d like to + go for a walk", task: "Combine: “I’d like to go for a walk.” Repeat 3×." },
+    { day: 3, focus: "I’m looking forward to", task: "Phrase: “I’m looking forward to having dinner.” Change the verb: preparing, eating, enjoying." },
+    { day: 4, focus: "I’m looking forward to + go for a walk", task: "Combine: “I’m looking forward to going for a walk.”" },
+    { day: 5, focus: "I can’t help", task: "Phrase: “I can’t help smiling.” Change the verb: laughing, thinking about it." },
+    { day: 6, focus: "You should have", task: "Phrase: “You should have told me.” Change: called me, gone for a walk." },
+    { day: 7, focus: "go for a walk", task: "“I go for a walk.” Change the person: my dad goes, my wife goes." },
+    { day: 8, focus: "have a shower", task: "“I have a shower.” Change person/tense: she has, I had." },
+    { day: 9, focus: "from time to time", task: "Combine: “I go for a walk from time to time.”" },
+    { day: 10, focus: "without fail", task: "Combine: “I go for a walk every morning without fail.”" },
+    { day: 11, focus: "now and then", task: "Combine: “I go for a walk now and then.”" },
+    { day: 12, focus: "every once in a while", task: "Combine: “I go for a walk every once in a while.”" },
+    { day: 13, focus: "by and large", task: "“By and large, I go for a walk in the mornings.”" },
+    { day: 14, focus: "I can’t wait to", task: "“I can’t wait to learn Japanese / Spanish.”" },
+    { day: 15, focus: "I’ve been looking forward to", task: "“I’ve been looking forward to it for hours.”" },
+    { day: 16, focus: "Grammar + vocabulary", task: "“I’m looking forward to going for a walk.” Repeat and change the activity." },
+    { day: 17, focus: "Grammar + vocabulary", task: "“I’d like to have a shower.” Then “I’d like to go for a walk.”" },
+    { day: 18, focus: "Grammar + vocabulary", task: "“You should have gone for a walk because now it’s raining.”" },
+    { day: 19, focus: "Activity + frequency", task: "“I go for a walk from time to time.” Change the frequency chunk." },
+    { day: 20, focus: "Activity + frequency", task: "“I have a shower every morning without fail.”" },
+    { day: 21, focus: "Mini story", task: "“I’d like to go for a walk. Actually, I’m looking forward to going for a walk. I’ve been looking forward to it for hours.”" },
+    { day: 22, focus: "Mini story", task: "“By and large, I go for a walk in the mornings. However, today I’ll go for a walk in the afternoon.”" },
+    { day: 23, focus: "Mini story", task: "“I can’t wait to go for a walk. I go for a walk every morning without fail.”" },
+    { day: 24, focus: "Mini story", task: "“I can’t help smiling when I go for a walk. I go for a walk now and then.”" },
+    { day: 25, focus: "Review: grammar", task: "Make 4 sentences with: I’d like to, I’m looking forward to, I can’t help, you should have." },
+    { day: 26, focus: "Review: vocabulary", task: "Make 3 sentences with: go for a walk, have a shower, have a wash." },
+    { day: 27, focus: "Review: frequency", task: "Make sentences with: from time to time, without fail, now and then, every once in a while, by and large." },
+    { day: 28, focus: "Combine 3 chunks", task: "Make one short story using at least 3 chunks from the bank." },
+    { day: 29, focus: "Full routine + recording", task: "Do the full 10-minute routine and record yourself. Listen for chunking." },
+    { day: 30, focus: "Free speaking", task: "Use any 5 chunks to tell a 1-minute story. Record it and listen back." }
+  ];
+
+  const STORAGE_KEY = "fluency30Days";
+  const planBody = document.getElementById("planBody");
+
+  function getSaved() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch { return []; }
+  }
+  function saveSaved(arr) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+  }
+
+  function renderPlan() {
+    const saved = getSaved();
+    planBody.innerHTML = "";
+    days.forEach((item) => {
+      const tr = document.createElement("tr");
+      const checked = saved.includes(item.day);
+      if (checked) tr.classList.add("done");
+      tr.innerHTML = `
+        <td><strong>${item.day}</strong></td>
+        <td>${item.focus}</td>
+        <td>${item.task}</td>
+        <td><input type="checkbox" data-day="${item.day}" ${checked ? "checked" : ""} aria-label="Mark day ${item.day} complete"></td>
+      `;
+      planBody.appendChild(tr);
+    });
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const saved = getSaved();
+    const count = saved.length;
+    document.getElementById("progressText").textContent = `${count} / 30 days`;
+    document.getElementById("progressFill").style.width = `${(count / 30) * 100}%`;
+  }
+
+  planBody.addEventListener("change", (e) => {
+    if (e.target.matches('input[type="checkbox"]')) {
+      const day = Number(e.target.dataset.day);
+      let saved = getSaved();
+      if (e.target.checked) {
+        if (!saved.includes(day)) saved.push(day);
+      } else {
+        saved = saved.filter(d => d !== day);
+      }
+      saveSaved(saved);
+      e.target.closest("tr").classList.toggle("done", e.target.checked);
+      updateProgress();
+    }
+  });
+
+  function resetProgress() {
+    if (confirm("Reset all 30 days?")) {
+      localStorage.removeItem(STORAGE_KEY);
+      renderPlan();
+    }
+  }
+
+  // Timer
+  let timerSeconds = 600;
+  let timerInterval = null;
+
+  function formatTime(s) {
+    const m = Math.floor(s / 60).toString().padStart(2, "0");
+    const sec = (s % 60).toString().padStart(2, "0");
+    return `${m}:${sec}`;
+  }
+  function updateTimerDisplay() {
+    document.getElementById("timerDisplay").textContent = formatTime(timerSeconds);
+  }
+  function startTimer() {
+    if (timerInterval) return;
+    timerInterval = setInterval(() => {
+      if (timerSeconds > 0) {
+        timerSeconds--;
+        updateTimerDisplay();
+      } else {
+        pauseTimer();
+        alert("10 minutes done — nice work!");
+      }
+    }, 1000);
+  }
+  function pauseTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  function resetTimer() {
+    pauseTimer();
+    timerSeconds = 600;
+    updateTimerDisplay();
+  }
+
+  renderPlan();
+  updateTimerDisplay();
+</script>
+</body>
+</html>
