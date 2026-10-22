@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>30-Day B1 → C1 English Plan</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:#e8eefc;
+    background:
+      radial-gradient(1100px 750px at 85% -15%, #1e2f66 0%, transparent 60%),
+      radial-gradient(900px 700px at -15% 115%, #4a1d4a 0%, transparent 55%),
+      #0b1020;
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- progress ---------- */
+  .progress{position:fixed;top:0;left:0;right:0;height:4px;background:rgba(255,255,255,.07);z-index:50}
+  .progress .bar{height:100%;width:0;background:linear-gradient(90deg,#4cc9f0,#a78bfa,#f72585);transition:width .3s ease}
+
+  /* ---------- deck ---------- */
+  .deck{
+    height:100dvh;
+    display:flex;align-items:center;justify-content:center;
+    padding:56px 18px 92px;
+  }
+  .slide{
+    display:none;
+    width:min(960px,100%);
+    max-height:calc(100dvh - 150px);
+    overflow-y:auto;
+    padding-right:6px;
+    animation:fade .32s ease both;
+  }
+  .slide.active{display:block}
+  .slide::-webkit-scrollbar{width:8px}
+  .slide::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:8px}
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  /* ---------- type ---------- */
+  h1{font-size:clamp(30px,5.4vw,54px);line-height:1.08;margin:.2em 0 .3em;letter-spacing:-.02em}
+  h2{font-size:clamp(22px,3.4vw,34px);line-height:1.15;margin:.15em 0 .4em;letter-spacing:-.015em}
+  p{color:#b9c4de;line-height:1.65;font-size:clamp(15px,1.6vw,17px);margin:.5em 0}
+  .kicker{
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:#7dd3fc;font-weight:700;margin-bottom:6px
+  }
+  .grad{background:linear-gradient(90deg,#4cc9f0,#a78bfa 55%,#f72585);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .muted{color:#93a1c0;font-size:14px}
+  strong{color:#fff}
+
+  /* ---------- chips / tags ---------- */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .chip{
+    font-size:13px;padding:7px 13px;border-radius:999px;
+    background:rgba(76,201,240,.12);border:1px solid rgba(76,201,240,.3);color:#bfe9ff
+  }
+  .tag{
+    display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;
+    padding:5px 11px;border-radius:999px;margin-top:8px;
+    background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.35);color:#d6c9ff
+  }
+
+  /* ---------- day slide ---------- */
+  .dayhead{display:flex;gap:clamp(14px,3vw,26px);align-items:flex-start}
+  .num{
+    font-size:clamp(44px,8vw,76px);font-weight:800;line-height:.9;letter-spacing:-.04em;
+    background:linear-gradient(160deg,#4cc9f0,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent;
+    flex:0 0 auto;padding-top:4px
+  }
+  .tasks{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px}
+  .tasks li{
+    position:relative;padding:14px 18px 14px 46px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;
+    font-size:clamp(14.5px,1.55vw,16.5px);line-height:1.55;color:#dbe4f7
+  }
+  .tasks li::before{
+    content:"";position:absolute;left:18px;top:50%;transform:translateY(-50%);
+    width:11px;height:11px;border-radius:50%;
+    border:2px solid #4cc9f0;box-shadow:0 0 12px rgba(76,201,240,.55)
+  }
+
+  /* ---------- done button ---------- */
+  .done-btn{
+    margin-top:26px;font:inherit;font-size:14px;font-weight:650;
+    padding:11px 20px;border-radius:999px;cursor:pointer;
+    color:#bfe9ff;background:rgba(76,201,240,.1);
+    border:1px solid rgba(76,201,240,.4);
+    transition:.2s;
+  }
+  .done-btn:hover{background:rgba(76,201,240,.2)}
+  .done-btn.is-done{
+    color:#062b12;background:#4ade80;border-color:#4ade80;
+  }
+
+  /* ---------- cards / grid ---------- */
+  .grid{display:grid;gap:14px;margin-top:22px}
+  .grid.two{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .card{
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:16px;padding:18px 20px
+  }
+  .card h3{margin:0 0 8px;font-size:16px;letter-spacing:.01em;color:#fff}
+  .card p{margin:0;font-size:14.5px;color:#a9b6d4;line-height:1.6}
+  .card .n{font-size:13px;font-weight:800;color:#7dd3fc;letter-spacing:.1em}
+
+  ol.steps{margin:18px 0 0;padding-left:22px;color:#c3cde6;line-height:1.8;font-size:15.5px}
+  ol.steps li{margin-bottom:6px}
+  ul.plain{margin:18px 0 0;padding-left:20px;color:#c3cde6;line-height:1.8;font-size:15.5px}
+
+  pre{
+    background:#0a1226;border:1px solid rgba(255,255,255,.1);border-radius:14px;
+    padding:16px 18px;overflow-x:auto;font-size:13.5px;line-height:1.6;color:#c8d6f2;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap
+  }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed;left:0;right:0;bottom:0;
+    display:flex;align-items:center;justify-content:center;gap:16px;
+    padding:14px 18px calc(14px + env(safe-area-inset-bottom));
+    background:linear-gradient(to top,rgba(11,16,32,.96),rgba(11,16,32,0));
+    z-index:40
+  }
+  .nav button{
+    font:inherit;font-size:15px;font-weight:600;cursor:pointer;
+    width:46px;height:46px;border-radius:50%;
+    color:#e8eefc;background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.16);
+    display:grid;place-items:center;transition:.18s
+  }
+  .nav button:hover{background:rgba(255,255,255,.16)}
+  .nav button:disabled{opacity:.28;cursor:default}
+  .counter{
+    font-size:13px;letter-spacing:.06em;color:#93a1c0;
+    min-width:120px;text-align:center;font-variant-numeric:tabular-nums
+  }
+  .counter b{color:#e8eefc}
+
+  @media (max-width:560px){
+    .deck{padding:48px 14px 88px}
+    .slide{max-height:calc(100dvh - 140px)}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="bar" id="bar"></div></div>
+
+<main class="deck" id="deck">
+
+  <!-- ============ TITLE ============ -->
+  <section class="slide">
+    <div class="kicker">Notice it → Note it → Use it</div>
+    <h1>30-Day <span class="grad">B1 → C1</span><br>English Activation Plan</h1>
+    <p>Stop just consuming English. Start <strong>activating</strong> what you already know — through speaking, chunks, error correction and daily review.</p>
+    <div class="chips">
+      <span class="chip">30–45 min / day</span>
+      <span class="chip">Speak aloud daily</span>
+      <span class="chip">Record 2–3×/week</span>
+      <span class="chip">Error diary</span>
+    </div>
+    <p class="muted" style="margin-top:26px">Navigate with <strong>← →</strong> keys, the buttons below, or swipe. <span id="doneStat"></span></p>
+  </section>
+
+  <!-- ============ HOW TO USE ============ -->
+  <section class="slide">
+    <div class="kicker">Start here</div>
+    <h2>How to use this deck</h2>
+    <p>Every day follows the same four-step loop.</p>
+    <div class="grid two">
+      <div class="card"><div class="n">01</div><h3>Input</h3><p>Listen to or read something in English — a video, podcast, article, series.</p></div>
+      <div class="card"><div class="n">02</div><h3>Notice &amp; Note</h3><p>Collect useful phrases, chunks, complex grammar — or a repeated mistake.</p></div>
+      <div class="card"><div class="n">03</div><h3>Use</h3><p>Say it aloud in your own sentences. Speak for 60 seconds. Repeat without notes.</p></div>
+      <div class="card"><div class="n">04</div><h3>Review</h3><p>Update your Error Diary. Compare with the original. Drill the correct form.</p></div>
+    </div>
+    <p class="muted" style="margin-top:22px">Templates for the diary, drills and summaries are near the end of this deck.</p>
+  </section>
+
+  <!-- ============ DAILY RHYTHM ============ -->
+  <section class="slide">
+    <div class="kicker">Structure</div>
+    <h2>Your daily rhythm</h2>
+    <div class="grid two">
+      <div class="card">
+        <h3>Full version · 30–45 min</h3>
+        <p>10 min input · 10 min noticing &amp; noting · 15 min speaking aloud · 5 min error diary review.</p>
+      </div>
+      <div class="card">
+        <h3>Minimum version · 15 min</h3>
+        <p>5 min review · 5 min noticing · 5 min speaking aloud. Never skip the speaking.</p>
+      </div>
+    </div>
+    <ul class="plain">
+      <li><strong>Speak aloud every single day</strong> — even alone.</li>
+      <li><strong>Record yourself</strong> 2–3 times per week and listen back.</li>
+      <li><strong>Review your Error Diary</strong> before every conversation.</li>
+      <li>Don’t collect words — <strong>use</strong> them in speech the same day.</li>
+    </ul>
+  </section>
+
+  <!-- ============ WEEKLY THEMES ============ -->
+  <section class="slide">
+    <div class="kicker">Roadmap</div>
+    <h2>Weekly themes</h2>
+    <div class="grid two">
+      <div class="card"><div class="n">WEEK 1 · DAYS 1–7</div><h3>Speaking activation</h3><p>Get talking, build the habit, start your Error Diary and find your baseline.</p></div>
+      <div class="card"><div class="n">WEEK 2 · DAYS 8–14</div><h3>Chunks &amp; natural speech</h3><p>Stop building word by word. Collect and use multi-word chunks.</p></div>
+      <div class="card"><div class="n">WEEK 3 · DAYS 15–21</div><h3>Accuracy under pressure</h3><p>Complex grammar in speech, real conversations, longer speaking tasks.</p></div>
+      <div class="card"><div class="n">WEEK 4 · DAYS 22–30</div><h3>Integration &amp; confidence</h3><p>Upgrade simple language, mock tests, final recording and next plan.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ DAY SLIDES INSERTED HERE ============ -->
+  <div id="daySlot"></div>
+
+  <!-- ============ TEMPLATES: PERSONAL DRILL ============ -->
+  <section class="slide">
+    <div class="kicker">Template</div>
+    <h2>Personal Drills</h2>
+    <ol class="steps">
+      <li>While reading/listening, notice <strong>3 useful phrases</strong> you understand but wouldn’t say.</li>
+      <li>Write each one down.</li>
+      <li>Make a <strong>personal sentence</strong> with each — about your life.</li>
+      <li>Speak for <strong>60 seconds</strong> using all three (notes allowed).</li>
+      <li>Repeat the 60 seconds <strong>without notes</strong>, from memory.</li>
+    </ol>
+    <pre>Phrase 1: I'm not particularly keen on …
+My sentence: I'm not particularly keen on football.
+
+Phrase 2: ______________________________
+My sentence: __________________________
+
+Phrase 3: ______________________________
+My sentence: __________________________
+
+60 sec with notes:    ☐
+60 sec without notes: ☐
+What felt difficult? ___________________</pre>
+  </section>
+
+  <!-- ============ TEMPLATES: ORAL SUMMARY ============ -->
+  <section class="slide">
+    <div class="kicker">Template</div>
+    <h2>Oral Summaries</h2>
+    <ol class="steps">
+      <li>Read or watch something short.</li>
+      <li>Note <strong>3 chunks or grammar points</strong>.</li>
+      <li>Summarise aloud <strong>with notes</strong>.</li>
+      <li>Summarise again <strong>from memory</strong>.</li>
+      <li>Compare with the original — where are the gaps? Repeat.</li>
+    </ol>
+    <pre>Source: _______________________________
+3 things I noticed:
+1. ____________________________________
+2. ____________________________________
+3. ____________________________________
+
+Summary with notes:     ☐
+Summary from memory:    ☐
+Compared with original: ☐
+Gaps to improve: ______________________</pre>
+  </section>
+
+  <!-- ============ TEMPLATES: SITUATION CHUNKS ============ -->
+  <section class="slide">
+    <div class="kicker">Template</div>
+    <h2>Situation Chunks</h2>
+    <p>Fluent speakers don’t build sentences word by word — they use ready-made chunks.</p>
+    <div class="grid two">
+      <div class="card"><h3>“This one’s on me.”</h3><p>Paying for a meal or drink.</p></div>
+      <div class="card"><h3>“Right, I’ll be making a move then.”</h3><p>Ending a conversation and leaving.</p></div>
+      <div class="card"><h3>“Oh, you shouldn’t have.”</h3><p>Receiving a present.</p></div>
+      <div class="card"><h3>“I’ll get the next one.”</h3><p>Returning the favour.</p></div>
+    </div>
+    <pre>Situation: _____________________________
+Chunks:
+1. ____________________________________
+2. ____________________________________
+3. ____________________________________
+
+Mini-dialogue written:  ☐
+Spoken aloud:           ☐
+Recorded:               ☐</pre>
+  </section>
+
+  <!-- ============ TEMPLATES: ERROR DIARY ============ -->
+  <section class="slide">
+    <div class="kicker">Template</div>
+    <h2>Error Diary</h2>
+    <p>Fossilized errors need awareness + drills, not just correction.</p>
+    <pre>MISTAKE            → CORRECT            → WHY
+"it depend"        → "it depends"       → 3rd person -s
+"I live here 3 yrs"→ "I've lived here…"→ present perfect
+"say me the time"  → "tell me the time"→ tell + person
+
+DRILL: "It depends on the weather."
+       "It depends on the person."
+       "It depends on the price."   ×10 aloud</pre>
+    <p style="margin-top:20px">In real conversations, ask a friend or teacher to <strong>wave</strong> when they hear a target mistake — don’t stop, don’t correct. Just notice.</p>
+  </section>
+
+  <!-- ============ AI PROMPT ============ -->
+  <section class="slide">
+    <div class="kicker">Template</div>
+    <h2>AI Feedback prompt</h2>
+    <p>Copy this into ChatGPT, Gemini or Claude.</p>
+    <pre>Here is a transcript of my spoken English. Do NOT correct
+every mistake. Identify only REPEATED / FOSSILIZED errors.
+
+For each error give me:
+1. the mistake
+2. the correct version
+3. a simple reason
+4. one 30-second speaking drill
+
+Then ask me 5 questions so I can practise the correct
+forms aloud.
+
+Transcript: [paste your transcript here]</pre>
+    <p class="muted" style="margin-top:18px">Record yourself, transcribe, paste. Do this on Days 6, 12, 19 and 26.</p>
+  </section>
+
+  <!-- ============ WEEKLY REVIEW ============ -->
+  <section class="slide">
+    <div class="kicker">Every 7 days</div>
+    <h2>Weekly review questions</h2>
+    <ol class="steps">
+      <li>Which <strong>3 chunks</strong> did I actually use in speaking this week?</li>
+      <li>Which <strong>repeated mistake</strong> appeared most often?</li>
+      <li>What did I <strong>avoid saying</strong> because I didn’t know how?</li>
+      <li>Did I speak aloud <strong>every day</strong>? If not, why?</li>
+      <li>What is <strong>one small change</strong> for next week?</li>
+    </ol>
+    <p style="margin-top:24px">Use the <strong>daily log</strong> in your notebook: date · input · 3 things noticed · speaking done ✓ · errors to review.</p>
+  </section>
+
+  <!-- ============ BONUS ============ -->
+  <section class="slide">
+    <div class="kicker">Bonus</div>
+    <h2>Two habits that accelerate everything</h2>
+    <div class="grid two">
+      <div class="card">
+        <h3>Extensive reading &amp; listening — for pleasure</h3>
+        <p>20–30 minutes several times a week. It reinforces complex grammar, chunks and correct forms without effort.</p>
+      </div>
+      <div class="card">
+        <h3>Sign up for an exam</h3>
+        <p>B2, C1 or IELTS — just above your level. Nothing motivates like a date in the calendar. Don’t stress: use it as fuel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL ============ -->
+  <section class="slide">
+    <div class="kicker">Key message</div>
+    <h2>Don’t start learning thousands of new words.</h2>
+    <p style="font-size:clamp(17px,2.2vw,22px);color:#dbe4f7;line-height:1.6">
+      Start <strong>activating and speaking out</strong> what you already know.
+    </p>
+    <p class="grad" style="font-size:clamp(24px,4vw,38px);font-weight:800;letter-spacing:-.02em;margin-top:18px">
+      Notice it. Note it. Use it.
+    </p>
+    <p class="muted" style="margin-top:24px">Don’t sit on it. Start moving — Day 1 is one tap away.</p>
+  </section>
+
+</main>
+
+<nav class="nav">
+  <button id="prev" aria-label="Previous slide">←</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button id="next" aria-label="Next slide">→</button>
+</nav>
+
+<script>
+/* =======================================================
+   DAY DATA
+   ======================================================= */
+const days = [
+  {n:1,  title:"Baseline recording", tag:"Diagnose", tasks:[
+    "Record 2 minutes speaking about “My English goals.” No script, no preparation.",
+    "Listen once. Write down 3 phrases you wish you had used.",
+    "Start your Error Diary with 3 mistakes you already know you make."
+  ]},
+  {n:2,  title:"Personal Drills", tag:"Speak what you know", tasks:[
+    "From a video or article, notice 3 useful phrases you understand but wouldn’t say.",
+    "Write one personal sentence for each.",
+    "Speak 60 seconds using them with notes, then repeat without notes."
+  ]},
+  {n:3,  title:"Personal Drills + Error Diary", tag:"Activate + correct", tasks:[
+    "Choose 3 new phrases and do a 60-second personal drill.",
+    "Review your top 3 repeated mistakes in the Error Diary.",
+    "Drill the correct versions aloud 10 times each, in full sentences."
+  ]},
+  {n:4,  title:"Oral Summary", tag:"Summarise aloud", tasks:[
+    "Watch or read something short (3–5 min).",
+    "Note 3 chunks or grammar points.",
+    "Summarise aloud with notes, then again from memory. Compare with the original."
+  ]},
+  {n:5,  title:"Situation Chunks: opinions", tag:"Natural chunks", tasks:[
+    "Collect 2–3 chunks for giving an opinion, e.g. “As far as I’m concerned…”, “I’d say…”.",
+    "Write a short mini-dialogue using them.",
+    "Perform the dialogue aloud. Record it."
+  ]},
+  {n:6,  title:"AI Feedback", tag:"Repeated errors only", tasks:[
+    "Record 1–2 minutes speaking.",
+    "Get a transcript and ask AI to identify only repeated errors.",
+    "Add the top 2 to your Error Diary with the correct form and reason."
+  ]},
+  {n:7,  title:"Review + extensive input", tag:"Consolidate", tasks:[
+    "Re-record the Day 1 topic. Compare with your baseline.",
+    "Update the Error Diary with anything new.",
+    "20 minutes of listening or reading purely for pleasure."
+  ]},
+
+  {n:8,  title:"Personal Drills: natural chunks", tag:"Chunks", tasks:[
+    "Notice 3 natural multi-word chunks (not single words).",
+    "Make personal sentences with each.",
+    "Speak 60 seconds with notes, then 60 seconds without."
+  ]},
+  {n:9,  title:"Situation Chunks: plans & decisions", tag:"Chunks", tasks:[
+    "Find chunks people use when making plans or decisions.",
+    "Collect 2–3 and note the situation they belong to.",
+    "Role-play a short dialogue aloud using all of them."
+  ]},
+  {n:10, title:"Oral Summary", tag:"Activate", tasks:[
+    "Summarise a short video or article aloud.",
+    "Use at least 3 chunks you noted this week.",
+    "Repeat from memory. Note where the gaps were."
+  ]},
+  {n:11, title:"Error Diary Drill", tag:"Accuracy", tasks:[
+    "Pick 3 fossilized errors from your diary.",
+    "Write: mistake → correct version → why.",
+    "Say the correct form 10 times aloud in full sentences."
+  ]},
+  {n:12, title:"AI Feedback: chunk upgrades", tag:"Upgrade", tasks:[
+    "Record yourself speaking for 2 minutes.",
+    "Ask AI: “Which chunks do I overuse? Which natural chunks could I use instead?”",
+    "Add 2 upgrades to your notes and use them in speech today."
+  ]},
+  {n:13, title:"Chunk shadowing", tag:"Rhythm & intonation", tasks:[
+    "Choose 5 sentences containing useful chunks.",
+    "Pause and repeat each aloud, copying rhythm and intonation exactly.",
+    "Then say them in your own sentences without the audio."
+  ]},
+  {n:14, title:"Review + extensive reading", tag:"Consolidate", tasks:[
+    "Read 20 minutes for pleasure.",
+    "Note 5 chunks you want to use.",
+    "Review the Error Diary and complete the weekly review questions."
+  ]},
+
+  {n:15, title:"Personal Drills: complex grammar", tag:"Grammar in speech", tasks:[
+    "Notice 3 phrases with advanced grammar — conditionals, perfect tenses, passive.",
+    "Make personal sentences with each.",
+    "Speak 60 seconds using them, then repeat without notes."
+  ]},
+  {n:16, title:"Oral Summary from memory", tag:"Recall", tasks:[
+    "Read or watch something, then summarise it with no notes.",
+    "Record the summary.",
+    "Compare with the original and note the gaps."
+  ]},
+  {n:17, title:"Situation Chunks: disagreeing & advice", tag:"Chunks", tasks:[
+    "Collect chunks for disagreeing politely and for giving advice.",
+    "Write a mini-dialogue for each situation.",
+    "Perform both aloud."
+  ]},
+  {n:18, title:"Error Diary + real conversation", tag:"Accuracy under load", tasks:[
+    "Review your top errors before the conversation.",
+    "Ask a friend or teacher to wave when they hear a target mistake — not correct you.",
+    "Review the diary afterwards and add anything new."
+  ]},
+  {n:19, title:"AI Feedback + drills", tag:"Fix fossilized errors", tasks:[
+    "Record yourself speaking for 2–3 minutes.",
+    "Ask AI for 3 short drills on your repeated errors.",
+    "Do the drills aloud and update the Error Diary."
+  ]},
+  {n:20, title:"3-minute speaking challenge", tag:"Fluency", tasks:[
+    "Speak for 3 minutes on one topic.",
+    "Use 5 chunks and 2 complex structures.",
+    "Record it. Listen back once and note one improvement."
+  ]},
+  {n:21, title:"Review + extensive listening", tag:"Consolidate", tasks:[
+    "Listen to Day 20’s recording and note progress.",
+    "20 minutes of extensive listening for pleasure.",
+    "Complete the weekly review questions."
+  ]},
+
+  {n:22, title:"Upgrade simple sentences", tag:"Natural speech", tasks:[
+    "Write 5 simple sentences you say all the time.",
+    "Rewrite each with a chunk or more complex grammar.",
+    "Say the simple and upgraded versions aloud, back to back."
+  ]},
+  {n:23, title:"Oral Summary: longer input", tag:"Sustain", tasks:[
+    "Use a 5–7 minute video or article.",
+    "Note 3 chunks and 1 grammar point.",
+    "Summarise with notes, then from memory."
+  ]},
+  {n:24, title:"Situation Chunks: persuading", tag:"Chunks", tasks:[
+    "Collect chunks for persuading and negotiating.",
+    "Write a short role-play using them.",
+    "Perform it aloud and record it."
+  ]},
+  {n:25, title:"Error Diary: final audit", tag:"Accuracy", tasks:[
+    "List your top 5 repeated errors.",
+    "Create a 30-second drill for each.",
+    "Practise all five aloud."
+  ]},
+  {n:26, title:"AI + mock conversation", tag:"Pressure test", tasks:[
+    "Have a 5-minute spoken conversation with AI or a partner.",
+    "Ask for repeated errors only, plus 3 natural chunk upgrades.",
+    "Add them to your notes and use them in speech today."
+  ]},
+  {n:27, title:"5-minute speaking challenge", tag:"Endurance", tasks:[
+    "Speak for 5 minutes: your week, your goals, one opinion.",
+    "Use at least 8 new chunks.",
+    "Record it and listen back."
+  ]},
+  {n:28, title:"Extensive reading & listening", tag:"Absorb", tasks:[
+    "30 minutes of reading or listening for pleasure.",
+    "Collect 10 chunks.",
+    "Choose 3 to actively use tomorrow."
+  ]},
+  {n:29, title:"Mock test / self-assessment", tag:"Motivation", tasks:[
+    "Do a B2 or C1 speaking task, or an IELTS speaking part.",
+    "Review it against your Error Diary.",
+    "Sign up for an exam to lock in your motivation."
+  ]},
+  {n:30, title:"Final recording", tag:"Next 30 days", tasks:[
+    "Record the Day 1 topic again and compare with your baseline.",
+    "Write your next 30-day plan: top 5 errors, 10 chunks to keep using, one exam date.",
+    "Celebrate — then start the cycle again."
+  ]}
+];
+
+/* =======================================================
+   BUILD DAY SLIDES
+   ======================================================= */
+const slot = document.getElementById('daySlot');
+const week = n => Math.ceil(n / 7);
+const pad  = n => String(n).padStart(2, '0');
+
+days.forEach(d => {
+  slot.insertAdjacentHTML('beforebegin', `
+    <section class="slide day" data-day="${d.n}">
+      <div class="dayhead">
+        <div class="num">${pad(d.n)}</div>
+        <div>
+          <div class="kicker">Day ${d.n} · Week ${week(d.n)}</div>
+          <h2>${d.title}</h2>
+          <span class="tag">${d.tag}</span>
+        </div>
+      </div>
+      <ul class="tasks">
+        ${d.tasks.map(t => `<li>${t}</li>`).join('')}
+      </ul>
+      <button class="done-btn" data-day="${d.n}">Mark day complete</button>
+    </section>
+  `);
+});
+slot.remove();
+
+/* =======================================================
+   NAVIGATION
+   ======================================================= */
+const slides  = Array.from(document.querySelectorAll('.slide'));
+const bar     = document.getElementById('bar');
+const counter = document.getElementById('counter');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const STORE   = 'b1c1-done';
+const HASH    = 'b1c1-slide';
+
+let index = 0;
+
+function show(i, pushHash = true) {
+  index = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach((s, k) => {
+    s.classList.toggle('active', k === index);
+    if (k === index) {
+      s.scrollTop = 0;
+      // restart fade animation
+      s.style.animation = 'none';
+      void s.offsetWidth;
+      s.style.animation = '';
+    }
+  });
+  counter.innerHTML = `<b>${index + 1}</b> / ${slides.length}`;
+  bar.style.width = ((index + 1) / slides.length * 100) + '%';
+  prevBtn.disabled = index === 0;
+  nextBtn.disabled = index === slides.length - 1;
+  if (pushHash) history.replaceState(null, '', '#' + (index + 1));
+}
+
+const next = () => show(index + 1);
+const prev = () => show(index - 1);
+
+nextBtn.addEventListener('click', next);
+prevBtn.addEventListener('click', prev);
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+    e.preventDefault(); next();
+  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    e.preventDefault(); prev();
+  } else if (e.key === 'Home') {
+    e.preventDefault(); show(0);
+  } else if (e.key === 'End') {
+    e.preventDefault(); show(slides.length - 1);
+  }
+});
+
+/* touch swipe */
+let tx = 0, ty = 0;
+document.addEventListener('touchstart', e => {
+  tx = e.changedTouches[0].clientX;
+  ty = e.changedTouches[0].clientY;
+}, {passive: true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  const dy = e.changedTouches[0].clientY - ty;
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+    dx < 0 ? next() : prev();
+  }
+}, {passive: true});
+
+/* =======================================================
+   PROGRESS TRACKING (localStorage)
+   ======================================================= */
+function loadDone() {
+  try { return new Set(JSON.parse(localStorage.getItem(STORE) || '[]')); }
+  catch { return new Set(); }
+}
+function saveDone(set) {
+  localStorage.setItem(STORE, JSON.stringify([...set]));
+}
+
+let done = loadDone();
+
+function refreshDoneUI() {
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    const on = done.has(Number(btn.dataset.day));
+    btn.classList.toggle('is-done', on);
+    btn.textContent = on ? '✓ Day complete' : 'Mark day complete';
+  });
+  const stat = document.getElementById('doneStat');
+  if (stat) {
+    stat.textContent = done.size
+      ? `${done.size} / 30 days completed.`
+      : 'No days completed yet — let’s start.';
+  }
+}
+
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.done-btn');
+  if (!btn) return;
+  const day = Number(btn.dataset.day);
+  done.has(day) ? done.delete(day) : done.add(day);
+  saveDone(done);
+  refreshDoneUI();
+});
+
+refreshDoneUI();
+
+/* =======================================================
+   INIT
+   ======================================================= */
+const startAt = parseInt(location.hash.replace('#', ''), 10);
+show(Number.isFinite(startAt) && startAt > 0 ? startAt - 1 : 0, false);
+</script>
+</body>
+  </html>
