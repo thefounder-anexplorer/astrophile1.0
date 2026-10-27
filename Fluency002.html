@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30-Day English Fluency Plan — 5 & 10 Minutes a Day (Chunking)</title>
+<style>
+  :root {
+    --bg: #f7f8fb; --card: #ffffff; --text: #1f2937; --muted: #6b7280;
+    --accent: #2563eb; --accent-soft: #dbeafe; --success: #16a34a; --border: #e5e7eb;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.5; }
+  header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white;
+    padding: 2rem 1rem; text-align: center; }
+  header h1 { margin: 0 0 .4rem; font-size: clamp(1.5rem, 4vw, 2.2rem); }
+  header p { margin: 0; opacity: .9; }
+  main { max-width: 1050px; margin: 0 auto; padding: 1.25rem; }
+  section { background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 1.25rem; margin: 1rem 0; box-shadow: 0 4px 12px rgba(0,0,0,.03); }
+  h2 { margin-top: 0; font-size: 1.25rem; }
+  h3 { margin: 1rem 0 .4rem; font-size: 1rem; }
+  .muted { color: var(--muted); }
+  .pill { display: inline-block; background: var(--accent-soft); color: #1e40af;
+    padding: .2rem .6rem; border-radius: 999px; font-size: .85rem; font-weight: 600; }
+  .pill.green { background: #dcfce7; color: #166534; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+  .routine-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .75rem; }
+  .step { border: 1px solid var(--border); border-radius: 12px; padding: .75rem .9rem; background: #fafafa; }
+  .step strong { display: block; margin-bottom: .2rem; }
+  .timer-box { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+  .timer-display { font-variant-numeric: tabular-nums; font-size: 2rem; font-weight: 700;
+    min-width: 6ch; text-align: center; }
+  button { background: var(--accent); color: white; border: none; border-radius: 10px;
+    padding: .6rem 1rem; font-weight: 600; cursor: pointer; font-size: .95rem; }
+  button:hover { filter: brightness(1.05); }
+  button.secondary { background: #e5e7eb; color: #111827; }
+  button.active { background: var(--success); }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  th, td { border-bottom: 1px solid var(--border); padding: .6rem .5rem; text-align: left; vertical-align: top; }
+  th { background: #f3f4f6; font-size: .8rem; text-transform: uppercase;
+    letter-spacing: .04em; color: #374151; }
+  tr.done td { background: #f0fdf4; }
+  tr.done td:last-child { color: var(--success); font-weight: 700; }
+  input[type="checkbox"] { width: 1.1rem; height: 1.1rem; cursor: pointer; }
+  .chunk-bank { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .75rem; }
+  .chunk-card { border: 1px solid var(--border); border-radius: 12px; padding: .8rem; background: #fafafa; }
+  .chunk-card h4 { margin: 0 0 .4rem; font-size: .95rem; }
+  .chunk-card ul { margin: 0; padding-left: 1.1rem; }
+  .chunk-card li { margin: .2rem 0; }
+  .progress-wrap { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+  .progress-bar { flex: 1; height: 10px; background: #e5e7eb; border-radius: 999px;
+    overflow: hidden; min-width: 180px; }
+  .progress-fill { height: 100%; width: 0%; background: var(--success); transition: width .3s ease; }
+  .example { font-style: italic; color: #374151; }
+  @media print {
+    header { background: white; color: black; }
+    button, .timer-box { display: none; }
+    section { box-shadow: none; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>30-Day English Fluency Plan</h1>
+  <p>Chunking method • 5 minutes a day (plus a 10-minute version when you have time)</p>
+</header>
+
+<main>
+
+  <section>
+    <h2>How this works</h2>
+    <p>
+      Don't speak word by word — speak in <strong>chunks</strong>: 2–3 words said as
+      <strong>one sound</strong>. A chunk is like a bunch of bananas: one unit, quick to pick up.
+    </p>
+    <p>
+      <strong>Verb chunks</strong> = <em>what</em> you do (<em>I tend to, I'm used to, I find it easy to</em>).
+      <strong>Adverbial chunks</strong> = <em>how / when</em> (<em>at the moment, by and large</em>).
+      Put them together and you build fluent sentences.
+    </p>
+    <p class="muted">Tick each day when finished. Progress is saved in this browser.</p>
+    <div class="progress-wrap">
+      <span class="pill" id="progressText">0 / 30 days</span>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <button class="secondary" onclick="resetProgress()">Reset progress</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>The two routines</h2>
+    <div class="grid2">
+      <div>
+        <h3>5-minute quick drill <span class="pill">every day</span></h3>
+        <div class="routine-grid">
+          <div class="step"><strong>1. Pick 3 verb chunks</strong><span class="muted">e.g. I tend to, I'm used to, I find it easy to.</span></div>
+          <div class="step"><strong>2. Repeat & change</strong><span class="muted">Swap the noun, verb, person or tense.</span></div>
+          <div class="step"><strong>3. Add adverb chunks</strong><span class="muted">Put them in front: "At the moment I tend to…"</span></div>
+          <div class="step"><strong>4. Extend</strong><span class="muted">Add because / since / as.</span></div>
+          <div class="step"><strong>5. Mini story</strong><span class="muted">3–5 sentences. Illogical is fine.</span></div>
+        </div>
+      </div>
+      <div>
+        <h3>10-minute extended routine <span class="pill green">when you have time</span></h3>
+        <div class="routine-grid">
+          <div class="step"><strong>A. Drill practice</strong><span class="muted">Repeat chunk → make a phrase → repeat 3× → change something.</span></div>
+          <div class="step"><strong>B. Real practice</strong><span class="muted">Combine 2 chunks → meaningful sentence → mini story → record.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Timer</h2>
+    <div class="timer-box">
+      <div class="timer-display" id="timerDisplay">05:00</div>
+      <button id="btn5" class="active" onclick="setPreset(300, this)">5 min</button>
+      <button id="btn10" class="secondary" onclick="setPreset(600, this)">10 min</button>
+      <button onclick="startTimer()">Start</button>
+      <button class="secondary" onclick="pauseTimer()">Pause</button>
+      <button class="secondary" onclick="resetTimer()">Reset</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>30-day plan</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Focus chunk(s)</th>
+          <th>Practice</th>
+          <th>Done</th>
+        </tr>
+      </thead>
+      <tbody id="planBody"></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Chunk bank (from both videos)</h2>
+    <div class="chunk-bank">
+      <div class="chunk-card">
+        <h4>Verb chunks</h4>
+        <ul>
+          <li>I tend to</li>
+          <li>I'm used to</li>
+          <li>I find it easy to</li>
+          <li>I'd like to</li>
+          <li>I'm looking forward to</li>
+          <li>I can't help</li>
+          <li>You should have</li>
+          <li>I can't wait to</li>
+        </ul>
+      </div>
+      <div class="chunk-card">
+        <h4>Adverbial chunks</h4>
+        <ul>
+          <li>at the moment</li>
+          <li>right now</li>
+          <li>by and large</li>
+          <li>at the end of the day</li>
+          <li>from time to time</li>
+          <li>without fail</li>
+          <li>now and then</li>
+          <li>every once in a while</li>
+        </ul>
+      </div>
+      <div class="chunk-card">
+        <h4>Vocabulary chunks (verbs + noun)</h4>
+        <ul>
+          <li>wake up early</li>
+          <li>have a big breakfast</li>
+          <li>drink tea</li>
+          <li>get nervous before meetings</li>
+          <li>get up early</li>
+          <li>work on my own</li>
+          <li>live in the countryside</li>
+          <li>stay organized</li>
+          <li>go for a walk</li>
+          <li>have a shower</li>
+        </ul>
+      </div>
+      <div class="chunk-card">
+        <h4>Linking / extending</h4>
+        <ul>
+          <li>because…</li>
+          <li>since…</li>
+          <li>as…</li>
+          <li>however…</li>
+          <li>actually…</li>
+        </ul>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:.75rem">
+      Tip: don't grind through the whole list. Pick 2–3 chunks and drill them until they feel like one sound.
+    </p>
+  </section>
+</main>
+
+<script>
+  const days = [
+    // Phase 1 — 5-minute drill: 3 verb chunks + adverbs (days 1–10)
+    { day: 1, focus: "I tend to", task: "“I tend to wake up early.” Change the noun: have a big breakfast, drink tea, get nervous before meetings." },
+    { day: 2, focus: "I tend to", task: "Repeat each phrase 3× focusing on the sound “I-tend-to”. Then say something true for you." },
+    { day: 3, focus: "I'm used to", task: "“I'm used to getting up early.” Change the -ing verb: working on my own, living in the countryside." },
+    { day: 4, focus: "I'm used to", task: "Combine: “I'm used to working on my own.” Change the person: she's used to, they're used to." },
+    { day: 5, focus: "I find it easy to", task: "“I find it easy to cook.” Change the verb: learn languages, stay organized, stay focused." },
+    { day: 6, focus: "I find it easy to", task: "Repeat 3× per phrase. Listen for the chunk “I-find-it-easy-to”." },
+    { day: 7, focus: "Review the 3 verb chunks", task: "Make 6 sentences — 2 with each verb chunk. Say them out loud." },
+    { day: 8, focus: "Adverb: at the moment", task: "“At the moment I tend to wake up early.” Change the verb chunk." },
+    { day: 9, focus: "Adverb: right now", task: "“Right now I'm used to living on my own.” Change the -ing verb." },
+    { day: 10, focus: "Adverb: by and large", task: "“By and large I find it easy to stay organized.” Change the verb chunk." },
+
+    // Phase 2 — combinations (days 11–20)
+    { day: 11, focus: "Verb + adverb", task: "“At the moment I tend to wake up early.” Make 5 versions with different adverbs." },
+    { day: 12, focus: "Verb + adverb", task: "“Right now I'm used to getting up early.” Then “By and large I'm used to…”" },
+    { day: 13, focus: "Extend with because", task: "“At the moment I tend to wake up early because I'm very busy.”" },
+    { day: 14, focus: "Extend with since / as", task: "Swap because for since and as in your day-13 sentences." },
+    { day: 15, focus: "Grammar chunks", task: "“I'd like to learn Spanish.” “I'm looking forward to having dinner.” Change the noun/verb." },
+    { day: 16, focus: "Grammar chunks", task: "“I can't help smiling.” “You should have told me.” Repeat and change." },
+    { day: 17, focus: "Vocabulary chunks", task: "“I go for a walk.” “I have a shower.” Change the person: my dad goes, she has." },
+    { day: 18, focus: "Frequency chunks", task: "“I go for a walk from time to time / without fail / now and then.”" },
+    { day: 19, focus: "Activity + frequency", task: "“I go for a walk every morning without fail.” Swap the activity and the frequency chunk." },
+    { day: 20, focus: "Grammar + vocabulary", task: "“I'd like to go for a walk.” “I'm looking forward to going for a walk.”" },
+
+    // Phase 3 — stories + recording (days 21–30)
+    { day: 21, focus: "Illogical mini story", task: "Use at the moment, by and large, right now. Doesn't need to make sense — focus on the sounds." },
+    { day: 22, focus: "Illogical mini story", task: "Use I tend to, I'm used to, I find it easy to. 3–5 sentences." },
+    { day: 23, focus: "Illogical mini story", task: "Add because / since / as to extend at least two sentences." },
+    { day: 24, focus: "Illogical mini story", task: "Use at least 3 adverb chunks + 2 verb chunks." },
+    { day: 25, focus: "True mini story", task: "Same routine, but everything must be true about you. Harder — think about meaning." },
+    { day: 26, focus: "True mini story", task: "Use 5 chunks from the bank. Say it twice — second time faster." },
+    { day: 27, focus: "True mini story", task: "Use because / since / as and one contrast word (however / actually)." },
+    { day: 28, focus: "Record yourself", task: "Do the 5-minute drill and record it. Listen for chunks, not words." },
+    { day: 29, focus: "Full 10-minute routine", task: "Drill practice + real practice + recording. Review your day-28 recording." },
+    { day: 30, focus: "Free speaking", task: "Tell a 1-minute story using any 5–7 chunks. Record and listen back. Compare to day 1." }
+  ];
+
+  const STORAGE_KEY = "fluency30DaysCombined";
+  const planBody = document.getElementById("planBody");
+
+  function getSaved() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch { return []; }
+  }
+  function saveSaved(arr) { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+
+  function renderPlan() {
+    const saved = getSaved();
+    planBody.innerHTML = "";
+    days.forEach((item) => {
+      const tr = document.createElement("tr");
+      const checked = saved.includes(item.day);
+      if (checked) tr.classList.add("done");
+      tr.innerHTML = `
+        <td><strong>${item.day}</strong></td>
+        <td>${item.focus}</td>
+        <td>${item.task}</td>
+        <td><input type="checkbox" data-day="${item.day}" ${checked ? "checked" : ""} aria-label="Mark day ${item.day} complete"></td>
+      `;
+      planBody.appendChild(tr);
+    });
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const count = getSaved().length;
+    document.getElementById("progressText").textContent = `${count} / 30 days`;
+    document.getElementById("progressFill").style.width = `${(count / 30) * 100}%`;
+  }
+
+  planBody.addEventListener("change", (e) => {
+    if (e.target.matches('input[type="checkbox"]')) {
+      const day = Number(e.target.dataset.day);
+      let saved = getSaved();
+      if (e.target.checked) { if (!saved.includes(day)) saved.push(day); }
+      else { saved = saved.filter(d => d !== day); }
+      saveSaved(saved);
+      e.target.closest("tr").classList.toggle("done", e.target.checked);
+      updateProgress();
+    }
+  });
+
+  function resetProgress() {
+    if (confirm("Reset all 30 days?")) {
+      localStorage.removeItem(STORAGE_KEY);
+      renderPlan();
+    }
+  }
+
+  // Timer
+  let timerSeconds = 300;
+  let timerInterval = null;
+
+  function formatTime(s) {
+    const m = Math.floor(s / 60).toString().padStart(2, "0");
+    const sec = (s % 60).toString().padStart(2, "0");
+    return `${m}:${sec}`;
+  }
+  function updateTimerDisplay() {
+    document.getElementById("timerDisplay").textContent = formatTime(timerSeconds);
+  }
+  function setPreset(seconds, btn) {
+    pauseTimer();
+    timerSeconds = seconds;
+    updateTimerDisplay();
+    document.getElementById("btn5").className = "secondary";
+    document.getElementById("btn10").className = "secondary";
+    btn.className = "active";
+  }
+  function startTimer() {
+    if (timerInterval) return;
+    timerInterval = setInterval(() => {
+      if (timerSeconds > 0) { timerSeconds--; updateTimerDisplay(); }
+      else { pauseTimer(); alert("Time's up — nice work!"); }
+    }, 1000);
+  }
+  function pauseTimer() { clearInterval(timerInterval); timerInterval = null; }
+  function resetTimer() { pauseTimer(); updateTimerDisplay(); }
+
+  renderPlan();
+  updateTimerDisplay();
+</script>
+</body>
+                                                                                                                                                </html>
