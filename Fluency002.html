@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>30-Day English Fluency Plan — 5 & 10 Minutes a Day (Chunking)</title>
+<title>30-Day English Fluency Plan — Discover · Practice · Review</title>
 <style>
   :root {
     --bg: #f7f8fb; --card: #ffffff; --text: #1f2937; --muted: #6b7280;
@@ -16,7 +16,7 @@
     padding: 2rem 1rem; text-align: center; }
   header h1 { margin: 0 0 .4rem; font-size: clamp(1.5rem, 4vw, 2.2rem); }
   header p { margin: 0; opacity: .9; }
-  main { max-width: 1050px; margin: 0 auto; padding: 1.25rem; }
+  main { max-width: 1100px; margin: 0 auto; padding: 1.25rem; }
   section { background: var(--card); border: 1px solid var(--border); border-radius: 16px;
     padding: 1.25rem; margin: 1rem 0; box-shadow: 0 4px 12px rgba(0,0,0,.03); }
   h2 { margin-top: 0; font-size: 1.25rem; }
@@ -25,10 +25,24 @@
   .pill { display: inline-block; background: var(--accent-soft); color: #1e40af;
     padding: .2rem .6rem; border-radius: 999px; font-size: .85rem; font-weight: 600; }
   .pill.green { background: #dcfce7; color: #166534; }
+  .pill.amber { background: #fef3c7; color: #92400e; }
+
+  /* 3-step system visual */
+  .system { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .75rem; }
+  .system-card { border: 1px solid var(--border); border-radius: 14px; padding: .9rem;
+    background: #fafafa; position: relative; }
+  .system-card h4 { margin: 0 0 .35rem; font-size: 1rem; }
+  .system-card .num { display: inline-flex; align-items: center; justify-content: center;
+    width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accent);
+    color: white; font-size: .85rem; font-weight: 700; margin-right: .4rem; }
+  .system-card ul { margin: .4rem 0 0; padding-left: 1.1rem; font-size: .9rem; }
+  .system-card li { margin: .15rem 0; }
+
   .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
-  .routine-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .75rem; }
+  .routine-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: .75rem; }
   .step { border: 1px solid var(--border); border-radius: 12px; padding: .75rem .9rem; background: #fafafa; }
   .step strong { display: block; margin-bottom: .2rem; }
+
   .timer-box { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
   .timer-display { font-variant-numeric: tabular-nums; font-size: 2rem; font-weight: 700;
     min-width: 6ch; text-align: center; }
@@ -37,66 +51,106 @@
   button:hover { filter: brightness(1.05); }
   button.secondary { background: #e5e7eb; color: #111827; }
   button.active { background: var(--success); }
-  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
-  th, td { border-bottom: 1px solid var(--border); padding: .6rem .5rem; text-align: left; vertical-align: top; }
-  th { background: #f3f4f6; font-size: .8rem; text-transform: uppercase;
-    letter-spacing: .04em; color: #374151; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 720px; }
+  th, td { border-bottom: 1px solid var(--border); padding: .6rem .55rem; text-align: left; vertical-align: top; }
+  th { background: #f3f4f6; font-size: .78rem; text-transform: uppercase;
+    letter-spacing: .04em; color: #374151; position: sticky; top: 0; }
   tr.done td { background: #f0fdf4; }
   tr.done td:last-child { color: var(--success); font-weight: 700; }
+  tr.week-row td { background: #eef2ff; font-weight: 700; color: #1e3a8a; font-size: .85rem; }
   input[type="checkbox"] { width: 1.1rem; height: 1.1rem; cursor: pointer; }
+
   .chunk-bank { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .75rem; }
   .chunk-card { border: 1px solid var(--border); border-radius: 12px; padding: .8rem; background: #fafafa; }
   .chunk-card h4 { margin: 0 0 .4rem; font-size: .95rem; }
   .chunk-card ul { margin: 0; padding-left: 1.1rem; }
   .chunk-card li { margin: .2rem 0; }
+
   .progress-wrap { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
   .progress-bar { flex: 1; height: 10px; background: #e5e7eb; border-radius: 999px;
     overflow: hidden; min-width: 180px; }
   .progress-fill { height: 100%; width: 0%; background: var(--success); transition: width .3s ease; }
-  .example { font-style: italic; color: #374151; }
+
   @media print {
     header { background: white; color: black; }
     button, .timer-box { display: none; }
     section { box-shadow: none; break-inside: avoid; }
+    th { position: static; }
   }
 </style>
 </head>
 <body>
 <header>
   <h1>30-Day English Fluency Plan</h1>
-  <p>Chunking method • 5 minutes a day (plus a 10-minute version when you have time)</p>
+  <p>Discover · Practice · Review — with the chunking method</p>
 </header>
 
 <main>
 
+  <!-- SYSTEM -->
   <section>
-    <h2>How this works</h2>
+    <h2>The Speaking Success System</h2>
+    <p class="muted">Three steps, repeated in cycles. Each day in the plan below touches all three.</p>
+    <div class="system">
+      <div class="system-card">
+        <h4><span class="num">1</span>Discover</h4>
+        <p class="muted" style="margin:.2rem 0">Find new language — vocabulary, grammar, chunks.</p>
+        <ul>
+          <li>Films, series, podcasts</li>
+          <li>Live lessons</li>
+          <li>Notice chunks you already know being used naturally</li>
+        </ul>
+        <p class="muted" style="margin:.5rem 0 0; font-size:.85rem">
+          Without this you stay <em>small but fluent</em>. Aim for <em>big and fluent</em>.
+        </p>
+      </div>
+      <div class="system-card">
+        <h4><span class="num">2</span>Practice</h4>
+        <p class="muted" style="margin:.2rem 0">Two different jobs — you need both.</p>
+        <ul>
+          <li><strong>Solo:</strong> accuracy + confidence. Repeat chunks, make phrases about you, record, check grammar with ChatGPT/Claude.</li>
+          <li><strong>With others:</strong> real fluency. Q&amp;A, problem-solving, shared tasks, debates, conversation rooms.</li>
+        </ul>
+      </div>
+      <div class="system-card">
+        <h4><span class="num">3</span>Review</h4>
+        <p class="muted" style="margin:.2rem 0">If you don't review, you forget.</p>
+        <ul>
+          <li>Re-read / re-listen to the original input</li>
+          <li>Quiz or test yourself</li>
+          <li>More conversations using the same language</li>
+          <li><strong>Same answer ×3:</strong> 1st = find the idea, 2nd = focus on fluency, 3rd = automatic</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHUNKS -->
+  <section>
+    <h2>Why chunks?</h2>
     <p>
       Don't speak word by word — speak in <strong>chunks</strong>: 2–3 words said as
-      <strong>one sound</strong>. A chunk is like a bunch of bananas: one unit, quick to pick up.
+      <strong>one sound</strong>. A chunk is a bunch of bananas, not one banana at a time.
     </p>
     <p>
       <strong>Verb chunks</strong> = <em>what</em> you do (<em>I tend to, I'm used to, I find it easy to</em>).
       <strong>Adverbial chunks</strong> = <em>how / when</em> (<em>at the moment, by and large</em>).
-      Put them together and you build fluent sentences.
+      Stack them and you build fluent sentences.
     </p>
-    <p class="muted">Tick each day when finished. Progress is saved in this browser.</p>
-    <div class="progress-wrap">
-      <span class="pill" id="progressText">0 / 30 days</span>
-      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-      <button class="secondary" onclick="resetProgress()">Reset progress</button>
-    </div>
   </section>
 
+  <!-- ROUTINES -->
   <section>
-    <h2>The two routines</h2>
+    <h2>The daily routines</h2>
     <div class="grid2">
       <div>
-        <h3>5-minute quick drill <span class="pill">every day</span></h3>
+        <h3>5-minute solo drill <span class="pill">every day</span></h3>
         <div class="routine-grid">
           <div class="step"><strong>1. Pick 3 verb chunks</strong><span class="muted">e.g. I tend to, I'm used to, I find it easy to.</span></div>
-          <div class="step"><strong>2. Repeat & change</strong><span class="muted">Swap the noun, verb, person or tense.</span></div>
-          <div class="step"><strong>3. Add adverb chunks</strong><span class="muted">Put them in front: "At the moment I tend to…"</span></div>
+          <div class="step"><strong>2. Repeat &amp; change</strong><span class="muted">Swap the noun, verb, person or tense.</span></div>
+          <div class="step"><strong>3. Add adverb chunks</strong><span class="muted">"At the moment I tend to…"</span></div>
           <div class="step"><strong>4. Extend</strong><span class="muted">Add because / since / as.</span></div>
           <div class="step"><strong>5. Mini story</strong><span class="muted">3–5 sentences. Illogical is fine.</span></div>
         </div>
@@ -111,6 +165,7 @@
     </div>
   </section>
 
+  <!-- TIMER -->
   <section>
     <h2>Timer</h2>
     <div class="timer-box">
@@ -123,23 +178,73 @@
     </div>
   </section>
 
+  <!-- PROGRESS -->
   <section>
-    <h2>30-day plan</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Day</th>
-          <th>Focus chunk(s)</th>
-          <th>Practice</th>
-          <th>Done</th>
-        </tr>
-      </thead>
-      <tbody id="planBody"></tbody>
-    </table>
+    <h2>Your progress</h2>
+    <div class="progress-wrap">
+      <span class="pill" id="progressText">0 / 30 days</span>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <button class="secondary" onclick="resetProgress()">Reset progress</button>
+    </div>
+    <p class="muted" style="margin-bottom:0">Tick each day in the table below. Saved in this browser.</p>
   </section>
 
+  <!-- PLAN -->
   <section>
-    <h2>Chunk bank (from both videos)</h2>
+    <h2>30-day plan</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:3.2rem">Day</th>
+            <th>Discover</th>
+            <th>Practice</th>
+            <th>Review</th>
+            <th style="width:3.5rem">Done</th>
+          </tr>
+        </thead>
+        <tbody id="planBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TOOLKITS -->
+  <section>
+    <h2>Practice-with-others toolkit</h2>
+    <p class="muted">The point isn't the activity — it's the cognitive load: listen, form an idea, express it, check you're understood.</p>
+    <div class="chunk-bank">
+      <div class="chunk-card">
+        <h4>Structured</h4>
+        <ul>
+          <li>Questions &amp; answers</li>
+          <li>Problem-solving together</li>
+          <li>Do a task together</li>
+          <li>Mini debate</li>
+        </ul>
+      </div>
+      <div class="chunk-card">
+        <h4>Where to find people</h4>
+        <ul>
+          <li>A classmate or teacher</li>
+          <li>Language-exchange apps</li>
+          <li>Conversation rooms / clubs</li>
+          <li>Anyone willing to chat</li>
+        </ul>
+      </div>
+      <div class="chunk-card">
+        <h4>Solo practice bonuses</h4>
+        <ul>
+          <li>Record yourself, listen back</li>
+          <li>Ask ChatGPT / Claude: "Is this grammatical?"</li>
+          <li>Repeat the same answer three times</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHUNK BANK -->
+  <section>
+    <h2>Chunk bank (all three videos)</h2>
     <div class="chunk-bank">
       <div class="chunk-card">
         <h4>Verb chunks</h4>
@@ -168,7 +273,7 @@
         </ul>
       </div>
       <div class="chunk-card">
-        <h4>Vocabulary chunks (verbs + noun)</h4>
+        <h4>Vocabulary chunks</h4>
         <ul>
           <li>wake up early</li>
           <li>have a big breakfast</li>
@@ -177,13 +282,13 @@
           <li>get up early</li>
           <li>work on my own</li>
           <li>live in the countryside</li>
-          <li>stay organized</li>
+          <li>stay organized / stay focused</li>
           <li>go for a walk</li>
-          <li>have a shower</li>
+          <li>have a shower / have a wash</li>
         </ul>
       </div>
       <div class="chunk-card">
-        <h4>Linking / extending</h4>
+        <h4>Linking &amp; extending</h4>
         <ul>
           <li>because…</li>
           <li>since…</li>
@@ -194,51 +299,114 @@
       </div>
     </div>
     <p class="muted" style="margin-top:.75rem">
-      Tip: don't grind through the whole list. Pick 2–3 chunks and drill them until they feel like one sound.
+      Don't grind through the whole list. Pick 2–3 chunks and drill them until they feel like one sound.
     </p>
   </section>
+
 </main>
 
 <script>
-  const days = [
-    // Phase 1 — 5-minute drill: 3 verb chunks + adverbs (days 1–10)
-    { day: 1, focus: "I tend to", task: "“I tend to wake up early.” Change the noun: have a big breakfast, drink tea, get nervous before meetings." },
-    { day: 2, focus: "I tend to", task: "Repeat each phrase 3× focusing on the sound “I-tend-to”. Then say something true for you." },
-    { day: 3, focus: "I'm used to", task: "“I'm used to getting up early.” Change the -ing verb: working on my own, living in the countryside." },
-    { day: 4, focus: "I'm used to", task: "Combine: “I'm used to working on my own.” Change the person: she's used to, they're used to." },
-    { day: 5, focus: "I find it easy to", task: "“I find it easy to cook.” Change the verb: learn languages, stay organized, stay focused." },
-    { day: 6, focus: "I find it easy to", task: "Repeat 3× per phrase. Listen for the chunk “I-find-it-easy-to”." },
-    { day: 7, focus: "Review the 3 verb chunks", task: "Make 6 sentences — 2 with each verb chunk. Say them out loud." },
-    { day: 8, focus: "Adverb: at the moment", task: "“At the moment I tend to wake up early.” Change the verb chunk." },
-    { day: 9, focus: "Adverb: right now", task: "“Right now I'm used to living on my own.” Change the -ing verb." },
-    { day: 10, focus: "Adverb: by and large", task: "“By and large I find it easy to stay organized.” Change the verb chunk." },
+  const plan = [
+    { week: "Week 1 — Discover & drill the core verb chunks" },
+    { day: 1, discover: "Watch 10 min of a series or podcast. Collect 3 verb chunks: I tend to / I'm used to / I find it easy to.",
+      practice: "Say each chunk 3× as one sound. Make one phrase with each.",
+      review: "Say the 3 phrases from memory. Record yourself." },
+    { day: 2, discover: "Collocations: wake up early, have a big breakfast, drink tea, get nervous before meetings.",
+      practice: "'I tend to' + each one. Change the noun/verb.",
+      review: "Self-quiz — say all 5 from memory, no notes." },
+    { day: 3, discover: "Two -ing activities: working on my own, living in the countryside.",
+      practice: "'I'm used to' + -ing. Change the person: she's used to, they're used to.",
+      review: "Re-record. Compare with day 1." },
+    { day: 4, discover: "Adverb chunks: at the moment, right now, by and large.",
+      practice: "Adverb + verb chunk: 'At the moment I tend to wake up early.'",
+      review: "Say 6 sentences aloud. Ask ChatGPT/Claude to check 3 of them." },
+    { day: 5, discover: "Linking words: because / since / as.",
+      practice: "Extend your day-4 sentences with them.",
+      review: "Same answer ×3 — repeat one sentence three times, focusing more on fluency each round." },
+    { day: 6, discover: "3 vocabulary chunks from your own life (e.g. go for a walk, have a shower).",
+      practice: "Make a phrase about you with each one.",
+      review: "Self-quiz. Write down what you forgot." },
+    { day: 7, discover: "Nothing new — consolidate this week's chunks.",
+      practice: "1-minute recording using 5 chunks.",
+      review: "Listen back. Note 3 things to fix." },
 
-    // Phase 2 — combinations (days 11–20)
-    { day: 11, focus: "Verb + adverb", task: "“At the moment I tend to wake up early.” Make 5 versions with different adverbs." },
-    { day: 12, focus: "Verb + adverb", task: "“Right now I'm used to getting up early.” Then “By and large I'm used to…”" },
-    { day: 13, focus: "Extend with because", task: "“At the moment I tend to wake up early because I'm very busy.”" },
-    { day: 14, focus: "Extend with since / as", task: "Swap because for since and as in your day-13 sentences." },
-    { day: 15, focus: "Grammar chunks", task: "“I'd like to learn Spanish.” “I'm looking forward to having dinner.” Change the noun/verb." },
-    { day: 16, focus: "Grammar chunks", task: "“I can't help smiling.” “You should have told me.” Repeat and change." },
-    { day: 17, focus: "Vocabulary chunks", task: "“I go for a walk.” “I have a shower.” Change the person: my dad goes, she has." },
-    { day: 18, focus: "Frequency chunks", task: "“I go for a walk from time to time / without fail / now and then.”" },
-    { day: 19, focus: "Activity + frequency", task: "“I go for a walk every morning without fail.” Swap the activity and the frequency chunk." },
-    { day: 20, focus: "Grammar + vocabulary", task: "“I'd like to go for a walk.” “I'm looking forward to going for a walk.”" },
+    { week: "Week 2 — Grammar & frequency chunks" },
+    { day: 8, discover: "I'd like to / I'm looking forward to.",
+      practice: "Make phrases; change the noun first, then the verb (preparing, eating, enjoying).",
+      review: "Same answer ×3 on one phrase." },
+    { day: 9, discover: "I can't help (+ -ing) / you should have (+ past participle).",
+      practice: "Two phrases each. Watch the form after the chunk.",
+      review: "Quiz yourself on gerund vs past participle." },
+    { day: 10, discover: "Frequency chunks: from time to time, without fail, now and then, every once in a while.",
+      practice: "Activity + frequency: 'I go for a walk without fail.'",
+      review: "ChatGPT/Claude grammar check on 5 sentences." },
+    { day: 11, discover: "Vocabulary chunks: go for a walk, have a shower, have a wash.",
+      practice: "Change the person and the tense: she has, I had.",
+      review: "Repeat each 3× as one sound." },
+    { day: 12, discover: "Listen to a podcast or news clip. Catch 3 chunks you already know used naturally.",
+      practice: "Reuse those 3 in your own sentences.",
+      review: "Record. Listen specifically for chunking, not words." },
+    { day: 13, discover: "Choose 3 new chunks from a topic you care about (work, travel, sport).",
+      practice: "Solo drill: repeat, phrase, change something.",
+      review: "Explain the chunks out loud as if teaching them." },
+    { day: 14, discover: "Nothing new.",
+      practice: "1-minute story using chunks from weeks 1–2.",
+      review: "Self-test everything so far. Compare with your day-7 recording." },
 
-    // Phase 3 — stories + recording (days 21–30)
-    { day: 21, focus: "Illogical mini story", task: "Use at the moment, by and large, right now. Doesn't need to make sense — focus on the sounds." },
-    { day: 22, focus: "Illogical mini story", task: "Use I tend to, I'm used to, I find it easy to. 3–5 sentences." },
-    { day: 23, focus: "Illogical mini story", task: "Add because / since / as to extend at least two sentences." },
-    { day: 24, focus: "Illogical mini story", task: "Use at least 3 adverb chunks + 2 verb chunks." },
-    { day: 25, focus: "True mini story", task: "Same routine, but everything must be true about you. Harder — think about meaning." },
-    { day: 26, focus: "True mini story", task: "Use 5 chunks from the bank. Say it twice — second time faster." },
-    { day: 27, focus: "True mini story", task: "Use because / since / as and one contrast word (however / actually)." },
-    { day: 28, focus: "Record yourself", task: "Do the 5-minute drill and record it. Listen for chunks, not words." },
-    { day: 29, focus: "Full 10-minute routine", task: "Drill practice + real practice + recording. Review your day-28 recording." },
-    { day: 30, focus: "Free speaking", task: "Tell a 1-minute story using any 5–7 chunks. Record and listen back. Compare to day 1." }
+    { week: "Week 3 — Combine & practice with other people" },
+    { day: 15, discover: "Natural combinations: grammar + vocabulary, activity + frequency.",
+      practice: "Solo — build 6 combined sentences.",
+      review: "Pick your best 3 and repeat each 3×." },
+    { day: 16, discover: "Question forms for the chunks you've learned.",
+      practice: "With others — Q&A with a partner, tutor or language app. Use your chunks in the answers.",
+      review: "Note 3 things you couldn't say. Look them up." },
+    { day: 17, discover: "Note new language you needed mid-task.",
+      practice: "With others — problem-solving task in English: plan a trip, solve a puzzle, sort a list together.",
+      review: "Record a 1-minute summary of what you did." },
+    { day: 18, discover: "Note 3 expressions your partner used.",
+      practice: "With others — mini debate on a simple topic (phones at dinner? homework?).",
+      review: "Reuse your partner's 3 expressions in your own sentences." },
+    { day: 19, discover: "—",
+      practice: "With others — describe a photo or tell a story; your partner asks questions.",
+      review: "Same answer ×3 on one of their questions." },
+    { day: 20, discover: "3 chunks from a film or series scene.",
+      practice: "With others — use them in conversation.",
+      review: "Self-quiz on all 3." },
+    { day: 21, discover: "—",
+      practice: "2-minute recording using 7+ chunks.",
+      review: "Listen and note 3 improvements. Compare with day 14." },
+
+    { week: "Week 4 — Stories, review & measurement" },
+    { day: 22, discover: "—",
+      practice: "Illogical mini story (solo) using at the moment, by and large, right now.",
+      review: "Record. Listen for chunks. It doesn't need to make sense." },
+    { day: 23, discover: "—",
+      practice: "Illogical mini story: I tend to, I'm used to, I find it easy to + because.",
+      review: "Same answer ×3." },
+    { day: 24, discover: "—",
+      practice: "True mini story — everything true about you. Harder: you must think about meaning too.",
+      review: "ChatGPT/Claude grammar check on your story." },
+    { day: 25, discover: "Contrast words: however, actually.",
+      practice: "True mini story using one contrast word.",
+      review: "Record. Compare with day 23 — is it smoother?" },
+    { day: 26, discover: "—",
+      practice: "With others — conversation room or language exchange. Use 5 chunks.",
+      review: "Write down what you heard but didn't understand." },
+    { day: 27, discover: "—",
+      practice: "Full 10-minute routine: drill practice + real practice.",
+      review: "Listen back to your day-1 recording." },
+    { day: 28, discover: "—",
+      practice: "Same answer ×3 on one genuinely difficult question.",
+      review: "Count your hesitations in each of the three rounds." },
+    { day: 29, discover: "—",
+      practice: "Go back through all your notes. Self-test every chunk.",
+      review: "Record 2 minutes. Then re-record it once more." },
+    { day: 30, discover: "—",
+      practice: "Free speaking: 2-minute story using 10+ chunks.",
+      review: "Compare day 1 / 7 / 14 / 30 recordings. Set next month's goal." }
   ];
 
-  const STORAGE_KEY = "fluency30DaysCombined";
+  const STORAGE_KEY = "fluency30DaysV3";
   const planBody = document.getElementById("planBody");
 
   function getSaved() {
@@ -250,14 +418,21 @@
   function renderPlan() {
     const saved = getSaved();
     planBody.innerHTML = "";
-    days.forEach((item) => {
+    plan.forEach((item) => {
       const tr = document.createElement("tr");
+      if (item.week) {
+        tr.className = "week-row";
+        tr.innerHTML = `<td colspan="5">${item.week}</td>`;
+        planBody.appendChild(tr);
+        return;
+      }
       const checked = saved.includes(item.day);
       if (checked) tr.classList.add("done");
       tr.innerHTML = `
         <td><strong>${item.day}</strong></td>
-        <td>${item.focus}</td>
-        <td>${item.task}</td>
+        <td>${item.discover}</td>
+        <td>${item.practice}</td>
+        <td>${item.review}</td>
         <td><input type="checkbox" data-day="${item.day}" ${checked ? "checked" : ""} aria-label="Mark day ${item.day} complete"></td>
       `;
       planBody.appendChild(tr);
@@ -324,4 +499,4 @@
   updateTimerDisplay();
 </script>
 </body>
-                                                                                                                                                </html>
+</html>
